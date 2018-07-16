@@ -5,6 +5,9 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 install: true
+addons:
+  sonarcloud:
+    organization: "proshin-roman-github"
 jdk:
   - oraclejdk8
 script:
