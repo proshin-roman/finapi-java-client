@@ -2,6 +2,9 @@
 [![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Build Status](https://travis-ci.org/proshin-roman/finapi-java-client.svg?branch=master)](https://travis-ci.org/proshin-roman/finapi-java-client)
+[![Build status](https://ci.appveyor.com/api/projects/status/n88wydxq8oa0eou0/branch/master?svg=true)](https://ci.appveyor.com/project/proshin-roman/finapi-java-client/branch/master)
+[![codecov](https://codecov.io/gh/proshin-roman/finapi-java-client/branch/master/graph/badge.svg)](https://codecov.io/gh/proshin-roman/finapi-java-client)
 
 
 **finapi-java-client** is a true-OOP Java client for API provided by [finAPI](https://finapi.io).
