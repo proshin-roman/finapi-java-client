@@ -1,11 +1,5 @@
 errors:
 - roman@proshin.org
-alerts:
-    suppress:
-    - on-found-puzzle
-    - on-lost-puzzle
-    github:
-    - proshin-roman
 format:
 - short-title
 - title-length=255
