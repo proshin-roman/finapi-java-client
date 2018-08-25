@@ -17,6 +17,9 @@ package org.proshin.finapi.bank;
 
 import org.proshin.finapi.bank.in.QueryCriteria;
 
+/**
+ * @todo #8:30min Fix state of Banks services: make sure all cases/services are implemented and fixed using unit tests.
+ */
 public interface Banks {
 
     Bank one(Long id);
