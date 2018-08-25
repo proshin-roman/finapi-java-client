@@ -16,11 +16,10 @@
 package org.proshin.finapi.client;
 
 import org.json.JSONObject;
-import org.proshin.finapi.AccessToken;
-import org.proshin.finapi.Client;
-import org.proshin.finapi.Endpoint;
-import org.proshin.finapi.Users;
+import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.user.FpUsers;
+import org.proshin.finapi.user.Users;
 
 public final class FpClient implements Client {
 
@@ -32,12 +31,11 @@ public final class FpClient implements Client {
         this.token = token;
     }
 
-
     @Override
     public Configuration configuration() {
         return new FpConfiguration(
             new JSONObject(
-                endpoint.get("/api/v1/clientConfiguration", token)
+                endpoint.get("/api/v1/clientConfiguration", this.token)
             )
         );
     }

@@ -18,10 +18,9 @@ package org.proshin.finapi.user;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
-import org.proshin.finapi.AccessToken;
-import org.proshin.finapi.Endpoint;
-import org.proshin.finapi.User;
-import org.proshin.finapi.Users;
+import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.endpoint.Endpoint;
+import org.proshin.finapi.user.in.CreateParameters;
 
 public final class FpUsers implements Users {
 
@@ -43,7 +42,7 @@ public final class FpUsers implements Users {
     @Override
     public User create(final CreateParameters parameters) {
         return new FpUser(
-            () -> new JSONObject(
+            new JSONObject(
                 this.endpoint.post(
                     "/api/v1/users",
                     this.token,

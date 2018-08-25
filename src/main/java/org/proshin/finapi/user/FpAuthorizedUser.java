@@ -16,16 +16,13 @@
 package org.proshin.finapi.user;
 
 import java.util.Optional;
-import org.cactoos.scalar.StickyScalar;
 import org.json.JSONObject;
-import org.proshin.finapi.AccessToken;
-import org.proshin.finapi.AuthorizedUser;
-import org.proshin.finapi.BankConnections;
-import org.proshin.finapi.Categories;
-import org.proshin.finapi.Endpoint;
-import org.proshin.finapi.Labels;
-import org.proshin.finapi.NotificationRules;
-import org.proshin.finapi.User;
+import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.bankconnection.BankConnections;
+import org.proshin.finapi.category.Categories;
+import org.proshin.finapi.endpoint.Endpoint;
+import org.proshin.finapi.label.Labels;
+import org.proshin.finapi.notificationrule.NotificationRules;
 
 public final class FpAuthorizedUser implements AuthorizedUser {
 
@@ -33,13 +30,12 @@ public final class FpAuthorizedUser implements AuthorizedUser {
     private final AccessToken token;
     private final User origin;
 
-
     public FpAuthorizedUser(final Endpoint endpoint, final AccessToken token) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = new FpUser(
-            new StickyScalar<>(
-                () -> new JSONObject(endpoint.get("/api/v1/users", token))
+            new JSONObject(
+                endpoint.get("/api/v1/users", token)
             )
         );
     }

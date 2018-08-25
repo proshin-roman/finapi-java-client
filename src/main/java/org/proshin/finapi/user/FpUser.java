@@ -16,55 +16,48 @@
 package org.proshin.finapi.user;
 
 import java.util.Optional;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
 import org.json.JSONObject;
-import org.proshin.finapi.User;
 
 public final class FpUser implements User {
 
-    private final UncheckedScalar<JSONObject> origin;
+    private final JSONObject origin;
 
-    public FpUser(final Scalar<JSONObject> origin) {
-        this(new UncheckedScalar<>(origin));
-    }
-
-    public FpUser(final UncheckedScalar<JSONObject> origin) {
+    public FpUser(final JSONObject origin) {
         this.origin = origin;
     }
 
     @Override
     public String id() {
-        return this.origin.value().getString("id");
+        return this.origin.getString("id");
     }
 
     @Override
     public String password() {
-        return this.origin.value().getString("password");
+        return this.origin.getString("password");
     }
 
     @Override
     public Optional<String> email() {
         final String name = "email";
-        if (this.origin.value().isNull(name)) {
+        if (this.origin.isNull(name)) {
             return Optional.empty();
         } else {
-            return Optional.of(this.origin.value().getString(name));
+            return Optional.of(this.origin.getString(name));
         }
     }
 
     @Override
     public Optional<String> phone() {
         final String name = "phone";
-        if (this.origin.value().isNull(name)) {
+        if (this.origin.isNull(name)) {
             return Optional.empty();
         } else {
-            return Optional.of(this.origin.value().getString(name));
+            return Optional.of(this.origin.getString(name));
         }
     }
 
     @Override
     public boolean isAutoUpdateEnabled() {
-        return this.origin.value().getBoolean("isAutoUpdateEnabled");
+        return this.origin.getBoolean("isAutoUpdateEnabled");
     }
 }

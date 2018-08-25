@@ -119,6 +119,18 @@ This library is in early alpha version and not all API methods are implemented y
     - [ ] Mock batch update
     - [ ] Check categorization
 
+## What about logging?
+
+The library uses [Logback](https://logback.qos.ch) for logging. As well you can enable logging of the [Apache HTTP 
+client](https://hc.apache.org) library by specifying command line parameters 
+(read [this](https://hc.apache.org/httpcomponents-client-ga/logging.html) for more details): 
+```
+-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog
+-Dorg.apache.commons.logging.simplelog.showdatetime=true
+-Dorg.apache.commons.logging.simplelog.log.org.apache.http=DEBUG
+-Dorg.apache.commons.logging.simplelog.log.org.apache.http.wire=ERROR
+```
+
 ## How to contribute
 
 Just fork the repo and send a pull request.
