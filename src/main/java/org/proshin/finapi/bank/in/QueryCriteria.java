@@ -19,7 +19,10 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.bank.Bank;
 
-// @todo: implement paging
+/**
+ * @todo #8 Find a way to generalize paging stuff for input criterias. It should a single (or multiple) general
+ *  implementation that allows to get rid of copy-pasting for paging.
+ */
 public interface QueryCriteria {
 
     QueryCriteria withIds(Iterable<Long> ids);
