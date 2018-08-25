@@ -33,12 +33,9 @@ public interface Endpoint {
 
     HttpPost post(String path);
 
+    String post(String path, HttpEntity entity, int expected);
+
     HttpPost post(String path, AccessToken token);
 
     String post(String path, AccessToken token, HttpEntity entity, int expected);
-
-    AccessToken clientToken(final String clientId, final String clientSecret);
-
-    AccessToken userToken(final String clientId, final String clientSecret, final String username,
-        final String password);
 }

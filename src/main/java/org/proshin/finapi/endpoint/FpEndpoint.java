@@ -18,8 +18,6 @@ package org.proshin.finapi.endpoint;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -28,23 +26,18 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeaderElement;
-import org.apache.http.message.BasicNameValuePair;
 import org.cactoos.io.InputOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UncheckedText;
-import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
-import org.proshin.finapi.accesstoken.ClientAccessToken;
-import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.exception.FinapiException;
 
 @Slf4j
@@ -118,6 +111,38 @@ public final class FpEndpoint implements Endpoint {
         return new HttpPost(this.endpoint + path);
     }
 
+    /**
+     * @param path Path to make a request to.
+     * @param entity Body of the request.
+     * @param expected Expected result code.
+     * @return a body of the respose in JSON format
+     * @todo #16 Remove duplicated code by refactoring all "post..." methods into a single method or even a class.
+     */
+    @Override
+    public String post(final String path, final HttpEntity entity, final int expected) {
+        try {
+            final HttpPost post = new HttpPost(this.endpoint + path);
+            post.setEntity(entity);
+            final HttpResponse response = this.client.execute(post);
+            if (response.getStatusLine().getStatusCode() != expected) {
+                throw new FinapiException(expected, response);
+            }
+            return new TextOf(
+                new InputOf(response.getEntity().getContent()),
+                StandardCharsets.UTF_8
+            ).asString();
+        } catch (IOException e) {
+            throw new IllegalStateException(
+                new UncheckedText(
+                    new FormattedText(
+                        "Couldn't post to '%s'",
+                        path
+                    )
+                ).asString()
+            );
+        }
+    }
+
     @Override
     public HttpPost post(String path, AccessToken token) {
         final HttpPost post = this.post(path);
@@ -148,68 +173,6 @@ public final class FpEndpoint implements Endpoint {
                     )
                 ).asString()
             );
-        }
-    }
-
-    @Override
-    public AccessToken clientToken(final String clientId, final String clientSecret) {
-        try {
-            final HttpPost post = new HttpPost(this.endpoint + "/oauth/token");
-            final List<NameValuePair> parameters = new ArrayList<>();
-            parameters.add(new BasicNameValuePair("grant_type", "client_credentials"));
-            parameters.add(new BasicNameValuePair("client_id", clientId));
-            parameters.add(new BasicNameValuePair("client_secret", clientSecret));
-            post.setEntity(new UrlEncodedFormEntity(parameters));
-            final HttpResponse response = this.client.execute(post);
-            if (response.getStatusLine().getStatusCode() != 200) {
-                throw new FinapiException(200, response);
-            }
-            return new ClientAccessToken(new JSONObject(
-                new TextOf(
-                    new InputOf(response.getEntity().getContent()),
-                    StandardCharsets.UTF_8
-                ).asString()
-            )
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("Couldn't get an access token", e);
-        }
-    }
-
-    @Override
-    public AccessToken userToken(final String clientId, final String clientSecret, final String username,
-        final String password) {
-        try {
-            final HttpPost post = new HttpPost(this.endpoint + "/oauth/token");
-            final List<NameValuePair> parameters = new ArrayList<>();
-            parameters.add(new BasicNameValuePair("grant_type", "password"));
-            parameters.add(new BasicNameValuePair("client_id", clientId));
-            parameters.add(new BasicNameValuePair("client_secret", clientSecret));
-            parameters.add(new BasicNameValuePair("username", username));
-            parameters.add(new BasicNameValuePair("password", password));
-            post.setEntity(new UrlEncodedFormEntity(parameters));
-            final HttpResponse response = this.client.execute(post);
-            if (response.getStatusLine().getStatusCode() != 200) {
-                throw new FinapiException(
-                    200,
-                    response.getStatusLine().getStatusCode(),
-                    new JSONObject(
-                        new TextOf(
-                            new InputOf(response.getEntity().getContent()),
-                            StandardCharsets.UTF_8
-                        ).asString()
-                    )
-                );
-            }
-            return new UserAccessToken(new JSONObject(
-                new TextOf(
-                    new InputOf(response.getEntity().getContent()),
-                    StandardCharsets.UTF_8
-                ).asString()
-            )
-            );
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't access the endpoint due to technical problem", e);
         }
     }
 
