@@ -2,7 +2,7 @@ errors:
 - roman@proshin.org
 format:
 - short-title
-- title-length=255
+- title-length=64
 tags:
 - pdd
 - bug
