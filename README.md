@@ -32,7 +32,7 @@ This library is in early alpha version and not all API methods are implemented y
 
 - Authorization
     - [x] Get tokens
-    - [ ] Revoke a token
+    - [x] Revoke a token
 - Mandator administration
     - [ ] Get user list
     - [ ] Delete users
@@ -51,9 +51,9 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Delete the authorized user
     - [ ] Delete an unverified user 
 - Banks
-    - [ ] Get a bank
+    - [x] Get a bank
     - [ ] ~~Get a multiple banks~~ (won't be implemented as deprecated)
-    - [ ] Get and search all banks 
+    - [x] Get and search all banks (:exclamation: no paging)
 - Bank connections
     - [ ] Get a bank connection
     - [ ] ~~Get multiple bank connections~~ (won't be implemented as deprecated)

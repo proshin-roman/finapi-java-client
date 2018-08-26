@@ -40,6 +40,12 @@ public final class FpBanks implements Banks {
         );
     }
 
+    /**
+     * Get and search all banks service.
+     * @param criteria Search options.
+     * @return a list of found banks
+     * @todo #14 Implement paging for service "Banks - Get and search all banks" (find a way to make it generic)
+     */
     @Override
     public Iterable<Bank> search(final QueryCriteria criteria) {
         return new IterableJsonArray<>(
