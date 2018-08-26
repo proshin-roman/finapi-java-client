@@ -16,6 +16,8 @@
 package org.proshin.finapi.primitives;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.function.Supplier;
 
@@ -28,6 +30,7 @@ public final class OffsetDateTimeOf implements Supplier<OffsetDateTime> {
         this(
             origin,
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+                .withZone(ZoneId.of("Europe/Berlin"))
         );
     }
 
@@ -38,6 +41,6 @@ public final class OffsetDateTimeOf implements Supplier<OffsetDateTime> {
 
     @Override
     public OffsetDateTime get() {
-        return OffsetDateTime.parse(this.origin, formatter);
+        return ZonedDateTime.parse(this.origin, formatter).toOffsetDateTime();
     }
 }

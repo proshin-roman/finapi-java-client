@@ -37,7 +37,13 @@ public final class FakeEndpoint implements Endpoint {
 
     @Override
     public String get(final String path, final AccessToken token, final Iterable<NameValuePair> parameters) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        for (FakeRoute route : routes) {
+            if (route.matches(path)) {
+                return route.response();
+            }
+        }
+        throw new RuntimeException(
+            String.format("No routes found for path '%s'", path));
     }
 
     @Override
