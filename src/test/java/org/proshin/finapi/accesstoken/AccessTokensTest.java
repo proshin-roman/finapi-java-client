@@ -21,6 +21,7 @@ import static org.hamcrest.core.Is.is;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.proshin.finapi.exception.NoFieldException;
 import org.proshin.finapi.fake.AnyPathMatcher;
 import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.fake.FakeRoute;
@@ -104,7 +105,7 @@ public final class AccessTokensTest {
         assertThat(token.expiresIn(), is(156));
         assertThat(token.scope(), is("all"));
 
-        this.expectedException.expect(RuntimeException.class);
+        this.expectedException.expect(NoFieldException.class);
         this.expectedException.expectMessage("Field 'refresh_token' may not be null for user's access token");
         token.refreshToken();
     }
