@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.53.0",
+        "version": "v1.54.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -3337,7 +3337,7 @@
                     "Mandator Administration"
                 ],
                 "summary": "Get user list",
-                "description": "<p>Get a list of the users of the mandator that is authorized by the access_token. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token. You can set optional search criteria to get only those users that you are interested in. If you do not specify any search criteria, then this service functions as a 'get all' service.</p><p>Note that the original user id is longer available in finAPI once a user has been deleted. Because of this, the userId of deleted users will be a distorted version of the original userId. For example, if the deleted user's id was originally 'user', then this service will return 'uXXr' as the userId.</p>",
+                "description": "<p>Get a list of the users of the mandator that is authorized by the access_token. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token. You can set optional search criteria to get only those users that you are interested in. If you do not specify any search criteria, then this service functions as a 'get all' service.</p><p>Note that the original user id is no longer available in finAPI once a user has been deleted. Because of this, the userId of deleted users will be a distorted version of the original userId. For example, if the deleted user's id was originally 'user', then this service will return 'uXXr' as the userId.</p>",
                 "operationId": "getUserList",
                 "parameters": [
                     {
@@ -6470,19 +6470,6 @@
                 "token_type"
             ],
             "properties": {
-                "access_token": {
-                    "type": "string",
-                    "description": "Access token. Token has a length of up to 128 characters."
-                },
-                "expires_in": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "Expiration time in seconds. A value of 0 means that the token never expires (unless it is explicitly invalidated, e.g. by revocation, or when a user gets locked)."
-                },
-                "refresh_token": {
-                    "type": "string",
-                    "description": "Refresh token. Only set in case of grant_type='password'. Token has a length of up to 128 characters."
-                },
                 "token_type": {
                     "type": "string",
                     "description": "Token type (it's always 'bearer')"
@@ -6490,6 +6477,19 @@
                 "scope": {
                     "type": "string",
                     "description": "Requested scopes (it's always 'all')"
+                },
+                "access_token": {
+                    "type": "string",
+                    "description": "Access token. Token has a length of up to 128 characters."
+                },
+                "refresh_token": {
+                    "type": "string",
+                    "description": "Refresh token. Only set in case of grant_type='password'. Token has a length of up to 128 characters."
+                },
+                "expires_in": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Expiration time in seconds. A value of 0 means that the token never expires (unless it is explicitly invalidated, e.g. by revocation, or when a user gets locked)."
                 }
             },
             "description": "User access token info"
@@ -8642,7 +8642,7 @@
                 },
                 "directDebits": {
                     "type": "array",
-                    "description": "List of the direct debits that you want to execute. Please check the account's 'supportedOrders' field to find out whether you can pass multiple direct debits or just one.",
+                    "description": "List of the direct debits that you want to execute (may contain at most 999 items). Please check the account's 'supportedOrders' field to find out whether you can pass multiple direct debits or just one.",
                     "items": {
                         "$ref": "#/definitions/SingleDirectDebitData"
                     }
@@ -8710,7 +8710,7 @@
                 },
                 "additionalMoneyTransfers": {
                     "type": "array",
-                    "description": "In case that you want to submit not just a single money transfer, but do a collective money transfer, use this field to pass a list of additional money transfer orders. The service will then pass a collective money transfer request to the bank, including both the money transfer specified on the top-level, as well as all money transfers specified in this list. Note that you should check the account's 'supportedOrders' field to find out whether or not it is supporting collective money transfers.",
+                    "description": "In case that you want to submit not just a single money transfer, but do a collective money transfer, use this field to pass a list of additional money transfer orders. The service will then pass a collective money transfer request to the bank, including both the money transfer specified on the top-level, as well as all money transfers specified in this list. The maximum count of money transfers that you can pass (in total) is 999. Note that you should check the account's 'supportedOrders' field to find out whether or not it is supporting collective money transfers.",
                     "items": {
                         "$ref": "#/definitions/SingleMoneyTransferRecipientData"
                     }
