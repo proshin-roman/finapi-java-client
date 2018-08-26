@@ -40,7 +40,7 @@ public final class UserAccessToken implements AccessToken {
     public Optional<String> refreshToken() {
         final String name = "refresh_token";
         if (this.origin.isNull(name)) {
-            return Optional.empty();
+            throw new RuntimeException("Field 'refresh_token' may not be null for user's access token");
         } else {
             return Optional.of(this.origin.getString(name));
         }
