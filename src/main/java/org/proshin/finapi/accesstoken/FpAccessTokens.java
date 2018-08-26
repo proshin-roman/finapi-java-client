@@ -76,4 +76,39 @@ public final class FpAccessTokens implements AccessTokens {
             )
         );
     }
+
+    /**
+     * Revoke user's access token.
+     *
+     * @param clientToken Client's token for authorization.
+     * @param userToken User's token for revoking.
+     * @param tokensToRevoke Which tokens should be revoked.
+     * @todo #32 Test this method: assert that methods submits the right request
+     */
+    @Override
+    public void revoke(AccessToken clientToken, AccessToken userToken, RevokeToken tokensToRevoke) {
+        final List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new BasicNameValuePair("token", userToken.accessToken()));
+        switch (tokensToRevoke) {
+            case ACCESS_TOKEN_ONLY: {
+                parameters.add(new BasicNameValuePair("token_type_hint", "access_token"));
+                break;
+            }
+            case REFRESH_TOKEN_ONLY: {
+                parameters.add(new BasicNameValuePair("token_type_hint", "refresh_token"));
+                break;
+            }
+            case ALL:
+            default: {
+                // do nothing: keep parameter empty
+            }
+        }
+        final UrlEncodedFormEntity entity;
+        try {
+            entity = new UrlEncodedFormEntity(parameters);
+        } catch (final UnsupportedEncodingException exception) {
+            throw new RuntimeException("Couldn't instantiate an entity for POST request", exception);
+        }
+        this.endpoint.post("/oauth/revoke", clientToken, entity, 200);
+    }
 }

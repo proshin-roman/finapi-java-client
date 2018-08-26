@@ -20,4 +20,14 @@ public interface AccessTokens {
 
     AccessToken userToken(final String clientId, final String clientSecret, final String username,
         final String password);
+
+    void revoke(AccessToken clientToken, AccessToken userToken, RevokeToken tokensToRevoke);
+
+    enum RevokeToken {
+        ACCESS_TOKEN_ONLY,
+
+        REFRESH_TOKEN_ONLY,
+
+        ALL
+    }
 }
