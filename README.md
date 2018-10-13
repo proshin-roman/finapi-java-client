@@ -31,7 +31,9 @@ The project is following the next principles (it is a subset of [those ones](htt
 This library is in early alpha version and not all API methods are implemented yet. This is a status of implementation:
 
 - Authorization
-    - [x] Get tokens
+    - [x] Get client's token
+    - [x] Get user's token using credentials
+    - [ ] Get user's token using refresh token
     - [x] Revoke a token
 - Mandator administration
     - [ ] Get user list
@@ -53,16 +55,16 @@ This library is in early alpha version and not all API methods are implemented y
 - Banks
     - [x] Get a bank
     - [ ] ~~Get a multiple banks~~ (won't be implemented as deprecated)
-    - [x] Get and search all banks (:exclamation: no paging)
+    - [x] Get and search all banks
 - Bank connections
-    - [ ] Get a bank connection
+    - [x] Get a bank connection
     - [ ] ~~Get multiple bank connections~~ (won't be implemented as deprecated)
-    - [ ] Get all bank connections
-    - [ ] Import a new bank connection
-    - [ ] Update a bank connection
-    - [ ] Edit a bank connection
-    - [ ] Delete a bank connection
-    - [ ] Delete all bank connections
+    - [x] Get all bank connections
+    - [x] Import a new bank connection
+    - [x] Update a bank connection
+    - [x] Edit a bank connection
+    - [x] Delete a bank connection
+    - [x] Delete all bank connections
 - Accounts
     - [ ] Get an account
     - [ ] ~~Get multiple accounts~~ (won't be implemented as deprecated)
