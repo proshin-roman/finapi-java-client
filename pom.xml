@@ -51,7 +51,7 @@
     <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
-      <version>0.36</version>
+      <version>0.38</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
