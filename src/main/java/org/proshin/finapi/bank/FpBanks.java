@@ -16,10 +16,11 @@
 package org.proshin.finapi.bank;
 
 import org.json.JSONObject;
+import org.proshin.finapi.primitives.FpPage;
+import org.proshin.finapi.primitives.Page;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.bank.in.QueryCriteria;
 import org.proshin.finapi.endpoint.Endpoint;
-import org.proshin.finapi.primitives.IterableJsonArray;
 
 public final class FpBanks implements Banks {
 
@@ -43,17 +44,17 @@ public final class FpBanks implements Banks {
     /**
      * Get and search all banks service.
      * @param criteria Search options.
-     * @return a list of found banks
-     * @todo #14 Implement paging for service "Banks - Get and search all banks" (find a way to make it generic)
+     * @return a page of found banks
      */
     @Override
-    public Iterable<Bank> search(final QueryCriteria criteria) {
-        return new IterableJsonArray<>(
+    public Page<Bank> search(final QueryCriteria criteria) {
+        return new FpPage<>(
+            "banks",
             new JSONObject(
                 this.endpoint.get("/api/v1/banks",
                     this.token, criteria.asPairs()
                 )
-            ).getJSONArray("banks"),
+            ),
             (jsonArray, index) -> new FpBank(jsonArray.getJSONObject(index))
         );
     }

@@ -30,6 +30,8 @@ import org.proshin.finapi.fake.AnyPathMatcher;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.fake.FakeRoute;
+import org.proshin.finapi.primitives.Page;
+import org.proshin.finapi.primitives.Paging;
 
 public final class BanksTest {
 
@@ -92,7 +94,7 @@ public final class BanksTest {
 
     @Test
     public void testThatSearchReturnsValidBanks() {
-        final Iterable<Bank> banks = new FpBanks(
+        final Page<Bank> banks = new FpBanks(
             new FakeEndpoint(
                 new FakeRoute(
                     new AnyPathMatcher(),
@@ -120,10 +122,10 @@ public final class BanksTest {
                         "    \"lastSuccessfulCommunication\": \"2018-08-03 11:22:33.444\"",
                         "  }],",
                         "  \"paging\": {",
-                        "    \"page\": 0,",
-                        "    \"perPage\": 0,",
-                        "    \"pageCount\": 0,",
-                        "    \"totalCount\": 0",
+                        "    \"page\": 1,",
+                        "    \"perPage\": 500,",
+                        "    \"pageCount\": 1,",
+                        "    \"totalCount\": 1",
                         "  }",
                         "}"
                     )
@@ -134,7 +136,7 @@ public final class BanksTest {
 
         assertThat(new ListOf<>(banks), hasSize(1));
 
-        final Bank bank = banks.iterator().next();
+        final Bank bank = banks.items().iterator().next();
         assertThat(bank.id(), is(123L));
         assertThat(bank.name(), is("Bank name"));
         assertThat(bank.loginHint(), is(Optional.empty()));
@@ -156,5 +158,11 @@ public final class BanksTest {
             bank.lastSuccessfulCommunication().map(OffsetDateTime::toString),
             is(Optional.of("2018-08-03T11:22:33.444+02:00"))
         );
+
+        final Paging paging = banks.paging();
+        assertThat(paging.page(), is(1));
+        assertThat(paging.perPage(), is(500));
+        assertThat(paging.pageCount(), is(1));
+        assertThat(paging.totalCount(), is(1));
     }
 }

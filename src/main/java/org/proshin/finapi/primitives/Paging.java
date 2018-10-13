@@ -13,17 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.bank;
+package org.proshin.finapi.primitives;
 
-import org.proshin.finapi.primitives.Page;
-import org.proshin.finapi.bank.in.QueryCriteria;
+public interface Paging {
+    int page();
 
-/**
- * @todo #8:30min Fix state of Banks services: make sure all cases/services are implemented and fixed using unit tests.
- */
-public interface Banks {
+    int perPage();
 
-    Bank one(Long id);
+    int pageCount();
 
-    Page<Bank> search(QueryCriteria criteria);
+    int totalCount();
 }
