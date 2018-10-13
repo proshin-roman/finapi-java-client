@@ -18,4 +18,18 @@ package org.proshin.finapi.bankconnection.in;
 import org.proshin.finapi.Jsonable;
 
 public interface UpdateParameters extends Jsonable {
+
+    UpdateParameters withBankConnection(Long connectionId);
+
+    UpdateParameters withPin(String pin);
+
+    UpdateParameters withStorePin();
+
+    UpdateParameters withImportNewAccounts();
+
+    UpdateParameters withSkipPositionsDownload();
+
+    UpdateParameters withLoadOwnerData();
+
+    UpdateParameters withChallengeResponse(String challengeResponse);
 }

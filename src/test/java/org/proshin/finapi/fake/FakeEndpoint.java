@@ -47,7 +47,7 @@ public final class FakeEndpoint implements Endpoint {
     }
 
     @Override
-    public void delete(final String path, final AccessToken token) {
+    public String delete(final String path, final AccessToken token) {
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 
@@ -74,6 +74,11 @@ public final class FakeEndpoint implements Endpoint {
 
     @Override
     public String post(final String path, final AccessToken token, final HttpEntity entity, final int expected) {
+        throw new UnsupportedOperationException("This method is not implemented yet");
+    }
+
+    @Override
+    public String patch(final String path, final AccessToken token, final HttpEntity entity, final int expected) {
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 }

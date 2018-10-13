@@ -15,9 +15,13 @@
  */
 package org.proshin.finapi.bankconnection;
 
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,6 +31,10 @@ import org.proshin.finapi.bankconnection.in.UpdateParameters;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
 
+/**
+ * Bank Connections endpoint.
+ * @todo #20 Cover FpBankConnections by unit tests with mocked JSON structures.
+ */
 public final class FpBankConnections implements BankConnections {
 
     private final Endpoint endpoint;
@@ -71,16 +79,51 @@ public final class FpBankConnections implements BankConnections {
 
     @Override
     public Future<BankConnection> importNew(final ImportParameters parameters) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return Executors.newSingleThreadExecutor().submit(
+            () -> new FpBankConnection(
+                this.endpoint,
+                this.token,
+                new JSONObject(
+                    this.endpoint.post(
+                        "/api/v1/bankConnections/import",
+                        this.token,
+                        new StringEntity(
+                            parameters.asJson(),
+                            ContentType.create("application/json", StandardCharsets.UTF_8)
+                        ),
+                        201
+                    )
+                )
+            ));
     }
 
     @Override
     public Future<BankConnection> update(final UpdateParameters parameters) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return Executors.newSingleThreadExecutor().submit(
+            () -> new FpBankConnection(
+                this.endpoint,
+                this.token,
+                new JSONObject(
+                    this.endpoint.post(
+                        "/api/v1/bankConnections/update",
+                        this.token,
+                        new StringEntity(
+                            parameters.asJson(),
+                            ContentType.create("application/json", StandardCharsets.UTF_8)
+                        ),
+                        200
+                    )
+                )
+            ));
     }
 
     @Override
     public Iterable<Long> deleteAll() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return new IterableJsonArray<>(
+            new JSONObject(
+                this.endpoint.delete("/api/v1/bankConnections", this.token)
+            ).getJSONArray("identifiers"),
+            JSONArray::getLong
+        );
     }
 }

@@ -15,7 +15,10 @@
  */
 package org.proshin.finapi.bankconnection;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.account.Accounts;
@@ -37,6 +40,10 @@ import org.proshin.finapi.primitives.OptionalJsonField;
 import org.proshin.finapi.primitives.OptionalObjectOf;
 import org.proshin.finapi.primitives.OptionalStringOf;
 
+/**
+ * Bank Connection model
+ * @todo #20 Cover FpBankConnection by unit tests with mocked JSON structures.
+ */
 public final class FpBankConnection implements BankConnection {
 
     private final Endpoint endpoint;
@@ -112,11 +119,25 @@ public final class FpBankConnection implements BankConnection {
 
     @Override
     public BankConnection edit(final EditParameters parameters) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return new FpBankConnection(
+            this.endpoint,
+            this.token,
+            new JSONObject(
+                this.endpoint.patch(
+                    String.format("/api/v1/bankConnections/%d", id()),
+                    this.token,
+                    new StringEntity(
+                        parameters.asJson(),
+                        ContentType.create("application/json", StandardCharsets.UTF_8)
+                    ),
+                    200
+                )
+            )
+        );
     }
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        this.endpoint.delete(String.format("/api/v1/bankConnections/%d", id()), this.token);
     }
 }

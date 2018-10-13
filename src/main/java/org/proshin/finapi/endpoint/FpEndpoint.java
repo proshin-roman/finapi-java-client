@@ -28,6 +28,7 @@ import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -86,7 +87,7 @@ public final class FpEndpoint implements Endpoint {
     }
 
     @Override
-    public void delete(final String path, final AccessToken token) {
+    public String delete(final String path, final AccessToken token) {
         try {
             final HttpDelete delete = new HttpDelete(this.endpoint + path);
             delete.addHeader(new AuthorizationHeader(token.accessToken()));
@@ -94,6 +95,12 @@ public final class FpEndpoint implements Endpoint {
             if (response.getStatusLine().getStatusCode() != 200) {
                 throw new FinapiException(200, response);
             }
+            final String responseBody = new TextOf(
+                new InputOf(response.getEntity().getContent()),
+                StandardCharsets.UTF_8
+            ).asString();
+            log.info("Response body was: {}", responseBody);
+            return responseBody;
         } catch (IOException e) {
             throw new IllegalStateException(
                 new UncheckedText(
@@ -157,6 +164,32 @@ public final class FpEndpoint implements Endpoint {
             post.addHeader(new AuthorizationHeader(token.accessToken()));
             post.setEntity(entity);
             final HttpResponse response = this.client.execute(post);
+            if (response.getStatusLine().getStatusCode() != expected) {
+                throw new FinapiException(expected, response);
+            }
+            return new TextOf(
+                new InputOf(response.getEntity().getContent()),
+                StandardCharsets.UTF_8
+            ).asString();
+        } catch (IOException e) {
+            throw new IllegalStateException(
+                new UncheckedText(
+                    new FormattedText(
+                        "Couldn't post to '%s'",
+                        path
+                    )
+                ).asString()
+            );
+        }
+    }
+
+    @Override
+    public String patch(final String path, final AccessToken token, final HttpEntity entity, final int expected) {
+        try {
+            final HttpPatch patch = new HttpPatch(this.endpoint + path);
+            patch.addHeader(new AuthorizationHeader(token.accessToken()));
+            patch.setEntity(entity);
+            final HttpResponse response = this.client.execute(patch);
             if (response.getStatusLine().getStatusCode() != expected) {
                 throw new FinapiException(expected, response);
             }

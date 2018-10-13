@@ -29,7 +29,7 @@ public interface Endpoint {
 
     String get(String path, AccessToken token, Iterable<NameValuePair> parameters);
 
-    void delete(String path, AccessToken token);
+    String delete(String path, AccessToken token);
 
     HttpPost post(String path);
 
@@ -38,4 +38,6 @@ public interface Endpoint {
     HttpPost post(String path, AccessToken token);
 
     String post(String path, AccessToken token, HttpEntity entity, int expected);
+
+    String patch(String path, AccessToken token, HttpEntity entity, int expected);
 }

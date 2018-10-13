@@ -18,4 +18,14 @@ package org.proshin.finapi.bankconnection.in;
 import org.proshin.finapi.Jsonable;
 
 public interface EditParameters extends Jsonable {
+
+    EditParameters withUserId(String userId);
+
+    EditParameters withCustomerId(String customerId);
+
+    EditParameters withPin(String pin);
+
+    EditParameters withDefaultTwoStepProcedure(String procedureId);
+
+    EditParameters withName(String name);
 }
