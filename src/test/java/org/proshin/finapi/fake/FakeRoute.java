@@ -15,17 +15,37 @@
  */
 package org.proshin.finapi.fake;
 
+import org.proshin.finapi.accesstoken.AccessToken;
+
 public final class FakeRoute {
-    private final PathMatcher matcher;
+    private final PathMatcher pathMatcher;
+    private final TokenMatcher tokenMatcher;
     private final String response;
 
-    public FakeRoute(final PathMatcher matcher, final String response) {
-        this.matcher = matcher;
+    public FakeRoute() {
+        this("");
+    }
+
+    public FakeRoute(final String response) {
+        this(new AnyPathMatcher(), new AnyTokenMatcher(), response);
+    }
+
+    public FakeRoute(final PathMatcher pathMatcher, final String response) {
+        this(pathMatcher, new AnyTokenMatcher(), response);
+    }
+
+    public FakeRoute(final PathMatcher pathMatcher, final TokenMatcher tokenMatcher, final String response) {
+        this.pathMatcher = pathMatcher;
+        this.tokenMatcher = tokenMatcher;
         this.response = response;
     }
 
     boolean matches(final String path) {
-        return this.matcher.matches(path);
+        return this.pathMatcher.matches(path);
+    }
+
+    boolean matches(final AccessToken accessToken, final String path) {
+        return this.tokenMatcher.matches(accessToken.accessToken()) && this.pathMatcher.matches(path);
     }
 
     String response() {

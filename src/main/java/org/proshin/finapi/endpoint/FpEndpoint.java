@@ -158,6 +158,31 @@ public final class FpEndpoint implements Endpoint {
     }
 
     @Override
+    public String post(final String path, final AccessToken token, final int expected) {
+        try {
+            final HttpPost post = new HttpPost(this.endpoint + path);
+            post.addHeader(new AuthorizationHeader(token.accessToken()));
+            final HttpResponse response = this.client.execute(post);
+            if (response.getStatusLine().getStatusCode() != expected) {
+                throw new FinapiException(expected, response);
+            }
+            return new TextOf(
+                new InputOf(response.getEntity().getContent()),
+                StandardCharsets.UTF_8
+            ).asString();
+        } catch (IOException e) {
+            throw new IllegalStateException(
+                new UncheckedText(
+                    new FormattedText(
+                        "Couldn't post to '%s'",
+                        path
+                    )
+                ).asString()
+            );
+        }
+    }
+
+    @Override
     public String post(final String path, final AccessToken token, final HttpEntity entity, final int expected) {
         try {
             final HttpPost post = new HttpPost(this.endpoint + path);

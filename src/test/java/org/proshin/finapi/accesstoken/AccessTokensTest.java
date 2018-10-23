@@ -22,7 +22,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.proshin.finapi.exception.NoFieldException;
-import org.proshin.finapi.fake.AnyPathMatcher;
 import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.fake.FakeRoute;
 
@@ -36,7 +35,6 @@ public final class AccessTokensTest {
         final AccessToken token = new FpAccessTokens(
             new FakeEndpoint(
                 new FakeRoute(
-                    new AnyPathMatcher(),
                     String.join("",
                         "{",
                         "\"access_token\": \"access token\",",
@@ -61,7 +59,6 @@ public final class AccessTokensTest {
         final AccessToken token = new FpAccessTokens(
             new FakeEndpoint(
                 new FakeRoute(
-                    new AnyPathMatcher(),
                     String.join("",
                         "{",
                         "\"access_token\": \"access token\",",
@@ -87,7 +84,6 @@ public final class AccessTokensTest {
         final AccessToken token = new FpAccessTokens(
             new FakeEndpoint(
                 new FakeRoute(
-                    new AnyPathMatcher(),
                     String.join("",
                         "{",
                         "\"access_token\": \"access token\",",

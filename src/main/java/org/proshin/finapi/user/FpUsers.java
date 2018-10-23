@@ -55,21 +55,47 @@ public final class FpUsers implements Users {
 
     @Override
     public String requestPasswordChange(final String userId) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return new JSONObject(
+            this.endpoint.post(
+                "/api/v1/users/requestPasswordChange",
+                this.token,
+                new StringEntity(new JSONObject().put("userId", userId).toString(), ContentType.APPLICATION_JSON),
+                200
+            )
+        ).getString("passwordChangeToken");
     }
 
     @Override
     public void executePasswordChange(final String userId, final String password, final String token) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        this.endpoint.post(
+            "/api/v1/users/executePasswordChange",
+            this.token,
+            new StringEntity(
+                new JSONObject()
+                    .put("userId", userId)
+                    .put("password", password)
+                    .put("passwordChangeToken", token)
+                    .toString(),
+                ContentType.APPLICATION_JSON
+            ),
+            200
+        );
     }
 
     @Override
     public void verify(final String userId) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        this.endpoint.post(
+            String.format("/api/v1/users/verify/%s", userId),
+            this.token,
+            200
+        );
     }
 
     @Override
     public void deleteUnverified(final String userId) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        this.endpoint.delete(
+            String.format("/api/v1/users/verify/%s", userId),
+            this.token
+        );
     }
 }

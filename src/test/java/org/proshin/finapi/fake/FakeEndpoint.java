@@ -73,8 +73,19 @@ public final class FakeEndpoint implements Endpoint {
     }
 
     @Override
-    public String post(final String path, final AccessToken token, final HttpEntity entity, final int expected) {
+    public String post(final String path, final AccessToken token, final int expected) {
         throw new UnsupportedOperationException("This method is not implemented yet");
+    }
+
+    @Override
+    public String post(final String path, final AccessToken token, final HttpEntity entity, final int expected) {
+        for (FakeRoute route : routes) {
+            if (route.matches(token, path)) {
+                return route.response();
+            }
+        }
+        throw new RuntimeException(
+            String.format("No routes found for path '%s'", path));
     }
 
     @Override

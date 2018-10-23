@@ -26,7 +26,6 @@ import org.junit.Test;
 import static org.proshin.finapi.bank.Bank.DataSource.FINTS_SERVER;
 import static org.proshin.finapi.bank.Bank.DataSource.WEB_SCRAPER;
 import org.proshin.finapi.bank.in.FpQueryCriteria;
-import org.proshin.finapi.fake.AnyPathMatcher;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.fake.FakeRoute;
@@ -40,7 +39,6 @@ public final class BanksTest {
         final Bank bank = new FpBanks(
             new FakeEndpoint(
                 new FakeRoute(
-                    new AnyPathMatcher(),
                     String.join("",
                         "{",
                         " \"id\": 123,",
@@ -97,7 +95,6 @@ public final class BanksTest {
         final Page<Bank> banks = new FpBanks(
             new FakeEndpoint(
                 new FakeRoute(
-                    new AnyPathMatcher(),
                     String.join("",
                         "{",
                         "  banks: [{",

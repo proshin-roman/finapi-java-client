@@ -37,6 +37,8 @@ public interface Endpoint {
 
     HttpPost post(String path, AccessToken token);
 
+    String post(String path, AccessToken token, int expected);
+
     String post(String path, AccessToken token, HttpEntity entity, int expected);
 
     String patch(String path, AccessToken token, HttpEntity entity, int expected);
