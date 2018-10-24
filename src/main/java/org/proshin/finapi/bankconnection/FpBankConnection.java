@@ -36,9 +36,9 @@ import org.proshin.finapi.bankconnection.out.TwoStepProcedures;
 import org.proshin.finapi.bankconnection.out.Type;
 import org.proshin.finapi.bankconnection.out.UpdateResult;
 import org.proshin.finapi.endpoint.Endpoint;
-import org.proshin.finapi.primitives.OptionalJsonField;
-import org.proshin.finapi.primitives.OptionalObjectOf;
-import org.proshin.finapi.primitives.OptionalStringOf;
+import org.proshin.finapi.primitives.optional.OptionalJsonField;
+import org.proshin.finapi.primitives.optional.OptionalObjectOf;
+import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
 /**
  * Bank Connection model

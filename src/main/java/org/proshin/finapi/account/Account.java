@@ -31,7 +31,7 @@ public interface Account {
 
     Optional<String> name();
 
-    Optional<String> number();
+    String number();
 
     Optional<String> subNumber();
 

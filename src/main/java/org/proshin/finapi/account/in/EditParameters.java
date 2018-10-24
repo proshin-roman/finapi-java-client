@@ -15,9 +15,10 @@
  */
 package org.proshin.finapi.account.in;
 
+import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.account.Type;
 
-public interface EditParameters {
+public interface EditParameters extends Jsonable {
 
     EditParameters withName(String name);
 

@@ -18,11 +18,8 @@ package org.proshin.finapi.bankconnection;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
@@ -30,6 +27,7 @@ import org.proshin.finapi.bankconnection.in.ImportParameters;
 import org.proshin.finapi.bankconnection.in.UpdateParameters;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
+import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 
 /**
  * Bank Connections endpoint.
@@ -66,11 +64,7 @@ public final class FpBankConnections implements BankConnections {
                 this.endpoint.get(
                     "api/v1/bankConnections",
                     this.token,
-                    new BasicNameValuePair("ids",
-                        StreamSupport.stream(ids.spliterator(), false)
-                            .map(Object::toString)
-                            .collect(Collectors.joining(","))
-                    )
+                    new CommaSeparatedPair<>("ids", ids)
                 )
             ),
             (array, index) -> new FpBankConnection(this.endpoint, this.token, array.getJSONObject(index))

@@ -29,8 +29,8 @@ import org.proshin.finapi.bank.in.FpQueryCriteria;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.fake.FakeRoute;
-import org.proshin.finapi.primitives.Page;
-import org.proshin.finapi.primitives.Paging;
+import org.proshin.finapi.primitives.paging.Page;
+import org.proshin.finapi.primitives.paging.Paging;
 
 public final class BanksTest {
 

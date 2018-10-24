@@ -15,12 +15,27 @@
  */
 package org.proshin.finapi.primitives;
 
-public interface Paging {
-    int page();
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.Test;
 
-    int perPage();
+public class StringOfTest {
+    @Test
+    public void testStringOfOffsetDateTime() {
+        assertThat(
+            new StringOf(OffsetDateTime.of(2018, 10, 25, 1, 2, 3, 4, ZoneOffset.UTC)).get(),
+            is("2018-10-25")
+        );
+    }
 
-    int pageCount();
-
-    int totalCount();
+    @Test
+    public void testStringOfBigDecimal() {
+        assertThat(
+            new StringOf(new BigDecimal("123456.012")).get(),
+            is("123456.01")
+        );
+    }
 }

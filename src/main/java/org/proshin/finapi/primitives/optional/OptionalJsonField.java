@@ -13,32 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.bankconnection.out;
+package org.proshin.finapi.primitives.optional;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import org.json.JSONObject;
-import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
-public final class FpCredentials implements Credentials {
+public final class OptionalJsonField<T> implements Supplier<Optional<T>> {
 
     private final JSONObject origin;
+    private final String name;
+    private final BiFunction<JSONObject, String, T> func;
 
-    public FpCredentials(final JSONObject origin) {
+    public OptionalJsonField(
+        final JSONObject origin,
+        final String name,
+        final BiFunction<JSONObject, String, T> func
+    ) {
         this.origin = origin;
+        this.name = name;
+        this.func = func;
     }
 
     @Override
-    public Optional<String> bankingUserId() {
-        return new OptionalStringOf(this.origin, "bankingUserId").get();
-    }
-
-    @Override
-    public Optional<String> bankingCustomerId() {
-        return new OptionalStringOf(this.origin, "bankingCustomerId").get();
-    }
-
-    @Override
-    public Optional<String> bankingPin() {
-        return new OptionalStringOf(this.origin, "bankingPin").get();
+    public Optional<T> get() {
+        if (this.origin.isNull(name)) {
+            return Optional.empty();
+        } else {
+            return Optional.of(this.func.apply(this.origin, this.name));
+        }
     }
 }
