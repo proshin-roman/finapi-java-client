@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.IterableJsonArray;
-import org.proshin.finapi.primitives.OptionalJsonField;
+import org.proshin.finapi.primitives.optional.OptionalJsonField;
 
 public final class FpTwoStepProcedures implements TwoStepProcedures {
 

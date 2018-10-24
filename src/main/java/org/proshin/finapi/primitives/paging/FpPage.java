@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.primitives;
+package org.proshin.finapi.primitives.paging;
 
 import java.util.function.BiFunction;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.proshin.finapi.primitives.IterableJsonArray;
 
 /**
  * Page of resources with paging info.

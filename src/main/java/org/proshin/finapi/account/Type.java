@@ -15,6 +15,9 @@
  */
 package org.proshin.finapi.account;
 
+/**
+ * @todo #21 This enum can be refactored to a general class - think about it
+ */
 public enum Type {
 
     Checking(1),
@@ -41,5 +44,22 @@ public enum Type {
 
     public int asCode() {
         return this.code;
+    }
+
+    public static class TypeOf {
+        private final int code;
+
+        public TypeOf(final int code) {
+            this.code = code;
+        }
+
+        public Type get() {
+            for (Type type : Type.values()) {
+                if (type.asCode() == this.code) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException(String.format("Unknown type %d", this.code));
+        }
     }
 }

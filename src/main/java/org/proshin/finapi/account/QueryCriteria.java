@@ -17,14 +17,15 @@ package org.proshin.finapi.account;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import org.apache.http.NameValuePair;
 
-public interface QueryCriteria {
+public interface QueryCriteria extends Iterable<NameValuePair> {
 
     QueryCriteria withIds(Iterable<Long> ids);
 
     QueryCriteria withSearch(String search);
 
-    QueryCriteria withTypes(Iterable<Type> types);
+    QueryCriteria withTypes(Type... types);
 
     QueryCriteria withBankConnections(Iterable<Long> ids);
 

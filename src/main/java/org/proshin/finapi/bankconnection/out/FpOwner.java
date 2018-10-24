@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.LocalDateOf;
-import org.proshin.finapi.primitives.OptionalJsonField;
+import org.proshin.finapi.primitives.optional.OptionalJsonField;
 
 public final class FpOwner implements Owner {
 

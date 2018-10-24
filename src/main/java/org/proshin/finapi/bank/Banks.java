@@ -15,8 +15,8 @@
  */
 package org.proshin.finapi.bank;
 
-import org.proshin.finapi.primitives.Page;
 import org.proshin.finapi.bank.in.QueryCriteria;
+import org.proshin.finapi.primitives.paging.Page;
 
 /**
  * @todo #8:30min Fix state of Banks services: make sure all cases/services are implemented and fixed using unit tests.

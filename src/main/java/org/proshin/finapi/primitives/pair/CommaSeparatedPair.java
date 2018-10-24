@@ -13,28 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.primitives;
+package org.proshin.finapi.primitives.pair;
 
-import java.util.Optional;
-import java.util.function.Supplier;
-import org.json.JSONObject;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+import org.apache.http.NameValuePair;
 
-public final class OptionalStringOf implements Supplier<Optional<String>> {
+public final class CommaSeparatedPair<T> implements NameValuePair {
 
-    private final JSONObject origin;
     private final String name;
+    private final Iterable<T> values;
 
-    public OptionalStringOf(final JSONObject origin, final String name) {
-        this.origin = origin;
+    public CommaSeparatedPair(final String name, final Iterable<T> values) {
         this.name = name;
+        this.values = values;
     }
 
     @Override
-    public Optional<String> get() {
-        if (this.origin.isNull(name)) {
-            return Optional.empty();
-        } else {
-            return Optional.of(this.origin.getString(name));
-        }
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public String getValue() {
+        return StreamSupport.stream(this.values.spliterator(), false)
+                   .map(Object::toString)
+                   .collect(Collectors.joining(","));
     }
 }

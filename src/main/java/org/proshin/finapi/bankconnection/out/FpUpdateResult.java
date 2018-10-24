@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
-import org.proshin.finapi.primitives.OptionalStringOf;
+import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
 public final class FpUpdateResult implements UpdateResult {
 

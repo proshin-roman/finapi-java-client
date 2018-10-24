@@ -13,32 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.bankconnection.out;
+package org.proshin.finapi.primitives.optional;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
+import java.util.function.Supplier;
 import org.json.JSONObject;
-import org.proshin.finapi.primitives.optional.OptionalStringOf;
+import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public final class FpCredentials implements Credentials {
+public final class OptionalOffsetDateTimeOf implements Supplier<Optional<OffsetDateTime>> {
 
     private final JSONObject origin;
+    private final String name;
 
-    public FpCredentials(final JSONObject origin) {
+    public OptionalOffsetDateTimeOf(final JSONObject origin, final String name) {
         this.origin = origin;
+        this.name = name;
     }
 
     @Override
-    public Optional<String> bankingUserId() {
-        return new OptionalStringOf(this.origin, "bankingUserId").get();
-    }
-
-    @Override
-    public Optional<String> bankingCustomerId() {
-        return new OptionalStringOf(this.origin, "bankingCustomerId").get();
-    }
-
-    @Override
-    public Optional<String> bankingPin() {
-        return new OptionalStringOf(this.origin, "bankingPin").get();
+    public Optional<OffsetDateTime> get() {
+        if (this.origin.isNull(name)) {
+            return Optional.empty();
+        } else {
+            return Optional.of(new OffsetDateTimeOf(this.origin.getString(name)).get());
+        }
     }
 }

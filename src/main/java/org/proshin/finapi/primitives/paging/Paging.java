@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account;
+package org.proshin.finapi.primitives.paging;
 
-import org.proshin.finapi.account.in.DailyBalancesCriteria;
-import org.proshin.finapi.account.out.DailyBalances;
+public interface Paging {
+    int page();
 
-public interface Accounts {
+    int perPage();
 
-    Account one(Long id);
+    int pageCount();
 
-    Iterable<Account> query(QueryCriteria criteria);
-
-    DailyBalances dailyBalances(DailyBalancesCriteria criteria);
-
-    void deleteAll();
+    int totalCount();
 }

@@ -13,41 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.bankconnection.out;
+package org.proshin.finapi.account.out;
 
-import java.util.Optional;
 import org.json.JSONObject;
-import org.proshin.finapi.primitives.optional.OptionalJsonField;
 
-public final class FpTwoStepProcedure implements TwoStepProcedure {
+public final class FpClearingAccount implements ClearingAccount {
 
     private final JSONObject origin;
 
-    public FpTwoStepProcedure(final JSONObject origin) {
+    public FpClearingAccount(final JSONObject origin) {
         this.origin = origin;
     }
 
     @Override
     public String id() {
-        return this.origin.getString("procedureId");
+        return this.origin.getString("clearingAccountId");
     }
 
     @Override
     public String name() {
-        return this.origin.getString("procedureName");
-    }
-
-    @Override
-    public Optional<Type> type() {
-        return new OptionalJsonField<>(
-            this.origin,
-            "procedureChallengeType",
-            (jsonObject, key) -> Type.valueOf(jsonObject.getString(key))
-        ).get();
-    }
-
-    @Override
-    public boolean implicitExecute() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return this.origin.getString("clearingAccountName");
     }
 }

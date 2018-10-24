@@ -13,39 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.primitives;
+package org.proshin.finapi.account.in;
 
 import org.json.JSONObject;
+import org.proshin.finapi.account.Type;
 
-/**
- * Paging info.
- * @todo #38 Write a test for FpPaging class.
- */
-public final class FpPaging implements Paging {
+public final class FpEditParameters implements EditParameters {
 
     private final JSONObject origin;
 
-    public FpPaging(final JSONObject origin) {
+    public FpEditParameters() {
+        this(new JSONObject());
+    }
+
+    public FpEditParameters(final JSONObject origin) {
         this.origin = origin;
     }
 
     @Override
-    public int page() {
-        return this.origin.getInt("page");
+    public EditParameters withName(final String name) {
+        this.origin.put("accountName", name);
+        return this;
     }
 
     @Override
-    public int perPage() {
-        return this.origin.getInt("perPage");
+    public EditParameters withType(final Type type) {
+        this.origin.put("accountTypeId", type.asCode());
+        return this;
     }
 
     @Override
-    public int pageCount() {
-        return this.origin.getInt("pageCount");
+    public EditParameters withNew(final boolean isNew) {
+        this.origin.put("isNew", isNew);
+        return this;
     }
 
     @Override
-    public int totalCount() {
-        return this.origin.getInt("totalCount");
+    public String asJson() {
+        return this.origin.toString();
     }
 }

@@ -13,41 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.bankconnection.out;
+package org.proshin.finapi.primitives.paging;
 
-import java.util.Optional;
 import org.json.JSONObject;
-import org.proshin.finapi.primitives.optional.OptionalJsonField;
 
-public final class FpTwoStepProcedure implements TwoStepProcedure {
+/**
+ * Paging info.
+ * @todo #38 Write a test for FpPaging class.
+ */
+public final class FpPaging implements Paging {
 
     private final JSONObject origin;
 
-    public FpTwoStepProcedure(final JSONObject origin) {
+    public FpPaging(final JSONObject origin) {
         this.origin = origin;
     }
 
     @Override
-    public String id() {
-        return this.origin.getString("procedureId");
+    public int page() {
+        return this.origin.getInt("page");
     }
 
     @Override
-    public String name() {
-        return this.origin.getString("procedureName");
+    public int perPage() {
+        return this.origin.getInt("perPage");
     }
 
     @Override
-    public Optional<Type> type() {
-        return new OptionalJsonField<>(
-            this.origin,
-            "procedureChallengeType",
-            (jsonObject, key) -> Type.valueOf(jsonObject.getString(key))
-        ).get();
+    public int pageCount() {
+        return this.origin.getInt("pageCount");
     }
 
     @Override
-    public boolean implicitExecute() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+    public int totalCount() {
+        return this.origin.getInt("totalCount");
     }
 }
