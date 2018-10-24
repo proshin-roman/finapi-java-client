@@ -19,11 +19,15 @@ import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.bankconnection.BankConnections;
+import org.proshin.finapi.bankconnection.FpBankConnections;
 import org.proshin.finapi.category.Categories;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.label.Labels;
 import org.proshin.finapi.notificationrule.NotificationRules;
 
+/**
+ * @todo #19 Finish categories(), labels() and notificationRules() when appropriate classes are implemented.
+ */
 public final class FpAuthorizedUser implements AuthorizedUser {
 
     private final Endpoint endpoint;
@@ -72,7 +76,7 @@ public final class FpAuthorizedUser implements AuthorizedUser {
 
     @Override
     public BankConnections connections() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return new FpBankConnections(this.endpoint, this.token);
     }
 
     @Override
