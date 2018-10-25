@@ -15,5 +15,15 @@ package org.proshin.finapi.primitives;/*
  */
 
 public enum Direction {
-    all, income, spending
+    ALL("all"), INCOME("income"), SPENDING("spending");
+
+    private final String label;
+
+    Direction(final String label) {
+        this.label = label;
+    }
+
+    public String label() {
+        return label;
+    }
 }

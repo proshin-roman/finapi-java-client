@@ -33,10 +33,16 @@ public final class FpCategories implements Categories {
 
     private final Endpoint endpoint;
     private final AccessToken token;
+    private final String url;
 
     public FpCategories(final Endpoint endpoint, final AccessToken token) {
+        this(endpoint, token, "/api/v1/categories");
+    }
+
+    public FpCategories(final Endpoint endpoint, final AccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
+        this.url = url;
     }
 
     @Override
@@ -46,7 +52,7 @@ public final class FpCategories implements Categories {
             this.token,
             new JSONObject(
                 this.endpoint.get(
-                    String.format("/api/v1/categories/%d", id),
+                    this.url + "/" + id,
                     this.token
                 )
             )
@@ -58,7 +64,7 @@ public final class FpCategories implements Categories {
         return new FpPage<>(
             "categories",
             new JSONObject(
-                this.endpoint.get("/api/v1/categories", this.token, criteria)
+                this.endpoint.get(this.url, this.token, criteria)
             ),
             (array, index) -> new FpCategory(this.endpoint, this.token, array.getJSONObject(index))
         );
@@ -70,7 +76,7 @@ public final class FpCategories implements Categories {
             this.endpoint,
             this.token,
             new JSONObject(
-                this.endpoint.get("/api/v1/categories/cashFlows", this.token, criteria)
+                this.endpoint.get(this.url + "/cashFlows", this.token, criteria)
             )
         );
     }
@@ -80,19 +86,19 @@ public final class FpCategories implements Categories {
         return new FpCategory(
             this.endpoint,
             this.token,
-            new JSONObject(this.endpoint.post("/api/v1/categories", this.token, parameters, 201))
+            new JSONObject(this.endpoint.post(this.url, this.token, parameters, 201))
         );
     }
 
     @Override
     public void trainCategorization(final TrainCategorizationParameters parameters) {
-        this.endpoint.post("/api/v1/categories/trainCategorization", this.token, parameters, 200);
+        this.endpoint.post(this.url + "/trainCategorization", this.token, parameters, 200);
     }
 
     @Override
     public Iterable<Long> deleteAll() {
         return new IterableJsonArray<>(
-            new JSONArray(this.endpoint.delete("/api/v1/categories", this.token)),
+            new JSONArray(this.endpoint.delete(this.url, this.token)),
             JSONArray::getLong
         );
     }

@@ -79,17 +79,17 @@ public final class CashFlowsCriteria implements Iterable<NameValuePair> {
     }
 
     public CashFlowsCriteria withMinAmount(final BigDecimal minAmount) {
-        this.pairs.add(new UrlEncodedPair("minAmount", new StringOf("minAmount")));
+        this.pairs.add(new UrlEncodedPair("minAmount", new StringOf(minAmount)));
         return this;
     }
 
     public CashFlowsCriteria withMaxAmount(final BigDecimal maxAmount) {
-        this.pairs.add(new UrlEncodedPair("maxAmount", new StringOf("maxAmount")));
+        this.pairs.add(new UrlEncodedPair("maxAmount", new StringOf(maxAmount)));
         return this;
     }
 
     public CashFlowsCriteria withDirection(final Direction direction) {
-        this.pairs.add(new UrlEncodedPair("direction", direction.name()));
+        this.pairs.add(new UrlEncodedPair("direction", direction.label()));
         return this;
     }
 
