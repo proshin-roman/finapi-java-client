@@ -46,7 +46,7 @@ public final class FpUsers implements Users {
                 this.endpoint.post(
                     "/api/v1/users",
                     this.token,
-                    new StringEntity(parameters.asJson(), ContentType.APPLICATION_JSON),
+                    parameters,
                     201
                 )
             )

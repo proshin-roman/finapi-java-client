@@ -25,6 +25,10 @@ public final class UrlEncodedPair implements NameValuePair {
 
     private final NameValuePair origin;
 
+    public UrlEncodedPair(final String name, final Object value) {
+        this(name, value.toString());
+    }
+
     public UrlEncodedPair(final String name, final String value) {
         this(new BasicNameValuePair(name, value));
     }

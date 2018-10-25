@@ -51,4 +51,9 @@ public final class StringOf implements Supplier<String> {
     public String get() {
         return this.origin;
     }
+
+    @Override
+    public String toString() {
+        return this.get();
+    }
 }

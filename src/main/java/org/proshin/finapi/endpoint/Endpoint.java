@@ -15,10 +15,14 @@
  */
 package org.proshin.finapi.endpoint;
 
+import java.nio.charset.StandardCharsets;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.cactoos.iterable.IterableOf;
+import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.accesstoken.AccessToken;
 
 public interface Endpoint {
@@ -40,6 +44,17 @@ public interface Endpoint {
     String post(String path, AccessToken token, int expected);
 
     String post(String path, AccessToken token, HttpEntity entity, int expected);
+
+    default String post(String path, AccessToken token, Jsonable body, int expected) {
+        return this.post(
+            path,
+            token,
+            new StringEntity(
+                body.asJson(),
+                ContentType.create("application/json", StandardCharsets.UTF_8)
+            ), expected
+        );
+    }
 
     String patch(String path, AccessToken token, HttpEntity entity, int expected);
 }

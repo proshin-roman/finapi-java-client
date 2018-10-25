@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account.in;
+package org.proshin.finapi.category.out;
 
-import org.proshin.finapi.Jsonable;
-import org.proshin.finapi.account.Type;
+import java.math.BigDecimal;
 
-public interface EditParameters extends Jsonable {
+public interface CashFlows extends Iterable<CashFlow> {
 
-    EditParameters withName(String name);
+    BigDecimal income();
 
-    EditParameters withType(Type type);
+    BigDecimal spending();
 
-    EditParameters withNew(boolean isNew);
+    BigDecimal balance();
 }

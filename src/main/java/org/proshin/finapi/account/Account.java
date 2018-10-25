@@ -18,7 +18,7 @@ package org.proshin.finapi.account;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Optional;
-import org.proshin.finapi.account.in.EditParameters;
+import org.proshin.finapi.account.in.FpEditParameters;
 import org.proshin.finapi.account.out.ClearingAccount;
 import org.proshin.finapi.account.out.Holder;
 import org.proshin.finapi.bankconnection.BankConnection;
@@ -63,7 +63,7 @@ public interface Account {
 
     Iterable<ClearingAccount> clearingAccounts();
 
-    void edit(EditParameters parameters);
+    void edit(FpEditParameters parameters);
 
     MoneyTransfer moneyTransfer();
 

@@ -13,23 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.category;
+package org.proshin.finapi.primitives.optional;
 
 import java.util.Optional;
+import java.util.function.Supplier;
+import org.json.JSONObject;
 
-public interface Category {
+public final class OptionalLongOf implements Supplier<Optional<Long>> {
 
-    Long id();
+    private final JSONObject origin;
+    private final String name;
 
-    String name();
+    public OptionalLongOf(final JSONObject origin, final String name) {
+        this.origin = origin;
+        this.name = name;
+    }
 
-    Optional<Long> parentId();
-
-    Optional<String> parentName();
-
-    boolean isCustom();
-
-    Iterable<Long> children();
-
-    void delete();
+    @Override
+    public Optional<Long> get() {
+        if (this.origin.isNull(name)) {
+            return Optional.empty();
+        } else {
+            return Optional.of(this.origin.getLong(name));
+        }
+    }
 }

@@ -13,23 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.category;
+package org.proshin.finapi.category.out;
 
+import java.math.BigDecimal;
 import java.util.Optional;
+import org.proshin.finapi.category.Category;
 
-public interface Category {
+public interface CashFlow {
 
-    Long id();
+    Optional<Category> category();
 
-    String name();
+    BigDecimal income();
 
-    Optional<Long> parentId();
+    BigDecimal spending();
 
-    Optional<String> parentName();
-
-    boolean isCustom();
-
-    Iterable<Long> children();
-
-    void delete();
+    BigDecimal balance();
 }

@@ -13,36 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account.in;
+package org.proshin.finapi.category.in;
 
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
-import org.proshin.finapi.account.Type;
 
-public final class FpEditParameters implements Jsonable {
+public final class CreateCategoryParameters implements Jsonable {
 
     private final JSONObject origin;
 
-    public FpEditParameters() {
+    public CreateCategoryParameters() {
         this(new JSONObject());
     }
 
-    public FpEditParameters(final JSONObject origin) {
+    public CreateCategoryParameters(final JSONObject origin) {
         this.origin = origin;
     }
 
-    public FpEditParameters withName(final String name) {
-        this.origin.put("accountName", name);
+    public CreateCategoryParameters withName(final String name) {
+        this.origin.put("name", name);
         return this;
     }
 
-    public FpEditParameters withType(final Type type) {
-        this.origin.put("accountTypeId", type.asCode());
-        return this;
-    }
-
-    public FpEditParameters withNew(final boolean isNew) {
-        this.origin.put("isNew", isNew);
+    public CreateCategoryParameters withParent(final Long parent) {
+        this.origin.put("parentId", parent);
         return this;
     }
 

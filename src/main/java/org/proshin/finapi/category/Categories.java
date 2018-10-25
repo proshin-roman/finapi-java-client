@@ -15,5 +15,24 @@
  */
 package org.proshin.finapi.category;
 
+import org.proshin.finapi.category.in.CashFlowsCriteria;
+import org.proshin.finapi.category.in.CategoriesCriteria;
+import org.proshin.finapi.category.in.CreateCategoryParameters;
+import org.proshin.finapi.category.in.TrainCategorizationParameters;
+import org.proshin.finapi.category.out.CashFlows;
+import org.proshin.finapi.primitives.paging.Page;
+
 public interface Categories {
+
+    Category one(Long id);
+
+    Page<Category> query(CategoriesCriteria criteria);
+
+    CashFlows cashFlows(CashFlowsCriteria criteria);
+
+    Category create(CreateCategoryParameters parameters);
+
+    void trainCategorization(TrainCategorizationParameters parameters);
+
+    Iterable<Long> deleteAll();
 }

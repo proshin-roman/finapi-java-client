@@ -23,7 +23,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
-import org.proshin.finapi.account.in.EditParameters;
+import org.proshin.finapi.account.in.FpEditParameters;
 import org.proshin.finapi.account.out.ClearingAccount;
 import org.proshin.finapi.account.out.FpClearingAccount;
 import org.proshin.finapi.account.out.FpHolder;
@@ -154,7 +154,7 @@ public final class FpAccount implements Account {
     }
 
     @Override
-    public void edit(final EditParameters parameters) {
+    public void edit(final FpEditParameters parameters) {
         this.endpoint.patch(
             String.format("/api/v1/accounts/%d", this.id()),
             this.token,

@@ -15,7 +15,9 @@
  */
 package org.proshin.finapi.user.in;
 
-public interface CreateParameters {
+import org.proshin.finapi.Jsonable;
+
+public interface CreateParameters extends Jsonable {
     CreateParameters withId(String id);
 
     CreateParameters withPassword(String password);
@@ -25,6 +27,4 @@ public interface CreateParameters {
     CreateParameters withPhone(String phone);
 
     CreateParameters withAutoUpdateEnabled();
-
-    String asJson();
 }

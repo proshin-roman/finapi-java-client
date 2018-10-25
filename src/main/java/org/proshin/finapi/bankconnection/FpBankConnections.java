@@ -15,11 +15,8 @@
  */
 package org.proshin.finapi.bankconnection;
 
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
@@ -81,10 +78,7 @@ public final class FpBankConnections implements BankConnections {
                     this.endpoint.post(
                         "/api/v1/bankConnections/import",
                         this.token,
-                        new StringEntity(
-                            parameters.asJson(),
-                            ContentType.create("application/json", StandardCharsets.UTF_8)
-                        ),
+                        parameters,
                         201
                     )
                 )
@@ -101,10 +95,7 @@ public final class FpBankConnections implements BankConnections {
                     this.endpoint.post(
                         "/api/v1/bankConnections/update",
                         this.token,
-                        new StringEntity(
-                            parameters.asJson(),
-                            ContentType.create("application/json", StandardCharsets.UTF_8)
-                        ),
+                        parameters,
                         200
                     )
                 )

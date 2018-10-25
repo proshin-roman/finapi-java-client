@@ -46,8 +46,8 @@ This library is in early alpha version and not all API methods are implemented y
     - [ ] Get the authorized user
     - [x] Get a user's verification status
     - [x] Create a new user
-    - [ ] Request password change
-    - [ ] Execute password change
+    - [x] Request password change
+    - [x] Execute password change
     - [ ] Verify a user
     - [ ] Edit the authorized user
     - [x] Delete the authorized user
@@ -66,17 +66,17 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Delete a bank connection
     - [x] Delete all bank connections
 - Accounts
-    - [ ] Get an account
+    - [x] Get an account
     - [ ] ~~Get multiple accounts~~ (won't be implemented as deprecated)
-    - [ ] Get and search all accounts
+    - [x] Get and search all accounts
     - [ ] Get daily balances
-    - [ ] Edit an account
+    - [x] Edit an account
     - [ ] Request SEPA Money Transfer
     - [ ] Execute SEPA Money Transfer
     - [ ] Request SEPA Direct Debit
     - [ ] Execute SEPA Direct Debit
-    - [ ] Delete an account
-    - [ ] Delete all accounts
+    - [x] Delete an account
+    - [x] Delete all accounts
 - Transactions
     - [ ] Get a transaction
     - [ ] ~~Get multiple transactions~~ (won't be implemented as deprecated)
@@ -94,14 +94,14 @@ This library is in early alpha version and not all API methods are implemented y
     - [ ] ~~Get multiple securities~~ (won't be implemented as deprecated)
     - [ ] Get and search all securities
 - Categories
-    - [ ] Get a category
+    - [x] Get a category
     - [ ] ~~Get multiple categories~~ (won't be implemented as deprecated)
-    - [ ] Get and search all categories
-    - [ ] Get cash flows
-    - [ ] Create a new category
-    - [ ] Train categorization 
-    - [ ] Delete a category
-    - [ ] Delete all categories
+    - [x] Get and search all categories
+    - [x] Get cash flows
+    - [x] Create a new category
+    - [x] Train categorization 
+    - [x] Delete a category
+    - [x] Delete all categories
 - Labels
     - [ ] Get a label
     - [ ] ~~Get multiple labels~~ (won't be implemented as deprecated)

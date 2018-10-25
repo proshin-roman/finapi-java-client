@@ -1,4 +1,4 @@
-/*
+package org.proshin.finapi.primitives;/*
  * Copyright 2018 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,23 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.category;
 
-import java.util.Optional;
-
-public interface Category {
-
-    Long id();
-
-    String name();
-
-    Optional<Long> parentId();
-
-    Optional<String> parentName();
-
-    boolean isCustom();
-
-    Iterable<Long> children();
-
-    void delete();
+public enum Direction {
+    all, income, spending
 }
