@@ -91,9 +91,9 @@ This library is in early alpha version and not all API methods are implemented y
     - [ ] Delete a transaction
     - [ ] Delete all transactions
 - Securities
-    - [ ] Get a security
+    - [x] Get a security
     - [ ] ~~Get multiple securities~~ (won't be implemented as deprecated)
-    - [ ] Get and search all securities
+    - [x] Get and search all securities
 - Categories
     - [x] Get a category
     - [ ] ~~Get multiple categories~~ (won't be implemented as deprecated)
@@ -104,13 +104,13 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Delete a category
     - [x] Delete all categories
 - Labels
-    - [ ] Get a label
+    - [x] Get a label
     - [ ] ~~Get multiple labels~~ (won't be implemented as deprecated)
-    - [ ] Get and search all labels
-    - [ ] Create a new label
-    - [ ] Edit a label
-    - [ ] Delete a label
-    - [ ] Delete all labels
+    - [x] Get and search all labels
+    - [x] Create a new label
+    - [x] Edit a label
+    - [x] Delete a label
+    - [x] Delete all labels
 - Notification rules
     - [ ] Get a notification rule
     - [ ] Get and search all notification rules
