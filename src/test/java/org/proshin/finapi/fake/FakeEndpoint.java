@@ -20,6 +20,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpPost;
 import org.cactoos.list.ListOf;
+import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 
@@ -27,7 +28,7 @@ public final class FakeEndpoint implements Endpoint {
 
     private final List<FakeRoute> routes;
 
-    public FakeEndpoint(FakeRoute... routes) {
+    public FakeEndpoint(final FakeRoute... routes) {
         this(new ListOf<>(routes));
     }
 
@@ -37,7 +38,7 @@ public final class FakeEndpoint implements Endpoint {
 
     @Override
     public String get(final String path, final AccessToken token, final Iterable<NameValuePair> parameters) {
-        for (FakeRoute route : routes) {
+        for (final FakeRoute route : this.routes) {
             if (route.matches(path)) {
                 return route.response();
             }
@@ -58,7 +59,7 @@ public final class FakeEndpoint implements Endpoint {
 
     @Override
     public String post(final String path, final HttpEntity entity, final int expected) {
-        for (FakeRoute route : routes) {
+        for (final FakeRoute route : this.routes) {
             if (route.matches(path)) {
                 return route.response();
             }
@@ -79,7 +80,7 @@ public final class FakeEndpoint implements Endpoint {
 
     @Override
     public String post(final String path, final AccessToken token, final HttpEntity entity, final int expected) {
-        for (FakeRoute route : routes) {
+        for (final FakeRoute route : this.routes) {
             if (route.matches(token, path)) {
                 return route.response();
             }
@@ -90,6 +91,11 @@ public final class FakeEndpoint implements Endpoint {
 
     @Override
     public String patch(final String path, final AccessToken token, final HttpEntity entity, final int expected) {
+        throw new UnsupportedOperationException("This method is not implemented yet");
+    }
+
+    @Override
+    public String patch(final String path, final AccessToken token, final Jsonable body, final int expected) {
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 }

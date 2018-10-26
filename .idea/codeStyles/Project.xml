@@ -1,6 +1,5 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
-    <option name="LINE_SEPARATOR" value="&#13;&#10;" />
     <option name="FORMATTER_TAGS_ENABLED" value="true" />
     <JavaCodeStyleSettings>
       <option name="GENERATE_FINAL_LOCALS" value="true" />
@@ -54,7 +53,6 @@
       <option name="ENUM_CONSTANTS_WRAP" value="1" />
       <indentOptions>
         <option name="CONTINUATION_INDENT_SIZE" value="4" />
-        <option name="USE_RELATIVE_INDENTS" value="true" />
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="XML">

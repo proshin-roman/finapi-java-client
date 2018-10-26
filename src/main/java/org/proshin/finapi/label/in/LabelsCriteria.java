@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.category.in;
+package org.proshin.finapi.label.in;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,45 +22,35 @@ import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
-public final class CategoriesCriteria implements Iterable<NameValuePair> {
+public final class LabelsCriteria implements Iterable<NameValuePair> {
 
     private final List<NameValuePair> pairs;
 
-    public CategoriesCriteria() {
+    public LabelsCriteria() {
         this(new ArrayList<>());
     }
 
-    public CategoriesCriteria(final List<NameValuePair> pairs) {
+    public LabelsCriteria(final List<NameValuePair> pairs) {
         this.pairs = pairs;
     }
 
-    public CategoriesCriteria withIds(final Iterable<Long> ids) {
-        this.pairs.add(new CommaSeparatedPair<Long>("ids", ids));
+    public LabelsCriteria withIds(final Iterable<Long> ids) {
+        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("ids", ids)));
         return this;
     }
 
-    public CategoriesCriteria withSearch(final String search) {
+    public LabelsCriteria withSearch(final String search) {
         this.pairs.add(new UrlEncodedPair("search", search));
         return this;
     }
 
-    public CategoriesCriteria withCustomOnly() {
-        this.pairs.add(new UrlEncodedPair("isCustom", true));
-        return this;
-    }
-
-    public CategoriesCriteria withNonCustomOnly() {
-        this.pairs.add(new UrlEncodedPair("isCustom", false));
-        return this;
-    }
-
-    public CategoriesCriteria withPage(final int page, final int perPage) {
+    public LabelsCriteria withPage(final int page, final int perPage) {
         this.pairs.add(new UrlEncodedPair("page", page));
         this.pairs.add(new UrlEncodedPair("perPage", perPage));
         return this;
     }
 
-    public CategoriesCriteria orderBy(final String... orders) {
+    public LabelsCriteria orderBy(final String... orders) {
         for (final String order : orders) {
             this.pairs.add(new UrlEncodedPair("order", order));
         }

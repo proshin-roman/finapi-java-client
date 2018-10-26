@@ -23,6 +23,7 @@ import org.proshin.finapi.bankconnection.FpBankConnections;
 import org.proshin.finapi.category.Categories;
 import org.proshin.finapi.category.FpCategories;
 import org.proshin.finapi.endpoint.Endpoint;
+import org.proshin.finapi.label.FpLabels;
 import org.proshin.finapi.label.Labels;
 import org.proshin.finapi.notificationrule.NotificationRules;
 
@@ -87,7 +88,7 @@ public final class FpAuthorizedUser implements AuthorizedUser {
 
     @Override
     public Labels labels() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return new FpLabels(this.endpoint, this.token);
     }
 
     @Override

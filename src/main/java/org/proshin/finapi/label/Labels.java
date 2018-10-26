@@ -15,5 +15,16 @@
  */
 package org.proshin.finapi.label;
 
+import org.proshin.finapi.label.in.LabelsCriteria;
+import org.proshin.finapi.primitives.paging.Page;
+
 public interface Labels {
+
+    Label one(Long id);
+
+    Page<Label> query(LabelsCriteria criteria);
+
+    Label create(String name);
+
+    Iterable<Long> deleteAll();
 }

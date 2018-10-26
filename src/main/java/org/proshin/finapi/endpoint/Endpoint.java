@@ -27,7 +27,7 @@ import org.proshin.finapi.accesstoken.AccessToken;
 
 public interface Endpoint {
 
-    default String get(String path, AccessToken token, NameValuePair... parameters) {
+    default String get(final String path, final AccessToken token, final NameValuePair... parameters) {
         return this.get(path, token, new IterableOf<>(parameters));
     }
 
@@ -45,7 +45,7 @@ public interface Endpoint {
 
     String post(String path, AccessToken token, HttpEntity entity, int expected);
 
-    default String post(String path, AccessToken token, Jsonable body, int expected) {
+    default String post(final String path, final AccessToken token, final Jsonable body, final int expected) {
         return this.post(
             path,
             token,
@@ -57,4 +57,6 @@ public interface Endpoint {
     }
 
     String patch(String path, AccessToken token, HttpEntity entity, int expected);
+
+    String patch(final String path, final AccessToken token, final Jsonable body, final int expected);
 }
