@@ -15,5 +15,43 @@
  */
 package org.proshin.finapi.security;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import org.proshin.finapi.security.out.QuantityNominalType;
+import org.proshin.finapi.security.out.QuoteType;
+
 public interface Security {
+
+    Long id();
+
+    Long account();
+
+    Optional<String> name();
+
+    Optional<String> isin();
+
+    Optional<String> wkn();
+
+    Optional<BigDecimal> quote();
+
+    Optional<String> quoteCurrency();
+
+    Optional<QuoteType> quoteType();
+
+    Optional<OffsetDateTime> quoteDate();
+
+    Optional<BigDecimal> quantityNominal();
+
+    Optional<QuantityNominalType> quantityNominalType();
+
+    Optional<BigDecimal> marketValue();
+
+    Optional<String> marketValueCurrency();
+
+    Optional<BigDecimal> entryQuote();
+
+    Optional<String> entryQuoteCurrency();
+
+    Optional<BigDecimal> profitOrLoss();
 }
