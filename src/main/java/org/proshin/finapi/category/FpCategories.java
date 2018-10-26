@@ -36,7 +36,7 @@ public final class FpCategories implements Categories {
     private final String url;
 
     public FpCategories(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/categories");
+        this(endpoint, token, "/api/v1/categories/");
     }
 
     public FpCategories(final Endpoint endpoint, final AccessToken token, final String url) {
@@ -52,7 +52,7 @@ public final class FpCategories implements Categories {
             this.token,
             new JSONObject(
                 this.endpoint.get(
-                    this.url + "/" + id,
+                    this.url + id,
                     this.token
                 )
             )
@@ -76,7 +76,7 @@ public final class FpCategories implements Categories {
             this.endpoint,
             this.token,
             new JSONObject(
-                this.endpoint.get(this.url + "/cashFlows", this.token, criteria)
+                this.endpoint.get(this.url + "cashFlows", this.token, criteria)
             )
         );
     }
@@ -92,7 +92,7 @@ public final class FpCategories implements Categories {
 
     @Override
     public void trainCategorization(final TrainCategorizationParameters parameters) {
-        this.endpoint.post(this.url + "/trainCategorization", this.token, parameters, 200);
+        this.endpoint.post(this.url + "trainCategorization", this.token, parameters, 200);
     }
 
     @Override

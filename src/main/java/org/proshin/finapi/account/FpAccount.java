@@ -16,11 +16,8 @@
 package org.proshin.finapi.account;
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.Optional;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.account.in.FpEditParameters;
@@ -155,15 +152,7 @@ public final class FpAccount implements Account {
 
     @Override
     public void edit(final FpEditParameters parameters) {
-        this.endpoint.patch(
-            String.format("/api/v1/accounts/%d", this.id()),
-            this.token,
-            new StringEntity(
-                parameters.asJson(),
-                ContentType.create("application/json", StandardCharsets.UTF_8)
-            ),
-            200
-        );
+        this.endpoint.patch(String.format("/api/v1/accounts/%d", this.id()), this.token, parameters, 200);
     }
 
     /**

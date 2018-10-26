@@ -18,6 +18,7 @@ package org.proshin.finapi.user;
 import org.proshin.finapi.user.in.CreateParameters;
 
 public interface Users {
+
     boolean verified(String userId);
 
     User create(final CreateParameters parameters);

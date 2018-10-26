@@ -31,6 +31,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeaderElement;
 import org.cactoos.io.InputOf;
@@ -38,6 +40,7 @@ import org.cactoos.list.ListOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UncheckedText;
+import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.exception.FinapiException;
 
@@ -59,7 +62,7 @@ public final class FpEndpoint implements Endpoint {
     @Override
     public String get(final String path, final AccessToken token, final Iterable<NameValuePair> parameters) {
         try {
-            URIBuilder builder = new URIBuilder(this.endpoint + path);
+            final URIBuilder builder = new URIBuilder(this.endpoint + path);
             builder.setParameters(new ListOf<>(parameters));
             final HttpGet get = new HttpGet(builder.build());
             get.addHeader(new AuthorizationHeader(token.accessToken()));
@@ -101,7 +104,7 @@ public final class FpEndpoint implements Endpoint {
             ).asString();
             log.info("Response body was: {}", responseBody);
             return responseBody;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException(
                 new UncheckedText(
                     new FormattedText(
@@ -114,7 +117,7 @@ public final class FpEndpoint implements Endpoint {
     }
 
     @Override
-    public HttpPost post(String path) {
+    public HttpPost post(final String path) {
         return new HttpPost(this.endpoint + path);
     }
 
@@ -138,7 +141,7 @@ public final class FpEndpoint implements Endpoint {
                 new InputOf(response.getEntity().getContent()),
                 StandardCharsets.UTF_8
             ).asString();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException(
                 new UncheckedText(
                     new FormattedText(
@@ -151,7 +154,7 @@ public final class FpEndpoint implements Endpoint {
     }
 
     @Override
-    public HttpPost post(String path, AccessToken token) {
+    public HttpPost post(final String path, final AccessToken token) {
         final HttpPost post = this.post(path);
         post.addHeader(new AuthorizationHeader(token.accessToken()));
         return post;
@@ -170,7 +173,7 @@ public final class FpEndpoint implements Endpoint {
                 new InputOf(response.getEntity().getContent()),
                 StandardCharsets.UTF_8
             ).asString();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException(
                 new UncheckedText(
                     new FormattedText(
@@ -196,7 +199,7 @@ public final class FpEndpoint implements Endpoint {
                 new InputOf(response.getEntity().getContent()),
                 StandardCharsets.UTF_8
             ).asString();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException(
                 new UncheckedText(
                     new FormattedText(
@@ -222,7 +225,7 @@ public final class FpEndpoint implements Endpoint {
                 new InputOf(response.getEntity().getContent()),
                 StandardCharsets.UTF_8
             ).asString();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException(
                 new UncheckedText(
                     new FormattedText(
@@ -234,7 +237,17 @@ public final class FpEndpoint implements Endpoint {
         }
     }
 
-    private static class AuthorizationHeader implements Header {
+    @Override
+    public String patch(final String path, final AccessToken token, final Jsonable body, final int expected) {
+        return this.patch(
+            path, token, new StringEntity(
+                body.asJson(),
+                ContentType.create("application/json", StandardCharsets.UTF_8)
+            ), expected
+        );
+    }
+
+    private static final class AuthorizationHeader implements Header {
 
         private final String token;
 
