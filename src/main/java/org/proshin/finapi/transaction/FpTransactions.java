@@ -86,7 +86,7 @@ public final class FpTransactions implements Transactions {
         for (final Long bankConnection : bankConnections) {
             parameters.append("bankConnectionIds", bankConnection);
         }
-        this.endpoint.post(this.url + "triggerCategorization", this.token, parameters::toString);
+        this.endpoint.post(this.url + "triggerCategorization", this.token, () -> parameters);
     }
 
     @Override

@@ -75,14 +75,14 @@ public final class DirectDebitParameters implements Jsonable {
 
     public DirectDebitParameters withDebtors(final Debtor... debtors) {
         for (final Debtor debtor : debtors) {
-            this.origin.append("directDebits", debtor.asJsonObject());
+            this.origin.append("directDebits", debtor.asJson());
         }
         return this;
     }
 
     @Override
-    public String asJson() {
-        return this.origin.toString();
+    public JSONObject asJson() {
+        return this.origin;
     }
 
     public enum DirectDebitType {
@@ -93,7 +93,7 @@ public final class DirectDebitParameters implements Jsonable {
         OOFF, FRST, RCUR, FNAL
     }
 
-    public static final class Debtor {
+    public static final class Debtor implements Jsonable {
         private final JSONObject origin;
 
         public Debtor() {
@@ -154,7 +154,8 @@ public final class DirectDebitParameters implements Jsonable {
             return this;
         }
 
-        public JSONObject asJsonObject() {
+        @Override
+        public JSONObject asJson() {
             return this.origin;
         }
     }

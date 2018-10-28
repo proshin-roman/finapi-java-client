@@ -112,11 +112,11 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Delete a label
     - [x] Delete all labels
 - Notification rules
-    - [ ] Get a notification rule
-    - [ ] Get and search all notification rules
-    - [ ] Create a new notification rule
-    - [ ] Delete a notification rule
-    - [ ] Delete all notification rules
+    - [x] Get a notification rule
+    - [x] Get and search all notification rules
+    - [x] Create a new notification rule
+    - [x] Delete a notification rule
+    - [x] Delete all notification rules
 - Web forms
     - [ ] Get a web form
 - Mocks and tests

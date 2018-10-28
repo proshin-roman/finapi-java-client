@@ -18,7 +18,7 @@ package org.proshin.finapi.bankconnection;
 import java.util.Optional;
 import org.proshin.finapi.account.Accounts;
 import org.proshin.finapi.bank.Bank;
-import org.proshin.finapi.bankconnection.in.EditParameters;
+import org.proshin.finapi.bankconnection.in.FpEditParameters;
 import org.proshin.finapi.bankconnection.out.Credentials;
 import org.proshin.finapi.bankconnection.out.Owner;
 import org.proshin.finapi.bankconnection.out.Status;
@@ -50,7 +50,7 @@ public interface BankConnection {
 
     Iterable<Owner> owners();
 
-    BankConnection edit(EditParameters parameters);
+    BankConnection edit(FpEditParameters parameters);
 
     void delete();
 }

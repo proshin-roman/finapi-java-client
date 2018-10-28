@@ -40,7 +40,7 @@ public final class TrainCategorizationParameters implements Jsonable {
             "transactionData",
             new JSONArray(
                 Arrays.stream(transactions)
-                    .map(tx -> new JSONObject(tx.asJson()))
+                    .map(tx -> new JSONObject(tx.asString()))
                     .collect(Collectors.toList())
             )
         );
@@ -53,8 +53,8 @@ public final class TrainCategorizationParameters implements Jsonable {
     }
 
     @Override
-    public String asJson() {
-        return this.origin.toString();
+    public JSONObject asJson() {
+        return this.origin;
     }
 
     public static final class TrainCategorizationTransaction implements Jsonable {
@@ -115,8 +115,8 @@ public final class TrainCategorizationParameters implements Jsonable {
         }
 
         @Override
-        public String asJson() {
-            return this.origin.toString();
+        public JSONObject asJson() {
+            return this.origin;
         }
     }
 }

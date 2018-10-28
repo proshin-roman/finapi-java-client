@@ -59,7 +59,6 @@ public final class FpMoneyTransfer implements MoneyTransfer {
                     () -> new JSONObject()
                         .put("accountId", account)
                         .put("bankingTan", bankingTan)
-                        .toString()
                 )
             )
         );

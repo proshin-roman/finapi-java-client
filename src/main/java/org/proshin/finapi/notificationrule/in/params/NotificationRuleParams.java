@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.collection;
+package org.proshin.finapi.notificationrule.in.params;
 
-import java.util.Iterator;
+import org.proshin.finapi.Jsonable;
+import org.proshin.finapi.notificationrule.TriggerEvent;
 
-public interface Page<T> extends Iterator<T> {
+public interface NotificationRuleParams extends Jsonable {
 
-    int index();
-
-    int perPage();
-
-    int pages();
-
-    int total();
+    boolean support(TriggerEvent triggerEvent);
 }

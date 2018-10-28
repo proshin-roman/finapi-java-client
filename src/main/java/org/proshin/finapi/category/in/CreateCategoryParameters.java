@@ -41,7 +41,7 @@ public final class CreateCategoryParameters implements Jsonable {
     }
 
     @Override
-    public String asJson() {
-        return this.origin.toString();
+    public JSONObject asJson() {
+        return this.origin;
     }
 }

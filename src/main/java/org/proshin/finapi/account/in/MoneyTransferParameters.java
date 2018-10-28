@@ -73,23 +73,23 @@ public final class MoneyTransferParameters implements Jsonable {
     public MoneyTransferParameters withRecipients(final Recipient... recipients) {
         final Iterator<Recipient> iterator = new IteratorOf<>(recipients);
         if (iterator.hasNext()) {
-            final JSONObject jsonObject = iterator.next().asJsonObject();
+            final JSONObject jsonObject = iterator.next().asJson();
             for (final String key : jsonObject.keySet()) {
                 this.origin.put(key, jsonObject.get(key));
             }
         }
         while (iterator.hasNext()) {
-            this.origin.append("additionalMoneyTransfers", iterator.next().asJsonObject());
+            this.origin.append("additionalMoneyTransfers", iterator.next().asJson());
         }
         return this;
     }
 
     @Override
-    public String asJson() {
-        return this.origin.toString();
+    public JSONObject asJson() {
+        return this.origin;
     }
 
-    public static final class Recipient {
+    public static final class Recipient implements Jsonable {
 
         private final JSONObject origin;
 
@@ -136,7 +136,8 @@ public final class MoneyTransferParameters implements Jsonable {
             return this;
         }
 
-        public JSONObject asJsonObject() {
+        @Override
+        public JSONObject asJson() {
             return this.origin;
         }
     }

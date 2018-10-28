@@ -16,8 +16,9 @@
 package org.proshin.finapi.bankconnection.in;
 
 import org.json.JSONObject;
+import org.proshin.finapi.Jsonable;
 
-public final class FpEditParameters implements EditParameters {
+public final class FpEditParameters implements Jsonable {
 
     private final JSONObject origin;
 
@@ -29,38 +30,33 @@ public final class FpEditParameters implements EditParameters {
         this.origin = origin;
     }
 
-    @Override
-    public EditParameters withUserId(final String userId) {
+    public FpEditParameters withUserId(final String userId) {
         this.origin.put("bankingUserId", userId);
         return this;
     }
 
-    @Override
-    public EditParameters withCustomerId(final String customerId) {
+    public FpEditParameters withCustomerId(final String customerId) {
         this.origin.put("bankingCustomerId", customerId);
         return this;
     }
 
-    @Override
-    public EditParameters withPin(final String pin) {
+    public FpEditParameters withPin(final String pin) {
         this.origin.put("bankingPin", pin);
         return this;
     }
 
-    @Override
-    public EditParameters withDefaultTwoStepProcedure(final String procedureId) {
+    public FpEditParameters withDefaultTwoStepProcedure(final String procedureId) {
         this.origin.put("defaultTwoStepProcedureId", procedureId);
         return this;
     }
 
-    @Override
-    public EditParameters withName(final String name) {
+    public FpEditParameters withName(final String name) {
         this.origin.put("name", name);
         return this;
     }
 
     @Override
-    public String asJson() {
-        return this.origin.toString();
+    public JSONObject asJson() {
+        return this.origin;
     }
 }

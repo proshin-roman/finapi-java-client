@@ -15,5 +15,16 @@
  */
 package org.proshin.finapi.notificationrule;
 
+import org.proshin.finapi.notificationrule.in.CreatingParameters;
+import org.proshin.finapi.notificationrule.in.NotificationRulesCriteria;
+
 public interface NotificationRules {
+
+    NotificationRule one(Long id);
+
+    Iterable<NotificationRule> query(NotificationRulesCriteria criteria);
+
+    NotificationRule create(CreatingParameters parameters);
+
+    Iterable<Long> deleteAll();
 }

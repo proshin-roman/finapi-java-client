@@ -57,7 +57,7 @@ public final class FpUsers implements Users {
             this.endpoint.post(
                 "/api/v1/users/requestPasswordChange",
                 this.token,
-                () -> new JSONObject().put("userId", userId).toString()
+                () -> new JSONObject().put("userId", userId)
             )
         ).getString("passwordChangeToken");
     }
@@ -71,7 +71,6 @@ public final class FpUsers implements Users {
                 .put("userId", userId)
                 .put("password", password)
                 .put("passwordChangeToken", token)
-                .toString()
         );
     }
 

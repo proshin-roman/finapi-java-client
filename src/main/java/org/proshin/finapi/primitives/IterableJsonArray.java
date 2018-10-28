@@ -32,16 +32,19 @@ public final class IterableJsonArray<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new JsonArrayIterator<>(array, func);
+        return new JsonArrayIterator<>(this.array, this.func);
     }
 
     private static final class JsonArrayIterator<T> implements Iterator<T> {
 
         private final AtomicInteger index;
         private final JSONArray array;
-        private final BiFunction<JSONArray, Integer, T> func;
+        private final BiFunction<? super JSONArray, ? super Integer, ? extends T> func;
 
-        JsonArrayIterator(final JSONArray array, final BiFunction<JSONArray, Integer, T> func) {
+        JsonArrayIterator(
+            final JSONArray array,
+            final BiFunction<? super JSONArray, ? super Integer, ? extends T> func
+        ) {
             this(
                 new AtomicInteger(0),
                 array,
@@ -52,7 +55,7 @@ public final class IterableJsonArray<T> implements Iterable<T> {
         JsonArrayIterator(
             final AtomicInteger index,
             final JSONArray array,
-            final BiFunction<JSONArray, Integer, T> func
+            final BiFunction<? super JSONArray, ? super Integer, ? extends T> func
         ) {
             this.index = index;
             this.array = array;

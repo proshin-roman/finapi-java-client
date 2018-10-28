@@ -19,48 +19,48 @@ import org.json.JSONObject;
 
 public final class FpCreateParameters implements CreateParameters {
 
-    private final JSONObject settings;
+    private final JSONObject origin;
 
     public FpCreateParameters() {
         this(new JSONObject());
     }
 
-    public FpCreateParameters(final JSONObject settings) {
-        this.settings = settings;
+    public FpCreateParameters(final JSONObject origin) {
+        this.origin = origin;
     }
 
     @Override
     public CreateParameters withId(final String id) {
-        this.settings.put("id", id);
+        this.origin.put("id", id);
         return this;
     }
 
     @Override
     public CreateParameters withPassword(final String password) {
-        this.settings.put("password", password);
+        this.origin.put("password", password);
         return this;
     }
 
     @Override
     public CreateParameters withEmail(final String email) {
-        this.settings.put("email", email);
+        this.origin.put("email", email);
         return this;
     }
 
     @Override
     public CreateParameters withPhone(final String phone) {
-        this.settings.put("phone", phone);
+        this.origin.put("phone", phone);
         return this;
     }
 
     @Override
     public CreateParameters withAutoUpdateEnabled() {
-        this.settings.put("isAutoUpdateEnabled", true);
+        this.origin.put("isAutoUpdateEnabled", true);
         return this;
     }
 
     @Override
-    public String asJson() {
-        return this.settings.toString();
+    public JSONObject asJson() {
+        return this.origin;
     }
 }

@@ -15,30 +15,80 @@
  */
 package org.proshin.finapi.bankconnection.in;
 
+import org.cactoos.collection.StickyCollection;
+import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.account.Type;
 
-public interface ImportParameters extends Jsonable {
+public final class ImportParameters implements Jsonable {
 
-    ImportParameters withBank(Long bankId);
+    private final JSONObject origin;
 
-    ImportParameters withUserId(String userId);
+    public ImportParameters() {
+        this(new JSONObject());
+    }
 
-    ImportParameters withCustomerId(String customerId);
+    public ImportParameters(final JSONObject origin) {
+        this.origin = origin;
+    }
 
-    ImportParameters withPin(String pin);
+    public ImportParameters withBank(final Long bankId) {
+        this.origin.put("bankId", bankId);
+        return this;
+    }
 
-    ImportParameters withStorePin();
+    public ImportParameters withUserId(final String userId) {
+        this.origin.put("bankingUserId", userId);
+        return this;
+    }
 
-    ImportParameters withName(String name);
+    public ImportParameters withCustomerId(final String customerId) {
+        this.origin.put("bankingCustomerId", customerId);
+        return this;
+    }
 
-    ImportParameters withSkipPositionsDownload();
+    public ImportParameters withPin(final String pin) {
+        this.origin.put("bankingPin", pin);
+        return this;
+    }
 
-    ImportParameters withLoadOwnerData();
+    public ImportParameters withStorePin() {
+        this.origin.put("storePin", true);
+        return this;
+    }
 
-    ImportParameters withMaxDaysForDownload(int days);
+    public ImportParameters withName(final String name) {
+        this.origin.put("name", name);
+        return this;
+    }
 
-    ImportParameters withAccountTypes(Iterable<Type> types);
+    public ImportParameters withSkipPositionsDownload() {
+        this.origin.put("skipPositionsDownload", true);
+        return this;
+    }
 
-    ImportParameters withChallengeResponse(String challengeResponse);
+    public ImportParameters withLoadOwnerData() {
+        this.origin.put("loadOwnerData", true);
+        return this;
+    }
+
+    public ImportParameters withMaxDaysForDownload(final int days) {
+        this.origin.put("maxDaysForDownload", days);
+        return this;
+    }
+
+    public ImportParameters withAccountTypes(final Iterable<Type> types) {
+        this.origin.put("accountTypeIds", new StickyCollection<>(types));
+        return this;
+    }
+
+    public ImportParameters withChallengeResponse(final String challengeResponse) {
+        this.origin.put("challengeResponse", challengeResponse);
+        return this;
+    }
+
+    @Override
+    public JSONObject asJson() {
+        return this.origin;
+    }
 }

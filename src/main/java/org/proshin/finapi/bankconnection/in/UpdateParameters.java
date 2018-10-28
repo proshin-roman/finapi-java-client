@@ -15,21 +15,58 @@
  */
 package org.proshin.finapi.bankconnection.in;
 
+import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 
-public interface UpdateParameters extends Jsonable {
+public final class UpdateParameters implements Jsonable {
 
-    UpdateParameters withBankConnection(Long connectionId);
+    private final JSONObject origin;
 
-    UpdateParameters withPin(String pin);
+    public UpdateParameters() {
+        this(new JSONObject());
+    }
 
-    UpdateParameters withStorePin();
+    public UpdateParameters(final JSONObject origin) {
+        this.origin = origin;
+    }
 
-    UpdateParameters withImportNewAccounts();
+    public UpdateParameters withBankConnection(final Long connectionId) {
+        this.origin.put("bankConnectionId", connectionId);
+        return this;
+    }
 
-    UpdateParameters withSkipPositionsDownload();
+    public UpdateParameters withPin(final String pin) {
+        this.origin.put("bankingPin", pin);
+        return this;
+    }
 
-    UpdateParameters withLoadOwnerData();
+    public UpdateParameters withStorePin() {
+        this.origin.put("storePin", true);
+        return this;
+    }
 
-    UpdateParameters withChallengeResponse(String challengeResponse);
+    public UpdateParameters withImportNewAccounts() {
+        this.origin.put("importNewAccounts", true);
+        return this;
+    }
+
+    public UpdateParameters withSkipPositionsDownload() {
+        this.origin.put("skipPositionsDownload", true);
+        return this;
+    }
+
+    public UpdateParameters withLoadOwnerData() {
+        this.origin.put("loadOwnerData", true);
+        return this;
+    }
+
+    public UpdateParameters withChallengeResponse(final String challengeResponse) {
+        this.origin.put("challengeResponse", challengeResponse);
+        return this;
+    }
+
+    @Override
+    public JSONObject asJson() {
+        return this.origin;
+    }
 }

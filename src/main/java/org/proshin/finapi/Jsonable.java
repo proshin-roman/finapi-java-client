@@ -15,6 +15,14 @@
  */
 package org.proshin.finapi;
 
+import org.json.JSONObject;
+
+@FunctionalInterface
 public interface Jsonable {
-    String asJson();
+
+    default String asString() {
+        return this.asJson().toString();
+    }
+
+    JSONObject asJson();
 }

@@ -23,6 +23,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public final class StringOf implements Supplier<String> {
 
@@ -41,6 +43,18 @@ public final class StringOf implements Supplier<String> {
             return df.format(value);
         }
         ).get());
+    }
+
+    public StringOf(final Iterable<Long> items) {
+        this(items, ",");
+    }
+
+    public StringOf(final Iterable<Long> items, final CharSequence delimiter) {
+        this(
+            StreamSupport.stream(items.spliterator(), false)
+                .map(Object::toString)
+                .collect(Collectors.joining(delimiter))
+        );
     }
 
     public StringOf(final String origin) {

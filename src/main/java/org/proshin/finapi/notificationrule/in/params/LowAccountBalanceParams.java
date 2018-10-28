@@ -13,37 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account.in;
+package org.proshin.finapi.notificationrule.in.params;
 
+import java.math.BigDecimal;
 import org.json.JSONObject;
-import org.proshin.finapi.Jsonable;
-import org.proshin.finapi.account.Type;
+import org.proshin.finapi.notificationrule.TriggerEvent;
+import org.proshin.finapi.primitives.StringOf;
 
-public final class FpEditParameters implements Jsonable {
+public final class LowAccountBalanceParams implements NotificationRuleParams {
 
     private final JSONObject origin;
 
-    public FpEditParameters() {
-        this(new JSONObject());
+    public LowAccountBalanceParams(final BigDecimal balanceThreshold) {
+        this.origin = new JSONObject()
+            .put("balanceThreshold", balanceThreshold);
     }
 
-    public FpEditParameters(final JSONObject origin) {
-        this.origin = origin;
-    }
-
-    public FpEditParameters withName(final String name) {
-        this.origin.put("accountName", name);
+    public LowAccountBalanceParams withAccounts(final Iterable<Long> accounts) {
+        this.origin.put("accountIds", new StringOf(accounts));
         return this;
     }
 
-    public FpEditParameters withType(final Type type) {
-        this.origin.put("accountTypeId", type.asCode());
-        return this;
-    }
-
-    public FpEditParameters withNew(final boolean isNew) {
-        this.origin.put("isNew", isNew);
-        return this;
+    @Override
+    public boolean support(final TriggerEvent triggerEvent) {
+        return triggerEvent == TriggerEvent.LOW_ACCOUNT_BALANCE;
     }
 
     @Override

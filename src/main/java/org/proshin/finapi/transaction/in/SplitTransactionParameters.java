@@ -32,13 +32,13 @@ public final class SplitTransactionParameters implements Jsonable {
 
     public SplitTransactionParameters withSubtransactions(final Subtransaction... subtransactions) {
         for (final Subtransaction subtransaction : subtransactions) {
-            this.origin.append("subTransactions", subtransaction.asJsonObject());
+            this.origin.append("subTransactions", subtransaction.asJson());
         }
         return this;
     }
 
     @Override
-    public String asJson() {
-        return this.origin.toString();
+    public JSONObject asJson() {
+        return this.origin;
     }
 }

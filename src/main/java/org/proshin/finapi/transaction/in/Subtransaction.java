@@ -17,8 +17,10 @@ package org.proshin.finapi.transaction.in;
 
 import java.math.BigDecimal;
 import org.json.JSONObject;
+import org.proshin.finapi.Jsonable;
 
-public final class Subtransaction {
+public final class Subtransaction implements Jsonable {
+
     private final JSONObject origin;
 
     public Subtransaction() {
@@ -76,7 +78,8 @@ public final class Subtransaction {
         return this;
     }
 
-    public JSONObject asJsonObject() {
+    @Override
+    public JSONObject asJson() {
         return this.origin;
     }
 }

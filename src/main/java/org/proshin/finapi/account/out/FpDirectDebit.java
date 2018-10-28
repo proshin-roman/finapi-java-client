@@ -55,7 +55,6 @@ public final class FpDirectDebit implements DirectDebit {
                     () -> new JSONObject()
                         .put("accountId", account)
                         .put("bankingTan", bankingTan)
-                        .toString()
                 )
             )
         );

@@ -50,7 +50,7 @@ public final class FpLabel implements Label {
                 this.endpoint.patch(
                     "/api/v1/labels/" + this.id(),
                     this.token,
-                    () -> new JSONObject().put("name", name).toString()
+                    () -> new JSONObject().put("name", name)
                 )
             )
         );

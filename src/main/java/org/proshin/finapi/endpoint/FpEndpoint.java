@@ -244,7 +244,7 @@ public final class FpEndpoint implements Endpoint {
         return this.patch(
             path, token,
             new StringEntity(
-                body.asJson(),
+                body.asString(),
                 ContentType.create("application/json", StandardCharsets.UTF_8)
             ),
             200

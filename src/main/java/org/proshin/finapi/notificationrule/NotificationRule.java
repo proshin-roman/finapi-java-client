@@ -15,5 +15,20 @@
  */
 package org.proshin.finapi.notificationrule;
 
+import java.util.Map;
+import java.util.Optional;
+
 public interface NotificationRule {
+
+    Long id();
+
+    TriggerEvent triggerEvent();
+
+    Map<String, Object> params();
+
+    Optional<String> callbackHandle();
+
+    boolean includeDetails();
+
+    void delete();
 }

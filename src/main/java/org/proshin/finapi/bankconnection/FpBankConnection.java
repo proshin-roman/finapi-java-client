@@ -21,7 +21,7 @@ import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.account.Accounts;
 import org.proshin.finapi.bank.Bank;
 import org.proshin.finapi.bank.FpBank;
-import org.proshin.finapi.bankconnection.in.EditParameters;
+import org.proshin.finapi.bankconnection.in.FpEditParameters;
 import org.proshin.finapi.bankconnection.out.Credentials;
 import org.proshin.finapi.bankconnection.out.FpCredentials;
 import org.proshin.finapi.bankconnection.out.FpStatus;
@@ -115,7 +115,7 @@ public final class FpBankConnection implements BankConnection {
     }
 
     @Override
-    public BankConnection edit(final EditParameters parameters) {
+    public BankConnection edit(final FpEditParameters parameters) {
         return new FpBankConnection(
             this.endpoint,
             this.token,

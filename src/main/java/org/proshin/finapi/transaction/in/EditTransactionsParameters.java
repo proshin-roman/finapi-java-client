@@ -71,7 +71,7 @@ public final class EditTransactionsParameters implements Jsonable {
     }
 
     @Override
-    public String asJson() {
-        return this.origin.toString();
+    public JSONObject asJson() {
+        return this.origin;
     }
 }

@@ -13,25 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.collection;
+package org.proshin.finapi.notificationrule;
 
-import java.util.Iterator;
-
-public interface Pages<T> extends Iterator<Page<T>> {
-
-    Page<T> page(int page);
-
-    @Override
-    boolean hasNext();
-
-    @Override
-    Page<T> next();
-
-    boolean hasPrevious();
-
-    Page<T> previous();
-
-    int size();
-
-    int itemsSize();
+public enum TriggerEvent {
+    NEW_ACCOUNT_BALANCE,
+    NEW_TRANSACTIONS,
+    BANK_LOGIN_ERROR,
+    FOREIGN_MONEY_TRANSFER,
+    LOW_ACCOUNT_BALANCE,
+    HIGH_TRANSACTION_AMOUNT,
+    CATEGORY_CASH_FLOW,
+    NEW_TERMS_AND_CONDITIONS
 }
