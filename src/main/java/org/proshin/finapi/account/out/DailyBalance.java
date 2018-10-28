@@ -17,7 +17,6 @@ package org.proshin.finapi.account.out;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import org.proshin.finapi.transaction.Transaction;
 
 public interface DailyBalance {
     OffsetDateTime date();
@@ -28,5 +27,5 @@ public interface DailyBalance {
 
     BigDecimal spending();
 
-    Iterable<Transaction> transactions();
+    Iterable<Long> transactions();
 }

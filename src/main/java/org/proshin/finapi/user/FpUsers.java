@@ -15,8 +15,6 @@
  */
 package org.proshin.finapi.user;
 
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
@@ -59,8 +57,7 @@ public final class FpUsers implements Users {
             this.endpoint.post(
                 "/api/v1/users/requestPasswordChange",
                 this.token,
-                new StringEntity(new JSONObject().put("userId", userId).toString(), ContentType.APPLICATION_JSON),
-                200
+                () -> new JSONObject().put("userId", userId).toString()
             )
         ).getString("passwordChangeToken");
     }
@@ -70,15 +67,11 @@ public final class FpUsers implements Users {
         this.endpoint.post(
             "/api/v1/users/executePasswordChange",
             this.token,
-            new StringEntity(
-                new JSONObject()
-                    .put("userId", userId)
-                    .put("password", password)
-                    .put("passwordChangeToken", token)
-                    .toString(),
-                ContentType.APPLICATION_JSON
-            ),
-            200
+            () -> new JSONObject()
+                .put("userId", userId)
+                .put("password", password)
+                .put("passwordChangeToken", token)
+                .toString()
         );
     }
 

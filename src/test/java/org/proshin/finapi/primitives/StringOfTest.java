@@ -26,7 +26,7 @@ public class StringOfTest {
     @Test
     public void testStringOfOffsetDateTime() {
         assertThat(
-            new StringOf(OffsetDateTime.of(2018, 10, 25, 1, 2, 3, 4, ZoneOffset.UTC)).get(),
+            new StringOf(OffsetDateTime.of(2018, 10, 25, 1, 2, 3, 4, ZoneOffset.UTC)).toString(),
             is("2018-10-25")
         );
     }
@@ -34,7 +34,7 @@ public class StringOfTest {
     @Test
     public void testStringOfBigDecimal() {
         assertThat(
-            new StringOf(new BigDecimal("123456.012")).get(),
+            new StringOf(new BigDecimal("123456.012")).toString(),
             is("123456.01")
         );
     }

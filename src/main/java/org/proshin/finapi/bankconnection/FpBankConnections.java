@@ -95,8 +95,7 @@ public final class FpBankConnections implements BankConnections {
                     this.endpoint.post(
                         "/api/v1/bankConnections/update",
                         this.token,
-                        parameters,
-                        200
+                        parameters
                     )
                 )
             ));

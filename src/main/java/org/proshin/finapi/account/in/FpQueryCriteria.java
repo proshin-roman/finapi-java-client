@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account;
+package org.proshin.finapi.account.in;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -23,11 +23,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.http.NameValuePair;
+import org.proshin.finapi.account.Type;
 import org.proshin.finapi.primitives.StringOf;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
-public final class FpQueryCriteria implements QueryCriteria {
+public final class FpQueryCriteria implements Iterable<NameValuePair> {
 
     private final List<NameValuePair> pairs;
 
@@ -39,20 +40,17 @@ public final class FpQueryCriteria implements QueryCriteria {
         this.pairs = pairs;
     }
 
-    @Override
-    public QueryCriteria withIds(final Iterable<Long> ids) {
+    public FpQueryCriteria withIds(final Iterable<Long> ids) {
         this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("ids", ids)));
         return this;
     }
 
-    @Override
-    public QueryCriteria withSearch(final String search) {
+    public FpQueryCriteria withSearch(final String search) {
         this.pairs.add(new UrlEncodedPair("search", search));
         return this;
     }
 
-    @Override
-    public QueryCriteria withTypes(final Type... types) {
+    public FpQueryCriteria withTypes(final Type... types) {
         this.pairs.add(
             new UrlEncodedPair(
                 new CommaSeparatedPair<>(
@@ -66,43 +64,38 @@ public final class FpQueryCriteria implements QueryCriteria {
         return this;
     }
 
-    @Override
-    public QueryCriteria withBankConnections(final Iterable<Long> ids) {
+    public FpQueryCriteria withBankConnections(final Iterable<Long> ids) {
         this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("bankConnectionIds", ids)));
         return this;
     }
 
-    @Override
-    public QueryCriteria withMinLastSuccessfulUpdate(final OffsetDateTime minLastSuccessfulUpdate) {
+    public FpQueryCriteria withMinLastSuccessfulUpdate(final OffsetDateTime minLastSuccessfulUpdate) {
         this.pairs.add(
             new UrlEncodedPair(
                 "minLastSuccessfulUpdate",
-                new StringOf(minLastSuccessfulUpdate).get()
+                new StringOf(minLastSuccessfulUpdate)
             )
         );
         return this;
     }
 
-    @Override
-    public QueryCriteria withMaxLastSuccessfulUpdate(final OffsetDateTime maxLastSuccessfulUpdate) {
+    public FpQueryCriteria withMaxLastSuccessfulUpdate(final OffsetDateTime maxLastSuccessfulUpdate) {
         this.pairs.add(
             new UrlEncodedPair(
                 "maxLastSuccessfulUpdate",
-                new StringOf(maxLastSuccessfulUpdate).get()
+                new StringOf(maxLastSuccessfulUpdate)
             )
         );
         return this;
     }
 
-    @Override
-    public QueryCriteria withMinBalance(final BigDecimal minBalance) {
-        this.pairs.add(new UrlEncodedPair("minBalance", new StringOf(minBalance).get()));
+    public FpQueryCriteria withMinBalance(final BigDecimal minBalance) {
+        this.pairs.add(new UrlEncodedPair("minBalance", new StringOf(minBalance)));
         return this;
     }
 
-    @Override
-    public QueryCriteria withMaxBalance(final BigDecimal maxBalance) {
-        this.pairs.add(new UrlEncodedPair("maxBalance", new StringOf(maxBalance).get()));
+    public FpQueryCriteria withMaxBalance(final BigDecimal maxBalance) {
+        this.pairs.add(new UrlEncodedPair("maxBalance", new StringOf(maxBalance)));
         return this;
     }
 

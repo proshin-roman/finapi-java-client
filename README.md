@@ -70,12 +70,12 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Get an account
     - [ ] ~~Get multiple accounts~~ (won't be implemented as deprecated)
     - [x] Get and search all accounts
-    - [ ] Get daily balances
+    - [x] Get daily balances
     - [x] Edit an account
-    - [ ] Request SEPA Money Transfer
-    - [ ] Execute SEPA Money Transfer
-    - [ ] Request SEPA Direct Debit
-    - [ ] Execute SEPA Direct Debit
+    - [x] Request SEPA Money Transfer
+    - [x] Execute SEPA Money Transfer
+    - [x] Request SEPA Direct Debit
+    - [x] Execute SEPA Direct Debit
     - [x] Delete an account
     - [x] Delete all accounts
 - Transactions

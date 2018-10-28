@@ -21,6 +21,8 @@ import java.util.Optional;
 import org.proshin.finapi.account.in.FpEditParameters;
 import org.proshin.finapi.account.out.ClearingAccount;
 import org.proshin.finapi.account.out.Holder;
+import org.proshin.finapi.account.out.Order;
+import org.proshin.finapi.account.out.Status;
 import org.proshin.finapi.bankconnection.BankConnection;
 
 public interface Account {
@@ -64,10 +66,6 @@ public interface Account {
     Iterable<ClearingAccount> clearingAccounts();
 
     void edit(FpEditParameters parameters);
-
-    MoneyTransfer moneyTransfer();
-
-    DirectDebit directDebit();
 
     void delete(Long id);
 }

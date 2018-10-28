@@ -30,8 +30,8 @@ public final class StringOf implements Supplier<String> {
 
     public StringOf(final OffsetDateTime value) {
         this(DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                 .withZone(ZoneId.of("Europe/Berlin"))
-                 .format(value));
+            .withZone(ZoneId.of("Europe/Berlin"))
+            .format(value));
     }
 
     public StringOf(final BigDecimal value) {

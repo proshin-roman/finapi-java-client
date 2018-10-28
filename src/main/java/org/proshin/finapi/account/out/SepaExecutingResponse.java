@@ -13,7 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account;
+package org.proshin.finapi.account.out;
 
-public interface DirectDebit {
+import java.util.Optional;
+
+public interface SepaExecutingResponse {
+
+    Optional<String> successMessage();
+
+    Optional<String> warnMessage();
 }

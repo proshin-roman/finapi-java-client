@@ -15,11 +15,29 @@
  */
 package org.proshin.finapi.account.out;
 
-import java.time.OffsetDateTime;
 import java.util.Optional;
-import org.proshin.finapi.primitives.paging.Page;
+import org.json.JSONObject;
+import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
-public interface DailyBalances extends Page<DailyBalance> {
+public final class FpSepaExecutingResponse implements SepaExecutingResponse {
 
-    Optional<OffsetDateTime> latestCommonBalanceTimestamp();
+    private final JSONObject origin;
+
+    public FpSepaExecutingResponse() {
+        this(new JSONObject());
+    }
+
+    public FpSepaExecutingResponse(final JSONObject origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public Optional<String> successMessage() {
+        return new OptionalStringOf(this.origin, "successMessage").get();
+    }
+
+    @Override
+    public Optional<String> warnMessage() {
+        return new OptionalStringOf(this.origin, "warnMessage").get();
+    }
 }

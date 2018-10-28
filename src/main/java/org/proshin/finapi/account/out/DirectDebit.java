@@ -13,24 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account;
+package org.proshin.finapi.account.out;
 
-import org.proshin.finapi.account.in.DailyBalancesCriteria;
-import org.proshin.finapi.account.in.FpQueryCriteria;
-import org.proshin.finapi.account.out.DailyBalances;
-import org.proshin.finapi.account.out.DirectDebit;
+import org.proshin.finapi.account.in.DirectDebitParameters;
 
-public interface Accounts {
+public interface DirectDebit {
 
-    Account one(Long id);
+    SepaRequestingResponse request(final DirectDebitParameters parameters);
 
-    Iterable<Account> query(FpQueryCriteria criteria);
-
-    DailyBalances dailyBalances(DailyBalancesCriteria criteria);
-
-    MoneyTransfer moneyTransfer();
-
-    DirectDebit directDebit();
-
-    void deleteAll();
+    SepaExecutingResponse execute(Long account, String bankingTan);
 }

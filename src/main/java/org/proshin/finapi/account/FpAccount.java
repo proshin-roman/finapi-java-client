@@ -25,6 +25,8 @@ import org.proshin.finapi.account.out.ClearingAccount;
 import org.proshin.finapi.account.out.FpClearingAccount;
 import org.proshin.finapi.account.out.FpHolder;
 import org.proshin.finapi.account.out.Holder;
+import org.proshin.finapi.account.out.Order;
+import org.proshin.finapi.account.out.Status;
 import org.proshin.finapi.bankconnection.BankConnection;
 import org.proshin.finapi.bankconnection.FpBankConnections;
 import org.proshin.finapi.endpoint.Endpoint;
@@ -41,11 +43,13 @@ public final class FpAccount implements Account {
     private final Endpoint endpoint;
     private final AccessToken token;
     private final JSONObject origin;
+    private final String url;
 
-    public FpAccount(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpAccount(final Endpoint endpoint, final AccessToken token, final JSONObject origin, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;
+        this.url = url;
     }
 
     @Override
@@ -56,7 +60,7 @@ public final class FpAccount implements Account {
     @Override
     public BankConnection bankConnection() {
         return new FpBankConnections(this.endpoint, this.token)
-                   .one(this.origin.getLong("bankConnectionId"));
+            .one(this.origin.getLong("bankConnectionId"));
     }
 
     @Override
@@ -152,29 +156,13 @@ public final class FpAccount implements Account {
 
     @Override
     public void edit(final FpEditParameters parameters) {
-        this.endpoint.patch(String.format("/api/v1/accounts/%d", this.id()), this.token, parameters, 200);
-    }
-
-    /**
-     * @todo #21 Implement money transfer
-     */
-    @Override
-    public MoneyTransfer moneyTransfer() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
-    }
-
-    /**
-     * @todo #21 Implement direct debit
-     */
-    @Override
-    public DirectDebit directDebit() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        this.endpoint.patch(this.url + this.id(), this.token, parameters, 200);
     }
 
     @Override
     public void delete(final Long id) {
         this.endpoint.delete(
-            String.format("/api/v1/accounts/%d", this.id()),
+            this.url + this.id(),
             this.token
         );
     }

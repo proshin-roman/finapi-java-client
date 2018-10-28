@@ -15,5 +15,13 @@
  */
 package org.proshin.finapi.account;
 
+import org.proshin.finapi.account.in.MoneyTransferParameters;
+import org.proshin.finapi.account.out.SepaExecutingResponse;
+import org.proshin.finapi.account.out.SepaRequestingResponse;
+
 public interface MoneyTransfer {
+
+    SepaRequestingResponse request(final MoneyTransferParameters parameters);
+
+    SepaExecutingResponse execute(Long account, String bankingTan);
 }

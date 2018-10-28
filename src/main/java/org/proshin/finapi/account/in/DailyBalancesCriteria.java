@@ -16,16 +16,61 @@
 package org.proshin.finapi.account.in;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.apache.http.NameValuePair;
+import org.proshin.finapi.primitives.StringOf;
+import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
+import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
-public interface DailyBalancesCriteria {
+public final class DailyBalancesCriteria implements Iterable<NameValuePair> {
 
-    DailyBalancesCriteria withAccounts(Iterable<Long> ids);
+    private final List<NameValuePair> pairs;
 
-    DailyBalancesCriteria withStartDate(OffsetDateTime startDate);
+    public DailyBalancesCriteria() {
+        this(new ArrayList<>());
+    }
 
-    DailyBalancesCriteria withEndDate(OffsetDateTime endDate);
+    public DailyBalancesCriteria(final List<NameValuePair> pairs) {
+        this.pairs = pairs;
+    }
 
-    DailyBalancesCriteria withProjection(boolean projection);
+    public DailyBalancesCriteria withAccounts(final Iterable<Long> accounts) {
+        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("accountIds", accounts)));
+        return this;
+    }
 
-    DailyBalancesCriteria withOrdering(String order);
+    public DailyBalancesCriteria withStartDate(final OffsetDateTime startDate) {
+        this.pairs.add(new UrlEncodedPair("startDate", new StringOf(startDate)));
+        return this;
+    }
+
+    public DailyBalancesCriteria withEndDate(final OffsetDateTime endDate) {
+        this.pairs.add(new UrlEncodedPair("endDate", new StringOf(endDate)));
+        return this;
+    }
+
+    public DailyBalancesCriteria withProjection() {
+        this.pairs.add(new UrlEncodedPair("withProjection", false));
+        return this;
+    }
+
+    public DailyBalancesCriteria withPage(final int page, final int perPage) {
+        this.pairs.add(new UrlEncodedPair("page", page));
+        this.pairs.add(new UrlEncodedPair("perPage", perPage));
+        return this;
+    }
+
+    public DailyBalancesCriteria orderBy(final String... orders) {
+        for (final String order : orders) {
+            this.pairs.add(new UrlEncodedPair("order", order));
+        }
+        return this;
+    }
+
+    @Override
+    public Iterator<NameValuePair> iterator() {
+        return this.pairs.iterator();
+    }
 }

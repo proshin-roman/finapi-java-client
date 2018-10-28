@@ -13,24 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account;
+package org.proshin.finapi.account.out;
 
-import org.proshin.finapi.account.in.DailyBalancesCriteria;
-import org.proshin.finapi.account.in.FpQueryCriteria;
-import org.proshin.finapi.account.out.DailyBalances;
-import org.proshin.finapi.account.out.DirectDebit;
-
-public interface Accounts {
-
-    Account one(Long id);
-
-    Iterable<Account> query(FpQueryCriteria criteria);
-
-    DailyBalances dailyBalances(DailyBalancesCriteria criteria);
-
-    MoneyTransfer moneyTransfer();
-
-    DirectDebit directDebit();
-
-    void deleteAll();
+public enum Status {
+    UPDATED,
+    UPDATED_FIXED,
+    DOWNLOAD_IN_PROGRESS,
+    DOWNLOAD_FAILED,
+    DEPRECATED
 }

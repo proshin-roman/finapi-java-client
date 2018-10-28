@@ -18,7 +18,11 @@ package org.proshin.finapi.account;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.account.in.DailyBalancesCriteria;
+import org.proshin.finapi.account.in.FpQueryCriteria;
 import org.proshin.finapi.account.out.DailyBalances;
+import org.proshin.finapi.account.out.DirectDebit;
+import org.proshin.finapi.account.out.FpDailyBalances;
+import org.proshin.finapi.account.out.FpDirectDebit;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
 
@@ -29,10 +33,16 @@ public final class FpAccounts implements Accounts {
 
     private final Endpoint endpoint;
     private final AccessToken token;
+    private final String url;
 
     public FpAccounts(final Endpoint endpoint, final AccessToken token) {
+        this(endpoint, token, "/api/v1/accounts/");
+    }
+
+    public FpAccounts(final Endpoint endpoint, final AccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
+        this.url = url;
     }
 
     @Override
@@ -41,17 +51,18 @@ public final class FpAccounts implements Accounts {
             this.endpoint,
             this.token,
             new JSONObject(
-                this.endpoint.get(String.format("/api/v1/accounts/%d", id), this.token)
-            )
+                this.endpoint.get(this.url + id, this.token)
+            ),
+            this.url
         );
     }
 
     @Override
-    public Iterable<Account> query(final QueryCriteria criteria) {
+    public Iterable<Account> query(final FpQueryCriteria criteria) {
         return new IterableJsonArray<>(
             new JSONObject(
                 this.endpoint.get(
-                    "/api/v1/accounts",
+                    this.url,
                     this.token,
                     criteria
                 )
@@ -59,21 +70,33 @@ public final class FpAccounts implements Accounts {
             (array, index) -> new FpAccount(
                 this.endpoint,
                 this.token,
-                array.getJSONObject(index)
+                array.getJSONObject(index),
+                this.url
             )
         );
     }
 
-    /**
-     * @todo #21 Implement daily balances for accounts endpoint
-     */
     @Override
     public DailyBalances dailyBalances(final DailyBalancesCriteria criteria) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return new FpDailyBalances(
+            new JSONObject(
+                this.endpoint.get(this.url + "dailyBalances", this.token, criteria)
+            )
+        );
+    }
+
+    @Override
+    public MoneyTransfer moneyTransfer() {
+        return new FpMoneyTransfer(this.endpoint, this.token, this.url);
+    }
+
+    @Override
+    public DirectDebit directDebit() {
+        return new FpDirectDebit(this.endpoint, this.token, this.url);
     }
 
     @Override
     public void deleteAll() {
-        this.endpoint.delete("/api/v1/accounts", this.token);
+        this.endpoint.delete(this.url, this.token);
     }
 }

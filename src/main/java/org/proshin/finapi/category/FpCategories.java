@@ -92,7 +92,7 @@ public final class FpCategories implements Categories {
 
     @Override
     public void trainCategorization(final TrainCategorizationParameters parameters) {
-        this.endpoint.post(this.url + "trainCategorization", this.token, parameters, 200);
+        this.endpoint.post(this.url + "trainCategorization", this.token, parameters);
     }
 
     @Override

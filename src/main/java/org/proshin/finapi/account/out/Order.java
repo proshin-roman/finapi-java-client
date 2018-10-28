@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account;
+package org.proshin.finapi.account.out;
 
 public enum Order {
     SEPA_MONEY_TRANSFER,

@@ -13,12 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account;
+package org.proshin.finapi.account.out;
 
-public enum Status {
-    UPDATED,
-    UPDATED_FIXED,
-    DOWNLOAD_IN_PROGRESS,
-    DOWNLOAD_FAILED,
-    DEPRECATED
+import java.util.Optional;
+
+public interface SepaRequestingResponse {
+
+    Optional<String> successMessage();
+
+    Optional<String> warnMessage();
+
+    Optional<String> challengeMessage();
+
+    Optional<String> answerFieldLabel();
+
+    Optional<String> tanListNumber();
+
+    Optional<String> opticalData();
+
+    Optional<String> photoTanMimeType();
+
+    Optional<String> photoTanData();
 }

@@ -45,6 +45,18 @@ public interface Endpoint {
 
     String post(String path, AccessToken token, HttpEntity entity, int expected);
 
+    default String post(final String path, final AccessToken token, final Jsonable body) {
+        return this.post(
+            path,
+            token,
+            new StringEntity(
+                body.asJson(),
+                ContentType.create("application/json", StandardCharsets.UTF_8)
+            ),
+            200
+        );
+    }
+
     default String post(final String path, final AccessToken token, final Jsonable body, final int expected) {
         return this.post(
             path,
@@ -52,7 +64,8 @@ public interface Endpoint {
             new StringEntity(
                 body.asJson(),
                 ContentType.create("application/json", StandardCharsets.UTF_8)
-            ), expected
+            ),
+            expected
         );
     }
 
