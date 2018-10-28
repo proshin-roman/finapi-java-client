@@ -48,7 +48,7 @@ public final class FakeEndpoint implements Endpoint {
     }
 
     @Override
-    public String delete(final String path, final AccessToken token) {
+    public String delete(final String path, final AccessToken token, final Iterable<NameValuePair> parameters) {
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 
@@ -95,7 +95,7 @@ public final class FakeEndpoint implements Endpoint {
     }
 
     @Override
-    public String patch(final String path, final AccessToken token, final Jsonable body, final int expected) {
+    public String patch(final String path, final AccessToken token, final Jsonable body) {
         throw new UnsupportedOperationException("This method is not implemented yet");
     }
 }

@@ -1,4 +1,4 @@
-package org.proshin.finapi.primitives;/*
+/*
  * Copyright 2018 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,17 +13,14 @@ package org.proshin.finapi.primitives;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.proshin.finapi.transaction.out;
 
-public enum Direction {
-    ALL("all"), INCOME("income"), SPENDING("spending");
+import java.util.Optional;
 
-    private final String label;
+public interface Type {
+    Optional<String> type();
 
-    Direction(final String label) {
-        this.label = label;
-    }
+    Optional<String> typeCodeZka();
 
-    public String label() {
-        return this.label;
-    }
+    Optional<String> typeCodeSwift();
 }

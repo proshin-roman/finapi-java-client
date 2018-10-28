@@ -79,17 +79,17 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Delete an account
     - [x] Delete all accounts
 - Transactions
-    - [ ] Get a transaction
+    - [x Get a transaction
     - [ ] ~~Get multiple transactions~~ (won't be implemented as deprecated)
-    - [ ] Get and search all transactions
-    - [ ] Split a transaction
-    - [ ] Restore a transaction
-    - [ ] Edit a transaction
+    - [x] Get and search all transactions
+    - [x] Split a transaction
+    - [x] Restore a transaction
+    - [x] Edit a transaction
     - [ ] ~~Edit multiple transactions (DEPRECATED)~~ (won't be implemented as deprecated)
-    - [ ] Edit multiple transactions
-    - [ ] Trigger categorization
-    - [ ] Delete a transaction
-    - [ ] Delete all transactions
+    - [x] Edit multiple transactions
+    - [x] Trigger categorization
+    - [x] Delete a transaction
+    - [x] Delete all transactions
 - Securities
     - [x] Get a security
     - [ ] ~~Get multiple securities~~ (won't be implemented as deprecated)

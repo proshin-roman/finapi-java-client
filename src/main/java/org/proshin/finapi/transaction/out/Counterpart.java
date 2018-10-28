@@ -1,4 +1,4 @@
-package org.proshin.finapi.primitives;/*
+/*
  * Copyright 2018 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,17 +13,26 @@ package org.proshin.finapi.primitives;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.proshin.finapi.transaction.out;
 
-public enum Direction {
-    ALL("all"), INCOME("income"), SPENDING("spending");
+import java.util.Optional;
 
-    private final String label;
+public interface Counterpart {
+    Optional<String> name();
 
-    Direction(final String label) {
-        this.label = label;
-    }
+    Optional<String> accountNumber();
 
-    public String label() {
-        return this.label;
-    }
+    Optional<String> iban();
+
+    Optional<String> blz();
+
+    Optional<String> bic();
+
+    Optional<String> bankName();
+
+    Optional<String> mandateReference();
+
+    Optional<String> customerReference();
+
+    Optional<String> creditorId();
 }

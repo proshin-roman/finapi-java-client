@@ -15,5 +15,20 @@
  */
 package org.proshin.finapi.transaction;
 
+import org.proshin.finapi.transaction.in.DeleteTransactionsCriteria;
+import org.proshin.finapi.transaction.in.EditTransactionsParameters;
+import org.proshin.finapi.transaction.in.TransactionsCriteria;
+import org.proshin.finapi.transaction.out.TransactionsPage;
+
 public interface Transactions {
+
+    Transaction one(Long id);
+
+    TransactionsPage query(TransactionsCriteria criteria);
+
+    Iterable<Long> edit(EditTransactionsParameters parameters);
+
+    void triggerCategorization(Iterable<Long> bankConnections);
+
+    Iterable<Long> deleteAll(DeleteTransactionsCriteria criteria);
 }

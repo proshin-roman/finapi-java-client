@@ -90,9 +90,11 @@ public final class FpEndpoint implements Endpoint {
     }
 
     @Override
-    public String delete(final String path, final AccessToken token) {
+    public String delete(final String path, final AccessToken token, final Iterable<NameValuePair> parameters) {
         try {
-            final HttpDelete delete = new HttpDelete(this.endpoint + path);
+            final URIBuilder builder = new URIBuilder(this.endpoint + path);
+            builder.setParameters(new ListOf<>(parameters));
+            final HttpDelete delete = new HttpDelete(builder.build());
             delete.addHeader(new AuthorizationHeader(token.accessToken()));
             final HttpResponse response = this.client.execute(delete);
             if (response.getStatusLine().getStatusCode() != 200) {
@@ -104,7 +106,7 @@ public final class FpEndpoint implements Endpoint {
             ).asString();
             log.info("Response body was: {}", responseBody);
             return responseBody;
-        } catch (final IOException e) {
+        } catch (final IOException | URISyntaxException e) {
             throw new IllegalStateException(
                 new UncheckedText(
                     new FormattedText(
@@ -238,12 +240,14 @@ public final class FpEndpoint implements Endpoint {
     }
 
     @Override
-    public String patch(final String path, final AccessToken token, final Jsonable body, final int expected) {
+    public String patch(final String path, final AccessToken token, final Jsonable body) {
         return this.patch(
-            path, token, new StringEntity(
+            path, token,
+            new StringEntity(
                 body.asJson(),
                 ContentType.create("application/json", StandardCharsets.UTF_8)
-            ), expected
+            ),
+            200
         );
     }
 

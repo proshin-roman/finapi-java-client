@@ -156,7 +156,7 @@ public final class FpAccount implements Account {
 
     @Override
     public void edit(final FpEditParameters parameters) {
-        this.endpoint.patch(this.url + this.id(), this.token, parameters, 200);
+        this.endpoint.patch(this.url + this.id(), this.token, parameters);
     }
 
     @Override

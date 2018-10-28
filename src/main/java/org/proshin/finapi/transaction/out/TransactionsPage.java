@@ -1,4 +1,4 @@
-package org.proshin.finapi.primitives;/*
+/*
  * Copyright 2018 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,17 +13,17 @@ package org.proshin.finapi.primitives;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.proshin.finapi.transaction.out;
 
-public enum Direction {
-    ALL("all"), INCOME("income"), SPENDING("spending");
+import java.math.BigDecimal;
+import org.proshin.finapi.primitives.paging.Page;
+import org.proshin.finapi.transaction.Transaction;
 
-    private final String label;
+public interface TransactionsPage extends Page<Transaction> {
 
-    Direction(final String label) {
-        this.label = label;
-    }
+    BigDecimal income();
 
-    public String label() {
-        return this.label;
-    }
+    BigDecimal spending();
+
+    BigDecimal balance();
 }

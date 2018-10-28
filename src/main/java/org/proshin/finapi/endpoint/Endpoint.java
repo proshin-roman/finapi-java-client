@@ -33,7 +33,11 @@ public interface Endpoint {
 
     String get(String path, AccessToken token, Iterable<NameValuePair> parameters);
 
-    String delete(String path, AccessToken token);
+    default String delete(final String path, final AccessToken token, final NameValuePair... parameters) {
+        return this.delete(path, token, new IterableOf<>(parameters));
+    }
+
+    String delete(String path, AccessToken token, Iterable<NameValuePair> parameters);
 
     HttpPost post(String path);
 
@@ -71,5 +75,5 @@ public interface Endpoint {
 
     String patch(String path, AccessToken token, HttpEntity entity, int expected);
 
-    String patch(final String path, final AccessToken token, final Jsonable body, final int expected);
+    String patch(final String path, final AccessToken token, final Jsonable body);
 }

@@ -15,5 +15,66 @@
  */
 package org.proshin.finapi.transaction;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import org.proshin.finapi.category.Category;
+import org.proshin.finapi.label.Label;
+import org.proshin.finapi.transaction.in.EditTransactionParameters;
+import org.proshin.finapi.transaction.in.SplitTransactionParameters;
+import org.proshin.finapi.transaction.out.Counterpart;
+import org.proshin.finapi.transaction.out.PayPalData;
+import org.proshin.finapi.transaction.out.Type;
+
 public interface Transaction {
+
+    Long id();
+
+    Optional<Long> parent();
+
+    Long account();
+
+    OffsetDateTime valueDate();
+
+    OffsetDateTime bankBookingDate();
+
+    OffsetDateTime finapiBookingDate();
+
+    BigDecimal amount();
+
+    Optional<String> purpose();
+
+    Counterpart counterpart();
+
+    Type type();
+
+    Optional<String> sepaPurposeCode();
+
+    Optional<String> primanota();
+
+    Optional<Category> category();
+
+    Iterable<Label> labels();
+
+    boolean isPotentialDuplicate();
+
+    boolean isAdjustingEntry();
+
+    boolean isNew();
+
+    OffsetDateTime importDate();
+
+    Iterable<Long> children();
+
+    Optional<PayPalData> payPalData();
+
+    Optional<String> endToEndReference();
+
+    Transaction split(SplitTransactionParameters parameters);
+
+    Transaction restore();
+
+    Transaction edit(EditTransactionParameters parameters);
+
+    void delete();
 }

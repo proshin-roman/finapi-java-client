@@ -86,13 +86,13 @@ public final class FpBankConnection implements BankConnection {
     @Override
     public Optional<UpdateResult> lastManualUpdate() {
         return new OptionalObjectOf(this.origin, "lastManualUpdate").get()
-                   .map(FpUpdateResult::new);
+            .map(FpUpdateResult::new);
     }
 
     @Override
     public Optional<UpdateResult> lastAutoUpdate() {
         return new OptionalObjectOf(this.origin, "lastAutoUpdate").get()
-                   .map(FpUpdateResult::new);
+            .map(FpUpdateResult::new);
     }
 
     @Override
@@ -123,8 +123,7 @@ public final class FpBankConnection implements BankConnection {
                 this.endpoint.patch(
                     String.format("/api/v1/bankConnections/%d", this.id()),
                     this.token,
-                    parameters,
-                    200
+                    parameters
                 )
             )
         );

@@ -13,26 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.primitives.optional;
+package org.proshin.finapi.transaction.in;
 
-import java.util.Optional;
-import java.util.function.Supplier;
 import org.json.JSONObject;
+import org.proshin.finapi.Jsonable;
 
-public final class OptionalObjectOf implements Supplier<Optional<JSONObject>> {
+public final class SplitTransactionParameters implements Jsonable {
 
     private final JSONObject origin;
-    private final String name;
 
-    public OptionalObjectOf(final JSONObject origin, final String name) {
+    public SplitTransactionParameters() {
+        this(new JSONObject());
+    }
+
+    public SplitTransactionParameters(final JSONObject origin) {
         this.origin = origin;
-        this.name = name;
+    }
+
+    public SplitTransactionParameters withSubtransactions(final Subtransaction... subtransactions) {
+        for (final Subtransaction subtransaction : subtransactions) {
+            this.origin.append("subTransactions", subtransaction.asJsonObject());
+        }
+        return this;
     }
 
     @Override
-    public Optional<JSONObject> get() {
-        return this.origin.isNull(this.name)
-            ? Optional.empty()
-            : Optional.of(this.origin.getJSONObject(this.name));
+    public String asJson() {
+        return this.origin.toString();
     }
 }

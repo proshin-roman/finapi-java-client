@@ -1,4 +1,4 @@
-package org.proshin.finapi.primitives;/*
+/*
  * Copyright 2018 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,17 +13,17 @@ package org.proshin.finapi.primitives;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.proshin.finapi.transaction.out;
 
-public enum Direction {
-    ALL("all"), INCOME("income"), SPENDING("spending");
+import java.math.BigDecimal;
+import java.util.Optional;
 
-    private final String label;
+public interface PayPalData {
+    Optional<String> invoiceNumber();
 
-    Direction(final String label) {
-        this.label = label;
-    }
+    Optional<BigDecimal> fee();
 
-    public String label() {
-        return this.label;
-    }
+    Optional<BigDecimal> net();
+
+    Optional<String> auctionSite();
 }

@@ -13,26 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.primitives.optional;
+package org.proshin.finapi.transaction.out;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 import org.json.JSONObject;
+import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
-public final class OptionalObjectOf implements Supplier<Optional<JSONObject>> {
+public final class FpType implements Type {
 
     private final JSONObject origin;
-    private final String name;
 
-    public OptionalObjectOf(final JSONObject origin, final String name) {
+    public FpType(final JSONObject origin) {
         this.origin = origin;
-        this.name = name;
     }
 
     @Override
-    public Optional<JSONObject> get() {
-        return this.origin.isNull(this.name)
-            ? Optional.empty()
-            : Optional.of(this.origin.getJSONObject(this.name));
+    public Optional<String> type() {
+        return new OptionalStringOf(this.origin, "type").get();
+    }
+
+    @Override
+    public Optional<String> typeCodeZka() {
+        return new OptionalStringOf(this.origin, "typeCodeZka").get();
+    }
+
+    @Override
+    public Optional<String> typeCodeSwift() {
+        return new OptionalStringOf(this.origin, "typeCodeSwift").get();
     }
 }
