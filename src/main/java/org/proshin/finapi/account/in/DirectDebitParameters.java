@@ -73,7 +73,10 @@ public final class DirectDebitParameters implements Jsonable {
         return this;
     }
 
-    public DirectDebitParameters withDebtors(final Debtor debtors) {
+    public DirectDebitParameters withDebtors(final Debtor... debtors) {
+        for (final Debtor debtor : debtors) {
+            this.origin.append("directDebits", debtor.asJsonObject());
+        }
         return this;
     }
 
