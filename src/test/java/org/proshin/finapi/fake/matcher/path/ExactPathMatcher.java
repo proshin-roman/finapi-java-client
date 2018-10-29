@@ -13,8 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.fake;
+package org.proshin.finapi.fake.matcher.path;
 
-public interface PathMatcher {
-    boolean matches(String path);
+public final class ExactPathMatcher implements PathMatcher {
+
+    private final String origin;
+
+    public ExactPathMatcher(final String origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public boolean matches(final String path) {
+        return this.origin.equals(path);
+    }
 }

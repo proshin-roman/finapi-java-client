@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.fake;
+package org.proshin.finapi.fake.matcher.path;
 
-public final class AnyTokenMatcher implements TokenMatcher {
+public final class AnyPathMatcher implements PathMatcher {
     @Override
-    public boolean matches(final String accessToken) {
+    public boolean matches(final String path) {
         return true;
     }
 }

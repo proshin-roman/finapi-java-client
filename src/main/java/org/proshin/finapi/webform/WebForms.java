@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.fake;
+package org.proshin.finapi.webform;
 
-public interface TokenMatcher {
-    boolean matches(String accessToken);
+public interface WebForms {
+
+    WebForm one(Long id);
 }

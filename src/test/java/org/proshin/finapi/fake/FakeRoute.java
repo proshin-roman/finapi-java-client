@@ -16,6 +16,10 @@
 package org.proshin.finapi.fake;
 
 import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.fake.matcher.path.AnyPathMatcher;
+import org.proshin.finapi.fake.matcher.path.PathMatcher;
+import org.proshin.finapi.fake.matcher.token.AnyTokenMatcher;
+import org.proshin.finapi.fake.matcher.token.TokenMatcher;
 
 public final class FakeRoute {
     private final PathMatcher pathMatcher;
