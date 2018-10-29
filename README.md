@@ -119,7 +119,7 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Delete a notification rule
     - [x] Delete all notification rules
 - Web forms
-    - [ ] Get a web form
+    - [x] Get a web form
 - Mocks and tests
     - [ ] Mock batch update
     - [ ] Check categorization
