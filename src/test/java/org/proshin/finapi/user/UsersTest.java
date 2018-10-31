@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.fake.FakeRoute;
+import org.proshin.finapi.fake.matcher.path.ExactPathMatcher;
 import org.proshin.finapi.user.in.FpCreateParameters;
 
 public final class UsersTest {
@@ -32,12 +33,10 @@ public final class UsersTest {
             new FpUsers(
                 new FakeEndpoint(
                     new FakeRoute(
-                        String.join("\n",
-                            "{" +
-                                "  \"userId\": \"user ID\"," +
-                                "  \"isUserVerified\": true" +
-                                "}"
-                        )
+                        '{' +
+                            "  \"userId\": \"user ID\"," +
+                            "  \"isUserVerified\": true" +
+                            '}'
                     )
                 ),
                 new FakeAccessToken("fake token")
@@ -51,15 +50,13 @@ public final class UsersTest {
         final User user = new FpUsers(
             new FakeEndpoint(
                 new FakeRoute(
-                    String.join("\n",
-                        "{" +
-                            "  \"id\": \"user ID\"," +
-                            "  \"password\": \"random password\"," +
-                            "  \"email\": \"user's email\"," +
-                            "  \"phone\": \"user's phone\"," +
-                            "  \"isAutoUpdateEnabled\": false" +
-                            "}"
-                    )
+                    '{' +
+                        "  \"id\": \"user ID\"," +
+                        "  \"password\": \"random password\"," +
+                        "  \"email\": \"user's email\"," +
+                        "  \"phone\": \"user's phone\"," +
+                        "  \"isAutoUpdateEnabled\": false" +
+                        '}'
                 )
             ),
             new FakeAccessToken("fake token")
@@ -77,18 +74,58 @@ public final class UsersTest {
             new FpUsers(
                 new FakeEndpoint(
                     new FakeRoute(
-                        String.join("\n",
-                            "{",
-                            "  \"userId\": \"userId\",",
-                            "  \"userEmail\": \"user's email\",",
-                            "  \"passwordChangeToken\": \"random token\"",
-                            "}"
-                        )
+                        '{' +
+                            "  \"userId\": \"userId\"," +
+                            "  \"userEmail\": \"user's email\"," +
+                            "  \"passwordChangeToken\": \"random token\"" +
+                            '}'
                     )
                 ),
                 new FakeAccessToken("fake token")
             ).requestPasswordChange("userId"),
             is("random token")
         );
+    }
+
+    @Test
+    @SuppressWarnings("JUnitTestMethodWithNoAssertions")
+    public void testExecutePasswordChange() {
+        new FpUsers(
+            new FakeEndpoint(
+                new FakeRoute(
+                    new ExactPathMatcher("/api/v1/users/executePasswordChange"),
+                    ""
+                )
+            ),
+            new FakeAccessToken("fake token")
+        ).executePasswordChange("user ID", "password", "token");
+    }
+
+    @Test
+    @SuppressWarnings("JUnitTestMethodWithNoAssertions")
+    public void testVerify() {
+        new FpUsers(
+            new FakeEndpoint(
+                new FakeRoute(
+                    new ExactPathMatcher("/api/v1/users/verify/user-1"),
+                    ""
+                )
+            ),
+            new FakeAccessToken("fake token")
+        ).verify("user-1");
+    }
+
+    @Test
+    @SuppressWarnings("JUnitTestMethodWithNoAssertions")
+    public void testDeleteUnverified() {
+        new FpUsers(
+            new FakeEndpoint(
+                new FakeRoute(
+                    new ExactPathMatcher("/api/v1/users/user-1"),
+                    ""
+                )
+            ),
+            new FakeAccessToken("fake token")
+        ).deleteUnverified("user-1");
     }
 }

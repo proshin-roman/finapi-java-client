@@ -15,10 +15,12 @@
  */
 package org.proshin.finapi.fake;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.cactoos.list.ListOf;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.accesstoken.AccessToken;
@@ -43,13 +45,17 @@ public final class FakeEndpoint implements Endpoint {
                 return route.response();
             }
         }
-        throw new RuntimeException(
-            String.format("No routes found for path '%s'", path));
+        throw new AssertionError(String.format("No routes found for path '%s'", path));
     }
 
     @Override
     public String delete(final String path, final AccessToken token, final Iterable<NameValuePair> parameters) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        for (final FakeRoute route : this.routes) {
+            if (route.matches(path)) {
+                return route.response();
+            }
+        }
+        throw new AssertionError(String.format("No routes found for path '%s'", path));
     }
 
     @Override
@@ -75,7 +81,11 @@ public final class FakeEndpoint implements Endpoint {
 
     @Override
     public String post(final String path, final AccessToken token, final int expected) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        try {
+            return this.post(path, token, new StringEntity(""), expected);
+        } catch (final UnsupportedEncodingException e) {
+            throw new AssertionError("Couldn't trigger a POST request", e);
+        }
     }
 
     @Override
@@ -85,8 +95,7 @@ public final class FakeEndpoint implements Endpoint {
                 return route.response();
             }
         }
-        throw new RuntimeException(
-            String.format("No routes found for path '%s'", path));
+        throw new AssertionError(String.format("No routes found for path '%s'", path));
     }
 
     @Override

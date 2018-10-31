@@ -15,19 +15,31 @@
  */
 package org.proshin.finapi.user;
 
+import org.proshin.finapi.account.Accounts;
 import org.proshin.finapi.bankconnection.BankConnections;
 import org.proshin.finapi.category.Categories;
 import org.proshin.finapi.label.Labels;
 import org.proshin.finapi.notificationrule.NotificationRules;
+import org.proshin.finapi.security.Securities;
+import org.proshin.finapi.transaction.Transactions;
+import org.proshin.finapi.webform.WebForms;
 
 public interface AuthorizedUser extends User {
     void delete();
 
     BankConnections connections();
 
+    Accounts accounts();
+
+    Transactions transactions();
+
+    Securities securities();
+
     Categories categories();
 
     Labels labels();
 
     NotificationRules notificationRules();
+
+    WebForms webForms();
 }

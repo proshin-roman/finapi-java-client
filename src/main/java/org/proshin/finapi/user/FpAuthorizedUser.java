@@ -18,6 +18,8 @@ package org.proshin.finapi.user;
 import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.account.Accounts;
+import org.proshin.finapi.account.FpAccounts;
 import org.proshin.finapi.bankconnection.BankConnections;
 import org.proshin.finapi.bankconnection.FpBankConnections;
 import org.proshin.finapi.category.Categories;
@@ -25,25 +27,35 @@ import org.proshin.finapi.category.FpCategories;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.label.FpLabels;
 import org.proshin.finapi.label.Labels;
+import org.proshin.finapi.notificationrule.FpNotificationRules;
 import org.proshin.finapi.notificationrule.NotificationRules;
+import org.proshin.finapi.security.FpSecurities;
+import org.proshin.finapi.security.Securities;
+import org.proshin.finapi.transaction.FpTransactions;
+import org.proshin.finapi.transaction.Transactions;
+import org.proshin.finapi.webform.FpWebForms;
+import org.proshin.finapi.webform.WebForms;
 
-/**
- * @todo #19 Finish categories(), labels() and notificationRules() when appropriate classes are implemented.
- */
 public final class FpAuthorizedUser implements AuthorizedUser {
 
     private final Endpoint endpoint;
     private final AccessToken token;
     private final User origin;
+    private final String url;
 
     public FpAuthorizedUser(final Endpoint endpoint, final AccessToken token) {
+        this(endpoint, token, "/api/v1/users");
+    }
+
+    public FpAuthorizedUser(final Endpoint endpoint, final AccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = new FpUser(
             new JSONObject(
-                endpoint.get("/api/v1/users", token)
+                endpoint.get(url, token)
             )
         );
+        this.url = url;
     }
 
     @Override
@@ -73,12 +85,27 @@ public final class FpAuthorizedUser implements AuthorizedUser {
 
     @Override
     public void delete() {
-        this.endpoint.delete("/api/v1/users", this.token);
+        this.endpoint.delete(this.url, this.token);
     }
 
     @Override
     public BankConnections connections() {
         return new FpBankConnections(this.endpoint, this.token);
+    }
+
+    @Override
+    public Accounts accounts() {
+        return new FpAccounts(this.endpoint, this.token);
+    }
+
+    @Override
+    public Transactions transactions() {
+        return new FpTransactions(this.endpoint, this.token);
+    }
+
+    @Override
+    public Securities securities() {
+        return new FpSecurities(this.endpoint, this.token);
     }
 
     @Override
@@ -93,6 +120,11 @@ public final class FpAuthorizedUser implements AuthorizedUser {
 
     @Override
     public NotificationRules notificationRules() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return new FpNotificationRules(this.endpoint, this.token);
+    }
+
+    @Override
+    public WebForms webForms() {
+        return new FpWebForms(this.endpoint, this.token);
     }
 }

@@ -29,7 +29,6 @@ public final class FpConfiguration implements Configuration {
         this.origin = origin;
     }
 
-
     @Override
     public boolean isAutomaticBatchUpdateEnabled() {
         throw new UnsupportedOperationException("This method is not implemented yet");

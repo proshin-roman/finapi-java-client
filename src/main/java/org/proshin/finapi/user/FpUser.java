@@ -17,6 +17,7 @@ package org.proshin.finapi.user;
 
 import java.util.Optional;
 import org.json.JSONObject;
+import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
 public final class FpUser implements User {
 
@@ -38,22 +39,12 @@ public final class FpUser implements User {
 
     @Override
     public Optional<String> email() {
-        final String name = "email";
-        if (this.origin.isNull(name)) {
-            return Optional.empty();
-        } else {
-            return Optional.of(this.origin.getString(name));
-        }
+        return new OptionalStringOf(this.origin, "email").get();
     }
 
     @Override
     public Optional<String> phone() {
-        final String name = "phone";
-        if (this.origin.isNull(name)) {
-            return Optional.empty();
-        } else {
-            return Optional.of(this.origin.getString(name));
-        }
+        return new OptionalStringOf(this.origin, "phone").get();
     }
 
     @Override

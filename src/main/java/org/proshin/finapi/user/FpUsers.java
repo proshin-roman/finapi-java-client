@@ -24,16 +24,22 @@ public final class FpUsers implements Users {
 
     private final Endpoint endpoint;
     private final AccessToken token;
+    private final String url;
 
     public FpUsers(final Endpoint endpoint, final AccessToken token) {
+        this(endpoint, token, "/api/v1/users/");
+    }
+
+    public FpUsers(final Endpoint endpoint, final AccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
+        this.url = url;
     }
 
     @Override
     public boolean verified(final String userId) {
         return new JSONObject(
-            this.endpoint.get("/api/v1/users/verificationStatus", this.token)
+            this.endpoint.get(this.url + "verificationStatus", this.token)
         ).getBoolean("isUserVerified");
     }
 
@@ -42,7 +48,7 @@ public final class FpUsers implements Users {
         return new FpUser(
             new JSONObject(
                 this.endpoint.post(
-                    "/api/v1/users",
+                    this.url,
                     this.token,
                     parameters,
                     201
@@ -55,7 +61,7 @@ public final class FpUsers implements Users {
     public String requestPasswordChange(final String userId) {
         return new JSONObject(
             this.endpoint.post(
-                "/api/v1/users/requestPasswordChange",
+                this.url + "requestPasswordChange",
                 this.token,
                 () -> new JSONObject().put("userId", userId)
             )
@@ -65,7 +71,7 @@ public final class FpUsers implements Users {
     @Override
     public void executePasswordChange(final String userId, final String password, final String token) {
         this.endpoint.post(
-            "/api/v1/users/executePasswordChange",
+            this.url + "executePasswordChange",
             this.token,
             () -> new JSONObject()
                 .put("userId", userId)
@@ -77,7 +83,7 @@ public final class FpUsers implements Users {
     @Override
     public void verify(final String userId) {
         this.endpoint.post(
-            String.format("/api/v1/users/verify/%s", userId),
+            this.url + "verify/" + userId,
             this.token,
             200
         );
@@ -86,7 +92,7 @@ public final class FpUsers implements Users {
     @Override
     public void deleteUnverified(final String userId) {
         this.endpoint.delete(
-            String.format("/api/v1/users/verify/%s", userId),
+            this.url + userId,
             this.token
         );
     }

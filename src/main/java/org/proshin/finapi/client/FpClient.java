@@ -35,7 +35,7 @@ public final class FpClient implements Client {
     public Configuration configuration() {
         return new FpConfiguration(
             new JSONObject(
-                endpoint.get("/api/v1/clientConfiguration", this.token)
+                this.endpoint.get("/api/v1/clientConfiguration", this.token)
             )
         );
     }
