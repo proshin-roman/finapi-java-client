@@ -86,7 +86,7 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Delete an account
     - [x] Delete all accounts
 - Transactions
-    - [x Get a transaction
+    - [x] Get a transaction
     - [ ] ~~Get multiple transactions~~ (won't be implemented as deprecated)
     - [x] Get and search all transactions
     - [x] Split a transaction
