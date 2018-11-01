@@ -21,20 +21,18 @@ import org.json.JSONObject;
 
 public final class OptionalStringOf implements Supplier<Optional<String>> {
 
-    private final JSONObject origin;
-    private final String name;
+    private final Supplier<Optional<String>> origin;
 
     public OptionalStringOf(final JSONObject origin, final String name) {
+        this(new OptionalOf<>(origin, name, JSONObject::getString));
+    }
+
+    public OptionalStringOf(final Supplier<Optional<String>> origin) {
         this.origin = origin;
-        this.name = name;
     }
 
     @Override
     public Optional<String> get() {
-        if (this.origin.isNull(name)) {
-            return Optional.empty();
-        } else {
-            return Optional.of(this.origin.getString(name));
-        }
+        return this.origin.get();
     }
 }

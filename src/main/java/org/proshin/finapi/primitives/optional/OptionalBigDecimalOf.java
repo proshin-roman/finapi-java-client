@@ -22,20 +22,18 @@ import org.json.JSONObject;
 
 public final class OptionalBigDecimalOf implements Supplier<Optional<BigDecimal>> {
 
-    private final JSONObject origin;
-    private final String name;
+    private final Supplier<Optional<BigDecimal>> origin;
 
     public OptionalBigDecimalOf(final JSONObject origin, final String name) {
+        this(new OptionalOf<>(origin, name, JSONObject::getBigDecimal));
+    }
+
+    public OptionalBigDecimalOf(final Supplier<Optional<BigDecimal>> origin) {
         this.origin = origin;
-        this.name = name;
     }
 
     @Override
     public Optional<BigDecimal> get() {
-        if (this.origin.isNull(name)) {
-            return Optional.empty();
-        } else {
-            return Optional.of(this.origin.getBigDecimal(name));
-        }
+        return this.origin.get();
     }
 }

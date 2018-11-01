@@ -17,7 +17,7 @@ package org.proshin.finapi.account.out;
 
 import java.util.Optional;
 import org.json.JSONObject;
-import org.proshin.finapi.primitives.optional.OptionalStringOf;
+import org.proshin.finapi.primitives.optional.OptionalOf;
 
 public final class FpHolder implements Holder {
 
@@ -29,11 +29,11 @@ public final class FpHolder implements Holder {
 
     @Override
     public Optional<String> id() {
-        return new OptionalStringOf(this.origin, "accountHolderId").get();
+        return new OptionalOf<>(this.origin, "accountHolderId", JSONObject::getString).get();
     }
 
     @Override
     public Optional<String> name() {
-        return new OptionalStringOf(this.origin, "accountHolderName").get();
+        return new OptionalOf<>(this.origin, "accountHolderName", JSONObject::getString).get();
     }
 }

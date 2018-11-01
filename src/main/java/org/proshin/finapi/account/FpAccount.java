@@ -32,12 +32,13 @@ import org.proshin.finapi.bankconnection.FpBankConnections;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.optional.OptionalBigDecimalOf;
+import org.proshin.finapi.primitives.optional.OptionalOf;
 import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
-import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
 /**
  * @todo #21 Write unit tests for FpAccount class
  */
+@SuppressWarnings("ClassWithTooManyMethods")
 public final class FpAccount implements Account {
 
     private final Endpoint endpoint;
@@ -65,7 +66,7 @@ public final class FpAccount implements Account {
 
     @Override
     public Optional<String> name() {
-        return new OptionalStringOf(this.origin, "accountName").get();
+        return new OptionalOf<>(this.origin, "accountName", JSONObject::getString).get();
     }
 
     @Override
@@ -75,12 +76,12 @@ public final class FpAccount implements Account {
 
     @Override
     public Optional<String> subNumber() {
-        return new OptionalStringOf(this.origin, "subAccountNumber").get();
+        return new OptionalOf<>(this.origin, "subAccountNumber", JSONObject::getString).get();
     }
 
     @Override
     public Optional<String> iban() {
-        return new OptionalStringOf(this.origin, "iban").get();
+        return new OptionalOf<>(this.origin, "iban", JSONObject::getString).get();
     }
 
     @Override
@@ -90,7 +91,7 @@ public final class FpAccount implements Account {
 
     @Override
     public Optional<String> currency() {
-        return new OptionalStringOf(this.origin, "accountCurrency").get();
+        return new OptionalOf<>(this.origin, "accountCurrency", JSONObject::getString).get();
     }
 
     @Override

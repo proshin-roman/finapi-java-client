@@ -15,11 +15,15 @@
  */
 package org.proshin.finapi.client;
 
+import org.proshin.finapi.client.in.EditClientParameters;
+import org.proshin.finapi.client.out.Configuration;
 import org.proshin.finapi.user.Users;
 
 public interface Client {
 
     Configuration configuration();
+
+    Configuration edit(EditClientParameters parameters);
 
     Users users();
 }

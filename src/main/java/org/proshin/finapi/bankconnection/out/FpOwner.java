@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.LocalDateOf;
-import org.proshin.finapi.primitives.optional.OptionalJsonField;
+import org.proshin.finapi.primitives.optional.OptionalOf;
 
 public final class FpOwner implements Owner {
 
@@ -31,7 +31,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<String> firstName() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "firstName",
             JSONObject::getString
@@ -40,7 +40,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<String> lastName() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "lastName",
             JSONObject::getString
@@ -49,7 +49,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<String> salutation() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "salutation",
             JSONObject::getString
@@ -58,7 +58,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<String> title() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "title",
             JSONObject::getString
@@ -67,7 +67,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<String> email() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "email",
             JSONObject::getString
@@ -76,7 +76,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<LocalDate> dateOfBirth() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "firstName",
             (jsonObject, key) -> new LocalDateOf(jsonObject.getString(key)).get()
@@ -85,7 +85,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<String> postCode() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "postCode",
             JSONObject::getString
@@ -94,7 +94,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<String> country() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "country",
             JSONObject::getString
@@ -103,7 +103,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<String> city() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "city",
             JSONObject::getString
@@ -112,7 +112,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<String> street() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "street",
             JSONObject::getString
@@ -121,7 +121,7 @@ public final class FpOwner implements Owner {
 
     @Override
     public Optional<String> houseNumber() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "houseNumber",
             JSONObject::getString

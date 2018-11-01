@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.client;
+package org.proshin.finapi.client.out;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.proshin.finapi.primitives.IterableJsonArray;
+import org.proshin.finapi.primitives.optional.OptionalOf;
 
 public final class FpConfiguration implements Configuration {
 
@@ -31,37 +31,37 @@ public final class FpConfiguration implements Configuration {
 
     @Override
     public boolean isAutomaticBatchUpdateEnabled() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return this.origin.getBoolean("isAutomaticBatchUpdateEnabled");
     }
 
     @Override
     public Optional<String> userNotificationCallbackUrl() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return new OptionalOf<>(this.origin, "userNotificationCallbackUrl", JSONObject::getString).get();
     }
 
     @Override
     public Optional<String> userSynchronizationCallbackUrl() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return new OptionalOf<>(this.origin, "userSynchronizationCallbackUrl", JSONObject::getString).get();
     }
 
     @Override
     public Optional<Integer> refreshTokensValidityPeriod() {
-        return this.optional("refreshTokensValidityPeriod");
+        return new OptionalOf<>(this.origin, "refreshTokensValidityPeriod", JSONObject::getInt).get();
     }
 
     @Override
     public Optional<Integer> userAccessTokensValidityPeriod() {
-        return this.optional("userAccessTokensValidityPeriod");
+        return new OptionalOf<>(this.origin, "userAccessTokensValidityPeriod", JSONObject::getInt).get();
     }
 
     @Override
     public Optional<Integer> clientAccessTokensValidityPeriod() {
-        return this.optional("clientAccessTokensValidityPeriod");
+        return new OptionalOf<>(this.origin, "clientAccessTokensValidityPeriod", JSONObject::getInt).get();
     }
 
     @Override
-    public Optional<Integer> maxUserLoginAttempts() {
-        return this.optional("maxUserLoginAttempts");
+    public int maxUserLoginAttempts() {
+        return this.origin.getInt("maxUserLoginAttempts");
     }
 
     @Override
@@ -81,19 +81,19 @@ public final class FpConfiguration implements Configuration {
 
     @Override
     public Iterable<String> availableBankGroups() {
-        final JSONArray array = this.origin.getJSONArray("availableBankGroups");
-        final List<String> availableBankGroups = new ArrayList<>(array.length());
-        for (int index = 0; index < array.length(); index++) {
-            availableBankGroups.add(array.getString(index));
-        }
-        return availableBankGroups;
+        return new IterableJsonArray<>(
+            this.origin.getJSONArray("availableBankGroups"),
+            JSONArray::getString
+        );
     }
 
-    private Optional<Integer> optional(final String name) {
-        if (this.origin.isNull(name)) {
-            return Optional.empty();
-        } else {
-            return Optional.of(this.origin.getInt(name));
-        }
+    @Override
+    public Optional<String> applicationName() {
+        return new OptionalOf<>(this.origin, "applicationName", JSONObject::getString).get();
+    }
+
+    @Override
+    public boolean pinStorageAvailableInWebForm() {
+        return this.origin.getBoolean("pinStorageAvailableInWebForm");
     }
 }

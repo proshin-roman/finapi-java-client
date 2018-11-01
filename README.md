@@ -49,7 +49,7 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Delete IBAN rules
 - Client configuration
     - [x] Get client configuration
-    - [ ] Edit client configuration
+    - [x] Edit client configuration
 - Users
     - [ ] Get the authorized user
     - [x] Get a user's verification status

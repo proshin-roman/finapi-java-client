@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.client;
+package org.proshin.finapi.client.out;
 
 import java.util.Optional;
 
@@ -30,7 +30,7 @@ public interface Configuration {
 
     Optional<Integer> clientAccessTokensValidityPeriod();
 
-    Optional<Integer> maxUserLoginAttempts();
+    int maxUserLoginAttempts();
 
     boolean isUserAutoVerificationEnabled();
 
@@ -39,4 +39,8 @@ public interface Configuration {
     boolean isWebScrapingEnabled();
 
     Iterable<String> availableBankGroups();
+
+    Optional<String> applicationName();
+
+    boolean pinStorageAvailableInWebForm();
 }

@@ -17,7 +17,7 @@ package org.proshin.finapi.account.out;
 
 import java.util.Optional;
 import org.json.JSONObject;
-import org.proshin.finapi.primitives.optional.OptionalStringOf;
+import org.proshin.finapi.primitives.optional.OptionalOf;
 
 public final class FpSepaExecutingResponse implements SepaExecutingResponse {
 
@@ -33,11 +33,11 @@ public final class FpSepaExecutingResponse implements SepaExecutingResponse {
 
     @Override
     public Optional<String> successMessage() {
-        return new OptionalStringOf(this.origin, "successMessage").get();
+        return new OptionalOf<>(this.origin, "successMessage", JSONObject::getString).get();
     }
 
     @Override
     public Optional<String> warnMessage() {
-        return new OptionalStringOf(this.origin, "warnMessage").get();
+        return new OptionalOf<>(this.origin, "warnMessage", JSONObject::getString).get();
     }
 }

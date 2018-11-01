@@ -23,24 +23,28 @@ import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
 public final class OptionalOffsetDateTimeOf implements Supplier<Optional<OffsetDateTime>> {
 
-    private final JSONObject origin;
-    private final String name;
-    private final String pattern;
+    private final Supplier<Optional<OffsetDateTime>> origin;
 
     public OptionalOffsetDateTimeOf(final JSONObject origin, final String name) {
         this(origin, name, "yyyy-MM-dd HH:mm:ss.SSS");
     }
 
     public OptionalOffsetDateTimeOf(final JSONObject origin, final String name, final String pattern) {
+        this(
+            new OptionalOf<>(
+                origin,
+                name,
+                (json, field) -> new OffsetDateTimeOf(json.getString(field), pattern).get()
+            )
+        );
+    }
+
+    public OptionalOffsetDateTimeOf(final Supplier<Optional<OffsetDateTime>> origin) {
         this.origin = origin;
-        this.name = name;
-        this.pattern = pattern;
     }
 
     @Override
     public Optional<OffsetDateTime> get() {
-        return this.origin.isNull(this.name)
-            ? Optional.empty()
-            : Optional.of(new OffsetDateTimeOf(this.origin.getString(this.name), this.pattern).get());
+        return this.origin.get();
     }
 }

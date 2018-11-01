@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.IterableJsonArray;
-import org.proshin.finapi.primitives.optional.OptionalJsonField;
+import org.proshin.finapi.primitives.optional.OptionalOf;
 
 public final class FpTwoStepProcedures implements TwoStepProcedures {
 
@@ -31,12 +31,12 @@ public final class FpTwoStepProcedures implements TwoStepProcedures {
 
     @Override
     public Optional<TwoStepProcedure> defaultOne() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "defaultTwoStepProcedureId",
             JSONObject::getString
         ).get().map(value -> {
-            for (TwoStepProcedure procedure : this.all()) {
+            for (final TwoStepProcedure procedure : this.all()) {
                 if (Objects.equals(value, procedure.id())) {
                     return procedure;
                 }

@@ -20,17 +20,13 @@ import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import org.json.JSONObject;
 
-public final class OptionalJsonField<T> implements Supplier<Optional<T>> {
+public final class OptionalOf<T> implements Supplier<Optional<T>> {
 
     private final JSONObject origin;
     private final String name;
     private final BiFunction<JSONObject, String, T> func;
 
-    public OptionalJsonField(
-        final JSONObject origin,
-        final String name,
-        final BiFunction<JSONObject, String, T> func
-    ) {
+    public OptionalOf(final JSONObject origin, final String name, final BiFunction<JSONObject, String, T> func) {
         this.origin = origin;
         this.name = name;
         this.func = func;
@@ -38,10 +34,8 @@ public final class OptionalJsonField<T> implements Supplier<Optional<T>> {
 
     @Override
     public Optional<T> get() {
-        if (this.origin.isNull(name)) {
-            return Optional.empty();
-        } else {
-            return Optional.of(this.func.apply(this.origin, this.name));
-        }
+        return this.origin.isNull(this.name)
+            ? Optional.empty()
+            : Optional.of(this.func.apply(this.origin, this.name));
     }
 }

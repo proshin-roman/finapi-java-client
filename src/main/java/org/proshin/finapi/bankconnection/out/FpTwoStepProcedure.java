@@ -17,7 +17,7 @@ package org.proshin.finapi.bankconnection.out;
 
 import java.util.Optional;
 import org.json.JSONObject;
-import org.proshin.finapi.primitives.optional.OptionalJsonField;
+import org.proshin.finapi.primitives.optional.OptionalOf;
 
 public final class FpTwoStepProcedure implements TwoStepProcedure {
 
@@ -39,7 +39,7 @@ public final class FpTwoStepProcedure implements TwoStepProcedure {
 
     @Override
     public Optional<Type> type() {
-        return new OptionalJsonField<>(
+        return new OptionalOf<>(
             this.origin,
             "procedureChallengeType",
             (jsonObject, key) -> Type.valueOf(jsonObject.getString(key))
