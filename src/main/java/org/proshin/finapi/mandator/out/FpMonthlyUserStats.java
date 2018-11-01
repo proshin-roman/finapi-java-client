@@ -13,34 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.primitives.optional;
+package org.proshin.finapi.mandator.out;
 
 import java.time.OffsetDateTime;
-import java.util.Optional;
-import java.util.function.Supplier;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public final class OptionalOffsetDateTimeOf implements Supplier<Optional<OffsetDateTime>> {
+public final class FpMonthlyUserStats implements MonthlyUserStats {
 
     private final JSONObject origin;
-    private final String name;
-    private final String pattern;
 
-    public OptionalOffsetDateTimeOf(final JSONObject origin, final String name) {
-        this(origin, name, "yyyy-MM-dd HH:mm:ss.SSS");
-    }
-
-    public OptionalOffsetDateTimeOf(final JSONObject origin, final String name, final String pattern) {
+    public FpMonthlyUserStats(final JSONObject origin) {
         this.origin = origin;
-        this.name = name;
-        this.pattern = pattern;
     }
 
     @Override
-    public Optional<OffsetDateTime> get() {
-        return this.origin.isNull(this.name)
-            ? Optional.empty()
-            : Optional.of(new OffsetDateTimeOf(this.origin.getString(this.name), this.pattern).get());
+    public OffsetDateTime month() {
+        return new OffsetDateTimeOf(this.origin.getString("month"), "yyyy-MM").get();
+    }
+
+    @Override
+    public int minBankConnectionCount() {
+        return this.origin.getInt("minBankConnectionCount");
+    }
+
+    @Override
+    public int maxBankConnectionCount() {
+        return this.origin.getInt("maxBankConnectionCount");
     }
 }

@@ -89,7 +89,7 @@ public final class CashFlowsCriteria implements Iterable<NameValuePair> {
     }
 
     public CashFlowsCriteria withDirection(final Direction direction) {
-        this.pairs.add(new UrlEncodedPair("direction", direction.label()));
+        this.pairs.add(new UrlEncodedPair("direction", direction.lowerCase()));
         return this;
     }
 
@@ -124,7 +124,7 @@ public final class CashFlowsCriteria implements Iterable<NameValuePair> {
     }
 
     public CashFlowsCriteria withOrdering(final String... orders) {
-        for (String order : orders) {
+        for (final String order : orders) {
             this.pairs.add(new UrlEncodedPair("order", order));
         }
         return this;

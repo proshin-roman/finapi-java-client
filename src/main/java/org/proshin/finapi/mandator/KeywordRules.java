@@ -1,4 +1,4 @@
-package org.proshin.finapi.primitives;/*
+/*
  * Copyright 2018 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,23 +13,16 @@ package org.proshin.finapi.primitives;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.proshin.finapi.mandator;
 
-public enum Direction {
-    ALL("all", "Both"), INCOME("income", "Income"), SPENDING("spending", "Spending");
+import org.proshin.finapi.mandator.in.NewKeywordRule;
+import org.proshin.finapi.primitives.paging.Page;
 
-    private final String lowerCase;
-    private final String capitalized;
+public interface KeywordRules {
 
-    Direction(final String lowerCase, final String capitalized) {
-        this.lowerCase = lowerCase;
-        this.capitalized = capitalized;
-    }
+    Page<KeywordRule> query(int page, int perPage);
 
-    public String lowerCase() {
-        return this.lowerCase;
-    }
+    Iterable<KeywordRule> create(final NewKeywordRule... rules);
 
-    public String capitalized() {
-        return this.capitalized;
-    }
+    Iterable<Long> delete(Iterable<Long> ids);
 }

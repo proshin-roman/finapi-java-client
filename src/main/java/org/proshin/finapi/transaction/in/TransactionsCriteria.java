@@ -26,6 +26,7 @@ import org.proshin.finapi.primitives.StringOf;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
+@SuppressWarnings("ClassWithTooManyMethods")
 public final class TransactionsCriteria implements Iterable<NameValuePair> {
 
     private final List<NameValuePair> pairs;
@@ -99,7 +100,7 @@ public final class TransactionsCriteria implements Iterable<NameValuePair> {
     }
 
     public TransactionsCriteria withDirection(final Direction direction) {
-        this.pairs.add(new UrlEncodedPair("direction", direction.label()));
+        this.pairs.add(new UrlEncodedPair("direction", direction.lowerCase()));
         return this;
     }
 

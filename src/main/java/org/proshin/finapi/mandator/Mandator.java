@@ -1,4 +1,4 @@
-package org.proshin.finapi.primitives;/*
+/*
  * Copyright 2018 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,23 +13,23 @@ package org.proshin.finapi.primitives;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.proshin.finapi.mandator;
 
-public enum Direction {
-    ALL("all", "Both"), INCOME("income", "Income"), SPENDING("spending", "Spending");
+import org.proshin.finapi.mandator.in.UsersCriteria;
+import org.proshin.finapi.mandator.out.DeletionResult;
+import org.proshin.finapi.mandator.out.User;
+import org.proshin.finapi.primitives.paging.Page;
 
-    private final String lowerCase;
-    private final String capitalized;
+public interface Mandator {
 
-    Direction(final String lowerCase, final String capitalized) {
-        this.lowerCase = lowerCase;
-        this.capitalized = capitalized;
-    }
+    Page<User> users(UsersCriteria criteria);
 
-    public String lowerCase() {
-        return this.lowerCase;
-    }
+    DeletionResult deleteUsers(Iterable<String> ids);
 
-    public String capitalized() {
-        return this.capitalized;
-    }
+    void changeClientCredentials(final String clientId, final String oldClientSecret,
+        final String newClientSecret);
+
+    KeywordRules keywordRules();
+
+    IbanRules ibanRules();
 }

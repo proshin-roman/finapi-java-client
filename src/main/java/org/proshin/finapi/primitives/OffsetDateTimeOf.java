@@ -27,9 +27,13 @@ public final class OffsetDateTimeOf implements Supplier<OffsetDateTime> {
     private final DateTimeFormatter formatter;
 
     public OffsetDateTimeOf(final String origin) {
+        this(origin, "yyyy-MM-dd HH:mm:ss.SSS");
+    }
+
+    public OffsetDateTimeOf(final String origin, final String pattern) {
         this(
             origin,
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
+            DateTimeFormatter.ofPattern(pattern)
                 .withZone(ZoneId.of("Europe/Berlin"))
         );
     }
@@ -41,6 +45,6 @@ public final class OffsetDateTimeOf implements Supplier<OffsetDateTime> {
 
     @Override
     public OffsetDateTime get() {
-        return ZonedDateTime.parse(this.origin, formatter).toOffsetDateTime();
+        return ZonedDateTime.parse(this.origin, this.formatter).toOffsetDateTime();
     }
 }

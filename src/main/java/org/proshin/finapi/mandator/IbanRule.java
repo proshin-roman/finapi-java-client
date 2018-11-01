@@ -1,4 +1,4 @@
-package org.proshin.finapi.primitives;/*
+/*
  * Copyright 2018 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,23 +13,21 @@ package org.proshin.finapi.primitives;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.proshin.finapi.mandator;
 
-public enum Direction {
-    ALL("all", "Both"), INCOME("income", "Income"), SPENDING("spending", "Spending");
+import java.time.OffsetDateTime;
+import org.proshin.finapi.category.Category;
+import org.proshin.finapi.primitives.Direction;
 
-    private final String lowerCase;
-    private final String capitalized;
+public interface IbanRule {
 
-    Direction(final String lowerCase, final String capitalized) {
-        this.lowerCase = lowerCase;
-        this.capitalized = capitalized;
-    }
+    Long id();
 
-    public String lowerCase() {
-        return this.lowerCase;
-    }
+    Category category();
 
-    public String capitalized() {
-        return this.capitalized;
-    }
+    Direction direction();
+
+    OffsetDateTime creationDate();
+
+    String iban();
 }

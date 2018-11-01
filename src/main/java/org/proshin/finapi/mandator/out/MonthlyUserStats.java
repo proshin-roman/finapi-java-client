@@ -1,4 +1,4 @@
-package org.proshin.finapi.primitives;/*
+/*
  * Copyright 2018 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,23 +13,15 @@ package org.proshin.finapi.primitives;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.proshin.finapi.mandator.out;
 
-public enum Direction {
-    ALL("all", "Both"), INCOME("income", "Income"), SPENDING("spending", "Spending");
+import java.time.OffsetDateTime;
 
-    private final String lowerCase;
-    private final String capitalized;
+public interface MonthlyUserStats {
 
-    Direction(final String lowerCase, final String capitalized) {
-        this.lowerCase = lowerCase;
-        this.capitalized = capitalized;
-    }
+    OffsetDateTime month();
 
-    public String lowerCase() {
-        return this.lowerCase;
-    }
+    int minBankConnectionCount();
 
-    public String capitalized() {
-        return this.capitalized;
-    }
+    int maxBankConnectionCount();
 }

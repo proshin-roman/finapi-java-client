@@ -38,9 +38,15 @@ This library is in early alpha version and not all API methods are implemented y
     - [ ] Get user's token using refresh token
     - [x] Revoke a token
 - Mandator administration
-    - [ ] Get user list
-    - [ ] Delete users
-    - [ ] Change client credentials
+    - [x] Get user list
+    - [x] Delete users
+    - [x] Change client credentials
+    - [x] Get keyword rules
+    - [x] Create keyword rules
+    - [x] Delete keyword rules
+    - [x] Get IBAN rules
+    - [x] Create IBAN rules
+    - [x] Delete IBAN rules
 - Client configuration
     - [x] Get client configuration
     - [ ] Edit client configuration

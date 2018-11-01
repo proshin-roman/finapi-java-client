@@ -1,4 +1,4 @@
-package org.proshin.finapi.primitives;/*
+/*
  * Copyright 2018 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,23 +13,11 @@ package org.proshin.finapi.primitives;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.proshin.finapi.mandator.out;
 
-public enum Direction {
-    ALL("all", "Both"), INCOME("income", "Income"), SPENDING("spending", "Spending");
+public interface DeletionResult {
 
-    private final String lowerCase;
-    private final String capitalized;
+    Iterable<String> deletedUsers();
 
-    Direction(final String lowerCase, final String capitalized) {
-        this.lowerCase = lowerCase;
-        this.capitalized = capitalized;
-    }
-
-    public String lowerCase() {
-        return this.lowerCase;
-    }
-
-    public String capitalized() {
-        return this.capitalized;
-    }
+    Iterable<String> nonDeletedUsers();
 }

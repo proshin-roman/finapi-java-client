@@ -22,6 +22,7 @@ import java.util.stream.StreamSupport;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.proshin.finapi.bank.Bank;
+import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 
 public final class FpQueryCriteria implements QueryCriteria {
 
@@ -37,13 +38,7 @@ public final class FpQueryCriteria implements QueryCriteria {
 
     @Override
     public QueryCriteria withIds(final Iterable<Long> ids) {
-        this.pairs.add(
-            new BasicNameValuePair("ids",
-                StreamSupport.stream(ids.spliterator(), false)
-                    .map(Object::toString)
-                    .collect(Collectors.joining(","))
-            )
-        );
+        this.pairs.add(new CommaSeparatedPair<>("ids", ids));
         return this;
     }
 
