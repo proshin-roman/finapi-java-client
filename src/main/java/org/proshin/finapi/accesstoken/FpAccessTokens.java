@@ -23,13 +23,22 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 import org.proshin.finapi.endpoint.Endpoint;
+import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
 public final class FpAccessTokens implements AccessTokens {
 
     private final Endpoint endpoint;
+    private final String tokenUrl;
+    private final String revokeUrl;
 
     public FpAccessTokens(final Endpoint endpoint) {
+        this(endpoint, "/oauth/token", "/oauth/revoke");
+    }
+
+    public FpAccessTokens(final Endpoint endpoint, final String tokenUrl, final String revokeUrl) {
         this.endpoint = endpoint;
+        this.tokenUrl = tokenUrl;
+        this.revokeUrl = revokeUrl;
     }
 
     @Override
@@ -46,7 +55,7 @@ public final class FpAccessTokens implements AccessTokens {
         }
         return new ClientAccessToken(
             new JSONObject(
-                this.endpoint.post("/oauth/token", entity, 200)
+                this.endpoint.post(this.tokenUrl, entity, 200)
             )
         );
     }
@@ -59,11 +68,11 @@ public final class FpAccessTokens implements AccessTokens {
         final String password
     ) {
         final List<NameValuePair> parameters = new ArrayList<>();
-        parameters.add(new BasicNameValuePair("grant_type", "password"));
-        parameters.add(new BasicNameValuePair("client_id", clientId));
-        parameters.add(new BasicNameValuePair("client_secret", clientSecret));
-        parameters.add(new BasicNameValuePair("username", username));
-        parameters.add(new BasicNameValuePair("password", password));
+        parameters.add(new UrlEncodedPair("grant_type", "password"));
+        parameters.add(new UrlEncodedPair("client_id", clientId));
+        parameters.add(new UrlEncodedPair("client_secret", clientSecret));
+        parameters.add(new UrlEncodedPair("username", username));
+        parameters.add(new UrlEncodedPair("password", password));
         final UrlEncodedFormEntity entity;
         try {
             entity = new UrlEncodedFormEntity(parameters);
@@ -72,7 +81,27 @@ public final class FpAccessTokens implements AccessTokens {
         }
         return new UserAccessToken(
             new JSONObject(
-                this.endpoint.post("/oauth/token", entity, 200)
+                this.endpoint.post(this.tokenUrl, entity, 200)
+            )
+        );
+    }
+
+    @Override
+    public AccessToken userToken(final String clientId, final String clientSecret, final String refreshToken) {
+        final List<NameValuePair> parameters = new ArrayList<>();
+        parameters.add(new UrlEncodedPair("grant_type", "refresh_token"));
+        parameters.add(new UrlEncodedPair("client_id", clientId));
+        parameters.add(new UrlEncodedPair("client_secret", clientSecret));
+        parameters.add(new UrlEncodedPair("refresh_token", refreshToken));
+        final UrlEncodedFormEntity entity;
+        try {
+            entity = new UrlEncodedFormEntity(parameters);
+        } catch (final UnsupportedEncodingException exception) {
+            throw new RuntimeException("Couldn't instantiate an entity for POST request", exception);
+        }
+        return new UserAccessToken(
+            new JSONObject(
+                this.endpoint.post(this.tokenUrl, entity, 200)
             )
         );
     }
@@ -86,7 +115,7 @@ public final class FpAccessTokens implements AccessTokens {
      * @todo #32 Test this method: assert that methods submits the right request
      */
     @Override
-    public void revoke(AccessToken clientToken, AccessToken userToken, RevokeToken tokensToRevoke) {
+    public void revoke(final AccessToken clientToken, final AccessToken userToken, final RevokeToken tokensToRevoke) {
         final List<NameValuePair> parameters = new ArrayList<>();
         parameters.add(new BasicNameValuePair("token", userToken.accessToken()));
         switch (tokensToRevoke) {
@@ -109,6 +138,6 @@ public final class FpAccessTokens implements AccessTokens {
         } catch (final UnsupportedEncodingException exception) {
             throw new RuntimeException("Couldn't instantiate an entity for POST request", exception);
         }
-        this.endpoint.post("/oauth/revoke", clientToken, entity, 200);
+        this.endpoint.post(this.revokeUrl, clientToken, entity, 200);
     }
 }

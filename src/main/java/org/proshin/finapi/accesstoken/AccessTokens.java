@@ -16,10 +16,12 @@
 package org.proshin.finapi.accesstoken;
 
 public interface AccessTokens {
-    AccessToken clientToken(final String clientId, final String clientSecret);
 
-    AccessToken userToken(final String clientId, final String clientSecret, final String username,
-        final String password);
+    AccessToken clientToken(String clientId, String clientSecret);
+
+    AccessToken userToken(String clientId, String clientSecret, String username, String password);
+
+    AccessToken userToken(String clientId, String clientSecret, String refreshToken);
 
     void revoke(AccessToken clientToken, AccessToken userToken, RevokeToken tokensToRevoke);
 
