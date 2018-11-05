@@ -32,10 +32,12 @@ import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
 public final class FinapiException extends RuntimeException {
 
-    private static final long serialVersionUID = 6548845063092477856L;
+    private static final long serialVersionUID = -5608855544688297953L;
 
-    private final UncheckedScalar<JSONObject> origin;
-    private final UncheckedScalar<Optional<String>> location;
+    @SuppressWarnings("TransientFieldNotInitialized")
+    private final transient UncheckedScalar<JSONObject> origin;
+    @SuppressWarnings("TransientFieldNotInitialized")
+    private final transient UncheckedScalar<Optional<String>> location;
 
     public FinapiException(final int expected, final HttpResponse response) {
         super(
