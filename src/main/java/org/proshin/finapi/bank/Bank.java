@@ -17,6 +17,7 @@ package org.proshin.finapi.bank;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
+import org.proshin.finapi.bank.out.LoginFields;
 
 public interface Bank {
 
@@ -30,11 +31,7 @@ public interface Bank {
 
     String blz();
 
-    Optional<String> loginFieldUserId();
-
-    Optional<String> loginFieldCustomerId();
-
-    Optional<String> loginFieldPin();
+    LoginFields loginFields();
 
     boolean isSupported();
 

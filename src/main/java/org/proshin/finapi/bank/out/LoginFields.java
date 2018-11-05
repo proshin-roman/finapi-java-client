@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.bank;
+package org.proshin.finapi.bank.out;
 
-import org.proshin.finapi.bank.in.BanksCriteria;
-import org.proshin.finapi.primitives.paging.Page;
+import java.util.Optional;
 
-/**
- * @todo #14 Write tests for FpBank/FpBanks classes.
- */
-public interface Banks {
+public interface LoginFields {
 
-    Bank one(Long id);
+    Optional<String> userId();
 
-    Page<Bank> search(BanksCriteria criteria);
+    Optional<String> customerId();
+
+    Optional<String> pin();
 }

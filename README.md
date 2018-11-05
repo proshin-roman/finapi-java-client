@@ -21,7 +21,6 @@ The project is following the next principles (it is a subset of [those ones](htt
 - No mutable objects
 - No static methods, not even private ones
 - No instanceof, type casting or reflection
-- No public methods without contract (interface)
 - No implementation inheritance
 
 ## How to use

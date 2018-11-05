@@ -25,7 +25,7 @@ import static org.hamcrest.core.Is.is;
 import org.junit.Test;
 import static org.proshin.finapi.bank.Bank.DataSource.FINTS_SERVER;
 import static org.proshin.finapi.bank.Bank.DataSource.WEB_SCRAPER;
-import org.proshin.finapi.bank.in.FpQueryCriteria;
+import org.proshin.finapi.bank.in.BanksCriteria;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.fake.FakeRoute;
@@ -72,9 +72,9 @@ public final class BanksTest {
         assertThat(bank.loginHint(), is(Optional.empty()));
         assertThat(bank.bic(), is(Optional.empty()));
         assertThat(bank.blz(), is("00000000"));
-        assertThat(bank.loginFieldUserId(), is(Optional.of("User ID field label")));
-        assertThat(bank.loginFieldCustomerId(), is(Optional.of("Customer ID field label")));
-        assertThat(bank.loginFieldPin(), is(Optional.of("PIN")));
+        assertThat(bank.loginFields().userId(), is(Optional.of("User ID field label")));
+        assertThat(bank.loginFields().customerId(), is(Optional.of("Customer ID field label")));
+        assertThat(bank.loginFields().pin(), is(Optional.of("PIN")));
         assertThat(bank.isSupported(), is(true));
         assertThat(bank.supportedDataSources(), contains(FINTS_SERVER, WEB_SCRAPER));
         assertThat(bank.pinsAreVolatile(), is(false));
@@ -129,7 +129,7 @@ public final class BanksTest {
                 )
             ),
             new FakeAccessToken("access token")
-        ).search(new FpQueryCriteria());
+        ).search(new BanksCriteria());
 
         assertThat(new ListOf<>(banks), hasSize(1));
 
@@ -139,9 +139,9 @@ public final class BanksTest {
         assertThat(bank.loginHint(), is(Optional.empty()));
         assertThat(bank.bic(), is(Optional.empty()));
         assertThat(bank.blz(), is("00000000"));
-        assertThat(bank.loginFieldUserId(), is(Optional.of("User ID field label")));
-        assertThat(bank.loginFieldCustomerId(), is(Optional.of("Customer ID field label")));
-        assertThat(bank.loginFieldPin(), is(Optional.of("PIN")));
+        assertThat(bank.loginFields().userId(), is(Optional.of("User ID field label")));
+        assertThat(bank.loginFields().customerId(), is(Optional.of("Customer ID field label")));
+        assertThat(bank.loginFields().pin(), is(Optional.of("PIN")));
         assertThat(bank.isSupported(), is(true));
         assertThat(bank.supportedDataSources(), contains(FINTS_SERVER, WEB_SCRAPER));
         assertThat(bank.pinsAreVolatile(), is(false));

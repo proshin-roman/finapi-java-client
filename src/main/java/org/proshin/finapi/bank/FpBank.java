@@ -18,8 +18,10 @@ package org.proshin.finapi.bank;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 import org.json.JSONObject;
+import org.proshin.finapi.bank.out.FpLoginFields;
+import org.proshin.finapi.bank.out.LoginFields;
 import org.proshin.finapi.primitives.IterableJsonArray;
-import org.proshin.finapi.primitives.OffsetDateTimeOf;
+import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
 public final class FpBank implements Bank {
@@ -56,18 +58,8 @@ public final class FpBank implements Bank {
     }
 
     @Override
-    public Optional<String> loginFieldUserId() {
-        return new OptionalStringOf(this.origin, "loginFieldUserId").get();
-    }
-
-    @Override
-    public Optional<String> loginFieldCustomerId() {
-        return new OptionalStringOf(this.origin, "loginFieldCustomerId").get();
-    }
-
-    @Override
-    public Optional<String> loginFieldPin() {
-        return new OptionalStringOf(this.origin, "loginFieldPin").get();
+    public LoginFields loginFields() {
+        return new FpLoginFields(this.origin);
     }
 
     @Override
@@ -115,13 +107,11 @@ public final class FpBank implements Bank {
 
     @Override
     public Optional<OffsetDateTime> lastCommunicationAttempt() {
-        return new OptionalStringOf(this.origin, "lastCommunicationAttempt").get()
-                   .map(string -> new OffsetDateTimeOf(string).get());
+        return new OptionalOffsetDateTimeOf(this.origin, "lastCommunicationAttempt").get();
     }
 
     @Override
     public Optional<OffsetDateTime> lastSuccessfulCommunication() {
-        return new OptionalStringOf(this.origin, "lastSuccessfulCommunication").get()
-                   .map(string -> new OffsetDateTimeOf(string).get());
+        return new OptionalOffsetDateTimeOf(this.origin, "lastSuccessfulCommunication").get();
     }
 }
