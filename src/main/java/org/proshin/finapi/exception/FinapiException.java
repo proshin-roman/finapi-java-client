@@ -18,73 +18,74 @@ package org.proshin.finapi.exception;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
+import java.util.Optional;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.cactoos.io.InputOf;
-import org.cactoos.text.FormattedText;
+import org.cactoos.scalar.SolidScalar;
+import org.cactoos.scalar.UncheckedScalar;
 import org.cactoos.text.TextOf;
-import org.cactoos.text.UncheckedText;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
 public final class FinapiException extends RuntimeException {
 
-    private final JSONObject origin;
+    private static final long serialVersionUID = 6548845063092477856L;
 
-    public FinapiException(final int expected, final HttpResponse response) throws IOException {
-        this(
-            expected,
-            response.getStatusLine().getStatusCode(),
-            new JSONObject(
-                new TextOf(
-                    new InputOf(response.getEntity().getContent()),
-                    StandardCharsets.UTF_8
-                ).asString()
+    private final UncheckedScalar<JSONObject> origin;
+    private final UncheckedScalar<Optional<String>> location;
+
+    public FinapiException(final int expected, final HttpResponse response) {
+        super(
+            String.format(
+                "Unexpected response code: expected=%d, actual=%s",
+                expected, response.getStatusLine().getStatusCode()
             )
         );
-    }
-
-    public FinapiException(final int expected, final int actual, final JSONObject origin) {
-        this(
-            new UncheckedText(
-                new FormattedText(
-                    "Server returns code %d instead of %d. Response was:\n%s",
-                    actual, expected, origin.toString()
-                )
-            ).asString(),
-            origin
-        );
-    }
-
-    public FinapiException(final String message, final JSONObject origin) {
-        super(message);
-        this.origin = origin;
+        final String content;
+        try {
+            content = new TextOf(
+                new InputOf(response.getEntity().getContent()),
+                StandardCharsets.UTF_8
+            ).asString();
+        } catch (final IOException e) {
+            throw new RuntimeException("Couldn't read the response body", e);
+        }
+        this.origin = new UncheckedScalar<>(new SolidScalar<>(() -> new JSONObject(content)));
+        final Header header = response.getFirstHeader("Location");
+        this.location = new UncheckedScalar<>(() -> Optional.ofNullable(header).map(NameValuePair::getValue));
     }
 
     public Iterable<FinapiError> errors() {
         return new IterableJsonArray<>(
-            this.origin.getJSONArray("errors"),
+            this.origin.value().getJSONArray("errors"),
             (array, index) -> new FinapiError(array.getJSONObject(index))
         );
     }
 
     public OffsetDateTime date() {
-        return new OffsetDateTimeOf(this.origin.getString("date")).get();
+        return new OffsetDateTimeOf(this.origin.value().getString("date")).get();
     }
 
     public String requestId() {
-        return this.origin.getString("requestId");
+        return this.origin.value().getString("requestId");
     }
 
     public String endpoint() {
-        return this.origin.getString("endpoint");
+        return this.origin.value().getString("endpoint");
     }
 
     public String authContext() {
-        return this.origin.getString("authContext");
+        return this.origin.value().getString("authContext");
     }
 
     public String bank() {
-        return this.origin.getString("bank");
+        return this.origin.value().getString("bank");
+    }
+
+    public Optional<String> location() {
+        return this.location.value();
     }
 }
