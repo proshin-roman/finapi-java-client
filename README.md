@@ -50,15 +50,15 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Get client configuration
     - [x] Edit client configuration
 - Users
-    - [ ] Get the authorized user
+    - [x] Get the authorized user
     - [x] Get a user's verification status
     - [x] Create a new user
     - [x] Request password change
     - [x] Execute password change
-    - [ ] Verify a user
-    - [ ] Edit the authorized user
+    - [x] Verify a user
+    - [x] Edit the authorized user
     - [x] Delete the authorized user
-    - [ ] Delete an unverified user 
+    - [x] Delete an unverified user 
 - Banks
     - [x] Get a bank
     - [ ] ~~Get a multiple banks~~ (won't be implemented as deprecated)

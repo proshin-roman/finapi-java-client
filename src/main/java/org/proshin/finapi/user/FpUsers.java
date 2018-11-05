@@ -18,7 +18,7 @@ package org.proshin.finapi.user;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
-import org.proshin.finapi.user.in.CreateParameters;
+import org.proshin.finapi.user.in.FpCreateParameters;
 
 public final class FpUsers implements Users {
 
@@ -37,6 +37,15 @@ public final class FpUsers implements Users {
     }
 
     @Override
+    public User authorized() {
+        return new FpUser(
+            new JSONObject(
+                this.endpoint.get(this.url, this.token)
+            )
+        );
+    }
+
+    @Override
     public boolean verified(final String userId) {
         return new JSONObject(
             this.endpoint.get(this.url + "verificationStatus", this.token)
@@ -44,7 +53,7 @@ public final class FpUsers implements Users {
     }
 
     @Override
-    public User create(final CreateParameters parameters) {
+    public User create(final FpCreateParameters parameters) {
         return new FpUser(
             new JSONObject(
                 this.endpoint.post(

@@ -25,6 +25,9 @@ import org.proshin.finapi.transaction.Transactions;
 import org.proshin.finapi.webform.WebForms;
 
 public interface AuthorizedUser extends User {
+
+    AuthorizedUser edit(String email, String phone, boolean isAutoUpdateEnabled);
+
     void delete();
 
     BankConnections connections();

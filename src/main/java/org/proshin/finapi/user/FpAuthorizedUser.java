@@ -48,13 +48,22 @@ public final class FpAuthorizedUser implements AuthorizedUser {
     }
 
     public FpAuthorizedUser(final Endpoint endpoint, final AccessToken token, final String url) {
-        this.endpoint = endpoint;
-        this.token = token;
-        this.origin = new FpUser(
-            new JSONObject(
-                endpoint.get(url, token)
+        this(
+            endpoint,
+            token,
+            url,
+            new FpUser(
+                new JSONObject(
+                    endpoint.get(url, token)
+                )
             )
         );
+    }
+
+    public FpAuthorizedUser(final Endpoint endpoint, final AccessToken token, final String url, final User origin) {
+        this.endpoint = endpoint;
+        this.token = token;
+        this.origin = origin;
         this.url = url;
     }
 
@@ -81,6 +90,27 @@ public final class FpAuthorizedUser implements AuthorizedUser {
     @Override
     public boolean isAutoUpdateEnabled() {
         return this.origin.isAutoUpdateEnabled();
+    }
+
+    @Override
+    public AuthorizedUser edit(final String email, final String phone, final boolean isAutoUpdateEnabled) {
+        return new FpAuthorizedUser(
+            this.endpoint,
+            this.token,
+            this.url,
+            new FpUser(
+                new JSONObject(
+                    this.endpoint.post(
+                        this.url,
+                        this.token,
+                        () -> new JSONObject()
+                            .put("email", email)
+                            .put("phone", phone)
+                            .put("isAutoUpdateEnabled", isAutoUpdateEnabled)
+                    )
+                )
+            )
+        );
     }
 
     @Override

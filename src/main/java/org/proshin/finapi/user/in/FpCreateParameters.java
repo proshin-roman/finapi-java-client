@@ -16,8 +16,9 @@
 package org.proshin.finapi.user.in;
 
 import org.json.JSONObject;
+import org.proshin.finapi.Jsonable;
 
-public final class FpCreateParameters implements CreateParameters {
+public final class FpCreateParameters implements Jsonable {
 
     private final JSONObject origin;
 
@@ -29,32 +30,27 @@ public final class FpCreateParameters implements CreateParameters {
         this.origin = origin;
     }
 
-    @Override
-    public CreateParameters withId(final String id) {
+    public FpCreateParameters withId(final String id) {
         this.origin.put("id", id);
         return this;
     }
 
-    @Override
-    public CreateParameters withPassword(final String password) {
+    public FpCreateParameters withPassword(final String password) {
         this.origin.put("password", password);
         return this;
     }
 
-    @Override
-    public CreateParameters withEmail(final String email) {
+    public FpCreateParameters withEmail(final String email) {
         this.origin.put("email", email);
         return this;
     }
 
-    @Override
-    public CreateParameters withPhone(final String phone) {
+    public FpCreateParameters withPhone(final String phone) {
         this.origin.put("phone", phone);
         return this;
     }
 
-    @Override
-    public CreateParameters withAutoUpdateEnabled() {
+    public FpCreateParameters withAutoUpdateEnabled() {
         this.origin.put("isAutoUpdateEnabled", true);
         return this;
     }

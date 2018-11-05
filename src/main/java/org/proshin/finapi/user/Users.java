@@ -15,13 +15,15 @@
  */
 package org.proshin.finapi.user;
 
-import org.proshin.finapi.user.in.CreateParameters;
+import org.proshin.finapi.user.in.FpCreateParameters;
 
 public interface Users {
 
+    User authorized();
+
     boolean verified(String userId);
 
-    User create(final CreateParameters parameters);
+    User create(final FpCreateParameters parameters);
 
     String requestPasswordChange(String userId);
 
