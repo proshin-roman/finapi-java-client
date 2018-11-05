@@ -34,7 +34,7 @@ This library is in early alpha version and not all API methods are implemented y
 - Authorization
     - [x] Get client's token
     - [x] Get user's token using credentials
-    - [ ] Get user's token using refresh token
+    - [x] Get user's token using refresh token
     - [x] Revoke a token
 - Mandator administration
     - [x] Get user list

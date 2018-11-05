@@ -83,4 +83,8 @@ public final class FinapiException extends RuntimeException {
     public String authContext() {
         return this.origin.getString("authContext");
     }
+
+    public String bank() {
+        return this.origin.getString("bank");
+    }
 }
