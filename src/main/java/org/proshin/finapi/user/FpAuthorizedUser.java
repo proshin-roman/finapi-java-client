@@ -27,6 +27,8 @@ import org.proshin.finapi.category.FpCategories;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.label.FpLabels;
 import org.proshin.finapi.label.Labels;
+import org.proshin.finapi.mock.FpMocksAndTests;
+import org.proshin.finapi.mock.MocksAndTests;
 import org.proshin.finapi.notificationrule.FpNotificationRules;
 import org.proshin.finapi.notificationrule.NotificationRules;
 import org.proshin.finapi.security.FpSecurities;
@@ -36,6 +38,7 @@ import org.proshin.finapi.transaction.Transactions;
 import org.proshin.finapi.webform.FpWebForms;
 import org.proshin.finapi.webform.WebForms;
 
+@SuppressWarnings("OverlyCoupledClass")
 public final class FpAuthorizedUser implements AuthorizedUser {
 
     private final Endpoint endpoint;
@@ -156,5 +159,10 @@ public final class FpAuthorizedUser implements AuthorizedUser {
     @Override
     public WebForms webForms() {
         return new FpWebForms(this.endpoint, this.token);
+    }
+
+    @Override
+    public MocksAndTests mocksAndTests() {
+        return new FpMocksAndTests(this.endpoint, this.token);
     }
 }

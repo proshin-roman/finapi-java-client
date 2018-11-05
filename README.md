@@ -126,8 +126,8 @@ This library is in early alpha version and not all API methods are implemented y
 - Web forms
     - [x] Get a web form
 - Mocks and tests
-    - [ ] Mock batch update
-    - [ ] Check categorization
+    - [x] Mock batch update
+    - [x] Check categorization
 
 ## What about logging?
 

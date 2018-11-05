@@ -19,6 +19,7 @@ import org.proshin.finapi.account.Accounts;
 import org.proshin.finapi.bankconnection.BankConnections;
 import org.proshin.finapi.category.Categories;
 import org.proshin.finapi.label.Labels;
+import org.proshin.finapi.mock.MocksAndTests;
 import org.proshin.finapi.notificationrule.NotificationRules;
 import org.proshin.finapi.security.Securities;
 import org.proshin.finapi.transaction.Transactions;
@@ -45,4 +46,6 @@ public interface AuthorizedUser extends User {
     NotificationRules notificationRules();
 
     WebForms webForms();
+
+    MocksAndTests mocksAndTests();
 }
