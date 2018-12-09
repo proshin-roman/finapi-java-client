@@ -26,7 +26,15 @@ The project is following the next principles (it is a subset of [those ones](htt
 
 ## How to use
 
-[TO BE DONE] The library will be published in Maven Central repository.
+Just add the following lines into your `pom.xml`
+```!xml
+<dependency>
+  <groupId>org.proshin</groupId>
+  <artifactId>finapi-java-client</artifactId>
+  <version>${version}</version>
+</dependency>
+```
+You can find the latest `version` on [`Releases`](https://github.com/proshin-roman/finapi-java-client/releases) page.
 
 ## Implementation status
 
