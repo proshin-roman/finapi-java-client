@@ -2,6 +2,6 @@ image: Visual Studio 2017
 build_script:
   - mvn clean package --batch-mode -DskipTest
 test_script:
-  - mvn clean install --batch-mode
+  - mvn clean test --batch-mode
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml
