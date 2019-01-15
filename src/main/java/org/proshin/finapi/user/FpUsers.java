@@ -48,7 +48,13 @@ public final class FpUsers implements Users {
     @Override
     public boolean verified(final String userId) {
         return new JSONObject(
-            this.endpoint.get(this.url + "verificationStatus", this.token)
+            this.endpoint.get(
+                this.url + "verificationStatus",
+                this.token,
+                new IterableOf<>(
+                    new UrlEncodedPair("userId", userId)
+                )
+            )
         ).getBoolean("isUserVerified");
     }
 
