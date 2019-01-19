@@ -58,6 +58,10 @@ public final class FpAccount implements Account {
         return this.origin.getLong("id");
     }
 
+    /**
+     * @todo #69 Think if account should create a lazy-loaded bank connection that contains only its identifier and
+     *  only if necessary - loads the rest info
+     */
     @Override
     public BankConnection bankConnection() {
         return new FpBankConnections(this.endpoint, this.token)
@@ -155,6 +159,10 @@ public final class FpAccount implements Account {
         );
     }
 
+    /**
+     * @todo #69 Create infrastructure for tests which will validate submitted data so that tests can assure that
+     *  the library submits correct JSON structures to the API (valid URL + HTTP method + auth header + JSON body).
+     */
     @Override
     public void edit(final FpEditParameters parameters) {
         this.endpoint.patch(this.url + this.id(), this.token, parameters);
