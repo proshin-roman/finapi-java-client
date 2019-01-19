@@ -16,6 +16,7 @@
 package org.proshin.finapi.primitives;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import org.json.JSONArray;
@@ -69,7 +70,17 @@ public final class IterableJsonArray<T> implements Iterable<T> {
 
         @Override
         public T next() {
-            return this.func.apply(this.array, this.index.getAndIncrement());
+            final int next = this.index.getAndIncrement();
+            if (next >= this.array.length()) {
+                throw new NoSuchElementException(
+                    String.format(
+                        "Array has %d items when you tried to get an item with index=%d",
+                        this.array.length(),
+                        next
+                    )
+                );
+            }
+            return this.func.apply(this.array, next);
         }
     }
 }

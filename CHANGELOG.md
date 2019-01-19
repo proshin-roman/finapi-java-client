@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - [100](https://github.com/proshin-roman/finapi-java-client/issues/100) - Parameter `userId` is not sent for a method 
 "Users / Get a user's verification status"
+- [36](https://github.com/proshin-roman/finapi-java-client/issues/36) - Method `next` of `IterableJsonArray` doesn't 
+throw `NoSuchElementException`
 
 ## [0.1.59] - 2019-01-08
 ### Added
