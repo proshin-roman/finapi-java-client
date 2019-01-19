@@ -25,14 +25,14 @@ import org.proshin.finapi.exception.NoFieldException;
 import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.fake.FakeRoute;
 
-public final class AccessTokensTest {
+public final class UserAccessTokensTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void testThatClientTokenReturnsValidToken() {
-        final AccessToken token = new FpAccessTokens(
+        final ClientAccessToken token = new FpAccessTokens(
             new FakeEndpoint(
                 new FakeRoute(
                     String.join("",
@@ -49,14 +49,13 @@ public final class AccessTokensTest {
 
         assertThat(token.accessToken(), is("access token"));
         assertThat(token.tokenType(), is("bearer"));
-        assertThat(token.refreshToken().isPresent(), is(false));
         assertThat(token.expiresIn(), is(156));
         assertThat(token.scope(), is("all"));
     }
 
     @Test
     public void testThatUserTokenReturnsValidToken() {
-        final AccessToken token = new FpAccessTokens(
+        final UserAccessToken token = new FpAccessTokens(
             new FakeEndpoint(
                 new FakeRoute(
                     String.join("",
@@ -81,7 +80,7 @@ public final class AccessTokensTest {
 
     @Test
     public void testThatUserTokenFailsIfNoRefreshTokenIsSent() {
-        final AccessToken token = new FpAccessTokens(
+        final UserAccessToken token = new FpAccessTokens(
             new FakeEndpoint(
                 new FakeRoute(
                     String.join("",

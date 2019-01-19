@@ -17,7 +17,7 @@ package org.proshin.finapi.transaction.out;
 
 import java.math.BigDecimal;
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.paging.FpPage;
 import org.proshin.finapi.primitives.paging.Page;
@@ -32,7 +32,7 @@ public final class FpTransactionsPage implements TransactionsPage {
 
     public FpTransactionsPage(
         final Endpoint endpoint,
-        final AccessToken token,
+        final UserAccessToken token,
         final JSONObject origin,
         final String url
     ) {

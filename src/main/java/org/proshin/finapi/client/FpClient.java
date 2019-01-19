@@ -16,7 +16,7 @@
 package org.proshin.finapi.client;
 
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.client.in.EditClientParameters;
 import org.proshin.finapi.client.out.Configuration;
 import org.proshin.finapi.client.out.FpConfiguration;
@@ -27,14 +27,14 @@ import org.proshin.finapi.user.Users;
 public final class FpClient implements Client {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
     private final String url;
 
-    public FpClient(final Endpoint endpoint, final AccessToken token) {
+    public FpClient(final Endpoint endpoint, final UserAccessToken token) {
         this(endpoint, token, "/api/v1/clientConfiguration/");
     }
 
-    public FpClient(final Endpoint endpoint, final AccessToken token, final String url) {
+    public FpClient(final Endpoint endpoint, final UserAccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.url = url;

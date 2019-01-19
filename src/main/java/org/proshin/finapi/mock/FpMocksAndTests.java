@@ -18,7 +18,7 @@ package org.proshin.finapi.mock;
 import org.cactoos.iterable.Mapped;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.mock.in.BatchUpdateParameters;
 import org.proshin.finapi.mock.in.CategorizationParameter;
@@ -28,14 +28,14 @@ import org.proshin.finapi.mock.out.FpCategorizationResults;
 public final class FpMocksAndTests implements MocksAndTests {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
     private final String url;
 
-    public FpMocksAndTests(final Endpoint endpoint, final AccessToken token) {
+    public FpMocksAndTests(final Endpoint endpoint, final UserAccessToken token) {
         this(endpoint, token, "/api/v1/tests/");
     }
 
-    public FpMocksAndTests(final Endpoint endpoint, final AccessToken token, final String url) {
+    public FpMocksAndTests(final Endpoint endpoint, final UserAccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.url = url;

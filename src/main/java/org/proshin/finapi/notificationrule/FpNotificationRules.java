@@ -17,7 +17,7 @@ package org.proshin.finapi.notificationrule;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.notificationrule.in.CreatingParameters;
 import org.proshin.finapi.notificationrule.in.NotificationRulesCriteria;
@@ -26,14 +26,14 @@ import org.proshin.finapi.primitives.IterableJsonArray;
 public final class FpNotificationRules implements NotificationRules {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
     private final String url;
 
-    public FpNotificationRules(final Endpoint endpoint, final AccessToken token) {
+    public FpNotificationRules(final Endpoint endpoint, final UserAccessToken token) {
         this(endpoint, token, "/api/v1/notificationRules/");
     }
 
-    public FpNotificationRules(final Endpoint endpoint, final AccessToken token, final String url) {
+    public FpNotificationRules(final Endpoint endpoint, final UserAccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.url = url;

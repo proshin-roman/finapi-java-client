@@ -15,11 +15,33 @@
  */
 package org.proshin.finapi.accesstoken;
 
-public interface ClientAccessToken extends AccessToken {
+import org.json.JSONObject;
 
-    String tokenType();
+public final class FpClientAccessToken implements ClientAccessToken {
 
-    int expiresIn();
+    private final JSONObject origin;
 
-    String scope();
+    public FpClientAccessToken(final JSONObject origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public String accessToken() {
+        return this.origin.getString("access_token");
+    }
+
+    @Override
+    public String tokenType() {
+        return this.origin.getString("token_type");
+    }
+
+    @Override
+    public int expiresIn() {
+        return this.origin.getInt("expires_in");
+    }
+
+    @Override
+    public String scope() {
+        return this.origin.getString("scope");
+    }
 }

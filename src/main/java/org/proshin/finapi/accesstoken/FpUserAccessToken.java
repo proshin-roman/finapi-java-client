@@ -13,40 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.fake;
+package org.proshin.finapi.accesstoken;
 
 import java.util.Optional;
-import org.proshin.finapi.accesstoken.UserAccessToken;
+import org.json.JSONObject;
+import org.proshin.finapi.exception.NoFieldException;
 
-public final class FakeAccessToken implements UserAccessToken {
-    private final String value;
+public final class FpUserAccessToken implements UserAccessToken {
 
-    public FakeAccessToken(final String value) {
-        this.value = value;
+    private final JSONObject origin;
+
+    public FpUserAccessToken(final JSONObject origin) {
+        this.origin = origin;
     }
 
     @Override
     public String accessToken() {
-        return this.value;
+        return this.origin.getString("access_token");
     }
 
     @Override
     public String tokenType() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return this.origin.getString("token_type");
     }
 
     @Override
     public Optional<String> refreshToken() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        final String name = "refresh_token";
+        if (this.origin.isNull(name)) {
+            throw new NoFieldException("Field 'refresh_token' may not be null for user's access token");
+        } else {
+            return Optional.of(this.origin.getString(name));
+        }
     }
 
     @Override
     public int expiresIn() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return this.origin.getInt("expires_in");
     }
 
     @Override
     public String scope() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return this.origin.getString("scope");
     }
 }

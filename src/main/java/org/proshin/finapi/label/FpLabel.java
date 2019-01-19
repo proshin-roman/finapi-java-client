@@ -16,16 +16,16 @@
 package org.proshin.finapi.label;
 
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 
 public final class FpLabel implements Label {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
     private final JSONObject origin;
 
-    public FpLabel(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpLabel(final Endpoint endpoint, final UserAccessToken token, final JSONObject origin) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;

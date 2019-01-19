@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.bankconnection.in.ImportParameters;
 import org.proshin.finapi.bankconnection.in.UpdateParameters;
 import org.proshin.finapi.endpoint.Endpoint;
@@ -33,9 +33,9 @@ import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 public final class FpBankConnections implements BankConnections {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
 
-    public FpBankConnections(final Endpoint endpoint, final AccessToken token) {
+    public FpBankConnections(final Endpoint endpoint, final UserAccessToken token) {
         this.endpoint = endpoint;
         this.token = token;
     }

@@ -18,7 +18,7 @@ package org.proshin.finapi.category;
 import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.optional.OptionalLongOf;
@@ -27,10 +27,10 @@ import org.proshin.finapi.primitives.optional.OptionalStringOf;
 public final class FpCategory implements Category {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
     private final JSONObject origin;
 
-    public FpCategory(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpCategory(final Endpoint endpoint, final UserAccessToken token, final JSONObject origin) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;

@@ -42,7 +42,7 @@ public final class FpAccessTokens implements AccessTokens {
     }
 
     @Override
-    public AccessToken clientToken(final String clientId, final String clientSecret) {
+    public ClientAccessToken clientToken(final String clientId, final String clientSecret) {
         final List<NameValuePair> parameters = new ArrayList<>();
         parameters.add(new BasicNameValuePair("grant_type", "client_credentials"));
         parameters.add(new BasicNameValuePair("client_id", clientId));
@@ -53,7 +53,7 @@ public final class FpAccessTokens implements AccessTokens {
         } catch (final UnsupportedEncodingException exception) {
             throw new RuntimeException("Couldn't instantiate an entity for POST request", exception);
         }
-        return new ClientAccessToken(
+        return new FpClientAccessToken(
             new JSONObject(
                 this.endpoint.post(this.tokenUrl, entity, 200)
             )
@@ -61,7 +61,7 @@ public final class FpAccessTokens implements AccessTokens {
     }
 
     @Override
-    public AccessToken userToken(
+    public UserAccessToken userToken(
         final String clientId,
         final String clientSecret,
         final String username,
@@ -79,7 +79,7 @@ public final class FpAccessTokens implements AccessTokens {
         } catch (final UnsupportedEncodingException exception) {
             throw new RuntimeException("Couldn't instantiate an entity for POST request", exception);
         }
-        return new UserAccessToken(
+        return new FpUserAccessToken(
             new JSONObject(
                 this.endpoint.post(this.tokenUrl, entity, 200)
             )
@@ -87,7 +87,7 @@ public final class FpAccessTokens implements AccessTokens {
     }
 
     @Override
-    public AccessToken userToken(final String clientId, final String clientSecret, final String refreshToken) {
+    public UserAccessToken userToken(final String clientId, final String clientSecret, final String refreshToken) {
         final List<NameValuePair> parameters = new ArrayList<>();
         parameters.add(new UrlEncodedPair("grant_type", "refresh_token"));
         parameters.add(new UrlEncodedPair("client_id", clientId));
@@ -99,7 +99,7 @@ public final class FpAccessTokens implements AccessTokens {
         } catch (final UnsupportedEncodingException exception) {
             throw new RuntimeException("Couldn't instantiate an entity for POST request", exception);
         }
-        return new UserAccessToken(
+        return new FpUserAccessToken(
             new JSONObject(
                 this.endpoint.post(this.tokenUrl, entity, 200)
             )
@@ -115,7 +115,11 @@ public final class FpAccessTokens implements AccessTokens {
      * @todo #32 Test this method: assert that methods submits the right request
      */
     @Override
-    public void revoke(final AccessToken clientToken, final AccessToken userToken, final RevokeToken tokensToRevoke) {
+    public void revoke(
+        final ClientAccessToken clientToken,
+        final UserAccessToken userToken,
+        final RevokeToken tokensToRevoke
+    ) {
         final List<NameValuePair> parameters = new ArrayList<>();
         parameters.add(new BasicNameValuePair("token", userToken.accessToken()));
         switch (tokensToRevoke) {

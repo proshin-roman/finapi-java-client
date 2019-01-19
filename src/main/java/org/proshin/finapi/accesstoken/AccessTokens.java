@@ -17,13 +17,13 @@ package org.proshin.finapi.accesstoken;
 
 public interface AccessTokens {
 
-    AccessToken clientToken(String clientId, String clientSecret);
+    ClientAccessToken clientToken(String clientId, String clientSecret);
 
-    AccessToken userToken(String clientId, String clientSecret, String username, String password);
+    UserAccessToken userToken(String clientId, String clientSecret, String username, String password);
 
-    AccessToken userToken(String clientId, String clientSecret, String refreshToken);
+    UserAccessToken userToken(String clientId, String clientSecret, String refreshToken);
 
-    void revoke(AccessToken clientToken, AccessToken userToken, RevokeToken tokensToRevoke);
+    void revoke(ClientAccessToken clientToken, UserAccessToken userToken, RevokeToken tokensToRevoke);
 
     enum RevokeToken {
         ACCESS_TOKEN_ONLY,

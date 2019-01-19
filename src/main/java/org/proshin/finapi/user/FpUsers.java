@@ -16,21 +16,21 @@
 package org.proshin.finapi.user;
 
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.user.in.FpCreateParameters;
 
 public final class FpUsers implements Users {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
     private final String url;
 
-    public FpUsers(final Endpoint endpoint, final AccessToken token) {
+    public FpUsers(final Endpoint endpoint, final UserAccessToken token) {
         this(endpoint, token, "/api/v1/users/");
     }
 
-    public FpUsers(final Endpoint endpoint, final AccessToken token, final String url) {
+    public FpUsers(final Endpoint endpoint, final UserAccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.url = url;

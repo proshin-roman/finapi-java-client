@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roman Proshin
+ * Copyright 2019 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,16 @@
  */
 package org.proshin.finapi.accesstoken;
 
-public interface ClientAccessToken extends AccessToken {
+public class SimpleAccessToken implements AccessToken {
 
-    String tokenType();
+    private final String token;
 
-    int expiresIn();
+    public SimpleAccessToken(final String token) {
+        this.token = token;
+    }
 
-    String scope();
+    @Override
+    public String accessToken() {
+        return this.token;
+    }
 }

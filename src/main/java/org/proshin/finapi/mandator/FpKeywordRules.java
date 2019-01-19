@@ -20,7 +20,7 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.mandator.in.NewKeywordRule;
 import org.proshin.finapi.primitives.IterableJsonArray;
@@ -31,10 +31,10 @@ import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 public final class FpKeywordRules implements KeywordRules {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
     private final String url;
 
-    public FpKeywordRules(final Endpoint endpoint, final AccessToken token, final String url) {
+    public FpKeywordRules(final Endpoint endpoint, final UserAccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.url = url;

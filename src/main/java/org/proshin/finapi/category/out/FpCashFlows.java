@@ -18,17 +18,17 @@ package org.proshin.finapi.category.out;
 import java.math.BigDecimal;
 import java.util.Iterator;
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
 
 public final class FpCashFlows implements CashFlows {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
     private final JSONObject origin;
 
-    public FpCashFlows(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpCashFlows(final Endpoint endpoint, final UserAccessToken token, final JSONObject origin) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;

@@ -16,20 +16,20 @@
 package org.proshin.finapi.webform;
 
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 
 public final class FpWebForms implements WebForms {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
     private final String url;
 
-    public FpWebForms(final Endpoint endpoint, final AccessToken token) {
+    public FpWebForms(final Endpoint endpoint, final UserAccessToken token) {
         this(endpoint, token, "/api/v1/webForms/");
     }
 
-    public FpWebForms(final Endpoint endpoint, final AccessToken token, final String url) {
+    public FpWebForms(final Endpoint endpoint, final UserAccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.url = url;

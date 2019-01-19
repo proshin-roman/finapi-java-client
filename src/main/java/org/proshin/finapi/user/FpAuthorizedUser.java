@@ -17,7 +17,7 @@ package org.proshin.finapi.user;
 
 import java.util.Optional;
 import org.json.JSONObject;
-import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.accesstoken.UserAccessToken;
 import org.proshin.finapi.account.Accounts;
 import org.proshin.finapi.account.FpAccounts;
 import org.proshin.finapi.bankconnection.BankConnections;
@@ -42,15 +42,15 @@ import org.proshin.finapi.webform.WebForms;
 public final class FpAuthorizedUser implements AuthorizedUser {
 
     private final Endpoint endpoint;
-    private final AccessToken token;
+    private final UserAccessToken token;
     private final User origin;
     private final String url;
 
-    public FpAuthorizedUser(final Endpoint endpoint, final AccessToken token) {
+    public FpAuthorizedUser(final Endpoint endpoint, final UserAccessToken token) {
         this(endpoint, token, "/api/v1/users");
     }
 
-    public FpAuthorizedUser(final Endpoint endpoint, final AccessToken token, final String url) {
+    public FpAuthorizedUser(final Endpoint endpoint, final UserAccessToken token, final String url) {
         this(
             endpoint,
             token,
@@ -63,7 +63,7 @@ public final class FpAuthorizedUser implements AuthorizedUser {
         );
     }
 
-    public FpAuthorizedUser(final Endpoint endpoint, final AccessToken token, final String url, final User origin) {
+    public FpAuthorizedUser(final Endpoint endpoint, final UserAccessToken token, final String url, final User origin) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;
