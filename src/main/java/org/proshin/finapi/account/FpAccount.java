@@ -35,9 +35,6 @@ import org.proshin.finapi.primitives.optional.OptionalBigDecimalOf;
 import org.proshin.finapi.primitives.optional.OptionalOf;
 import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
 
-/**
- * @todo #21 Write unit tests for FpAccount class
- */
 @SuppressWarnings("ClassWithTooManyMethods")
 public final class FpAccount implements Account {
 
