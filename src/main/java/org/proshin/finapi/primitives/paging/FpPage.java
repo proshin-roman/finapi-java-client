@@ -23,7 +23,6 @@ import org.proshin.finapi.primitives.IterableJsonArray;
 /**
  * Page of resources with paging info.
  * @param <T> Type of items.
- * @todo #38 Write a test for FpPage class.
  */
 public final class FpPage<T> implements Page<T> {
 
@@ -41,7 +40,7 @@ public final class FpPage<T> implements Page<T> {
     public Iterable<T> items() {
         return new IterableJsonArray<>(
             this.origin.getJSONArray(this.itemsField),
-            func
+            this.func
         );
     }
 
