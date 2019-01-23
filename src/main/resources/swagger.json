@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.60.0",
+        "version": "v1.61.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -1546,7 +1546,7 @@
                         }
                     },
                     "422": {
-                        "description": "INVALID_TWO_STEP_PROCEDURE:<br/>if submitted two-step-procedure does not exist for the user. Please use one of the procedures that are listed in the bank connection;<br/>",
+                        "description": "INVALID_TWO_STEP_PROCEDURE:<br/>if submitted two-step-procedure does not exist for the user. Please use one of the procedures that are listed in the bank connection;<br/>ILLEGAL_FIELD_VALUE:<br/>if the bank connection's credentials were tried to be changed, but the new credentials are equal to the credentials of another existing bank connection of the same bank.",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -6526,15 +6526,15 @@
                     "example": "all",
                     "description": "Requested scopes (it's always 'all')"
                 },
-                "access_token": {
-                    "type": "string",
-                    "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
-                    "description": "Access token. Token has a length of up to 128 characters."
-                },
                 "token_type": {
                     "type": "string",
                     "example": "bearer",
                     "description": "Token type (it's always 'bearer')"
+                },
+                "access_token": {
+                    "type": "string",
+                    "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
+                    "description": "Access token. Token has a length of up to 128 characters."
                 },
                 "refresh_token": {
                     "type": "string",
@@ -6602,7 +6602,7 @@
                 },
                 "accountHolderId": {
                     "type": "string",
-                    "example": " + UserBankAccountToResourceConverter.DISTORTED_ACCOUNT_HOLDER_ID + ",
+                    "example": "XXXXX",
                     "description": "Bank's internal identification of the account holder. Note that if your client has no license for processing this field, it will always be 'XXXXX'"
                 },
                 "accountCurrency": {
