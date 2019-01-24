@@ -57,13 +57,13 @@ public final class FpBankConnections implements BankConnections {
     @Override
     public Iterable<BankConnection> query(final Iterable<Long> ids) {
         return new IterableJsonArray<>(
-            new JSONArray(
+            new JSONObject(
                 this.endpoint.get(
                     "api/v1/bankConnections",
                     this.token,
                     new CommaSeparatedPair<>("ids", ids)
                 )
-            ),
+            ).getJSONArray("connections"),
             (array, index) -> new FpBankConnection(this.endpoint, this.token, array.getJSONObject(index))
         );
     }
