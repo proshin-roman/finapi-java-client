@@ -23,7 +23,7 @@ public class FpEditParameters implements Jsonable {
     private final JSONObject origin;
 
     public FpEditParameters(final String name) {
-        this(new JSONObject().append("name", name));
+        this(new JSONObject().put("name", name));
     }
 
     public FpEditParameters(final JSONObject origin) {

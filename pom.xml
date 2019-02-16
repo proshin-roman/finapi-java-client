@@ -109,6 +109,12 @@
       <version>1.3</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.mock-server</groupId>
+      <artifactId>mockserver-netty</artifactId>
+      <version>5.5.1</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>

@@ -26,6 +26,11 @@ import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 
+/**
+ * @todo #139 Migrate existing tests which use this FakeEndpoint class to mock-server as it provides more flexible
+ *  way specifying expectations/responses
+ */
+@Deprecated
 public final class FakeEndpoint implements Endpoint {
 
     private final List<FakeRoute> routes;

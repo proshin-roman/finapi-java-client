@@ -70,9 +70,6 @@ public final class FpCategory implements Category {
         );
     }
 
-    /**
-     * @todo #130 Write a unit test for "Categories / Edit a category" endpoint
-     */
     @Override
     public Category edit(final FpEditParameters parameters) {
         return new FpCategory(
