@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.63.0",
+        "version": "v1.64.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -36,6 +36,9 @@
         },
         {
             "name": "Notification Rules"
+        },
+        {
+            "name": "Payments"
         },
         {
             "name": "Securities"
@@ -377,7 +380,7 @@
                     "200": {
                         "description": "Response for the SEPA Direct Debit execute",
                         "schema": {
-                            "$ref": "#/definitions/BankResponse"
+                            "$ref": "#/definitions/PaymentExecutionResponse"
                         }
                     },
                     "400": {
@@ -407,7 +410,7 @@
                     "422": {
                         "description": "ILLEGAL_ENTITY_STATE if no pending SEPA direct debit order exists for the account; BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to execute the direct debit order. The response's error message can be forwarded to the user, it will typically contain a german message from the bank server that contains useful information.",
                         "schema": {
-                            "$ref": "#/definitions/BankResponse"
+                            "$ref": "#/definitions/ErrorMessage"
                         }
                     },
                     "423": {
@@ -458,7 +461,7 @@
                     "200": {
                         "description": "Response for the SEPA Money Transfer execute",
                         "schema": {
-                            "$ref": "#/definitions/BankResponse"
+                            "$ref": "#/definitions/PaymentExecutionResponse"
                         }
                     },
                     "400": {
@@ -488,7 +491,7 @@
                     "422": {
                         "description": "ILLEGAL_ENTITY_STATE if no pending SEPA money transfer order exists for the account; BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to execute the money transfer order. The response's error message can be forwarded to the user, it will typically contain a german message from the bank server that contains useful information.",
                         "schema": {
-                            "$ref": "#/definitions/BankResponse"
+                            "$ref": "#/definitions/ErrorMessage"
                         }
                     },
                     "423": {
@@ -2096,7 +2099,7 @@
                     }
                 ],
                 "x-finapi": {
-                    "order": "8"
+                    "order": "9"
                 }
             }
         },
@@ -2569,6 +2572,88 @@
                     },
                     "422": {
                         "description": "Category cannot be deleted",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "An unexpected error occurred",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "finapi_auth": [
+                            "all"
+                        ]
+                    }
+                ],
+                "x-finapi": {
+                    "order": "8"
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Edit a category",
+                "description": "Change the name of a custom transaction category belonging to the authorized user. Must pass the user's access_token.",
+                "operationId": "editCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier of the category to edit",
+                        "required": true,
+                        "type": "integer",
+                        "pattern": "[\\d]+",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "New category name",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/EditCategoryParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Edited transaction category",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Not authenticated or invalid access_token",
+                        "schema": {
+                            "$ref": "#/definitions/BadCredentialsError"
+                        }
+                    },
+                    "403": {
+                        "description": "Incorrect authorization role",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "422": {
+                        "description": "Category cannot be edited",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -4276,6 +4361,129 @@
                 ],
                 "x-finapi": {
                     "order": "4"
+                }
+            }
+        },
+        "/api/v1/payments": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Get payments",
+                "description": "Get payments of the user that is authorized by the access_token. <p>Note: For requesting / executing payments, please refer to the 'Accounts' section of the API.</p>",
+                "operationId": "getPayments",
+                "parameters": [
+                    {
+                        "name": "ids",
+                        "in": "query",
+                        "description": "A comma-separated list of payment identifiers. If specified, then only payments whose identifier is matching any of the given identifiers will be regarded. The maximum number of identifiers is 1000.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "accountIds",
+                        "in": "query",
+                        "description": "A comma-separated list of account identifiers. If specified, then only payments that relate to the given account(s) will be regarded. The maximum number of identifiers is 1000.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "minAmount",
+                        "in": "query",
+                        "description": "If specified, then only those payments are regarded whose (absolute) total amount is equal or greater than the given amount will be regarded. The value must be a positive (absolute) amount.",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "maxAmount",
+                        "in": "query",
+                        "description": "If specified, then only those payments are regarded whose (absolute) total amount is equal or less than the given amount will be regarded. Value must be a positive (absolute) amount.",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Result page that you want to retrieve",
+                        "required": false,
+                        "type": "integer",
+                        "default": 1,
+                        "minimum": 1.0
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Maximum number of records per page. Can be at most 500. NOTE: Due to its validation and visualization, the swagger frontend might show very low performance, or even crashes, when a service responds with a lot of data. It is recommended to use a HTTP client like Postman or DHC instead of our swagger frontend for service calls with large page sizes.",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "maximum": 500.0,
+                        "minimum": 1.0
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Determines the order of the results. You can use the following fields for ordering the response: 'id', 'amount', 'requestDate' and 'executionDate'. The default order for all services is 'id,asc'.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "default": "id,ASC"
+                        },
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of requested payments",
+                        "schema": {
+                            "$ref": "#/definitions/PageablePaymentResources"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication required",
+                        "schema": {
+                            "$ref": "#/definitions/BadCredentialsError"
+                        }
+                    },
+                    "403": {
+                        "description": "Incorrect authorization role",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected error occurred",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "finapi_auth": [
+                            "all"
+                        ]
+                    }
+                ],
+                "x-finapi": {
+                    "order": "1"
                 }
             }
         },
@@ -6526,10 +6734,10 @@
                     "example": "all",
                     "description": "Requested scopes (it's always 'all')"
                 },
-                "token_type": {
+                "access_token": {
                     "type": "string",
-                    "example": "bearer",
-                    "description": "Token type (it's always 'bearer')"
+                    "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
+                    "description": "Access token. Token has a length of up to 128 characters."
                 },
                 "refresh_token": {
                     "type": "string",
@@ -6542,10 +6750,10 @@
                     "example": 3600,
                     "description": "Expiration time in seconds. A value of 0 means that the token never expires (unless it is explicitly invalidated, e.g. by revocation, or when a user gets locked)."
                 },
-                "access_token": {
+                "token_type": {
                     "type": "string",
-                    "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
-                    "description": "Access token. Token has a length of up to 128 characters."
+                    "example": "bearer",
+                    "description": "Token type (it's always 'bearer')"
                 }
             },
             "description": "User access token info"
@@ -7125,22 +7333,6 @@
             },
             "description": "Container for data of multiple banks"
         },
-        "BankResponse": {
-            "type": "object",
-            "properties": {
-                "successMessage": {
-                    "type": "string",
-                    "example": "Auftrag ausgeführt.",
-                    "description": "Technical message from the bank server, confirming the success of the request. Typically, you would not want to present this message to the user. Note that this field may not be set. However if it is not set, it does not necessarily mean that there was an error in processing the request."
-                },
-                "warnMessage": {
-                    "type": "string",
-                    "example": "Auftrag konnte nicht ausgeführt werden.",
-                    "description": "In some cases, a bank server may accept the requested order, but return a warn message. This message may be of technical nature, but could also be of interest to the user."
-                }
-            },
-            "description": "Bank server's response to some request"
-        },
         "CashFlow": {
             "type": "object",
             "required": [
@@ -7274,7 +7466,7 @@
                 },
                 "name": {
                     "type": "string",
-                    "example": "Restaurant / Cafe / Bar",
+                    "example": "Sport & Fitness",
                     "description": "Category name"
                 },
                 "parentId": {
@@ -7333,7 +7525,7 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "example": "Restaurant / Cafe / Bar",
+                    "example": "Sport & Fitness",
                     "description": "Name of the category. Maximum length is 128.",
                     "pattern": "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
                 },
@@ -7687,6 +7879,9 @@
         },
         "DirectDebitOrderingResponse": {
             "type": "object",
+            "required": [
+                "paymentId"
+            ],
             "properties": {
                 "successMessage": {
                     "type": "string",
@@ -7697,6 +7892,12 @@
                     "type": "string",
                     "example": "Auftrag konnte nicht ausgeführt werden.",
                     "description": "In some cases, a bank server may accept the requested order, but return a warn message. This message may be of technical nature, but could also be of interest to the user."
+                },
+                "paymentId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1,
+                    "description": "Payment identifier. Can be used to retrieve the status of the payment (see 'Get payments' service)"
                 },
                 "challengeMessage": {
                     "type": "string",
@@ -7761,6 +7962,21 @@
                 }
             },
             "description": "Container for bank connection edit params"
+        },
+        "EditCategoryParams": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Sport & Fitness",
+                    "description": "New name of the category. Maximum length is 128.",
+                    "pattern": "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
+                }
+            },
+            "description": "Container for category edit params"
         },
         "ErrorDetails": {
             "type": "object",
@@ -8422,6 +8638,9 @@
         },
         "MoneyTransferOrderingResponse": {
             "type": "object",
+            "required": [
+                "paymentId"
+            ],
             "properties": {
                 "successMessage": {
                     "type": "string",
@@ -8432,6 +8651,12 @@
                     "type": "string",
                     "example": "Auftrag konnte nicht ausgeführt werden.",
                     "description": "In some cases, a bank server may accept the requested order, but return a warn message. This message may be of technical nature, but could also be of interest to the user."
+                },
+                "paymentId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1,
+                    "description": "Payment identifier. Can be used to retrieve the status of the payment (see 'Get payments' service)"
                 },
                 "challengeMessage": {
                     "type": "string",
@@ -8764,6 +8989,27 @@
             },
             "description": "Label resources with paging information"
         },
+        "PageablePaymentResources": {
+            "type": "object",
+            "required": [
+                "paging",
+                "payments"
+            ],
+            "properties": {
+                "payments": {
+                    "type": "array",
+                    "description": "List of received account payments",
+                    "items": {
+                        "$ref": "#/definitions/Payment"
+                    }
+                },
+                "paging": {
+                    "description": "Information for pagination",
+                    "$ref": "#/definitions/Paging"
+                }
+            },
+            "description": "Payment resources with paging information"
+        },
         "PageableSecurityList": {
             "type": "object",
             "required": [
@@ -8902,6 +9148,103 @@
                 }
             },
             "description": "Password changing details"
+        },
+        "Payment": {
+            "type": "object",
+            "required": [
+                "accountId",
+                "amount",
+                "id",
+                "orderCount",
+                "requestDate",
+                "status",
+                "type"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1,
+                    "description": "Payment identifier"
+                },
+                "accountId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1,
+                    "description": "Identifier of the account to which this payment relates"
+                },
+                "requestDate": {
+                    "type": "string",
+                    "example": "2019-01-01 00:00:00.000",
+                    "description": "Time of when this payment was requested, in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german time)"
+                },
+                "executionDate": {
+                    "type": "string",
+                    "example": "2019-01-01 00:00:00.000",
+                    "description": "Time of when this payment was executed, in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german time)"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "MONEY_TRANSFER",
+                    "description": "Payment type",
+                    "enum": [
+                        "MONEY_TRANSFER",
+                        "DIRECT_DEBIT"
+                    ]
+                },
+                "status": {
+                    "type": "string",
+                    "example": "PENDING",
+                    "description": "Current payment status:<br/> &bull; PENDING: means that this payment has been requested, but not yet executed.<br/> &bull; SUCCESSFUL: means that this payment has been successfully executed.<br/> &bull; NOT_SUCCESSFUL: means that this payment could not be executed successfully.<br/> &bull; DISCARDED: means that this payment was discarded because another payment was requested for the same account before this payment was executed.",
+                    "enum": [
+                        "PENDING",
+                        "SUCCESSFUL",
+                        "NOT_SUCCESSFUL",
+                        "DISCARDED"
+                    ]
+                },
+                "bankMessage": {
+                    "type": "string",
+                    "description": "Contains the bank's response to the execution of this payment. This field is not set until the payment gets executed. Note that even after the execution of the payment, the field might still not be set, if the bank did not send any response message."
+                },
+                "amount": {
+                    "type": "number",
+                    "example": "99.99",
+                    "description": "Total money amount of the payment order(s), as absolute value"
+                },
+                "orderCount": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1,
+                    "description": "Total count of orders included in this payment"
+                }
+            },
+            "description": "Container for a payment's data"
+        },
+        "PaymentExecutionResponse": {
+            "type": "object",
+            "required": [
+                "paymentId"
+            ],
+            "properties": {
+                "successMessage": {
+                    "type": "string",
+                    "example": "Auftrag ausgeführt.",
+                    "description": "Technical message from the bank server, confirming the success of the request. Typically, you would not want to present this message to the user. Note that this field may not be set. However if it is not set, it does not necessarily mean that there was an error in processing the request."
+                },
+                "warnMessage": {
+                    "type": "string",
+                    "example": "Auftrag konnte nicht ausgeführt werden.",
+                    "description": "In some cases, a bank server may accept the requested order, but return a warn message. This message may be of technical nature, but could also be of interest to the user."
+                },
+                "paymentId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1,
+                    "description": "Payment identifier. Can be used to retrieve the status of the payment (see 'Get payments' service)."
+                }
+            },
+            "description": "Bank server's response to Money Transfer / Direct Debit execution"
         },
         "PaypalTransactionData": {
             "type": "object",

@@ -23,6 +23,8 @@ public interface SepaRequestingResponse {
 
     Optional<String> warnMessage();
 
+    Long paymentId();
+
     Optional<String> challengeMessage();
 
     Optional<String> answerFieldLabel();

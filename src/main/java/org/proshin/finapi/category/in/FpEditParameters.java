@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roman Proshin
+ * Copyright 2019 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.category;
+package org.proshin.finapi.category.in;
 
-import java.util.Optional;
-import org.proshin.finapi.category.in.FpEditParameters;
+import org.json.JSONObject;
+import org.proshin.finapi.Jsonable;
 
-public interface Category {
+public class FpEditParameters implements Jsonable {
 
-    Long id();
+    private final JSONObject origin;
 
-    String name();
+    public FpEditParameters(final String name) {
+        this(new JSONObject().append("name", name));
+    }
 
-    Optional<Long> parentId();
+    public FpEditParameters(final JSONObject origin) {
+        this.origin = origin;
+    }
 
-    Optional<String> parentName();
-
-    boolean isCustom();
-
-    Iterable<Long> children();
-
-    Category edit(FpEditParameters parameters);
-
-    void delete();
+    @Override
+    public JSONObject asJson() {
+        return this.origin;
+    }
 }

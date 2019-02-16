@@ -19,6 +19,7 @@ import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.category.in.FpEditParameters;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.optional.OptionalLongOf;
@@ -66,6 +67,24 @@ public final class FpCategory implements Category {
         return new IterableJsonArray<>(
             this.origin.getJSONArray("children"),
             JSONArray::getLong
+        );
+    }
+
+    /**
+     * @todo #130 Write a unit test for "Categories / Edit a category" endpoint
+     */
+    @Override
+    public Category edit(final FpEditParameters parameters) {
+        return new FpCategory(
+            this.endpoint,
+            this.token,
+            new JSONObject(
+                this.endpoint.patch(
+                    String.format("/api/v1/categories/%d", this.id()),
+                    this.token,
+                    parameters
+                )
+            )
         );
     }
 

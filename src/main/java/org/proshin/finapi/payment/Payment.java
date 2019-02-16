@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roman Proshin
+ * Copyright 2019 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.category;
+package org.proshin.finapi.payment;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.Optional;
-import org.proshin.finapi.category.in.FpEditParameters;
+import org.proshin.finapi.payment.out.Status;
+import org.proshin.finapi.payment.out.Type;
 
-public interface Category {
+public interface Payment {
 
     Long id();
 
-    String name();
+    Long accountId();
 
-    Optional<Long> parentId();
+    OffsetDateTime requestDate();
 
-    Optional<String> parentName();
+    Optional<OffsetDateTime> executionDate();
 
-    boolean isCustom();
+    Type type();
 
-    Iterable<Long> children();
+    Status status();
 
-    Category edit(FpEditParameters parameters);
+    Optional<String> bankMessage();
 
-    void delete();
+    BigDecimal amount();
+
+    int orderCount();
 }

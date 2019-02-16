@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roman Proshin
+ * Copyright 2019 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.category;
+package org.proshin.finapi.payment;
 
-import java.util.Optional;
-import org.proshin.finapi.category.in.FpEditParameters;
+import org.proshin.finapi.payment.in.FpQueryCriteria;
+import org.proshin.finapi.primitives.paging.Page;
 
-public interface Category {
+public interface Payments {
 
-    Long id();
-
-    String name();
-
-    Optional<Long> parentId();
-
-    Optional<String> parentName();
-
-    boolean isCustom();
-
-    Iterable<Long> children();
-
-    Category edit(FpEditParameters parameters);
-
-    void delete();
+    /**
+     * @todo #130 Write a unit test for "Payments / Get payments" endpoint
+     */
+    Page<Payment> query(FpQueryCriteria criteria);
 }
