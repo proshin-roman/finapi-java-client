@@ -20,8 +20,5 @@ import org.proshin.finapi.primitives.paging.Page;
 
 public interface Payments {
 
-    /**
-     * @todo #130 Write a unit test for "Payments / Get payments" endpoint
-     */
     Page<Payment> query(FpQueryCriteria criteria);
 }
