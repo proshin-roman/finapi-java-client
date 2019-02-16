@@ -28,7 +28,6 @@ import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 
 /**
  * Bank Connections endpoint.
- * @todo #20 Cover FpBankConnections by unit tests with mocked JSON structures.
  */
 public final class FpBankConnections implements BankConnections {
 

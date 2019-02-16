@@ -54,6 +54,14 @@
       </option>
     </inspection_tool>
     <inspection_tool class="BadExceptionDeclared" enabled="true" level="WARNING" enabled_by_default="true">
+      <scope name="Tests" level="WARNING" enabled="false">
+        <option name="exceptionsString" value="" />
+        <option name="exceptions">
+          <value />
+        </option>
+        <option name="ignoreTestCases" value="false" />
+        <option name="ignoreLibraryOverrides" value="false" />
+      </scope>
       <option name="exceptionsString" value="" />
       <option name="exceptions">
         <value />
