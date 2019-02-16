@@ -5,8 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.1.64] - 2019-02-16
 ### Added
 - [#130](https://github.com/proshin-roman/finapi-java-client/issues/130) - The library now supports finAPI v1.64.0
+
+### Fixed
+- [#138](https://github.com/proshin-roman/finapi-java-client/issues/138), 
+[#139](https://github.com/proshin-roman/finapi-java-client/issues/139) - Improved test coverage
 
 ## [0.1.63] - 2019-02-16
 ### Added
@@ -46,7 +52,8 @@ dependencies issue
 ### Added
 - [#73](https://github.com/proshin-roman/finapi-java-client/issues/73) - The library now supports finAPI v1.59.0
 
-[Unreleased]: https://github.com/proshin-roman/finapi-java-client/compare/v0.1.63...HEAD
+[Unreleased]: https://github.com/proshin-roman/finapi-java-client/compare/v0.1.64...HEAD
+[0.1.64]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.64
 [0.1.63]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.63
 [0.1.62]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.62
 [0.1.61]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.61
