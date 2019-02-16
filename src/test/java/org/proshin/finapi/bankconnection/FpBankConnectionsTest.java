@@ -22,7 +22,6 @@ import org.cactoos.iterable.IterableOf;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.proshin.finapi.bankconnection.in.ImportParameters;
 import org.proshin.finapi.bankconnection.in.UpdateParameters;
@@ -127,12 +126,7 @@ public class FpBankConnectionsTest {
         this.assertBankConnection(connection);
     }
 
-    /**
-     * @todo #46 Fix a path in org.proshin.finapi.bankconnection.FpBankConnections#query(java.lang.Iterable) - it
-     *  should start with /
-     */
     @Test
-    @Ignore
     public void testQuery() {
         final Iterable<BankConnection> connections = new FpBankConnections(
             new FakeEndpoint(

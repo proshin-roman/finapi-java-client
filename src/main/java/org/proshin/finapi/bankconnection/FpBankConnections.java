@@ -58,7 +58,7 @@ public final class FpBankConnections implements BankConnections {
         return new IterableJsonArray<>(
             new JSONObject(
                 this.endpoint.get(
-                    "api/v1/bankConnections",
+                    "/api/v1/bankConnections",
                     this.token,
                     new CommaSeparatedPair<>("ids", ids)
                 )
