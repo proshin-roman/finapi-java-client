@@ -109,6 +109,8 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Get a security
     - [ ] ~~Get multiple securities~~ (won't be implemented as deprecated)
     - [x] Get and search all securities
+- Payments
+    - [x] Get payments
 - Categories
     - [x] Get a category
     - [ ] ~~Get multiple categories~~ (won't be implemented as deprecated)
@@ -116,6 +118,7 @@ This library is in early alpha version and not all API methods are implemented y
     - [x] Get cash flows
     - [x] Create a new category
     - [x] Train categorization 
+    - [x] Edit a category
     - [x] Delete a category
     - [x] Delete all categories
 - Labels
