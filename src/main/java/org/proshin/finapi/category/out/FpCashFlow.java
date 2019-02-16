@@ -39,7 +39,7 @@ public final class FpCashFlow implements CashFlow {
     @Override
     public Optional<Category> category() {
         return new OptionalObjectOf(this.origin, "category").get()
-                   .map(json -> new FpCategory(this.endpoint, this.token, json));
+            .map(json -> new FpCategory(this.endpoint, this.token, json));
     }
 
     @Override
@@ -55,5 +55,20 @@ public final class FpCashFlow implements CashFlow {
     @Override
     public BigDecimal balance() {
         return this.origin.getBigDecimal("balance");
+    }
+
+    @Override
+    public int countIncomeTransactions() {
+        return this.origin.getInt("countIncomeTransactions");
+    }
+
+    @Override
+    public int countSpendingTransactions() {
+        return this.origin.getInt("countSpendingTransactions");
+    }
+
+    @Override
+    public int countAllTransactions() {
+        return this.origin.getInt("countAllTransactions");
     }
 }
