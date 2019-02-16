@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.64.0",
+        "version": "v1.65.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -6734,10 +6734,10 @@
                     "example": "all",
                     "description": "Requested scopes (it's always 'all')"
                 },
-                "access_token": {
+                "token_type": {
                     "type": "string",
-                    "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
-                    "description": "Access token. Token has a length of up to 128 characters."
+                    "example": "bearer",
+                    "description": "Token type (it's always 'bearer')"
                 },
                 "refresh_token": {
                     "type": "string",
@@ -6750,10 +6750,10 @@
                     "example": 3600,
                     "description": "Expiration time in seconds. A value of 0 means that the token never expires (unless it is explicitly invalidated, e.g. by revocation, or when a user gets locked)."
                 },
-                "token_type": {
+                "access_token": {
                     "type": "string",
-                    "example": "bearer",
-                    "description": "Token type (it's always 'bearer')"
+                    "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
+                    "description": "Access token. Token has a length of up to 128 characters."
                 }
             },
             "description": "User access token info"
@@ -7167,7 +7167,7 @@
                 "updateStatus": {
                     "type": "string",
                     "example": "READY",
-                    "description": "Current status of transactions download. The POST /bankConnections/import and POST /bankConnections/<id>/update services will set this flag to IN_PROGRESS before they return. Once the import or update has finished, the status will be changed to READY.",
+                    "description": "Current status of data download (account balances and transactions/securities). The POST /bankConnections/import and POST /bankConnections/<id>/update services will set this flag to IN_PROGRESS before they return. Once the import or update has finished, the status will be changed to READY.",
                     "enum": [
                         "IN_PROGRESS",
                         "READY"
@@ -7897,7 +7897,7 @@
                     "type": "integer",
                     "format": "int64",
                     "example": 1,
-                    "description": "Payment identifier. Can be used to retrieve the status of the payment (see 'Get payments' service)"
+                    "description": "Payment identifier. Can be used to retrieve the status of the payment (see 'Get payments' service)."
                 },
                 "challengeMessage": {
                     "type": "string",
@@ -8656,7 +8656,7 @@
                     "type": "integer",
                     "format": "int64",
                     "example": 1,
-                    "description": "Payment identifier. Can be used to retrieve the status of the payment (see 'Get payments' service)"
+                    "description": "Payment identifier. Can be used to retrieve the status of the payment (see 'Get payments' service)."
                 },
                 "challengeMessage": {
                     "type": "string",
@@ -9252,22 +9252,22 @@
                 "invoiceNumber": {
                     "type": "string",
                     "example": "INV2-KXVU-7Z64-DT6W-MG2X",
-                    "description": "Invoice Number"
+                    "description": "Invoice Number.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point."
                 },
                 "fee": {
                     "type": "number",
                     "example": "-0.99",
-                    "description": "Fee value"
+                    "description": "Fee value.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point."
                 },
                 "net": {
                     "type": "number",
                     "example": "9.99",
-                    "description": "Net value"
+                    "description": "Net value.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point."
                 },
                 "auctionSite": {
                     "type": "string",
                     "example": "eBay",
-                    "description": "Auction Site"
+                    "description": "Auction Site.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point."
                 }
             },
             "description": "Additional, PayPal-specific transaction data. This field is only set for transactions that belong to an account of the 'PayPal' bank (BLZ 'PAYPAL')."
@@ -10009,7 +10009,7 @@
                     }
                 },
                 "paypalData": {
-                    "description": "Additional, PayPal-specific transaction data. This field is only set for transactions that belong to an account of the 'PayPal' bank (BLZ 'PAYPAL').",
+                    "description": "Additional, PayPal-specific transaction data. This field is only set for transactions that belong to an account of the 'PayPal' bank (BLZ 'PAYPAL').<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point.",
                     "$ref": "#/definitions/PaypalTransactionData"
                 },
                 "endToEndReference": {
