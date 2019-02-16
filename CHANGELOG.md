@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.61] - 2019-02-16
+### Added
+- [#95](https://github.com/proshin-roman/finapi-java-client/issues/95) - The library now supports finAPI v1.61.0
+
+### Fixed
+- [#115](https://github.com/proshin-roman/finapi-java-client/issues/115) - 
+Method "Bank connections / Get all bank connections" now parses a response from the API correctly
+- [#122](https://github.com/proshin-roman/finapi-java-client/issues/122) - 
+Method "Bank connections / Get all bank connections" now uses the correct path for communicating to the API
+- [#46](https://github.com/proshin-roman/finapi-java-client/issues/46) - Improved test coverage
+
 ## [0.1.60] - 2019-01-23
 ### Added
 - [#94](https://github.com/proshin-roman/finapi-java-client/issues/94) - The library now supports finAPI v1.60.0
@@ -18,13 +29,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 throw `NoSuchElementException`
 - [#43](https://github.com/proshin-roman/finapi-java-client/issues/43), 
 [#69](https://github.com/proshin-roman/finapi-java-client/issues/69) - Improved test coverage
-[#98](https://github.com/proshin-roman/finapi-java-client/issues/98) - Maven release plugin doesn't work due to 
+- [#98](https://github.com/proshin-roman/finapi-java-client/issues/98) - Maven release plugin doesn't work due to 
 dependencies issue
 
 ## [0.1.59] - 2019-01-08
 ### Added
 - [#73](https://github.com/proshin-roman/finapi-java-client/issues/73) - The library now supports finAPI v1.59.0
 
-[Unreleased]: https://github.com/proshin-roman/finapi-java-client/compare/v0.1.60...HEAD
+[Unreleased]: https://github.com/proshin-roman/finapi-java-client/compare/v0.1.61...HEAD
+[0.1.61]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.61
 [0.1.60]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.60
 [0.1.59]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.59
