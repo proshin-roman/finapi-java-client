@@ -28,4 +28,10 @@ public interface CashFlow {
     BigDecimal spending();
 
     BigDecimal balance();
+
+    int countIncomeTransactions();
+
+    int countSpendingTransactions();
+
+    int countAllTransactions();
 }

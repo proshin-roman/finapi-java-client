@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.62.0",
+        "version": "v1.63.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -2245,7 +2245,7 @@
                     {
                         "name": "includeSubCashFlows",
                         "in": "query",
-                        "description": "If it is true, then the income, spending and balance of a main category results from all transactions that have either this (main) category or any of its subcategories assigned (of course all transactions depends from the other filtering settings); If it is false, then the income, spending and balance of a main category only results from the transactions that have exactly this (main) category assigned. Default value for this parameter is 'true'.",
+                        "description": "If it is true, then the income, spending, balance and count of transactions of a main category results from all transactions that have either this (main) category or any of its subcategories assigned (of course all transactions depends from the other filtering settings); If it is false, then the income, spending, balance and count of transactions of a main category only results from the transactions that have exactly this (main) category assigned. Default value for this parameter is 'true'.",
                         "required": false,
                         "type": "boolean",
                         "default": true
@@ -6526,6 +6526,16 @@
                     "example": "all",
                     "description": "Requested scopes (it's always 'all')"
                 },
+                "token_type": {
+                    "type": "string",
+                    "example": "bearer",
+                    "description": "Token type (it's always 'bearer')"
+                },
+                "refresh_token": {
+                    "type": "string",
+                    "example": "0b9KjiBVlZLz7a4HshSAIcFuscStiXT1VzT5mgNYwCQ_dWctTDsaIjedAhD1LpsOFJ7x6K8Emf8M3VOQkwNFR9FHijALYSQw2UeRwAC2MvrOKwfF1dHmOq5VEVYEaGf6",
+                    "description": "Refresh token. Only set in case of grant_type='password'. Token has a length of up to 128 characters."
+                },
                 "expires_in": {
                     "type": "integer",
                     "format": "int32",
@@ -6536,16 +6546,6 @@
                     "type": "string",
                     "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
                     "description": "Access token. Token has a length of up to 128 characters."
-                },
-                "token_type": {
-                    "type": "string",
-                    "example": "bearer",
-                    "description": "Token type (it's always 'bearer')"
-                },
-                "refresh_token": {
-                    "type": "string",
-                    "example": "0b9KjiBVlZLz7a4HshSAIcFuscStiXT1VzT5mgNYwCQ_dWctTDsaIjedAhD1LpsOFJ7x6K8Emf8M3VOQkwNFR9FHijALYSQw2UeRwAC2MvrOKwfF1dHmOq5VEVYEaGf6",
-                    "description": "Refresh token. Only set in case of grant_type='password'. Token has a length of up to 128 characters."
                 }
             },
             "description": "User access token info"
@@ -6766,6 +6766,7 @@
                 "blzs",
                 "health",
                 "id",
+                "isCustomerIdPassword",
                 "isSupported",
                 "isTestBank",
                 "name",
@@ -6822,6 +6823,11 @@
                     "type": "string",
                     "example": "PIN",
                     "description": "Label for the PIN field, as it is called on the bank's website (mostly \"PIN\"). If this field is set (i.e. not null) then you should prompt your users to enter the required data in a text field which you can label with this field's value."
+                },
+                "isCustomerIdPassword": {
+                    "type": "boolean",
+                    "description": "Whether the banking customer ID has to be treated like a password. Certain banks require a second password (besides the PIN) for the user to login. In this case your application should use a password input field when prompting users for their credentials.",
+                    "example": false
                 },
                 "isSupported": {
                     "type": "boolean",
@@ -6934,7 +6940,7 @@
                 "bankingCustomerId": {
                     "type": "string",
                     "example": "XXXXX",
-                    "description": "Stored online banking customer ID credential. Note that if your client has no license for processing banking credentials then a banking customer ID will always be 'XXXXX'."
+                    "description": "Stored online banking customer ID credential. Note that if your client has no license for processing banking credentials or if this field contains a value that requires password protection (see field ‘isCustomerIdPassword’ in Bank Resource) then the banking customer ID will always be 'XXXXX'."
                 },
                 "bankingPin": {
                     "type": "string",
@@ -7139,6 +7145,9 @@
             "type": "object",
             "required": [
                 "balance",
+                "countAllTransactions",
+                "countIncomeTransactions",
+                "countSpendingTransactions",
                 "income",
                 "spending"
             ],
@@ -7161,6 +7170,24 @@
                     "type": "number",
                     "example": 100.0,
                     "description": "The calculated balance for the given category"
+                },
+                "countIncomeTransactions": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 5,
+                    "description": "The total count of income transactions for the given category"
+                },
+                "countSpendingTransactions": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 3,
+                    "description": "The total count of spending transactions for the given category"
+                },
+                "countAllTransactions": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 8,
+                    "description": "The total count of all transactions for the given category"
                 }
             },
             "description": "Cash flow"

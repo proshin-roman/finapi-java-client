@@ -33,6 +33,8 @@ public interface Bank {
 
     LoginFields loginFields();
 
+    boolean isCustomerIdPassword();
+
     boolean isSupported();
 
     Iterable<DataSource> supportedDataSources();
