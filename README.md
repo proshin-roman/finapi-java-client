@@ -2,14 +2,26 @@
 [![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
+### Releases
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.proshin/finapi-java-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.proshin/finapi-java-client)
+[![](https://jitpack.io/v/proshin-roman/finapi-java-client.svg)](https://jitpack.io/#proshin-roman/finapi-java-client)
+
+### Builds
 [![Build Status](https://travis-ci.org/proshin-roman/finapi-java-client.svg?branch=master)](https://travis-ci.org/proshin-roman/finapi-java-client)
 [![Build status](https://ci.appveyor.com/api/projects/status/n88wydxq8oa0eou0/branch/master?svg=true)](https://ci.appveyor.com/project/proshin-roman/finapi-java-client/branch/master)
+
+### Code quality
 [![codecov](https://codecov.io/gh/proshin-roman/finapi-java-client/branch/master/graph/badge.svg)](https://codecov.io/gh/proshin-roman/finapi-java-client)
 [![codebeat badge](https://codebeat.co/badges/907cb4b8-0f65-446a-a874-9ece228ab579)](https://codebeat.co/projects/github-com-proshin-roman-finapi-java-client-master)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=org.proshin%3Afinapi-java-client&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.proshin%3Afinapi-java-client)
 [![Report](https://inspecode.rocro.com/badges/github.com/proshin-roman/finapi-java-client/report?token=XQDM-T86oDab_Cxht2zu7R2Id6M09Uobn6izEWhA8es&branch=master)](https://inspecode.rocro.com/reports/github.com/proshin-roman/finapi-java-client/branch/master/summary)
-[![PDD status](http://www.0pdd.com/svg?name=proshin-roman/finapi-java-client)](http://www.0pdd.com/p?name=proshin-roman/finapi-java-client) [![Join the chat at https://gitter.im/finapi-java-client/Lobby](https://badges.gitter.im/finapi-java-client/Lobby.svg)](https://gitter.im/finapi-java-client/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+### Puzzle Driven Development
+[![PDD status](http://www.0pdd.com/svg?name=proshin-roman/finapi-java-client)](http://www.0pdd.com/p?name=proshin-roman/finapi-java-client)
+
+### Community
+[![Join the chat at https://gitter.im/finapi-java-client/Lobby](https://badges.gitter.im/finapi-java-client/Lobby.svg)](https://gitter.im/finapi-java-client/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 **finapi-java-client** is a true-OOP Java client for API provided by [finAPI](https://finapi.io).
