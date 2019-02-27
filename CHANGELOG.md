@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.66] - 2019-02-27
+### Added
+- [#149](https://github.com/proshin-roman/finapi-java-client/issues/149) - The library now supports finAPI v1.66.0
+
 ## [0.1.65] - 2019-02-16
 ### Added
 - [#145](https://github.com/proshin-roman/finapi-java-client/issues/145) - The library now supports finAPI v1.65.0
@@ -56,7 +60,8 @@ dependencies issue
 ### Added
 - [#73](https://github.com/proshin-roman/finapi-java-client/issues/73) - The library now supports finAPI v1.59.0
 
-[Unreleased]: https://github.com/proshin-roman/finapi-java-client/compare/v0.1.65...HEAD
+[Unreleased]: https://github.com/proshin-roman/finapi-java-client/compare/v0.1.66...HEAD
+[0.1.66]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.66
 [0.1.65]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.65
 [0.1.64]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.64
 [0.1.63]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.63
