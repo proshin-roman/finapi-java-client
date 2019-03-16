@@ -18,7 +18,14 @@ package org.proshin.finapi.user;
 import java.util.Optional;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockserver.integration.ClientAndServer;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
+import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.fake.FakeRoute;
@@ -26,6 +33,42 @@ import org.proshin.finapi.fake.matcher.path.ExactPathMatcher;
 import org.proshin.finapi.user.in.FpCreateParameters;
 
 public final class UsersTest {
+
+    @SuppressWarnings("InstanceVariableMayNotBeInitialized")
+    private ClientAndServer server;
+
+    @Before
+    public void startMockServer() {
+        this.server = startClientAndServer(10001);
+    }
+
+    @Test
+    public void testAuthorized() {
+        this.server
+            .when(
+                request("/api/v1/users/")
+                    .withMethod("GET")
+                    .withHeader("Authorization", "Bearer random-token")
+            )
+            .respond(
+                response('{' +
+                    "\"id\": \"username\"," +
+                    "  \"password\": \"password\"," +
+                    "  \"email\": \"email@localhost.de\"," +
+                    "  \"phone\": \"+49 99 999999-999\"," +
+                    "  \"isAutoUpdateEnabled\": true" +
+                    '}')
+            );
+        final User user = new FpUsers(
+            new FpEndpoint("http://127.0.0.1:10001"),
+            new FakeAccessToken("random-token")
+        ).authorized();
+        assertThat(user.id(), is("username"));
+        assertThat(user.password(), is("password"));
+        assertThat(user.email(), is(Optional.of("email@localhost.de")));
+        assertThat(user.phone(), is(Optional.of("+49 99 999999-999")));
+        assertThat(user.isAutoUpdateEnabled(), is(true));
+    }
 
     @Test
     public void testVerified() {
@@ -127,5 +170,10 @@ public final class UsersTest {
             ),
             new FakeAccessToken("fake token")
         ).deleteUnverified("user-1");
+    }
+
+    @After
+    public void stopMockServer() {
+        this.server.stop();
     }
 }
