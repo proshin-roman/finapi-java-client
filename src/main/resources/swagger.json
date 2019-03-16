@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.66.0",
+        "version": "v1.67.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -6729,12 +6729,6 @@
                 "token_type"
             ],
             "properties": {
-                "expires_in": {
-                    "type": "integer",
-                    "format": "int32",
-                    "example": 3600,
-                    "description": "Expiration time in seconds. A value of 0 means that the token never expires (unless it is explicitly invalidated, e.g. by revocation, or when a user gets locked)."
-                },
                 "token_type": {
                     "type": "string",
                     "example": "bearer",
@@ -6745,15 +6739,21 @@
                     "example": "all",
                     "description": "Requested scopes (it's always 'all')"
                 },
+                "refresh_token": {
+                    "type": "string",
+                    "example": "0b9KjiBVlZLz7a4HshSAIcFuscStiXT1VzT5mgNYwCQ_dWctTDsaIjedAhD1LpsOFJ7x6K8Emf8M3VOQkwNFR9FHijALYSQw2UeRwAC2MvrOKwfF1dHmOq5VEVYEaGf6",
+                    "description": "Refresh token. Only set in case of grant_type='password'. Token has a length of up to 128 characters."
+                },
                 "access_token": {
                     "type": "string",
                     "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
                     "description": "Access token. Token has a length of up to 128 characters."
                 },
-                "refresh_token": {
-                    "type": "string",
-                    "example": "0b9KjiBVlZLz7a4HshSAIcFuscStiXT1VzT5mgNYwCQ_dWctTDsaIjedAhD1LpsOFJ7x6K8Emf8M3VOQkwNFR9FHijALYSQw2UeRwAC2MvrOKwfF1dHmOq5VEVYEaGf6",
-                    "description": "Refresh token. Only set in case of grant_type='password'. Token has a length of up to 128 characters."
+                "expires_in": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 3600,
+                    "description": "Expiration time in seconds. A value of 0 means that the token never expires (unless it is explicitly invalidated, e.g. by revocation, or when a user gets locked)."
                 }
             },
             "description": "User access token info"
@@ -8102,7 +8102,7 @@
                 },
                 "passwordChangeToken": {
                     "type": "string",
-                    "example": "PassWordCHAnGEToKen",
+                    "example": "45a611d8-8a19-4a02-8726-a24b6a691ce9",
                     "description": "Decrypted password change token (the token that you received from the /users/requestPasswordChange service, decrypted with your data decryption key)",
                     "pattern": "[0-9a-f\\-]*"
                 }
@@ -9209,7 +9209,7 @@
                 },
                 "amount": {
                     "type": "number",
-                    "example": "99.99",
+                    "example": 99.99,
                     "description": "Total money amount of the payment order(s), as absolute value"
                 },
                 "orderCount": {
@@ -9256,12 +9256,12 @@
                 },
                 "fee": {
                     "type": "number",
-                    "example": "-0.99",
+                    "example": -0.99,
                     "description": "Fee value.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point."
                 },
                 "net": {
                     "type": "number",
-                    "example": "9.99",
+                    "example": 9.99,
                     "description": "Net value.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point."
                 },
                 "auctionSite": {
@@ -9476,7 +9476,7 @@
                 },
                 "isin": {
                     "type": "string",
-                    "example": "DE0008404005.",
+                    "example": "DE0008404005",
                     "description": "ISIN"
                 },
                 "wkn": {
@@ -9534,7 +9534,7 @@
                 },
                 "entryQuote": {
                     "type": "number",
-                    "example": "99.999999",
+                    "example": 99.999999,
                     "description": "Entry quote"
                 },
                 "entryQuoteCurrency": {
@@ -9544,7 +9544,7 @@
                 },
                 "profitOrLoss": {
                     "type": "number",
-                    "example": "99.999999",
+                    "example": 99.999999,
                     "description": "Current profit or loss"
                 }
             },
