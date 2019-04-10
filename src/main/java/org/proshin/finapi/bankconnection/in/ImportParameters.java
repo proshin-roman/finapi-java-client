@@ -15,7 +15,7 @@
  */
 package org.proshin.finapi.bankconnection.in;
 
-import org.cactoos.collection.StickyCollection;
+import org.cactoos.collection.Solid;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.account.Type;
@@ -78,7 +78,7 @@ public final class ImportParameters implements Jsonable {
     }
 
     public ImportParameters withAccountTypes(final Iterable<Type> types) {
-        this.origin.put("accountTypeIds", new StickyCollection<>(types));
+        this.origin.put("accountTypeIds", new Solid<>(types));
         return this;
     }
 

@@ -16,7 +16,7 @@
 package org.proshin.finapi.primitives.paging;
 
 import org.cactoos.iterable.Mapped;
-import org.cactoos.text.JoinedText;
+import org.cactoos.text.Joined;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.json.JSONArray;
@@ -38,7 +38,7 @@ public class FpPageTest {
         );
         assertThat(
             "Joined text doesn't match to the expected one",
-            new JoinedText(" - ", new Mapped<>(String::valueOf, items.items())).asString(),
+            new Joined(" - ", new Mapped<>(String::valueOf, items.items())).asString(),
             is("1 - 2 - 3 - 5 - 8 - 11")
         );
     }
