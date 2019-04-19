@@ -72,7 +72,7 @@ public final class FpNotificationRules implements NotificationRules {
             this.endpoint,
             this.token,
             new JSONObject(
-                this.endpoint.post(this.url, this.token, parameters)
+                this.endpoint.post(this.url, this.token, parameters, 201)
             ),
             this.url
         );
