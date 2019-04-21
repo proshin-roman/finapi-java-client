@@ -35,7 +35,7 @@ public final class CategoriesCriteria implements Iterable<NameValuePair> {
     }
 
     public CategoriesCriteria withIds(final Iterable<Long> ids) {
-        this.pairs.add(new CommaSeparatedPair<Long>("ids", ids));
+        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("ids", ids)));
         return this;
     }
 
@@ -44,13 +44,8 @@ public final class CategoriesCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
-    public CategoriesCriteria withCustomOnly() {
-        this.pairs.add(new UrlEncodedPair("isCustom", true));
-        return this;
-    }
-
-    public CategoriesCriteria withNonCustomOnly() {
-        this.pairs.add(new UrlEncodedPair("isCustom", false));
+    public CategoriesCriteria withIsCustom(final boolean isCustom) {
+        this.pairs.add(new UrlEncodedPair("isCustom", isCustom));
         return this;
     }
 

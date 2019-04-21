@@ -46,6 +46,12 @@ public class FpMoneyTransferTest {
         server.reset();
     }
 
+    @AfterClass
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
+    public static void stopMockServer() {
+        server.stop();
+    }
+
     @Test
     public void testRequest() {
         server
@@ -135,11 +141,5 @@ public class FpMoneyTransferTest {
             new FakeAccessToken("access-token"),
             "/api/v1/accounts/"
         ).execute(1L, "098765");
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
     }
 }

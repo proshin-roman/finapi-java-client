@@ -98,7 +98,7 @@ public final class FpCategories implements Categories {
     @Override
     public Iterable<Long> deleteAll() {
         return new IterableJsonArray<>(
-            new JSONArray(this.endpoint.delete(this.url, this.token)),
+            new JSONObject(this.endpoint.delete(this.url, this.token)).getJSONArray("identifiers"),
             JSONArray::getLong
         );
     }
