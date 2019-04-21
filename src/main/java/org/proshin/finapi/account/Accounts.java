@@ -18,7 +18,6 @@ package org.proshin.finapi.account;
 import org.proshin.finapi.account.in.DailyBalancesCriteria;
 import org.proshin.finapi.account.in.FpQueryCriteria;
 import org.proshin.finapi.account.out.DailyBalances;
-import org.proshin.finapi.account.out.DirectDebit;
 
 public interface Accounts {
 

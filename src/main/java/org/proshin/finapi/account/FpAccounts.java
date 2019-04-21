@@ -20,9 +20,7 @@ import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.account.in.DailyBalancesCriteria;
 import org.proshin.finapi.account.in.FpQueryCriteria;
 import org.proshin.finapi.account.out.DailyBalances;
-import org.proshin.finapi.account.out.DirectDebit;
 import org.proshin.finapi.account.out.FpDailyBalances;
-import org.proshin.finapi.account.out.FpDirectDebit;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
 
