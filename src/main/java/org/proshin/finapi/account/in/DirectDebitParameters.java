@@ -150,7 +150,7 @@ public final class DirectDebitParameters implements Jsonable {
         }
 
         public Debtor withEndToEndId(final String endToEndId) {
-            this.origin.put("endToEndIdId", endToEndId);
+            this.origin.put("endToEndId", endToEndId);
             return this;
         }
 

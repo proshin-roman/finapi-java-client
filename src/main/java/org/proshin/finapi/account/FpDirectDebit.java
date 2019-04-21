@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roman Proshin
+ * Copyright 2019 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account.out;
+package org.proshin.finapi.account;
 
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.account.in.DirectDebitParameters;
+import org.proshin.finapi.account.out.FpSepaExecutingResponse;
+import org.proshin.finapi.account.out.FpSepaRequestingResponse;
+import org.proshin.finapi.account.out.SepaExecutingResponse;
+import org.proshin.finapi.account.out.SepaRequestingResponse;
 import org.proshin.finapi.endpoint.Endpoint;
 
 public final class FpDirectDebit implements DirectDebit {
