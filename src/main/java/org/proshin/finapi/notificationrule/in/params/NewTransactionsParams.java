@@ -15,7 +15,6 @@
  */
 package org.proshin.finapi.notificationrule.in.params;
 
-import java.math.BigDecimal;
 import org.json.JSONObject;
 import org.proshin.finapi.notificationrule.TriggerEvent;
 import org.proshin.finapi.primitives.StringOf;
@@ -29,7 +28,7 @@ public final class NewTransactionsParams implements NotificationRuleParams {
             .put("accountIds", new StringOf(accounts));
     }
 
-    public NewTransactionsParams withMaxTransactionsCount(final BigDecimal maxTransactionsCount) {
+    public NewTransactionsParams withMaxTransactionsCount(final int maxTransactionsCount) {
         this.origin.put("maxTransactionsCount", maxTransactionsCount);
         return this;
     }
