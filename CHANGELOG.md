@@ -5,8 +5,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.1.69] - 2019-04-22
 ### Added
 - [#178](https://github.com/proshin-roman/finapi-java-client/issues/178) - The library now supports finAPI v1.69.0
+- [#22](https://github.com/proshin-roman/finapi-java-client/issues/22), 
+[#23](https://github.com/proshin-roman/finapi-java-client/issues/23), 
+[#24](https://github.com/proshin-roman/finapi-java-client/issues/24), 
+[#176](https://github.com/proshin-roman/finapi-java-client/issues/176), 
+[#177](https://github.com/proshin-roman/finapi-java-client/issues/177) - Improved test coverage
+
+### Changed
+- [#182](https://github.com/proshin-roman/finapi-java-client/issues/182) - Some library methods use now LocalDate 
+instead of OffsetDateTime for input parameters (where it's possible for the REST API)
+
+### Fixed
+- [#174](https://github.com/proshin-roman/finapi-java-client/issues/174) - Improved performance of the unit tests
 
 ## [0.1.68] - 2019-04-21
 ### Added
@@ -75,7 +89,8 @@ dependencies issue
 ### Added
 - [#73](https://github.com/proshin-roman/finapi-java-client/issues/73) - The library now supports finAPI v1.59.0
 
-[Unreleased]: https://github.com/proshin-roman/finapi-java-client/compare/v0.1.68...HEAD
+[Unreleased]: https://github.com/proshin-roman/finapi-java-client/compare/v0.1.69...HEAD
+[0.1.69]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.69
 [0.1.68]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.68
 [0.1.67]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.67
 [0.1.66]: https://github.com/proshin-roman/finapi-java-client/releases/tag/v0.1.66
