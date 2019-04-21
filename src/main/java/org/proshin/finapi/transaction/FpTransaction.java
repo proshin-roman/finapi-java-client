@@ -158,6 +158,7 @@ public final class FpTransaction implements Transaction {
     }
 
     @Override
+    @Deprecated
     public Optional<PayPalData> payPalData() {
         return new OptionalObjectOf(this.origin, "paypalData").get()
             .map(FpPayPalData::new);
