@@ -27,7 +27,7 @@ import org.mockserver.model.JsonBody;
 import org.proshin.finapi.account.in.DirectDebitParameters;
 import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.primitives.OffsetDateTimeOf;
+import org.proshin.finapi.primitives.LocalDateOf;
 
 public class FpDirectDebitTest {
 
@@ -84,7 +84,7 @@ public class FpDirectDebitTest {
                 .withTwoStepProcedure("955")
                 .withDirectDebitType(DirectDebitParameters.DirectDebitType.B2B)
                 .withSequenceType(DirectDebitParameters.SequenceType.OOFF)
-                .withExecutionDate(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get())
+                .withExecutionDate(new LocalDateOf("2018-01-01").get())
                 .asSingleBooking()
                 .withDebtors(
                     new DirectDebitParameters.Debtor()
@@ -95,7 +95,7 @@ public class FpDirectDebitTest {
                         .withPurpose("Test Payment")
                         .withSepaPurposeCode("OTHR")
                         .withMandateId("1")
-                        .withMandateDate(new OffsetDateTimeOf("2018-01-02 00:00:00.000").get())
+                        .withMandateDate(new LocalDateOf("2018-01-02").get())
                         .withCreditorId("Creditor")
                         .withEndToEndId("001100550526")
                 )

@@ -86,9 +86,9 @@ public final class FpMandator implements Mandator {
             this.url + "changeClientCredentials",
             this.token,
             () -> new JSONObject()
-                .append("clientId", clientId)
-                .append("oldClientSecret", oldClientSecret)
-                .append("newClientSecret", newClientSecret)
+                .put("clientId", clientId)
+                .put("oldClientSecret", oldClientSecret)
+                .put("newClientSecret", newClientSecret)
         );
     }
 

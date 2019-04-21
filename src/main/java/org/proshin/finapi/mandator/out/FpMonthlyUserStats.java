@@ -15,9 +15,9 @@
  */
 package org.proshin.finapi.mandator.out;
 
-import java.time.OffsetDateTime;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import org.json.JSONObject;
-import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
 public final class FpMonthlyUserStats implements MonthlyUserStats {
 
@@ -28,8 +28,11 @@ public final class FpMonthlyUserStats implements MonthlyUserStats {
     }
 
     @Override
-    public OffsetDateTime month() {
-        return new OffsetDateTimeOf(this.origin.getString("month"), "yyyy-MM").get();
+    public YearMonth month() {
+        return YearMonth.parse(
+            this.origin.getString("month"),
+            DateTimeFormatter.ofPattern("yyyy-MM")
+        );
     }
 
     @Override

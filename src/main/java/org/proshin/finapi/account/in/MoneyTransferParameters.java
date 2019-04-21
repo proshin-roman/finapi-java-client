@@ -16,7 +16,7 @@
 package org.proshin.finapi.account.in;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.Iterator;
 import org.cactoos.iterator.IteratorOf;
 import org.json.JSONObject;
@@ -60,7 +60,7 @@ public final class MoneyTransferParameters implements Jsonable {
         return this;
     }
 
-    public MoneyTransferParameters withExecutionDate(final OffsetDateTime executionDate) {
+    public MoneyTransferParameters withExecutionDate(final LocalDate executionDate) {
         this.origin.put("executionDate", new StringOf(executionDate));
         return this;
     }
