@@ -42,5 +42,7 @@ public interface Configuration {
 
     Optional<String> applicationName();
 
+    boolean paymentsEnabled();
+
     boolean pinStorageAvailableInWebForm();
 }

@@ -93,6 +93,11 @@ public final class FpConfiguration implements Configuration {
     }
 
     @Override
+    public boolean paymentsEnabled() {
+        return this.origin.getBoolean("paymentsEnabled");
+    }
+
+    @Override
     public boolean pinStorageAvailableInWebForm() {
         return this.origin.getBoolean("pinStorageAvailableInWebForm");
     }
