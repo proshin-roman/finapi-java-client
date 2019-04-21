@@ -74,4 +74,9 @@ public final class FpUser implements User {
             (array, index) -> new FpMonthlyUserStats(array.getJSONObject(index))
         );
     }
+
+    @Override
+    public boolean isLocked() {
+        return this.origin.getBoolean("isLocked");
+    }
 }

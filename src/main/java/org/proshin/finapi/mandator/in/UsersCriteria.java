@@ -93,6 +93,11 @@ public final class UsersCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
+    public UsersCriteria withIsLocked(final boolean isLocked) {
+        this.pairs.add(new UrlEncodedPair("isLocked", isLocked));
+        return this;
+    }
+
     public UsersCriteria withPage(final int page, final int perPage) {
         this.pairs.add(new UrlEncodedPair("page", page));
         this.pairs.add(new UrlEncodedPair("perPage", perPage));

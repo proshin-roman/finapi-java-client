@@ -35,4 +35,6 @@ public interface User {
     Optional<OffsetDateTime> latestBankConnectionDeletionDate();
 
     Iterable<MonthlyUserStats> monthlyUserStats();
+
+    boolean isLocked();
 }

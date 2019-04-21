@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.68.0",
+        "version": "v1.69.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -570,7 +570,7 @@
                         }
                     },
                     "422": {
-                        "description": "ILLEGAL_FIELD_VALUE if SEPA purpose code is specified incorrectly;<br/>ILLEGAL_ENTITY_STATE if no PIN has been specified and finAPI has no PIN stored for the account's bank connection;<br/>UNSUPPORTED_ORDER if the account does not support the requested order. Check the account's 'supportedOrders' field for available orders;<br/>IBAN_ONLY_DIRECT_DEBIT_NOT_SUPPORTED if the debitor account's BIC is required but was not set (see Bank Connection resource to find out whether the BIC is required or not);<br/>MISSING_TWO_STEP_PROCEDURE if no two-step-procedure was specified in the input parameters of the service call, and there is no default two-step-procedure set in the account's bank connection neither;<br/>INVALID_TWO_STEP_PROCEDURE if the given two-step-procedure does not match any of the procedures that are listed in the account's bank connection;<br/>BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to submit the direct debit order. The response's error message can be forwarded to the user, as it will typically contain a german message from the bank server that contains  useful information for the user.",
+                        "description": "ILLEGAL_FIELD_VALUE if SEPA purpose code is specified incorrectly;<br/>ILLEGAL_ENTITY_STATE if no PIN has been specified and finAPI has no PIN stored for the account's bank connection or if the account used for the request is DEPRECATED/not found on bank side;<br/>UNSUPPORTED_ORDER if the account does not support the requested order. Check the account's 'supportedOrders' field for available orders;<br/>IBAN_ONLY_DIRECT_DEBIT_NOT_SUPPORTED if the debitor account's BIC is required but was not set (see Bank Connection resource to find out whether the BIC is required or not);<br/>MISSING_TWO_STEP_PROCEDURE if no two-step-procedure was specified in the input parameters of the service call, and there is no default two-step-procedure set in the account's bank connection neither;<br/>INVALID_TWO_STEP_PROCEDURE if the given two-step-procedure does not match any of the procedures that are listed in the account's bank connection;<br/>BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to submit the direct debit order. The response's error message can be forwarded to the user, as it will typically contain a german message from the bank server that contains  useful information for the user.",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -663,7 +663,7 @@
                         }
                     },
                     "422": {
-                        "description": "ILLEGAL_ENTITY_STATE if no PIN has been specified and finAPI has no PIN stored for the account's bank connection;<br/>UNSUPPORTED_ORDER if the account does not support the requested order. Check the account's 'supportedOrders' field for available orders;<br/>IBAN_ONLY_MONEY_TRANSFER_NOT_SUPPORTED if the recipient account's BIC is required but was not set (see Bank Connection resource to find out whether the BIC is required or not);<br/>COLLECTIVE_MONEY_TRANSFER_NOT_SUPPORTED - DEPRECATED! This code will never be returned. If a collective money transfer request was submitted but the account does not support collective money transfers, then the service will return with the code UNSUPPORTED_ORDER;<br/>MISSING_TWO_STEP_PROCEDURE if no two-step-procedure was specified in the input parameters of the service call, and there is no default two-step-procedure set in the account's bank connection either;<br/>INVALID_TWO_STEP_PROCEDURE if the given two-step-procedure does not match any of the procedures that are listed in the account's bank connection;<br/>BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to submit the money transfer order. The response's error message can be forwarded to the user, as it will typically contain a german message from the bank server that contains  useful information for the user;<br/>ILLEGAL_FIELD_VALUE if recipient IBAN/Name or clearing account id is not specified or specified incorrectly; if SEPA purpose code is specified incorrectly",
+                        "description": "ILLEGAL_ENTITY_STATE if no PIN has been specified and finAPI has no PIN stored for the account's bank connection or if the account used for the request is DEPRECATED/not found on bank side;<br/>UNSUPPORTED_ORDER if the account does not support the requested order. Check the account's 'supportedOrders' field for available orders;<br/>IBAN_ONLY_MONEY_TRANSFER_NOT_SUPPORTED if the recipient account's BIC is required but was not set (see Bank Connection resource to find out whether the BIC is required or not);<br/>COLLECTIVE_MONEY_TRANSFER_NOT_SUPPORTED - DEPRECATED! This code will never be returned. If a collective money transfer request was submitted but the account does not support collective money transfers, then the service will return with the code UNSUPPORTED_ORDER;<br/>MISSING_TWO_STEP_PROCEDURE if no two-step-procedure was specified in the input parameters of the service call, and there is no default two-step-procedure set in the account's bank connection either;<br/>INVALID_TWO_STEP_PROCEDURE if the given two-step-procedure does not match any of the procedures that are listed in the account's bank connection;<br/>BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to submit the money transfer order. The response's error message can be forwarded to the user, as it will typically contain a german message from the bank server that contains  useful information for the user;<br/>ILLEGAL_FIELD_VALUE if recipient IBAN/Name or clearing account id is not specified or specified incorrectly; if SEPA purpose code is specified incorrectly",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -3509,6 +3509,13 @@
                         "name": "isDeleted",
                         "in": "query",
                         "description": "If NOT specified, then the service will regard both active and deleted users in the search. If set to 'true', then ONLY deleted users will be regarded. If set to 'false', then ONLY active users will be regarded.",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "isLocked",
+                        "in": "query",
+                        "description": "If NOT specified, then the service will regard both locked and not locked users in the search. If set to 'true', then ONLY locked users will be regarded. If set to 'false', then ONLY not locked users will be regarded.",
                         "required": false,
                         "type": "boolean"
                     },
@@ -6734,11 +6741,6 @@
                     "example": "all",
                     "description": "Requested scopes (it's always 'all')"
                 },
-                "token_type": {
-                    "type": "string",
-                    "example": "bearer",
-                    "description": "Token type (it's always 'bearer')"
-                },
                 "refresh_token": {
                     "type": "string",
                     "example": "0b9KjiBVlZLz7a4HshSAIcFuscStiXT1VzT5mgNYwCQ_dWctTDsaIjedAhD1LpsOFJ7x6K8Emf8M3VOQkwNFR9FHijALYSQw2UeRwAC2MvrOKwfF1dHmOq5VEVYEaGf6",
@@ -6749,6 +6751,11 @@
                     "format": "int32",
                     "example": 3600,
                     "description": "Expiration time in seconds. A value of 0 means that the token never expires (unless it is explicitly invalidated, e.g. by revocation, or when a user gets locked)."
+                },
+                "token_type": {
+                    "type": "string",
+                    "example": "bearer",
+                    "description": "Token type (it's always 'bearer')"
                 },
                 "access_token": {
                     "type": "string",
@@ -7640,8 +7647,7 @@
                 "mcCode": {
                     "type": "string",
                     "example": "5542",
-                    "description": "Merchant category code (for credit card transactions only). May only contain up to 4 digits. Default value: null.",
-                    "pattern": "[0-9]+"
+                    "description": "Merchant category code (for credit card transactions only). May only contain up to 4 digits. Default value: null."
                 },
                 "typeCodeZka": {
                     "type": "string",
@@ -7754,14 +7760,14 @@
                     "example": "My App",
                     "description": "Application name. When an application name is set (e.g. \"My App\"), then <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's web form</a> will display a text to the user \"Weiterleitung auf finAPI von ...\" (e.g. \"Weiterleitung auf finAPI von MyApp\")."
                 },
-                "paymentsEnabled": {
-                    "type": "boolean",
-                    "description": "Whether this client is allowed to do payments",
-                    "example": true
-                },
                 "pinStorageAvailableInWebForm": {
                     "type": "boolean",
                     "description": "Whether <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's web form</a> will provide a checkbox for the user allowing him to choose whether to store his banking PIN in finAPI. If this field is set to false, then the user won't have an option to store his PIN.",
+                    "example": true
+                },
+                "paymentsEnabled": {
+                    "type": "boolean",
+                    "description": "Whether this client is allowed to do payments",
                     "example": true
                 }
             },
@@ -10466,6 +10472,11 @@
                     "items": {
                         "$ref": "#/definitions/MonthlyUserStats"
                     }
+                },
+                "isLocked": {
+                    "type": "boolean",
+                    "description": "Whether the user is currently locked (for further information, see the 'maxUserLoginAttempts' setting in your client's configuration). Note that deleted users will always have this field set to 'false'.",
+                    "example": false
                 }
             },
             "description": "Container for user information"
