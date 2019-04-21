@@ -45,13 +45,8 @@ public final class NotificationRulesCriteria implements Iterable<NameValuePair> 
         return this;
     }
 
-    public NotificationRulesCriteria withDetailsOnly() {
-        this.pairs.add(new UrlEncodedPair("includeDetails", true));
-        return this;
-    }
-
-    public NotificationRulesCriteria withoutDetailsOnly() {
-        this.pairs.add(new UrlEncodedPair("includeDetails", false));
+    public NotificationRulesCriteria withDetails(final boolean includeDetails) {
+        this.pairs.add(new UrlEncodedPair("includeDetails", includeDetails));
         return this;
     }
 

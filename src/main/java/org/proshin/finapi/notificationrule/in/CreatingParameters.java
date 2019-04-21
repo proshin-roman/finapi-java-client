@@ -52,7 +52,7 @@ public final class CreatingParameters implements Jsonable {
         return this;
     }
 
-    public CreatingParameters withIncludingDetails() {
+    public CreatingParameters withDetails() {
         this.origin.put("includeDetails", true);
         return this;
     }
