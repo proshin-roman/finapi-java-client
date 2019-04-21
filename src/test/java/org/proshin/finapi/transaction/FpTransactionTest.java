@@ -153,6 +153,7 @@ public class FpTransactionTest {
         assertThat(tx.type().typeCodeSwift(), is(Optional.of("RAPRDE51")));
         assertThat(tx.sepaPurposeCode(), is(Optional.of("OTHR")));
         assertThat(tx.primanota(), is(Optional.of("Primanota")));
+        assertThat(tx.category().isPresent(), is(true));
         assertThat(tx.category().get().id(), is(4L));
         assertThat(tx.labels(), hasItems(new LabelMatcher(1L, "test")));
         assertThat(tx.isPotentialDuplicate(), is(true));
@@ -160,6 +161,11 @@ public class FpTransactionTest {
         assertThat(tx.isNew(), is(true));
         assertThat(tx.importDate(), is(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get()));
         assertThat(tx.children(), hasItems(1L, 2L, 3L));
+        assertThat(tx.payPalData().isPresent(), is(true));
+        assertThat(tx.payPalData().get().invoiceNumber(), is(Optional.of("INV2-KXVU-7Z64-DT6W-MG2X")));
+        assertThat(tx.payPalData().get().fee(), is(Optional.of(new BigDecimal("-0.99"))));
+        assertThat(tx.payPalData().get().net(), is(Optional.of(new BigDecimal("9.99"))));
+        assertThat(tx.payPalData().get().auctionSite(), is(Optional.of("eBay")));
         assertThat(tx.endToEndReference(), is(Optional.of("001100550526")));
     }
 

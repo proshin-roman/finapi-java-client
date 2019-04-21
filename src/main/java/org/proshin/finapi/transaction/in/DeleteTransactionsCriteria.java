@@ -15,7 +15,7 @@
  */
 package org.proshin.finapi.transaction.in;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,7 +34,7 @@ public final class DeleteTransactionsCriteria implements Iterable<NameValuePair>
         this.pairs = pairs;
     }
 
-    public DeleteTransactionsCriteria withMaxDeletionDate(final OffsetDateTime maxDeletionDate) {
+    public DeleteTransactionsCriteria withMaxDeletionDate(final LocalDate maxDeletionDate) {
         this.pairs.add(new UrlEncodedPair("maxDeletionDate", new StringOf(maxDeletionDate)));
         return this;
     }
