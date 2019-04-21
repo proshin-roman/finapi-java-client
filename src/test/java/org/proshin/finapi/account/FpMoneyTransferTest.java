@@ -17,6 +17,7 @@ package org.proshin.finapi.account;
 
 import java.math.BigDecimal;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
@@ -38,6 +39,11 @@ public class FpMoneyTransferTest {
     @BeforeClass
     public static void startMockServer() {
         server = startClientAndServer(10004);
+    }
+
+    @Before
+    public void reset() {
+        server.reset();
     }
 
     @Test
