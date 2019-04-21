@@ -15,11 +15,11 @@
  */
 package org.proshin.finapi.mandator.out;
 
-import java.time.OffsetDateTime;
+import java.time.YearMonth;
 
 public interface MonthlyUserStats {
 
-    OffsetDateTime month();
+    YearMonth month();
 
     int minBankConnectionCount();
 

@@ -16,7 +16,7 @@
 package org.proshin.finapi.account.in;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.primitives.StringOf;
@@ -63,7 +63,7 @@ public final class DirectDebitParameters implements Jsonable {
         return this;
     }
 
-    public DirectDebitParameters withExecutionDate(final OffsetDateTime executionDate) {
+    public DirectDebitParameters withExecutionDate(final LocalDate executionDate) {
         this.origin.put("executionDate", new StringOf(executionDate));
         return this;
     }
@@ -139,7 +139,7 @@ public final class DirectDebitParameters implements Jsonable {
             return this;
         }
 
-        public Debtor withMandateDate(final OffsetDateTime mandateDate) {
+        public Debtor withMandateDate(final LocalDate mandateDate) {
             this.origin.put("mandateDate", new StringOf(mandateDate));
             return this;
         }

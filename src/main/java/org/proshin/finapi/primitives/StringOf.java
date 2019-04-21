@@ -18,9 +18,9 @@ package org.proshin.finapi.primitives;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -30,7 +30,7 @@ public final class StringOf implements Supplier<String> {
 
     private final String origin;
 
-    public StringOf(final OffsetDateTime value) {
+    public StringOf(final TemporalAccessor value) {
         this(DateTimeFormatter.ofPattern("yyyy-MM-dd")
             .withZone(ZoneId.of("Europe/Berlin"))
             .format(value));

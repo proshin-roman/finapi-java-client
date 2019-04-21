@@ -15,41 +15,39 @@
  */
 package org.proshin.finapi.mandator.out;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.IterableJsonArray;
-import org.proshin.finapi.primitives.OffsetDateTimeOf;
-import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
+import org.proshin.finapi.primitives.LocalDateOf;
+import org.proshin.finapi.primitives.optional.OptionalLocalDateOf;
 
 public final class FpUser implements User {
 
     private final JSONObject origin;
-    private final String pattern;
 
     public FpUser(final JSONObject origin) {
         this.origin = origin;
-        this.pattern = "YYYY-MM-DD";
     }
 
     @Override
     public String id() {
-        return this.origin.getString("id");
+        return this.origin.getString("userId");
     }
 
     @Override
-    public OffsetDateTime registrationDate() {
-        return new OffsetDateTimeOf(this.origin.getString("registrationDate"), this.pattern).get();
+    public LocalDate registrationDate() {
+        return new LocalDateOf(this.origin.getString("registrationDate")).get();
     }
 
     @Override
-    public Optional<OffsetDateTime> deletionDate() {
-        return new OptionalOffsetDateTimeOf(this.origin, "deletionDate", this.pattern).get();
+    public Optional<LocalDate> deletionDate() {
+        return new OptionalLocalDateOf(this.origin, "deletionDate").get();
     }
 
     @Override
-    public Optional<OffsetDateTime> lastActiveDate() {
-        return new OptionalOffsetDateTimeOf(this.origin, "lastActiveDate", this.pattern).get();
+    public Optional<LocalDate> lastActiveDate() {
+        return new OptionalLocalDateOf(this.origin, "lastActiveDate").get();
     }
 
     @Override
@@ -58,13 +56,13 @@ public final class FpUser implements User {
     }
 
     @Override
-    public Optional<OffsetDateTime> latestBankConnectionImportDate() {
-        return new OptionalOffsetDateTimeOf(this.origin, "latestBankConnectionImportDate", this.pattern).get();
+    public Optional<LocalDate> latestBankConnectionImportDate() {
+        return new OptionalLocalDateOf(this.origin, "latestBankConnectionImportDate").get();
     }
 
     @Override
-    public Optional<OffsetDateTime> latestBankConnectionDeletionDate() {
-        return new OptionalOffsetDateTimeOf(this.origin, "latestBankConnectionDeletionDate", this.pattern).get();
+    public Optional<LocalDate> latestBankConnectionDeletionDate() {
+        return new OptionalLocalDateOf(this.origin, "latestBankConnectionDeletionDate").get();
     }
 
     @Override

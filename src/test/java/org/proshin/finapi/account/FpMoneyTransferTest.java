@@ -28,7 +28,7 @@ import org.proshin.finapi.account.in.MoneyTransferParameters;
 import org.proshin.finapi.account.out.SepaRequestingResponse;
 import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.primitives.OffsetDateTimeOf;
+import org.proshin.finapi.primitives.LocalDateOf;
 
 public class FpMoneyTransferTest {
 
@@ -89,7 +89,7 @@ public class FpMoneyTransferTest {
                 .withStoringPin()
                 .withTwoStepProcedure("955")
                 .withChallengeResponse("0123")
-                .withExecutionDate(new OffsetDateTimeOf("2019-04-03 02:01:00.000").get())
+                .withExecutionDate(new LocalDateOf("2019-04-03").get())
                 .asSingleBooking()
                 .withRecipients(
                     new MoneyTransferParameters.Recipient()
