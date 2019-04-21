@@ -44,6 +44,7 @@ public class FpCategoryTest {
     public void testEdit() {
         this.server.when(
             HttpRequest.request("/api/v1/categories/378")
+                .withMethod("PATCH")
                 .withHeader("Authorization", "Bearer random-token")
                 .withBody(new JsonBody("{\"name\": \"New category name\"}")))
             .respond(
