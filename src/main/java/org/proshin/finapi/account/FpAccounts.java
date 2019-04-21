@@ -26,9 +26,6 @@ import org.proshin.finapi.account.out.FpDirectDebit;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
 
-/**
- * @todo #21 Write unit tests for FpAccounts
- */
 public final class FpAccounts implements Accounts {
 
     private final Endpoint endpoint;

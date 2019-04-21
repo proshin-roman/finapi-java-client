@@ -34,4 +34,9 @@ public final class FpClearingAccount implements ClearingAccount {
     public String name() {
         return this.origin.getString("clearingAccountName");
     }
+
+    @Override
+    public String toString() {
+        return "JSON=" + this.origin;
+    }
 }
