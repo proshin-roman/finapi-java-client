@@ -101,7 +101,7 @@ public class FpClientTest {
 
     /**
      * @todo #164 Implement a new matcher that will match that the given instance submits the right JSON structure to
-     *   the test server
+     *  the test server
      */
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
