@@ -19,8 +19,9 @@ import java.util.Optional;
 import org.hamcrest.CoreMatchers;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
@@ -37,17 +38,28 @@ import org.proshin.finapi.user.in.FpCreateParameters;
 
 public class FpClientTest {
 
-    @SuppressWarnings("InstanceVariableMayNotBeInitialized")
-    private ClientAndServer server;
+    @SuppressWarnings("StaticVariableMayNotBeInitialized")
+    private static ClientAndServer server;
+
+    @BeforeClass
+    public static void startMockServer() {
+        server = startClientAndServer(10002);
+    }
 
     @Before
-    public void startMockServer() {
-        this.server = startClientAndServer(10002);
+    public void reset() {
+        server.reset();
+    }
+
+    @AfterClass
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
+    public static void stopMockServer() {
+        server.stop();
     }
 
     @Test
     public void testConfiguration() {
-        this.server.when(
+        server.when(
             HttpRequest.request("/api/v1/clientConfiguration/")
                 .withMethod("GET")
                 .withHeader("Authorization", "Bearer random-token"))
@@ -106,7 +118,7 @@ public class FpClientTest {
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
     public void testEdit() {
-        this.server.when(
+        server.when(
             HttpRequest.request("/api/v1/clientConfiguration/")
                 .withMethod("PATCH")
                 .withHeader("Authorization", "Bearer random-token")
@@ -159,7 +171,7 @@ public class FpClientTest {
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
     public void testUsers() {
-        this.server.when(
+        server.when(
             HttpRequest.request("/api/v1/users/")
                 .withMethod("POST")
                 .withHeader("Authorization", "Bearer random-token"))
@@ -172,10 +184,5 @@ public class FpClientTest {
             new FakeAccessToken("random-token")
         ).users();
         final User user = users.create(new FpCreateParameters());
-    }
-
-    @After
-    public void stopMockServer() {
-        this.server.stop();
     }
 }

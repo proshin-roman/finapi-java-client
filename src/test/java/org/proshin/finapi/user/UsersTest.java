@@ -18,8 +18,9 @@ package org.proshin.finapi.user;
 import java.util.Optional;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
@@ -34,17 +35,28 @@ import org.proshin.finapi.user.in.FpCreateParameters;
 
 public final class UsersTest {
 
-    @SuppressWarnings("InstanceVariableMayNotBeInitialized")
-    private ClientAndServer server;
+    @SuppressWarnings("StaticVariableMayNotBeInitialized")
+    private static ClientAndServer server;
+
+    @BeforeClass
+    public static void startMockServer() {
+        server = startClientAndServer(10001);
+    }
 
     @Before
-    public void startMockServer() {
-        this.server = startClientAndServer(10001);
+    public void reset() {
+        server.reset();
+    }
+
+    @AfterClass
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
+    public static void stopMockServer() {
+        server.stop();
     }
 
     @Test
     public void testAuthorized() {
-        this.server
+        server
             .when(
                 request("/api/v1/users/")
                     .withMethod("GET")
@@ -170,10 +182,5 @@ public final class UsersTest {
             ),
             new FakeAccessToken("fake token")
         ).deleteUnverified("user-1");
-    }
-
-    @After
-    public void stopMockServer() {
-        this.server.stop();
     }
 }

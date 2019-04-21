@@ -17,8 +17,9 @@ package org.proshin.finapi.account;
 
 import java.math.BigDecimal;
 import org.cactoos.iterable.IterableOfLongs;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
@@ -32,17 +33,28 @@ import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
 public class FpAccountsTest {
 
-    @SuppressWarnings("InstanceVariableMayNotBeInitialized")
-    private ClientAndServer server;
+    @SuppressWarnings("StaticVariableMayNotBeInitialized")
+    private static ClientAndServer server;
+
+    @BeforeClass
+    public static void startMockServer() {
+        server = startClientAndServer(10003);
+    }
 
     @Before
-    public void startMockServer() {
-        this.server = startClientAndServer(10003);
+    public void reset() {
+        server.reset();
+    }
+
+    @AfterClass
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
+    public static void stopMockServer() {
+        server.stop();
     }
 
     @Test
     public void testOne() {
-        this.server
+        server
             .when(
                 HttpRequest.request("/api/v1/accounts/2")
                     .withMethod("GET")
@@ -59,7 +71,7 @@ public class FpAccountsTest {
 
     @Test
     public void testQuery() {
-        this.server
+        server
             .when(
                 HttpRequest.request("/api/v1/accounts/")
                     .withQueryStringParameter("ids", "1%2C2")
@@ -93,7 +105,7 @@ public class FpAccountsTest {
 
     @Test
     public void testDailyBalances() {
-        this.server
+        server
             .when(
                 HttpRequest.request("/api/v1/accounts/dailyBalances")
                     .withQueryStringParameter("accountIds", "1%2C2")
@@ -121,10 +133,5 @@ public class FpAccountsTest {
                 .withPage(1, 20)
                 .orderBy("date,asc", "balance,desc")
         );
-    }
-
-    @After
-    public void stopMockServer() {
-        this.server.stop();
     }
 }

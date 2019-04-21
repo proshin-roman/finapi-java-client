@@ -16,7 +16,7 @@
 package org.proshin.finapi.category.in;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -58,22 +58,22 @@ public final class CashFlowsCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
-    public CashFlowsCriteria withMinBankBookingDate(final OffsetDateTime minBankBookingDate) {
+    public CashFlowsCriteria withMinBankBookingDate(final LocalDate minBankBookingDate) {
         this.pairs.add(new UrlEncodedPair("minBankBookingDate", new StringOf(minBankBookingDate)));
         return this;
     }
 
-    public CashFlowsCriteria withMaxBankBookingDate(final OffsetDateTime maxBankBookingDate) {
+    public CashFlowsCriteria withMaxBankBookingDate(final LocalDate maxBankBookingDate) {
         this.pairs.add(new UrlEncodedPair("maxBankBookingDate", new StringOf(maxBankBookingDate)));
         return this;
     }
 
-    public CashFlowsCriteria withMinFinapiBookingDate(final OffsetDateTime minFinapiBookingDate) {
+    public CashFlowsCriteria withMinFinapiBookingDate(final LocalDate minFinapiBookingDate) {
         this.pairs.add(new UrlEncodedPair("minFinapiBookingDate", new StringOf(minFinapiBookingDate)));
         return this;
     }
 
-    public CashFlowsCriteria withMaxFinapiBookingDate(final OffsetDateTime maxFinapiBookingDate) {
+    public CashFlowsCriteria withMaxFinapiBookingDate(final LocalDate maxFinapiBookingDate) {
         this.pairs.add(new UrlEncodedPair("maxFinapiBookingDate", new StringOf(maxFinapiBookingDate)));
         return this;
     }
@@ -108,12 +108,12 @@ public final class CashFlowsCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
-    public CashFlowsCriteria withMinImportDate(final OffsetDateTime minImportDate) {
+    public CashFlowsCriteria withMinImportDate(final LocalDate minImportDate) {
         this.pairs.add(new UrlEncodedPair("minImportDate", new StringOf(minImportDate)));
         return this;
     }
 
-    public CashFlowsCriteria withMaxImportDate(final OffsetDateTime maxImportDate) {
+    public CashFlowsCriteria withMaxImportDate(final LocalDate maxImportDate) {
         this.pairs.add(new UrlEncodedPair("maxImportDate", new StringOf(maxImportDate)));
         return this;
     }
