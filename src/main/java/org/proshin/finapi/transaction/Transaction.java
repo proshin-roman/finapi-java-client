@@ -75,6 +75,14 @@ public interface Transaction {
 
     Optional<String> endToEndReference();
 
+    Optional<BigDecimal> compensationAmount();
+
+    Optional<BigDecimal> originalAmount();
+
+    Optional<String> differentDebitor();
+
+    Optional<String> differentCreditor();
+
     Transaction split(SplitTransactionParameters parameters);
 
     Transaction restore();

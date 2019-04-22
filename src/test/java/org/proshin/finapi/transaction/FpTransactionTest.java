@@ -85,6 +85,7 @@ public class FpTransactionTest {
                 "  \"counterpartMandateReference\": \"MR123\"," +
                 "  \"counterpartCustomerReference\": \"CUR123\"," +
                 "  \"counterpartCreditorId\": \"CRI123\"," +
+                "  \"counterpartDebitorId\": \"CRI098\"," +
                 "  \"type\": \"Überweisungsauftrag\"," +
                 "  \"typeCodeZka\": \"999\"," +
                 "  \"typeCodeSwift\": \"RAPRDE51\"," +
@@ -148,6 +149,7 @@ public class FpTransactionTest {
         assertThat(tx.counterpart().mandateReference(), is(Optional.of("MR123")));
         assertThat(tx.counterpart().customerReference(), is(Optional.of("CUR123")));
         assertThat(tx.counterpart().creditorId(), is(Optional.of("CRI123")));
+        assertThat(tx.counterpart().debitorId(), is(Optional.of("CRI098")));
         assertThat(tx.type().type(), is(Optional.of("Überweisungsauftrag")));
         assertThat(tx.type().typeCodeZka(), is(Optional.of("999")));
         assertThat(tx.type().typeCodeSwift(), is(Optional.of("RAPRDE51")));
@@ -167,6 +169,11 @@ public class FpTransactionTest {
         assertThat(tx.payPalData().get().net(), is(Optional.of(new BigDecimal("9.99"))));
         assertThat(tx.payPalData().get().auctionSite(), is(Optional.of("eBay")));
         assertThat(tx.endToEndReference(), is(Optional.of("001100550526")));
+        assertThat(tx.compensationAmount(), is(Optional.of(new BigDecimal("-1.11"))));
+        assertThat(tx.originalAmount(), is(Optional.of(new BigDecimal("-9.99"))));
+        assertThat(tx.differentDebitor(), is(Optional.of("DIFD70204")));
+        assertThat(tx.differentCreditor(), is(Optional.of("DIFC98450")));
+
     }
 
     @Test

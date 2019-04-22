@@ -28,6 +28,7 @@ import org.proshin.finapi.label.FpLabel;
 import org.proshin.finapi.label.Label;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
+import org.proshin.finapi.primitives.optional.OptionalBigDecimalOf;
 import org.proshin.finapi.primitives.optional.OptionalLongOf;
 import org.proshin.finapi.primitives.optional.OptionalObjectOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
@@ -167,6 +168,26 @@ public final class FpTransaction implements Transaction {
     @Override
     public Optional<String> endToEndReference() {
         return new OptionalStringOf(this.origin, "endToEndReference").get();
+    }
+
+    @Override
+    public Optional<BigDecimal> compensationAmount() {
+        return new OptionalBigDecimalOf(this.origin, "compensationAmount").get();
+    }
+
+    @Override
+    public Optional<BigDecimal> originalAmount() {
+        return new OptionalBigDecimalOf(this.origin, "originalAmount").get();
+    }
+
+    @Override
+    public Optional<String> differentDebitor() {
+        return new OptionalStringOf(this.origin, "differentDebitor").get();
+    }
+
+    @Override
+    public Optional<String> differentCreditor() {
+        return new OptionalStringOf(this.origin, "differentCreditor").get();
     }
 
     @Override
