@@ -35,4 +35,6 @@ public interface Counterpart {
     Optional<String> customerReference();
 
     Optional<String> creditorId();
+
+    Optional<String> debitorId();
 }

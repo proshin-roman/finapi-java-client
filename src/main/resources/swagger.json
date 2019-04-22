@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.69.0",
+        "version": "v1.70.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -9949,7 +9949,12 @@
                 "counterpartCreditorId": {
                     "type": "string",
                     "example": "CRI123",
-                    "description": "The creditor ID of the counterpart"
+                    "description": "The creditor ID of the counterpart. Exists only for SEPA direct debit transactions (\"Lastschrift\")."
+                },
+                "counterpartDebitorId": {
+                    "type": "string",
+                    "example": "CRI098",
+                    "description": "The originator's identification code. Exists only for SEPA money transfer transactions (\"Überweisung\")."
                 },
                 "type": {
                     "type": "string",
@@ -10028,6 +10033,26 @@
                     "type": "string",
                     "example": "001100550526",
                     "description": "End-To-End reference"
+                },
+                "compensationAmount": {
+                    "type": "number",
+                    "example": -1.11,
+                    "description": "Compensation Amount. Sum of reimbursement of out-of-pocket expenses plus processing brokerage in case of a national return / refund debit as well as an optional interest equalisation. Exists predominantly for SEPA direct debit returns."
+                },
+                "originalAmount": {
+                    "type": "number",
+                    "example": -9.99,
+                    "description": "Original Amount of the original direct debit. Exists predominantly for SEPA direct debit returns."
+                },
+                "differentDebitor": {
+                    "type": "string",
+                    "example": "DIFD70204",
+                    "description": "Payer's/debtor's reference party (in the case of a credit transfer) or payee's/creditor's reference party (in the case of a direct debit)"
+                },
+                "differentCreditor": {
+                    "type": "string",
+                    "example": "DIFC98450",
+                    "description": "Payee's/creditor's reference party (in the case of a credit transfer) or payer's/debtor's reference party (in the case of a direct debit)"
                 }
             },
             "description": "Container for a transaction's data"

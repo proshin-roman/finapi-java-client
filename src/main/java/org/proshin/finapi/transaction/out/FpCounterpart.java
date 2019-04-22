@@ -71,4 +71,9 @@ public final class FpCounterpart implements Counterpart {
     public Optional<String> creditorId() {
         return new OptionalStringOf(this.origin, "counterpartCreditorId").get();
     }
+
+    @Override
+    public Optional<String> debitorId() {
+        return new OptionalStringOf(this.origin, "counterpartDebitorId").get();
+    }
 }
