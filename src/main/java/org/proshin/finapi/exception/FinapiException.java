@@ -19,12 +19,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.Optional;
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.cactoos.io.InputOf;
-import org.cactoos.scalar.SolidScalar;
-import org.cactoos.scalar.UncheckedScalar;
 import org.cactoos.text.TextOf;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.IterableJsonArray;
@@ -35,9 +32,9 @@ public final class FinapiException extends RuntimeException {
     private static final long serialVersionUID = -5608855544688297953L;
 
     @SuppressWarnings("TransientFieldNotInitialized")
-    private final transient UncheckedScalar<JSONObject> origin;
-    @SuppressWarnings("TransientFieldNotInitialized")
-    private final transient UncheckedScalar<Optional<String>> location;
+    private final transient JSONObject origin;
+    @SuppressWarnings({"TransientFieldNotInitialized", "OptionalUsedAsFieldOrParameterType"})
+    private final transient Optional<String> location;
 
     public FinapiException(final int expected, final HttpResponse response) {
         super(
@@ -55,39 +52,39 @@ public final class FinapiException extends RuntimeException {
         } catch (final IOException e) {
             throw new RuntimeException("Couldn't read the response body", e);
         }
-        this.origin = new UncheckedScalar<>(new SolidScalar<>(() -> new JSONObject(content)));
-        final Header header = response.getFirstHeader("Location");
-        this.location = new UncheckedScalar<>(() -> Optional.ofNullable(header).map(NameValuePair::getValue));
+        this.origin = new JSONObject(content);
+        this.location = Optional.ofNullable(response.getFirstHeader("Location"))
+            .map(NameValuePair::getValue);
     }
 
     public Iterable<FinapiError> errors() {
         return new IterableJsonArray<>(
-            this.origin.value().getJSONArray("errors"),
+            this.origin.getJSONArray("errors"),
             (array, index) -> new FinapiError(array.getJSONObject(index))
         );
     }
 
     public OffsetDateTime date() {
-        return new OffsetDateTimeOf(this.origin.value().getString("date")).get();
+        return new OffsetDateTimeOf(this.origin.getString("date")).get();
     }
 
     public String requestId() {
-        return this.origin.value().getString("requestId");
+        return this.origin.getString("requestId");
     }
 
     public String endpoint() {
-        return this.origin.value().getString("endpoint");
+        return this.origin.getString("endpoint");
     }
 
     public String authContext() {
-        return this.origin.value().getString("authContext");
+        return this.origin.getString("authContext");
     }
 
     public String bank() {
-        return this.origin.value().getString("bank");
+        return this.origin.getString("bank");
     }
 
     public Optional<String> location() {
-        return this.location.value();
+        return this.location;
     }
 }
