@@ -23,8 +23,8 @@ import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.cactoos.io.InputOf;
-import org.cactoos.scalar.SolidScalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Solid;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.TextOf;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.IterableJsonArray;
@@ -35,9 +35,9 @@ public final class FinapiException extends RuntimeException {
     private static final long serialVersionUID = -5608855544688297953L;
 
     @SuppressWarnings("TransientFieldNotInitialized")
-    private final transient UncheckedScalar<JSONObject> origin;
+    private final transient Unchecked<JSONObject> origin;
     @SuppressWarnings("TransientFieldNotInitialized")
-    private final transient UncheckedScalar<Optional<String>> location;
+    private final transient Unchecked<Optional<String>> location;
 
     public FinapiException(final int expected, final HttpResponse response) {
         super(
@@ -55,9 +55,9 @@ public final class FinapiException extends RuntimeException {
         } catch (final IOException e) {
             throw new RuntimeException("Couldn't read the response body", e);
         }
-        this.origin = new UncheckedScalar<>(new SolidScalar<>(() -> new JSONObject(content)));
+        this.origin = new Unchecked<>(new Solid<>(() -> new JSONObject(content)));
         final Header header = response.getFirstHeader("Location");
-        this.location = new UncheckedScalar<>(() -> Optional.ofNullable(header).map(NameValuePair::getValue));
+        this.location = new Unchecked<>(() -> Optional.ofNullable(header).map(NameValuePair::getValue));
     }
 
     public Iterable<FinapiError> errors() {
