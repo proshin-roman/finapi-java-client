@@ -24,7 +24,7 @@ import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
 public final class PagingCriteria implements Iterable<NameValuePair> {
 
-    private final Supplier<Iterator<NameValuePair>> origin;
+    private final Supplier<? extends Iterator<NameValuePair>> origin;
 
     public PagingCriteria(final int page, final int perPage, final String... orders) {
         this(() -> {
@@ -39,7 +39,7 @@ public final class PagingCriteria implements Iterable<NameValuePair> {
         );
     }
 
-    public PagingCriteria(final Supplier<Iterator<NameValuePair>> origin) {
+    public PagingCriteria(final Supplier<? extends Iterator<NameValuePair>> origin) {
         this.origin = origin;
     }
 
