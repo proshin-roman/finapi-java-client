@@ -15,6 +15,7 @@
  */
 package org.proshin.finapi.mock;
 
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Mapped;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
@@ -56,7 +57,7 @@ public final class FpMocksAndTests implements MocksAndTests {
                     this.url + "checkCategorization",
                     this.token,
                     () -> new JSONObject()
-                        .put("transactionData", new Mapped<>(Jsonable::asJson, parameters))
+                        .put("transactionData", new CollectionOf<>(new Mapped<>(Jsonable::asJson, parameters)))
                 )
             )
         );
