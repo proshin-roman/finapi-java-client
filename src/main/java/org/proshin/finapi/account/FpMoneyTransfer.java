@@ -41,7 +41,7 @@ public final class FpMoneyTransfer implements MoneyTransfer {
         return new FpSepaRequestingResponse(
             new JSONObject(
                 this.endpoint.post(
-                    this.url + "requestSepaMoneyTransfer",
+                    this.url + "/requestSepaMoneyTransfer",
                     this.token,
                     parameters
                 )
@@ -54,7 +54,7 @@ public final class FpMoneyTransfer implements MoneyTransfer {
         return new FpSepaExecutingResponse(
             new JSONObject(
                 this.endpoint.post(
-                    this.url + "executeSepaMoneyTransfer",
+                    this.url + "/executeSepaMoneyTransfer",
                     this.token,
                     () -> new JSONObject()
                         .put("accountId", account)

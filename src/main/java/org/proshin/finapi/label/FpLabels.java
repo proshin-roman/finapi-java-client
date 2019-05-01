@@ -31,7 +31,7 @@ public final class FpLabels implements Labels {
     private final String url;
 
     public FpLabels(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/labels/");
+        this(endpoint, token, "/api/v1/labels");
     }
 
     public FpLabels(final Endpoint endpoint, final AccessToken token, final String url) {
@@ -46,8 +46,9 @@ public final class FpLabels implements Labels {
             this.endpoint,
             this.token,
             new JSONObject(
-                this.endpoint.get(this.url + id, this.token)
-            )
+                this.endpoint.get(this.url + '/' + id, this.token)
+            ),
+            this.url
         );
     }
 
@@ -58,7 +59,7 @@ public final class FpLabels implements Labels {
             new JSONObject(
                 this.endpoint.get(this.url, this.token, criteria)
             ),
-            (array, index) -> new FpLabel(this.endpoint, this.token, array.getJSONObject(index))
+            (array, index) -> new FpLabel(this.endpoint, this.token, array.getJSONObject(index), this.url)
         );
     }
 
@@ -74,7 +75,8 @@ public final class FpLabels implements Labels {
                     () -> new JSONObject().put("name", name),
                     201
                 )
-            )
+            ),
+            this.url
         );
     }
 

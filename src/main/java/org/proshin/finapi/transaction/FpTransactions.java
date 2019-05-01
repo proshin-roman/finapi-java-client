@@ -33,7 +33,7 @@ public final class FpTransactions implements Transactions {
     private final String url;
 
     public FpTransactions(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/transactions/");
+        this(endpoint, token, "/api/v1/transactions");
     }
 
     public FpTransactions(final Endpoint endpoint, final AccessToken token, final String url) {
@@ -48,7 +48,7 @@ public final class FpTransactions implements Transactions {
             this.endpoint,
             this.token,
             new JSONObject(
-                this.endpoint.get(this.url + id, this.token)
+                this.endpoint.get(this.url + '/' + id, this.token)
             ),
             this.url
         );
@@ -86,7 +86,7 @@ public final class FpTransactions implements Transactions {
         for (final Long bankConnection : bankConnections) {
             parameters.append("bankConnectionIds", bankConnection);
         }
-        this.endpoint.post(this.url + "triggerCategorization", this.token, () -> parameters);
+        this.endpoint.post(this.url + "/triggerCategorization", this.token, () -> parameters);
     }
 
     @Override

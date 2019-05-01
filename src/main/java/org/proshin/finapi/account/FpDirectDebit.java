@@ -41,7 +41,7 @@ public final class FpDirectDebit implements DirectDebit {
         return new FpSepaRequestingResponse(
             new JSONObject(
                 this.endpoint.post(
-                    this.url + "requestSepaDirectDebit",
+                    this.url + "/requestSepaDirectDebit",
                     this.token,
                     parameters
                 )
@@ -54,7 +54,7 @@ public final class FpDirectDebit implements DirectDebit {
         return new FpSepaExecutingResponse(
             new JSONObject(
                 this.endpoint.post(
-                    this.url + "executeSepaDirectDebit",
+                    this.url + "/executeSepaDirectDebit",
                     this.token,
                     () -> new JSONObject()
                         .put("accountId", account)

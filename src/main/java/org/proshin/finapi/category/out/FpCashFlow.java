@@ -29,17 +29,24 @@ public final class FpCashFlow implements CashFlow {
     private final Endpoint endpoint;
     private final AccessToken token;
     private final JSONObject origin;
+    private final String url;
 
-    public FpCashFlow(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpCashFlow(
+        final Endpoint endpoint,
+        final AccessToken token,
+        final JSONObject origin,
+        final String url
+    ) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;
+        this.url = url;
     }
 
     @Override
     public Optional<Category> category() {
         return new OptionalObjectOf(this.origin, "category").get()
-            .map(json -> new FpCategory(this.endpoint, this.token, json));
+            .map(json -> new FpCategory(this.endpoint, this.token, json, this.url));
     }
 
     @Override

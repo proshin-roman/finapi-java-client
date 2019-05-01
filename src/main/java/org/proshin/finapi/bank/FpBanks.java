@@ -26,17 +26,24 @@ public final class FpBanks implements Banks {
 
     private final Endpoint endpoint;
     private final AccessToken token;
+    private final String url;
 
     public FpBanks(final Endpoint endpoint, final AccessToken token) {
+        this(endpoint, token, "/api/v1/banks");
+    }
+
+    public FpBanks(final Endpoint endpoint, final AccessToken token,
+        final String url) {
         this.endpoint = endpoint;
         this.token = token;
+        this.url = url;
     }
 
     @Override
     public Bank one(final Long id) {
         return new FpBank(
             new JSONObject(
-                this.endpoint.get(String.format("/api/v1/banks/%d", id), this.token)
+                this.endpoint.get(String.format("%s/%d", this.url, id), this.token)
             )
         );
     }
@@ -51,7 +58,7 @@ public final class FpBanks implements Banks {
         return new FpPage<>(
             "banks",
             new JSONObject(
-                this.endpoint.get("/api/v1/banks", this.token, criteria)
+                this.endpoint.get(this.url, this.token, criteria)
             ),
             (jsonArray, index) -> new FpBank(jsonArray.getJSONObject(index))
         );

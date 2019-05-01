@@ -30,11 +30,13 @@ public final class FpIbanRule implements IbanRule {
     private final Endpoint endpoint;
     private final AccessToken token;
     private final JSONObject origin;
+    private final String url;
 
-    public FpIbanRule(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpIbanRule(final Endpoint endpoint, final AccessToken token, final JSONObject origin, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;
+        this.url = url;
     }
 
     @Override
@@ -47,7 +49,8 @@ public final class FpIbanRule implements IbanRule {
         return new FpCategory(
             this.endpoint,
             this.token,
-            this.origin.getJSONObject("category")
+            this.origin.getJSONObject("category"),
+            this.url
         );
     }
 

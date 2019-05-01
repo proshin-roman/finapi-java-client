@@ -60,7 +60,7 @@ public class FpClientTest {
     @Test
     public void testConfiguration() {
         server.when(
-            HttpRequest.request("/api/v1/clientConfiguration/")
+            HttpRequest.request("/api/v1/clientConfiguration")
                 .withMethod("GET")
                 .withHeader("Authorization", "Bearer random-token"))
             .respond(
@@ -119,7 +119,7 @@ public class FpClientTest {
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
     public void testEdit() {
         server.when(
-            HttpRequest.request("/api/v1/clientConfiguration/")
+            HttpRequest.request("/api/v1/clientConfiguration")
                 .withMethod("PATCH")
                 .withHeader("Authorization", "Bearer random-token")
                 .withBody(new JsonBody('{' +
@@ -172,7 +172,7 @@ public class FpClientTest {
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
     public void testUsers() {
         server.when(
-            HttpRequest.request("/api/v1/users/")
+            HttpRequest.request("/api/v1/users")
                 .withMethod("POST")
                 .withHeader("Authorization", "Bearer random-token"))
             .respond(

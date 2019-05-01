@@ -208,7 +208,7 @@ public class FpTransactionTest {
             new FpEndpoint("http://127.0.0.1:10007"),
             new FakeAccessToken("user-token"),
             new JSONObject("{\"id\":123}"),
-            "/api/v1/transactions/"
+            "/api/v1/transactions"
         ).split(
             new SplitTransactionParameters()
                 .withSubtransactions(
@@ -241,7 +241,7 @@ public class FpTransactionTest {
             new FpEndpoint("http://127.0.0.1:10007"),
             new FakeAccessToken("user-token"),
             new JSONObject("{\"id\":123}"),
-            "/api/v1/transactions/"
+            "/api/v1/transactions"
         ).restore();
     }
 
@@ -271,7 +271,7 @@ public class FpTransactionTest {
             new FpEndpoint("http://127.0.0.1:10007"),
             new FakeAccessToken("user-token"),
             new JSONObject("{\"id\":123}"),
-            "/api/v1/transactions/"
+            "/api/v1/transactions"
         ).edit(
             new EditTransactionParameters()
                 .withIsNew(true)
@@ -297,7 +297,7 @@ public class FpTransactionTest {
             new FpEndpoint("http://127.0.0.1:10007"),
             new FakeAccessToken("user-token"),
             new JSONObject("{\"id\":123}"),
-            "/api/v1/transactions/"
+            "/api/v1/transactions"
         ).delete();
     }
 

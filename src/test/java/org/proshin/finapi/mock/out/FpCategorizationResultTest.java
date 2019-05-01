@@ -38,7 +38,8 @@ public class FpCategorizationResultTest {
                 "    \"isCustom\": true," +
                 "    \"children\": [1, 2, 3]" +
                 "  }" +
-                '}')
+                '}'),
+            "/some-url"
         );
         assertThat(result.category().isPresent(), is(true));
         assertThat(result.category().get().id(), is(378L));

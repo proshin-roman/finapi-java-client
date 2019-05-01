@@ -57,7 +57,8 @@ public final class FpIbanRules implements IbanRules {
             (array, index) -> new FpIbanRule(
                 this.endpoint,
                 this.token,
-                array.getJSONObject(index)
+                array.getJSONObject(index),
+                this.url
             )
         );
     }
@@ -76,7 +77,8 @@ public final class FpIbanRules implements IbanRules {
             (array, index) -> new FpIbanRule(
                 this.endpoint,
                 this.token,
-                array.getJSONObject(index)
+                array.getJSONObject(index),
+                this.url
             )
         );
     }

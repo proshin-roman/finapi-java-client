@@ -57,7 +57,8 @@ public final class FpKeywordRules implements KeywordRules {
             (array, index) -> new FpKeywordRule(
                 this.endpoint,
                 this.token,
-                array.getJSONObject(index)
+                array.getJSONObject(index),
+                this.url
             )
         );
     }
@@ -76,7 +77,8 @@ public final class FpKeywordRules implements KeywordRules {
             (array, index) -> new FpKeywordRule(
                 this.endpoint,
                 this.token,
-                array.getJSONObject(index)
+                array.getJSONObject(index),
+                this.url
             )
         );
     }

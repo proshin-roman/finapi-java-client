@@ -30,11 +30,13 @@ public final class FpCategory implements Category {
     private final Endpoint endpoint;
     private final AccessToken token;
     private final JSONObject origin;
+    private final String url;
 
-    public FpCategory(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpCategory(final Endpoint endpoint, final AccessToken token, final JSONObject origin, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;
+        this.url = url;
     }
 
     @Override
@@ -77,16 +79,17 @@ public final class FpCategory implements Category {
             this.token,
             new JSONObject(
                 this.endpoint.patch(
-                    String.format("/api/v1/categories/%d", this.id()),
+                    String.format("%s/%d", this.url, this.id()),
                     this.token,
                     parameters
                 )
-            )
+            ),
+            this.url
         );
     }
 
     @Override
     public void delete() {
-        this.endpoint.delete(String.format("/api/v1/categories/%d", this.id()), this.token);
+        this.endpoint.delete(String.format("%s/%d", this.url, this.id()), this.token);
     }
 }

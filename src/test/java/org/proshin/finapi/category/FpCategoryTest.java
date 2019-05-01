@@ -66,7 +66,8 @@ public class FpCategoryTest {
                 "  \"parentName\": \"Freizeit, Hobbys & Soziales\"," +
                 "  \"isCustom\": true," +
                 "  \"children\": [1, 2, 3]" +
-                '}')
+                '}'),
+            "/api/v1/categories"
         );
         assertThat(category.id(), is(378L));
         assertThat(category.name(), is("Sport & Fitness"));
@@ -89,7 +90,8 @@ public class FpCategoryTest {
         new FpCategory(
             new FpEndpoint("http://127.0.0.1:10000"),
             new FakeAccessToken("random-token"),
-            new JSONObject("{\"id\":378}")
+            new JSONObject("{\"id\":378}"),
+            "/api/v1/categories"
         ).edit(new FpEditParameters("New category name"));
     }
 
@@ -105,7 +107,8 @@ public class FpCategoryTest {
         new FpCategory(
             new FpEndpoint("http://127.0.0.1:10000"),
             new FakeAccessToken("random-token"),
-            new JSONObject("{\"id\":378}")
+            new JSONObject("{\"id\":378}"),
+            "/api/v1/categories"
         ).delete();
     }
 }

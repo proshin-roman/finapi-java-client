@@ -73,7 +73,7 @@ public class FpAccountsTest {
     public void testQuery() {
         server
             .when(
-                HttpRequest.request("/api/v1/accounts/")
+                HttpRequest.request("/api/v1/accounts")
                     .withQueryStringParameter("ids", "1%2C2")
                     .withQueryStringParameter("search", "just+a+word")
                     .withQueryStringParameter("accountTypeIds", "1%2C4")

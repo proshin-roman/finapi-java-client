@@ -82,7 +82,7 @@ public class FpCategoriesTest {
     public void testQuery() {
         server
             .when(
-                HttpRequest.request("/api/v1/categories/")
+                HttpRequest.request("/api/v1/categories")
                     .withMethod("GET")
                     .withHeader("Authorization", "Bearer user-token")
                     .withQueryStringParameter("ids", "1%2C2%2C3")
@@ -177,7 +177,7 @@ public class FpCategoriesTest {
     public void testCreate() {
         server
             .when(
-                HttpRequest.request("/api/v1/categories/")
+                HttpRequest.request("/api/v1/categories")
                     .withMethod("POST")
                     .withHeader("Authorization", "Bearer user-token")
                     .withBody(new JsonBody('{' +
@@ -250,7 +250,7 @@ public class FpCategoriesTest {
     public void testDeleteAll() {
         server
             .when(
-                HttpRequest.request("/api/v1/categories/")
+                HttpRequest.request("/api/v1/categories")
                     .withMethod("DELETE")
                     .withHeader("Authorization", "Bearer user-token")
             )

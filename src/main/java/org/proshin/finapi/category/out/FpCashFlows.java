@@ -27,11 +27,18 @@ public final class FpCashFlows implements CashFlows {
     private final Endpoint endpoint;
     private final AccessToken token;
     private final JSONObject origin;
+    private final String url;
 
-    public FpCashFlows(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpCashFlows(
+        final Endpoint endpoint,
+        final AccessToken token,
+        final JSONObject origin,
+        final String url
+    ) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;
+        this.url = url;
     }
 
     @Override
@@ -53,7 +60,7 @@ public final class FpCashFlows implements CashFlows {
     public Iterator<CashFlow> iterator() {
         return new IterableJsonArray<CashFlow>(
             this.origin.getJSONArray("cashFlows"),
-            (array, index) -> new FpCashFlow(this.endpoint, this.token, array.getJSONObject(index))
+            (array, index) -> new FpCashFlow(this.endpoint, this.token, array.getJSONObject(index), this.url)
         ).iterator();
     }
 }

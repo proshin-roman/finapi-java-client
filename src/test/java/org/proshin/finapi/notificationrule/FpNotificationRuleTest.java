@@ -67,7 +67,7 @@ public class FpNotificationRuleTest {
                 "  \"callbackHandle\": \"handle\"," +
                 "  \"includeDetails\": true" +
                 '}'),
-            "/api/v1/notificationRules/"
+            "/api/v1/notificationRules"
         );
         assertThat(rule.id(), is(1L));
         assertThat(rule.triggerEvent(), is(TriggerEvent.NEW_ACCOUNT_BALANCE));
@@ -87,7 +87,7 @@ public class FpNotificationRuleTest {
                 "  \"callbackHandle\": \"handle\"," +
                 "  \"includeDetails\": true" +
                 '}'),
-            "/api/v1/notificationRules/"
+            "/api/v1/notificationRules"
         );
         assertThat(rule.id(), is(1L));
         assertThat(rule.triggerEvent(), is(TriggerEvent.NEW_ACCOUNT_BALANCE));
@@ -111,7 +111,7 @@ public class FpNotificationRuleTest {
             new FpEndpoint("http://127.0.0.1:10011"),
             new FakeAccessToken("user-token"),
             new JSONObject("{\"id\": 123}"),
-            "/api/v1/notificationRules/"
+            "/api/v1/notificationRules"
         ).delete();
     }
 }

@@ -33,7 +33,7 @@ public final class FpMocksAndTests implements MocksAndTests {
     private final String url;
 
     public FpMocksAndTests(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/tests/");
+        this(endpoint, token, "/api/v1/tests");
     }
 
     public FpMocksAndTests(final Endpoint endpoint, final AccessToken token, final String url) {
@@ -44,7 +44,7 @@ public final class FpMocksAndTests implements MocksAndTests {
 
     @Override
     public void mockBatchUpdate(final BatchUpdateParameters parameters) {
-        this.endpoint.post(this.url + "mockBatchUpdate", this.token, parameters);
+        this.endpoint.post(this.url + "/mockBatchUpdate", this.token, parameters);
     }
 
     @Override
@@ -54,12 +54,13 @@ public final class FpMocksAndTests implements MocksAndTests {
             this.token,
             new JSONObject(
                 this.endpoint.post(
-                    this.url + "checkCategorization",
+                    this.url + "/checkCategorization",
                     this.token,
                     () -> new JSONObject()
                         .put("transactionData", new CollectionOf<>(new Mapped<>(Jsonable::asJson, parameters)))
                 )
-            )
+            ),
+            this.url
         );
     }
 }

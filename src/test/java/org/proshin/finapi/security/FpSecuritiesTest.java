@@ -70,7 +70,7 @@ public class FpSecuritiesTest {
     public void testQuery() {
         server
             .when(
-                HttpRequest.request("/api/v1/securities/")
+                HttpRequest.request("/api/v1/securities")
                     .withMethod("GET")
                     .withHeader("Authorization", "Bearer user-token")
                     .withQueryStringParameter("ids", "1%2C2%2C3")

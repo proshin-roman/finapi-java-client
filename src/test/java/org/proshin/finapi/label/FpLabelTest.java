@@ -19,16 +19,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import org.json.JSONObject;
 import org.junit.Test;
+import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.fake.FakeEndpoint;
 
-public class LabelTest {
+public class FpLabelTest {
     @Test
-    public void testSuccessCase() {
+    public void test() {
         final Label label = new FpLabel(
-            new FakeEndpoint(),
+            new FpEndpoint("http://127.0.0.1"),
             new FakeAccessToken("fake token"),
-            new JSONObject("{\"id\": 23, \"name\": \"Label name\"}")
+            new JSONObject("{\"id\": 23, \"name\": \"Label name\"}"),
+            "/api/v1/labels"
         );
         assertThat(label.id(), is(23L));
         assertThat(label.name(), is("Label name"));
