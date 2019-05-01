@@ -15,11 +15,11 @@
  */
 package org.proshin.finapi.primitives.paging;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.Supplier;
 import org.apache.http.NameValuePair;
-import org.cactoos.list.ListOf;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
 public final class PagingCriteria implements Iterable<NameValuePair> {
@@ -28,7 +28,7 @@ public final class PagingCriteria implements Iterable<NameValuePair> {
 
     public PagingCriteria(final int page, final int perPage, final String... orders) {
         this(() -> {
-                final Collection<NameValuePair> list = new ListOf<>();
+            final Collection<NameValuePair> list = new ArrayList<>();
                 list.add(new UrlEncodedPair("page", page));
                 list.add(new UrlEncodedPair("perPage", perPage));
                 for (final String order : orders) {
