@@ -15,14 +15,16 @@
  */
 package org.proshin.finapi.accesstoken;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 import org.proshin.finapi.endpoint.Endpoint;
+import org.proshin.finapi.primitives.QueryString;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
 public final class FpAccessTokens implements AccessTokens {
@@ -43,19 +45,21 @@ public final class FpAccessTokens implements AccessTokens {
 
     @Override
     public AccessToken clientToken(final String clientId, final String clientSecret) {
-        final List<NameValuePair> parameters = new ArrayList<>();
-        parameters.add(new BasicNameValuePair("grant_type", "client_credentials"));
-        parameters.add(new BasicNameValuePair("client_id", clientId));
-        parameters.add(new BasicNameValuePair("client_secret", clientSecret));
-        final UrlEncodedFormEntity entity;
-        try {
-            entity = new UrlEncodedFormEntity(parameters);
-        } catch (final UnsupportedEncodingException exception) {
-            throw new RuntimeException("Couldn't instantiate an entity for POST request", exception);
-        }
         return new ClientAccessToken(
             new JSONObject(
-                this.endpoint.post(this.tokenUrl, entity, 200)
+                this.endpoint.post(
+                    this.tokenUrl + '?' +
+                        new QueryString(
+                            new UrlEncodedPair("grant_type", "client_credentials"),
+                            new UrlEncodedPair("client_id", clientId),
+                            new UrlEncodedPair("client_secret", clientSecret)
+                        ).get(),
+                    new StringEntity(
+                        "",
+                        ContentType.create("application/json", StandardCharsets.UTF_8)
+                    ),
+                    200
+                )
             )
         );
     }
@@ -67,41 +71,45 @@ public final class FpAccessTokens implements AccessTokens {
         final String username,
         final String password
     ) {
-        final List<NameValuePair> parameters = new ArrayList<>();
-        parameters.add(new UrlEncodedPair("grant_type", "password"));
-        parameters.add(new UrlEncodedPair("client_id", clientId));
-        parameters.add(new UrlEncodedPair("client_secret", clientSecret));
-        parameters.add(new UrlEncodedPair("username", username));
-        parameters.add(new UrlEncodedPair("password", password));
-        final UrlEncodedFormEntity entity;
-        try {
-            entity = new UrlEncodedFormEntity(parameters);
-        } catch (final UnsupportedEncodingException exception) {
-            throw new RuntimeException("Couldn't instantiate an entity for POST request", exception);
-        }
         return new UserAccessToken(
             new JSONObject(
-                this.endpoint.post(this.tokenUrl, entity, 200)
+                this.endpoint.post(
+                    this.tokenUrl + '?' +
+                        new QueryString(
+                            new UrlEncodedPair("grant_type", "password"),
+                            new UrlEncodedPair("client_id", clientId),
+                            new UrlEncodedPair("client_secret", clientSecret),
+                            new UrlEncodedPair("username", username),
+                            new UrlEncodedPair("password", password)
+                        ).get(),
+                    new StringEntity(
+                        "",
+                        ContentType.create("application/json", StandardCharsets.UTF_8)
+                    ),
+                    200
+                )
             )
         );
     }
 
     @Override
     public AccessToken userToken(final String clientId, final String clientSecret, final String refreshToken) {
-        final List<NameValuePair> parameters = new ArrayList<>();
-        parameters.add(new UrlEncodedPair("grant_type", "refresh_token"));
-        parameters.add(new UrlEncodedPair("client_id", clientId));
-        parameters.add(new UrlEncodedPair("client_secret", clientSecret));
-        parameters.add(new UrlEncodedPair("refresh_token", refreshToken));
-        final UrlEncodedFormEntity entity;
-        try {
-            entity = new UrlEncodedFormEntity(parameters);
-        } catch (final UnsupportedEncodingException exception) {
-            throw new RuntimeException("Couldn't instantiate an entity for POST request", exception);
-        }
         return new UserAccessToken(
             new JSONObject(
-                this.endpoint.post(this.tokenUrl, entity, 200)
+                this.endpoint.post(
+                    this.tokenUrl + '?' +
+                        new QueryString(
+                            new UrlEncodedPair("grant_type", "refresh_token"),
+                            new UrlEncodedPair("client_id", clientId),
+                            new UrlEncodedPair("client_secret", clientSecret),
+                            new UrlEncodedPair("refresh_token", refreshToken)
+                        ).get(),
+                    new StringEntity(
+                        "",
+                        ContentType.create("application/json", StandardCharsets.UTF_8)
+                    ),
+                    200
+                )
             )
         );
     }
@@ -112,7 +120,6 @@ public final class FpAccessTokens implements AccessTokens {
      * @param clientToken Client's token for authorization.
      * @param userToken User's token for revoking.
      * @param tokensToRevoke Which tokens should be revoked.
-     * @todo #32 Test this method: assert that methods submits the right request
      */
     @Override
     public void revoke(final AccessToken clientToken, final AccessToken userToken, final RevokeToken tokensToRevoke) {
@@ -120,11 +127,11 @@ public final class FpAccessTokens implements AccessTokens {
         parameters.add(new BasicNameValuePair("token", userToken.accessToken()));
         switch (tokensToRevoke) {
             case ACCESS_TOKEN_ONLY: {
-                parameters.add(new BasicNameValuePair("token_type_hint", "access_token"));
+                parameters.add(new UrlEncodedPair("token_type_hint", "access_token"));
                 break;
             }
             case REFRESH_TOKEN_ONLY: {
-                parameters.add(new BasicNameValuePair("token_type_hint", "refresh_token"));
+                parameters.add(new UrlEncodedPair("token_type_hint", "refresh_token"));
                 break;
             }
             case ALL:
@@ -132,12 +139,14 @@ public final class FpAccessTokens implements AccessTokens {
                 // do nothing: keep parameter empty
             }
         }
-        final UrlEncodedFormEntity entity;
-        try {
-            entity = new UrlEncodedFormEntity(parameters);
-        } catch (final UnsupportedEncodingException exception) {
-            throw new RuntimeException("Couldn't instantiate an entity for POST request", exception);
-        }
-        this.endpoint.post(this.revokeUrl, clientToken, entity, 200);
+        this.endpoint.post(
+            this.revokeUrl + '?' + new QueryString(parameters).get(),
+            clientToken,
+            new StringEntity(
+                "",
+                ContentType.create("application/json", StandardCharsets.UTF_8)
+            ),
+            200
+        );
     }
 }
