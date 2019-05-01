@@ -16,7 +16,6 @@
 package org.proshin.finapi.bankconnection;
 
 import java.util.Optional;
-import org.proshin.finapi.account.Accounts;
 import org.proshin.finapi.bank.Bank;
 import org.proshin.finapi.bankconnection.in.FpEditParameters;
 import org.proshin.finapi.bankconnection.out.Credentials;
@@ -44,9 +43,16 @@ public interface BankConnection {
 
     Optional<UpdateResult> lastAutoUpdate();
 
-    Optional<TwoStepProcedures> twoStepProcedures();
+    TwoStepProcedures twoStepProcedures();
 
-    Accounts accounts();
+    boolean ibanOnlyMoneyTransferSupported();
+
+    boolean ibanOnlyDirectDebitSupported();
+
+    @Deprecated
+    boolean collectiveMoneyTransferSupported();
+
+    Iterable<Long> accounts();
 
     Iterable<Owner> owners();
 

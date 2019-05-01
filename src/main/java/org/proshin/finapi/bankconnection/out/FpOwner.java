@@ -78,7 +78,7 @@ public final class FpOwner implements Owner {
     public Optional<LocalDate> dateOfBirth() {
         return new OptionalOf<>(
             this.origin,
-            "firstName",
+            "dateOfBirth",
             (jsonObject, key) -> new LocalDateOf(jsonObject.getString(key)).get()
         ).get();
     }
