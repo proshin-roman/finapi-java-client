@@ -15,151 +15,95 @@
  */
 package org.proshin.finapi.bank;
 
-import java.time.OffsetDateTime;
-import java.util.Optional;
-import org.cactoos.list.ListOf;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.Is.is;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.IterableOfLongs;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockserver.integration.ClientAndServer;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpResponse;
 import static org.proshin.finapi.bank.Bank.DataSource.FINTS_SERVER;
 import static org.proshin.finapi.bank.Bank.DataSource.WEB_SCRAPER;
 import org.proshin.finapi.bank.in.BanksCriteria;
+import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.fake.FakeEndpoint;
-import org.proshin.finapi.fake.FakeRoute;
 import org.proshin.finapi.primitives.paging.Page;
-import org.proshin.finapi.primitives.paging.Paging;
+import org.proshin.finapi.primitives.paging.PagingCriteria;
 
 public final class BanksTest {
 
-    @Test
-    public void testThatOneReturnsValidBank() {
-        final Bank bank = new FpBanks(
-            new FakeEndpoint(
-                new FakeRoute(
-                    String.join("",
-                        "{",
-                        " \"id\": 123,",
-                        "\"name\": \"Bank name\",",
-                        "\"loginHint\": null,",
-                        "\"bic\": null,",
-                        "\"blz\": \"00000000\",",
-                        "\"blzs\": [\"00000000\"],",
-                        "\"loginFieldUserId\": \"User ID field label\",",
-                        "\"loginFieldCustomerId\": \"Customer ID field label\",",
-                        "\"loginFieldPin\": \"PIN\",",
-                        "\"isSupported\": true,",
-                        "\"supportedDataSources\": [\"FINTS_SERVER\", \"WEB_SCRAPER\"],",
-                        "\"pinsAreVolatile\": false,",
-                        "\"location\": \"DE\",",
-                        "\"city\": null,",
-                        "\"isTestBank\": true,",
-                        "\"popularity\": 2,",
-                        "\"health\": 100,",
-                        "\"lastCommunicationAttempt\": null,",
-                        "\"lastSuccessfulCommunication\": \"2018-08-03 11:22:33.444\"",
-                        "}"
-                    )
-                )
-            ),
-            new FakeAccessToken("access token")
-        ).one(123L);
+    @SuppressWarnings("StaticVariableMayNotBeInitialized")
+    private static ClientAndServer server;
 
-        assertThat(bank.id(), is(123L));
-        assertThat(bank.name(), is("Bank name"));
-        assertThat(bank.loginHint(), is(Optional.empty()));
-        assertThat(bank.bic(), is(Optional.empty()));
-        assertThat(bank.blz(), is("00000000"));
-        assertThat(bank.loginFields().userId(), is(Optional.of("User ID field label")));
-        assertThat(bank.loginFields().customerId(), is(Optional.of("Customer ID field label")));
-        assertThat(bank.loginFields().pin(), is(Optional.of("PIN")));
-        assertThat(bank.isSupported(), is(true));
-        assertThat(bank.supportedDataSources(), contains(FINTS_SERVER, WEB_SCRAPER));
-        assertThat(bank.pinsAreVolatile(), is(false));
-        assertThat(bank.location(), is(Optional.of("DE")));
-        assertThat(bank.city(), is(Optional.empty()));
-        assertThat(bank.isTestBank(), is(true));
-        assertThat(bank.popularity(), is(2));
-        assertThat(bank.health(), is(100));
-        assertThat(bank.lastCommunicationAttempt(), is(Optional.empty()));
-        assertThat(
-            bank.lastSuccessfulCommunication().map(OffsetDateTime::toString),
-            is(Optional.of("2018-08-03T11:22:33.444+02:00"))
-        );
+    @BeforeClass
+    public static void startMockServer() {
+        server = startClientAndServer(10016);
+    }
+
+    @Before
+    public void reset() {
+        server.reset();
+    }
+
+    @AfterClass
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
+    public static void stopMockServer() {
+        server.stop();
     }
 
     @Test
-    public void testThatSearchReturnsValidBanks() {
+    public void testOne() {
+        server
+            .when(
+                HttpRequest.request("/api/v1/banks/123")
+                    .withHeader("Authorization", "Bearer user-token")
+            )
+            .respond(
+                HttpResponse.response("{}")
+            );
+        new FpBanks(
+            new FpEndpoint("http://127.0.0.1:10016"),
+            new FakeAccessToken("user-token")
+        ).one(123L);
+    }
+
+    @Test
+    public void testSearch() {
+        server
+            .when(
+                HttpRequest.request("/api/v1/banks")
+                    .withHeader("Authorization", "Bearer user-token")
+                    .withQueryStringParameter("ids", "1%2C2%2C3")
+                    .withQueryStringParameter("search", "just+a+word")
+                    .withQueryStringParameter("isSupported", "true")
+                    .withQueryStringParameter("pinsAreVolatile", "true")
+                    .withQueryStringParameter("supportedDataSources", "WEB_SCRAPER%2CFINTS_SERVER")
+                    .withQueryStringParameter("location", "DE")
+                    .withQueryStringParameter("isTestBank", "true")
+                    .withQueryStringParameter("page", "2")
+                    .withQueryStringParameter("perPage", "20")
+                    .withQueryStringParameter("order", "id%2Casc", "name%2Cdesc")
+            )
+            .respond(
+                HttpResponse.response("{\"banks\":[{}]}")
+            );
         final Page<Bank> banks = new FpBanks(
-            new FakeEndpoint(
-                new FakeRoute(
-                    String.join("",
-                        "{",
-                        "  banks: [{",
-                        "    \"id\": 123,",
-                        "    \"name\": \"Bank name\",",
-                        "    \"loginHint\": null,",
-                        "    \"bic\": null,",
-                        "    \"blz\": \"00000000\",",
-                        "    \"blzs\": [\"00000000\"],",
-                        "    \"loginFieldUserId\": \"User ID field label\",",
-                        "    \"loginFieldCustomerId\": \"Customer ID field label\",",
-                        "    \"loginFieldPin\": \"PIN\",",
-                        "    \"isSupported\": true,",
-                        "    \"supportedDataSources\": [\"FINTS_SERVER\", \"WEB_SCRAPER\"],",
-                        "    \"pinsAreVolatile\": false,",
-                        "    \"location\": \"DE\",",
-                        "    \"city\": null,",
-                        "    \"isTestBank\": true,",
-                        "    \"popularity\": 2,",
-                        "    \"health\": 100,",
-                        "    \"lastCommunicationAttempt\": null,",
-                        "    \"lastSuccessfulCommunication\": \"2018-08-03 11:22:33.444\"",
-                        "  }],",
-                        "  \"paging\": {",
-                        "    \"page\": 1,",
-                        "    \"perPage\": 500,",
-                        "    \"pageCount\": 1,",
-                        "    \"totalCount\": 1",
-                        "  }",
-                        "}"
-                    )
-                )
-            ),
-            new FakeAccessToken("access token")
-        ).search(new BanksCriteria());
-
-        assertThat(new ListOf<>(banks), hasSize(1));
-
-        final Bank bank = banks.items().iterator().next();
-        assertThat(bank.id(), is(123L));
-        assertThat(bank.name(), is("Bank name"));
-        assertThat(bank.loginHint(), is(Optional.empty()));
-        assertThat(bank.bic(), is(Optional.empty()));
-        assertThat(bank.blz(), is("00000000"));
-        assertThat(bank.loginFields().userId(), is(Optional.of("User ID field label")));
-        assertThat(bank.loginFields().customerId(), is(Optional.of("Customer ID field label")));
-        assertThat(bank.loginFields().pin(), is(Optional.of("PIN")));
-        assertThat(bank.isSupported(), is(true));
-        assertThat(bank.supportedDataSources(), contains(FINTS_SERVER, WEB_SCRAPER));
-        assertThat(bank.pinsAreVolatile(), is(false));
-        assertThat(bank.location(), is(Optional.of("DE")));
-        assertThat(bank.city(), is(Optional.empty()));
-        assertThat(bank.isTestBank(), is(true));
-        assertThat(bank.popularity(), is(2));
-        assertThat(bank.health(), is(100));
-        assertThat(bank.lastCommunicationAttempt(), is(Optional.empty()));
-        assertThat(
-            bank.lastSuccessfulCommunication().map(OffsetDateTime::toString),
-            is(Optional.of("2018-08-03T11:22:33.444+02:00"))
+            new FpEndpoint("http://127.0.0.1:10016"),
+            new FakeAccessToken("user-token")
+        ).search(
+            new BanksCriteria()
+                .withIds(new IterableOfLongs(1L, 2L, 3L))
+                .withSearch("just a word")
+                .withSupporting(true)
+                .withPinsAreVolatile(true)
+                .withSupportedDataSources(new IterableOf<>(WEB_SCRAPER, FINTS_SERVER))
+                .withLocation(new IterableOf<>("DE"))
+                .withTestBank(true)
+                .withPaging(new PagingCriteria(2, 20, "id,asc", "name,desc"))
         );
-
-        final Paging paging = banks.paging();
-        assertThat(paging.page(), is(1));
-        assertThat(paging.perPage(), is(500));
-        assertThat(paging.pageCount(), is(1));
-        assertThat(paging.totalCount(), is(1));
+        final Bank bank = banks.items().iterator().next();
     }
 }
