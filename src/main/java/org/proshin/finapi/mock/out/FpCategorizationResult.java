@@ -45,7 +45,7 @@ public final class FpCategorizationResult implements CategorizationResult {
         return new OptionalOf<Category>(
             this.origin,
             "category",
-            (json, name) -> new FpCategory(this.endpoint, this.token, json)
+            (json, name) -> new FpCategory(this.endpoint, this.token, json.getJSONObject(name))
         ).get();
     }
 }
