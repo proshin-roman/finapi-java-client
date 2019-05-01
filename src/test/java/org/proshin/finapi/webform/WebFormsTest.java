@@ -15,40 +15,52 @@
  */
 package org.proshin.finapi.webform;
 
-import java.util.Optional;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockserver.integration.ClientAndServer;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpResponse;
+import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.fake.FakeEndpoint;
-import org.proshin.finapi.fake.FakeRoute;
-import org.proshin.finapi.fake.matcher.path.ExactPathMatcher;
 
 public class WebFormsTest {
 
+    @SuppressWarnings("StaticVariableMayNotBeInitialized")
+    private static ClientAndServer server;
+
+    @BeforeClass
+    public static void startMockServer() {
+        server = startClientAndServer(10019);
+    }
+
+    @Before
+    public void reset() {
+        server.reset();
+    }
+
+    @AfterClass
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
+    public static void stopMockServer() {
+        server.stop();
+    }
+
     @Test
     public void testOne() {
-        final WebForms webForms = new FpWebForms(
-            new FakeEndpoint(
-                new FakeRoute(
-                    new ExactPathMatcher("/api/v1/webForms/12"),
-                    '{' +
-                        "  \"id\": 12," +
-                        "  \"token\": \"random token\"," +
-                        "  \"status\": \"NOT_YET_OPENED\"," +
-                        "  \"serviceResponseCode\": null," +
-                        "  \"serviceResponseBody\": null" +
-                        '}'
-                )
-            ),
+        server
+            .when(
+                HttpRequest.request("/api/v1/webForms/12")
+                    .withMethod("GET")
+                    .withHeader("Authorization", "Bearer user access token")
+            )
+            .respond(
+                HttpResponse.response("{}")
+            );
+        new FpWebForms(
+            new FpEndpoint("http://127.0.0.1:10019"),
             new FakeAccessToken("user access token")
-        );
-
-        final WebForm webForm = webForms.one(12L);
-        assertThat(webForm.id(), is(12L));
-        assertThat(webForm.token(), is("random token"));
-        assertThat(webForm.status(), is(WebForm.Status.NOT_YET_OPENED));
-        assertThat(webForm.serviceResponseCode(), is(Optional.empty()));
-        assertThat(webForm.serviceResponseBody(), is(Optional.empty()));
+        ).one(12L);
     }
 }

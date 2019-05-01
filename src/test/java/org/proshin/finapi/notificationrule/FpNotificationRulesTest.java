@@ -80,7 +80,7 @@ public class FpNotificationRulesTest {
     public void testQuery() {
         server
             .when(
-                HttpRequest.request("/api/v1/notificationRules/")
+                HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("GET")
                     .withHeader("Authorization", "Bearer user-token")
                     .withQueryStringParameter("ids", "1%2C2%2C3")
@@ -105,7 +105,7 @@ public class FpNotificationRulesTest {
     public void testCreateNewAccountBalance() {
         server
             .when(
-                HttpRequest.request("/api/v1/notificationRules/")
+                HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
                     .withHeader("Authorization", "Bearer user-token")
                     .withBody(new JsonBody('{' +
@@ -137,7 +137,7 @@ public class FpNotificationRulesTest {
     public void testCreateNewTransactions() {
         server
             .when(
-                HttpRequest.request("/api/v1/notificationRules/")
+                HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
                     .withHeader("Authorization", "Bearer user-token")
                     .withBody(new JsonBody('{' +
@@ -171,7 +171,7 @@ public class FpNotificationRulesTest {
     public void testCreateBankLoginError() {
         server
             .when(
-                HttpRequest.request("/api/v1/notificationRules/")
+                HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
                     .withHeader("Authorization", "Bearer user-token")
                     .withBody(new JsonBody('{' +
@@ -203,7 +203,7 @@ public class FpNotificationRulesTest {
     public void testCreateForeignMoneyTransfer() {
         server
             .when(
-                HttpRequest.request("/api/v1/notificationRules/")
+                HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
                     .withHeader("Authorization", "Bearer user-token")
                     .withBody(new JsonBody('{' +
@@ -235,7 +235,7 @@ public class FpNotificationRulesTest {
     public void testCreateLowAccountBalance() {
         server
             .when(
-                HttpRequest.request("/api/v1/notificationRules/")
+                HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
                     .withHeader("Authorization", "Bearer user-token")
                     .withBody(new JsonBody('{' +
@@ -269,7 +269,7 @@ public class FpNotificationRulesTest {
     public void testCreateHighTransactionAmount() {
         server
             .when(
-                HttpRequest.request("/api/v1/notificationRules/")
+                HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
                     .withHeader("Authorization", "Bearer user-token")
                     .withBody(new JsonBody('{' +
@@ -305,7 +305,7 @@ public class FpNotificationRulesTest {
     public void testCreateCategoryCashFlow() {
         server
             .when(
-                HttpRequest.request("/api/v1/notificationRules/")
+                HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
                     .withHeader("Authorization", "Bearer user-token")
                     .withBody(new JsonBody('{' +
@@ -341,7 +341,7 @@ public class FpNotificationRulesTest {
     public void testCreateNewTermsAndConditions() {
         server
             .when(
-                HttpRequest.request("/api/v1/notificationRules/")
+                HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
                     .withHeader("Authorization", "Bearer user-token")
                     .withBody(new JsonBody('{' +
@@ -367,7 +367,7 @@ public class FpNotificationRulesTest {
     public void testDeleteAll() {
         server
             .when(
-                HttpRequest.request("/api/v1/notificationRules/")
+                HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("DELETE")
                     .withHeader("Authorization", "Bearer user-token")
             )

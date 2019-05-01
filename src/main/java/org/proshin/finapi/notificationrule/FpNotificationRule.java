@@ -72,6 +72,6 @@ public final class FpNotificationRule implements NotificationRule {
 
     @Override
     public void delete() {
-        this.endpoint.delete(this.url + this.id(), this.token);
+        this.endpoint.delete(this.url + '/' + this.id(), this.token);
     }
 }

@@ -15,11 +15,11 @@
  */
 package org.proshin.finapi.user;
 
-import org.json.JSONObject;
 import org.cactoos.iterable.IterableOf;
-import org.proshin.finapi.primitives.pair.UrlEncodedPair;
+import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
+import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 import org.proshin.finapi.user.in.FpCreateParameters;
 
 public final class FpUsers implements Users {
@@ -29,7 +29,7 @@ public final class FpUsers implements Users {
     private final String url;
 
     public FpUsers(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/users/");
+        this(endpoint, token, "/api/v1/users");
     }
 
     public FpUsers(final Endpoint endpoint, final AccessToken token, final String url) {
@@ -51,7 +51,7 @@ public final class FpUsers implements Users {
     public boolean verified(final String userId) {
         return new JSONObject(
             this.endpoint.get(
-                this.url + "verificationStatus",
+                this.url + "/verificationStatus",
                 this.token,
                 new IterableOf<>(
                     new UrlEncodedPair("userId", userId)
@@ -78,7 +78,7 @@ public final class FpUsers implements Users {
     public String requestPasswordChange(final String userId) {
         return new JSONObject(
             this.endpoint.post(
-                this.url + "requestPasswordChange",
+                this.url + "/requestPasswordChange",
                 this.token,
                 () -> new JSONObject().put("userId", userId)
             )
@@ -88,7 +88,7 @@ public final class FpUsers implements Users {
     @Override
     public void executePasswordChange(final String userId, final String password, final String token) {
         this.endpoint.post(
-            this.url + "executePasswordChange",
+            this.url + "/executePasswordChange",
             this.token,
             () -> new JSONObject()
                 .put("userId", userId)
@@ -100,7 +100,7 @@ public final class FpUsers implements Users {
     @Override
     public void verify(final String userId) {
         this.endpoint.post(
-            this.url + "verify/" + userId,
+            this.url + "/verify/" + userId,
             this.token,
             200
         );
@@ -109,7 +109,7 @@ public final class FpUsers implements Users {
     @Override
     public void deleteUnverified(final String userId) {
         this.endpoint.delete(
-            this.url + userId,
+            this.url + '/' + userId,
             this.token
         );
     }

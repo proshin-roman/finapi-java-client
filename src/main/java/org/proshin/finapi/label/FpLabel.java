@@ -24,11 +24,13 @@ public final class FpLabel implements Label {
     private final Endpoint endpoint;
     private final AccessToken token;
     private final JSONObject origin;
+    private final String url;
 
-    public FpLabel(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpLabel(final Endpoint endpoint, final AccessToken token, final JSONObject origin, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;
+        this.url = url;
     }
 
     @Override
@@ -48,16 +50,17 @@ public final class FpLabel implements Label {
             this.token,
             new JSONObject(
                 this.endpoint.patch(
-                    "/api/v1/labels/" + this.id(),
+                    this.url + '/' + this.id(),
                     this.token,
                     () -> new JSONObject().put("name", name)
                 )
-            )
+            ),
+            this.url
         );
     }
 
     @Override
     public void delete() {
-        this.endpoint.delete("/api/v1/labels/" + this.id(), this.token);
+        this.endpoint.delete(this.url + '/' + this.id(), this.token);
     }
 }

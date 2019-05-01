@@ -33,7 +33,7 @@ public final class FpMandator implements Mandator {
     private final String url;
 
     public FpMandator(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/mandatorAdmin/");
+        this(endpoint, token, "/api/v1/mandatorAdmin");
     }
 
     public FpMandator(final Endpoint endpoint, final AccessToken token, final String url) {
@@ -48,7 +48,7 @@ public final class FpMandator implements Mandator {
             "users",
             new JSONObject(
                 this.endpoint.get(
-                    this.url + "getUserList",
+                    this.url + "/getUserList",
                     this.token,
                     criteria
                 )
@@ -62,7 +62,7 @@ public final class FpMandator implements Mandator {
         return new FpDeletionResult(
             new JSONObject(
                 this.endpoint.post(
-                    this.url + "deleteUsers",
+                    this.url + "/deleteUsers",
                     this.token,
                     () -> {
                         final JSONObject body = new JSONObject();
@@ -83,7 +83,7 @@ public final class FpMandator implements Mandator {
         final String newClientSecret
     ) {
         this.endpoint.post(
-            this.url + "changeClientCredentials",
+            this.url + "/changeClientCredentials",
             this.token,
             () -> new JSONObject()
                 .put("clientId", clientId)
@@ -94,11 +94,11 @@ public final class FpMandator implements Mandator {
 
     @Override
     public KeywordRules keywordRules() {
-        return new FpKeywordRules(this.endpoint, this.token, this.url + "keywordRules/");
+        return new FpKeywordRules(this.endpoint, this.token, this.url + "/keywordRules");
     }
 
     @Override
     public IbanRules ibanRules() {
-        return new FpIbanRules(this.endpoint, this.token, this.url + "ibanRules/");
+        return new FpIbanRules(this.endpoint, this.token, this.url + "/ibanRules");
     }
 }

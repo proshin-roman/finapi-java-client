@@ -29,7 +29,7 @@ public final class FpSecurities implements Securities {
     private final String url;
 
     public FpSecurities(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/securities/");
+        this(endpoint, token, "/api/v1/securities");
     }
 
     public FpSecurities(final Endpoint endpoint, final AccessToken token, final String url) {
@@ -42,7 +42,7 @@ public final class FpSecurities implements Securities {
     public Security one(final Long id) {
         return new FpSecurity(
             new JSONObject(
-                this.endpoint.get(this.url + id, this.token)
+                this.endpoint.get(this.url + '/' + id, this.token)
             )
         );
     }

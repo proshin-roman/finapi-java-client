@@ -15,67 +15,81 @@
  */
 package org.proshin.finapi.label;
 
-import java.util.Iterator;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import org.cactoos.iterable.IterableOf;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockserver.integration.ClientAndServer;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpResponse;
+import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.fake.FakeEndpoint;
-import org.proshin.finapi.fake.FakeRoute;
 import org.proshin.finapi.label.in.LabelsCriteria;
 import org.proshin.finapi.primitives.paging.Page;
-import org.proshin.finapi.primitives.paging.Paging;
 
 public class LabelsTest {
 
+    @SuppressWarnings("StaticVariableMayNotBeInitialized")
+    private static ClientAndServer server;
+
+    @BeforeClass
+    public static void startMockServer() {
+        server = startClientAndServer(10018);
+    }
+
+    @Before
+    public void reset() {
+        server.reset();
+    }
+
+    @AfterClass
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
+    public static void stopMockServer() {
+        server.stop();
+    }
+
     @Test
     public void testOne() {
+        server
+            .when(
+                HttpRequest.request("/api/v1/labels/12")
+                    .withMethod("GET")
+                    .withHeader("Authorization", "Bearer user-token")
+            )
+            .respond(
+                HttpResponse.response("{}")
+            );
         final Label label = new FpLabels(
-            new FakeEndpoint(
-                new FakeRoute("{\"id\": 12, \"name\": \"Label name\"}")
-            ),
-            new FakeAccessToken("fake token")
+            new FpEndpoint("http://127.0.0.1:10018"),
+            new FakeAccessToken("user-token")
         ).one(12L);
-
-        assertThat(label.id(), is(12L));
-        assertThat(label.name(), is("Label name"));
     }
 
     @Test
     public void testQuery() {
+        server
+            .when(
+                HttpRequest.request("/api/v1/labels")
+                    .withMethod("GET")
+                    .withHeader("Authorization", "Bearer user-token")
+                    .withQueryStringParameter("ids", "1%2C2")
+                    .withQueryStringParameter("search", "just+a+word")
+                    .withQueryStringParameter("order", "id%2Casc", "name%2Cdesc")
+            )
+            .respond(
+                HttpResponse.response("{}")
+            );
         final Page<Label> labels = new FpLabels(
-            new FakeEndpoint(
-                new FakeRoute(
-                    '{' +
-                        "  \"labels\": [" +
-                        "    {" +
-                        "      \"id\": 12," +
-                        "      \"name\": \"Label name\"" +
-                        "    }" +
-                        "  ]," +
-                        "  \"paging\": {" +
-                        "    \"page\": 1," +
-                        "    \"perPage\": 13," +
-                        "    \"pageCount\": 2," +
-                        "    \"totalCount\": 14" +
-                        "  }" +
-                        '}'
-                )
-            ),
-            new FakeAccessToken("fake token")
-        ).query(new LabelsCriteria());
-
-        final Iterator<Label> iterator = labels.items().iterator();
-        assertThat(iterator.hasNext(), is(true));
-        final Label label = iterator.next();
-        assertThat(label.id(), is(12L));
-        assertThat(label.name(), is("Label name"));
-        assertThat(iterator.hasNext(), is(false));
-
-        final Paging paging = labels.paging();
-        assertThat(paging.page(), is(1));
-        assertThat(paging.perPage(), is(13));
-        assertThat(paging.pageCount(), is(2));
-        assertThat(paging.totalCount(), is(14));
+            new FpEndpoint("http://127.0.0.1:10018"),
+            new FakeAccessToken("user-token")
+        ).query(
+            new LabelsCriteria()
+                .withIds(new IterableOf<>(1L, 2L))
+                .withSearch("just a word")
+                .withPage(2, 23)
+                .orderBy("id,asc", "name,desc")
+        );
     }
 }

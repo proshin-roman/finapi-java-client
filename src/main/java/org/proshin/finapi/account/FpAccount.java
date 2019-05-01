@@ -156,10 +156,6 @@ public final class FpAccount implements Account {
         );
     }
 
-    /**
-     * @todo #69 Create infrastructure for tests which will validate submitted data so that tests can assure that
-     *  the library submits correct JSON structures to the API (valid URL + HTTP method + auth header + JSON body).
-     */
     @Override
     public void edit(final FpEditParameters parameters) {
         this.endpoint.patch(this.url + this.id(), this.token, parameters);

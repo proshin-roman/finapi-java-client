@@ -16,77 +16,70 @@
 package org.proshin.finapi.payment;
 
 import java.math.BigDecimal;
-import java.util.Iterator;
-import java.util.Optional;
-import org.cactoos.iterable.IterableOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.cactoos.iterable.IterableOfLongs;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockserver.integration.ClientAndServer;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpResponse;
+import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.fake.FakeEndpoint;
-import org.proshin.finapi.fake.FakeRoute;
-import org.proshin.finapi.fake.matcher.path.ExactPathMatcher;
 import org.proshin.finapi.payment.in.FpQueryCriteria;
-import org.proshin.finapi.payment.out.Status;
-import org.proshin.finapi.payment.out.Type;
-import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.primitives.paging.Page;
-import org.proshin.finapi.primitives.paging.Paging;
 
 public class FpPaymentsTest {
 
+    @SuppressWarnings("StaticVariableMayNotBeInitialized")
+    private static ClientAndServer server;
+
+    @BeforeClass
+    public static void startMockServer() {
+        server = startClientAndServer(10019);
+    }
+
+    @Before
+    public void reset() {
+        server.reset();
+    }
+
+    @AfterClass
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
+    public static void stopMockServer() {
+        server.stop();
+    }
+
     @Test
     public void testQuery() {
+        server
+            .when(
+                HttpRequest.request("/api/v1/payments")
+                    .withMethod("GET")
+                    .withHeader("Authorization", "Bearer random token")
+                    .withQueryStringParameter("ids", "1%2C2%2C3")
+                    .withQueryStringParameter("accountIds", "2%2C3%2C4")
+                    .withQueryStringParameter("minAmount", "-11.23")
+                    .withQueryStringParameter("maxAmount", "99.99")
+                    .withQueryStringParameter("page", "2")
+                    .withQueryStringParameter("perPage", "34")
+                    .withQueryStringParameter("order", "id%2Casc", "name%2Cdesc")
+            )
+            .respond(
+                HttpResponse.response("{}")
+            );
         final Page<Payment> page = new FpPayments(
-            new FakeEndpoint(
-                new FakeRoute(
-                    new ExactPathMatcher("/api/v1/payments"),
-                    '{' +
-                        "  \"payments\": [" +
-                        "    {" +
-                        "      \"id\": 1," +
-                        "      \"accountId\": 2," +
-                        "      \"requestDate\": \"2019-01-01 00:00:00.000\"," +
-                        "      \"executionDate\": \"2019-02-02 00:00:00.000\"," +
-                        "      \"type\": \"MONEY_TRANSFER\"," +
-                        "      \"status\": \"PENDING\"," +
-                        "      \"bankMessage\": \"string\"," +
-                        "      \"amount\": \"99.99\"," +
-                        "      \"orderCount\": 1" +
-                        "    }" +
-                        "  ]," +
-                        "  \"paging\": {" +
-                        "    \"page\": 1," +
-                        "    \"perPage\": 20," +
-                        "    \"pageCount\": 10," +
-                        "    \"totalCount\": 200" +
-                        "  }" +
-                        '}'
-                )
-            ),
+            new FpEndpoint("http://127.0.0.1:10019"),
             new FakeAccessToken("random token")
-        ).query(new FpQueryCriteria().withIds(new IterableOf<>(1L)));
-
-        final Iterable<Payment> payments = page.items();
-        final Iterator<Payment> iterator = payments.iterator();
-        assertThat(iterator.hasNext(), is(true));
-        final Payment payment = iterator.next();
-        assertThat(iterator.hasNext(), is(false));
-
-        assertThat(payment.id(), is(1L));
-        assertThat(payment.accountId(), is(2L));
-        assertThat(payment.requestDate(), is(new OffsetDateTimeOf("2019-01-01 00:00:00.000").get()));
-        assertThat(payment.executionDate(), is(Optional.of(new OffsetDateTimeOf("2019-02-02 00:00:00.000").get())));
-        assertThat(payment.type(), is(Type.MONEY_TRANSFER));
-        assertThat(payment.status(), is(Status.PENDING));
-        assertThat(payment.bankMessage(), is(Optional.of("string")));
-        assertThat(payment.amount(), is(new BigDecimal("99.99")));
-        assertThat(payment.orderCount(), is(1));
-
-        final Paging paging = page.paging();
-        assertThat(paging.page(), is(1));
-        assertThat(paging.perPage(), is(20));
-        assertThat(paging.pageCount(), is(10));
-        assertThat(paging.totalCount(), is(200));
+        ).query(
+            new FpQueryCriteria()
+                .withIds(new IterableOfLongs(1L, 2L, 3L))
+                .withAccountIds(new IterableOfLongs(2L, 3L, 4L))
+                .withMinAmount(new BigDecimal("-11.23"))
+                .withMaxAmount(new BigDecimal("99.99"))
+                .withPage(2, 34)
+                .orderBy("id,asc", "name,desc")
+        );
     }
 }

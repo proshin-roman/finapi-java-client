@@ -31,7 +31,7 @@ public final class FpClient implements Client {
     private final String url;
 
     public FpClient(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/clientConfiguration/");
+        this(endpoint, token, "/api/v1/clientConfiguration");
     }
 
     public FpClient(final Endpoint endpoint, final AccessToken token, final String url) {

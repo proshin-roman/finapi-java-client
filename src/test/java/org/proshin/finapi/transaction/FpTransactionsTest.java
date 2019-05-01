@@ -76,7 +76,7 @@ public class FpTransactionsTest {
     public void testQuery() {
         server
             .when(
-                HttpRequest.request("/api/v1/transactions/")
+                HttpRequest.request("/api/v1/transactions")
                     .withMethod("GET")
                     .withHeader("Authorization", "Bearer user-token")
                     .withQueryStringParameter("ids", "1%2C2%2C3")
@@ -159,7 +159,7 @@ public class FpTransactionsTest {
     public void testEdit() {
         server
             .when(
-                HttpRequest.request("/api/v1/transactions/")
+                HttpRequest.request("/api/v1/transactions")
                     .withMethod("PATCH")
                     .withHeader("Authorization", "Bearer user-token")
                     .withBody(new JsonBody('{' +
@@ -208,7 +208,7 @@ public class FpTransactionsTest {
     public void testDeleteAll() {
         server
             .when(
-                HttpRequest.request("/api/v1/transactions/")
+                HttpRequest.request("/api/v1/transactions")
                     .withMethod("DELETE")
                     .withHeader("Authorization", "Bearer user-token")
                     .withQueryStringParameter("maxDeletionDate", "2019-01-01")

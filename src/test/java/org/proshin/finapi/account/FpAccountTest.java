@@ -33,8 +33,8 @@ import static org.proshin.finapi.account.out.Order.SEPA_BASIC_DIRECT_DEBIT;
 import static org.proshin.finapi.account.out.Order.SEPA_COLLECTIVE_MONEY_TRANSFER;
 import static org.proshin.finapi.account.out.Order.SEPA_MONEY_TRANSFER;
 import org.proshin.finapi.account.out.Status;
+import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
 public class FpAccountTest {
@@ -42,7 +42,7 @@ public class FpAccountTest {
     @Test
     public void testFields() {
         final Account account = new FpAccount(
-            new FakeEndpoint(),
+            new FpEndpoint("http://127.0.0.1"),
             new FakeAccessToken("secure user token"),
             new JSONObject('{' +
                 "  \"id\": 1," +

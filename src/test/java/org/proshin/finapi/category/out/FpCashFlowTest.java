@@ -48,7 +48,8 @@ public class FpCashFlowTest {
                 "      \"countIncomeTransactions\": 5," +
                 "      \"countSpendingTransactions\": 3," +
                 "      \"countAllTransactions\": 8" +
-                "    }")
+                "    }"),
+            "/api/v1/accounts"
         );
         assertThat(cashFlow.category().isPresent(), is(true));
         assertThat(cashFlow.category().get().id(), is(378L));
