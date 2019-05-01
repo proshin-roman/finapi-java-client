@@ -33,10 +33,17 @@ public final class FpBankConnections implements BankConnections {
 
     private final Endpoint endpoint;
     private final AccessToken token;
+    private final String url;
 
     public FpBankConnections(final Endpoint endpoint, final AccessToken token) {
+        this(endpoint, token, "/api/v1/bankConnections");
+    }
+
+    public FpBankConnections(final Endpoint endpoint,
+        final AccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
+        this.url = url;
     }
 
     @Override
@@ -46,10 +53,11 @@ public final class FpBankConnections implements BankConnections {
             this.token,
             new JSONObject(
                 this.endpoint.get(
-                    String.format("/api/v1/bankConnections/%d", id),
+                    String.format("%s/%d", this.url, id),
                     this.token
                 )
-            )
+            ),
+            this.url
         );
     }
 
@@ -58,12 +66,17 @@ public final class FpBankConnections implements BankConnections {
         return new IterableJsonArray<>(
             new JSONObject(
                 this.endpoint.get(
-                    "/api/v1/bankConnections",
+                    this.url,
                     this.token,
                     new CommaSeparatedPair<>("ids", ids)
                 )
             ).getJSONArray("connections"),
-            (array, index) -> new FpBankConnection(this.endpoint, this.token, array.getJSONObject(index))
+            (array, index) -> new FpBankConnection(
+                this.endpoint,
+                this.token,
+                array.getJSONObject(index),
+                this.url
+            )
         );
     }
 
@@ -75,12 +88,13 @@ public final class FpBankConnections implements BankConnections {
                 this.token,
                 new JSONObject(
                     this.endpoint.post(
-                        "/api/v1/bankConnections/import",
+                        this.url + "/import",
                         this.token,
                         parameters,
                         201
                     )
-                )
+                ),
+                this.url
             ));
     }
 
@@ -92,11 +106,12 @@ public final class FpBankConnections implements BankConnections {
                 this.token,
                 new JSONObject(
                     this.endpoint.post(
-                        "/api/v1/bankConnections/update",
+                        this.url + "/update",
                         this.token,
                         parameters
                     )
-                )
+                ),
+                this.url
             ));
     }
 
@@ -104,7 +119,7 @@ public final class FpBankConnections implements BankConnections {
     public Iterable<Long> deleteAll() {
         return new IterableJsonArray<>(
             new JSONObject(
-                this.endpoint.delete("/api/v1/bankConnections", this.token)
+                this.endpoint.delete(this.url, this.token)
             ).getJSONArray("identifiers"),
             JSONArray::getLong
         );

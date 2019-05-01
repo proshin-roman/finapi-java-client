@@ -48,6 +48,6 @@ public final class FpTwoStepProcedure implements TwoStepProcedure {
 
     @Override
     public boolean implicitExecute() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return this.origin.getBoolean("implicitExecute");
     }
 }

@@ -16,444 +16,173 @@
 package org.proshin.finapi.bankconnection;
 
 import java.util.Iterator;
-import java.util.Optional;
 import java.util.concurrent.Future;
 import org.cactoos.iterable.IterableOf;
-import static org.hamcrest.CoreMatchers.hasItems;
+import org.cactoos.iterable.IterableOfLongs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockserver.integration.ClientAndServer;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpResponse;
+import org.mockserver.model.JsonBody;
+import org.proshin.finapi.account.Type;
 import org.proshin.finapi.bankconnection.in.ImportParameters;
 import org.proshin.finapi.bankconnection.in.UpdateParameters;
+import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.fake.FakeEndpoint;
-import org.proshin.finapi.fake.FakeRoute;
-import org.proshin.finapi.fake.matcher.path.ExactPathMatcher;
 
 public class FpBankConnectionsTest {
 
+    @SuppressWarnings("StaticVariableMayNotBeInitialized")
+    private static ClientAndServer server;
+
+    @BeforeClass
+    public static void startMockServer() {
+        server = startClientAndServer(10015);
+    }
+
+    @Before
+    public void reset() {
+        server.reset();
+    }
+
+    @AfterClass
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
+    public static void stopMockServer() {
+        server.stop();
+    }
+
     @Test
     public void testOne() {
-        final BankConnection connection =
-            new FpBankConnections(
-                new FakeEndpoint(
-                    new FakeRoute(
-                        new ExactPathMatcher("/api/v1/bankConnections/42"),
-                        '{' +
-                            "  \"id\": 42," +
-                            "  \"bankId\": 277672," +
-                            "  \"bank\": {" +
-                            "    \"id\": 277672," +
-                            "    \"name\": \"FinAPI Test Bank\"," +
-                            "    \"loginHint\": \"Bitte geben Sie Ihre Online-Identifikation und Ihre PIN ein.\"," +
-                            "    \"bic\": \"TESTBANKING\"," +
-                            "    \"blz\": \"00000000\"," +
-                            "    \"blzs\": []," +
-                            "    \"loginFieldUserId\": \"Onlinebanking-ID\"," +
-                            "    \"loginFieldCustomerId\": \"Kunden-ID\"," +
-                            "    \"loginFieldPin\": \"PIN\"," +
-                            "    \"isCustomerIdPassword\": true," +
-                            "    \"isSupported\": true," +
-                            "    \"supportedDataSources\": [" +
-                            "      \"FINTS_SERVER\"," +
-                            "      \"WEB_SCRAPER\"" +
-                            "    ]," +
-                            "    \"pinsAreVolatile\": true," +
-                            "    \"location\": \"DE\"," +
-                            "    \"city\": \"München\"," +
-                            "    \"isTestBank\": true," +
-                            "    \"popularity\": 95," +
-                            "    \"health\": 100," +
-                            "    \"lastCommunicationAttempt\": \"2018-01-01 00:00:00.000\"," +
-                            "    \"lastSuccessfulCommunication\": \"2018-01-01 00:00:00.000\"" +
-                            "  }," +
-                            "  \"name\": \"Bank Connection\"," +
-                            "  \"bankingUserId\": \"XXXXX\"," +
-                            "  \"bankingCustomerId\": \"XXXXX\"," +
-                            "  \"bankingPin\": \"XXXXX\"," +
-                            "  \"type\": \"DEMO\"," +
-                            "  \"updateStatus\": \"READY\"," +
-                            "  \"categorizationStatus\": \"READY\"," +
-                            "  \"lastManualUpdate\": {" +
-                            "    \"result\": \"INTERNAL_SERVER_ERROR\"," +
-                            "    \"errorMessage\": \"Internal server error\"," +
-                            "    \"errorType\": \"TECHNICAL\"," +
-                            "    \"timestamp\": \"2018-01-01 00:00:00.000\"" +
-                            "  }," +
-                            "  \"lastAutoUpdate\": {" +
-                            "    \"result\": \"INTERNAL_SERVER_ERROR\"," +
-                            "    \"errorMessage\": \"Internal server error\"," +
-                            "    \"errorType\": \"TECHNICAL\"," +
-                            "    \"timestamp\": \"2018-01-01 00:00:00.000\"" +
-                            "  }," +
-                            "  \"twoStepProcedures\": [" +
-                            "    {" +
-                            "      \"procedureId\": \"955\"," +
-                            "      \"procedureName\": \"mobileTAN\"," +
-                            "      \"procedureChallengeType\": \"TEXT\"," +
-                            "      \"implicitExecute\": true" +
-                            "    }" +
-                            "  ]," +
-                            "  \"ibanOnlyMoneyTransferSupported\": true," +
-                            "  \"ibanOnlyDirectDebitSupported\": true," +
-                            "  \"collectiveMoneyTransferSupported\": true," +
-                            "  \"defaultTwoStepProcedureId\": \"955\"," +
-                            "  \"accountIds\": [" +
-                            "    1," +
-                            "    2," +
-                            "    3" +
-                            "  ]," +
-                            "  \"owners\": [" +
-                            "    {" +
-                            "      \"firstName\": \"Max\"," +
-                            "      \"lastName\": \"Mustermann\"," +
-                            "      \"salutation\": \"Herr\"," +
-                            "      \"title\": \"Dr.\"," +
-                            "      \"email\": \"email@localhost.de\"," +
-                            "      \"dateOfBirth\": \"1980-01-01\"," +
-                            "      \"postCode\": \"80000\"," +
-                            "      \"country\": \"Deutschland\"," +
-                            "      \"city\": \"München\"," +
-                            "      \"street\": \"Musterstraße\"," +
-                            "      \"houseNumber\": \"99\"" +
-                            "    }" +
-                            "  ]" +
-                            '}'
-                    )
-                ),
-                new FakeAccessToken("random token")
-            ).one(42L);
-        this.assertBankConnection(connection);
+        server
+            .when(
+                HttpRequest.request("/api/v1/bankConnections/42")
+                    .withHeader("Authorization", "Bearer user-token")
+                    .withMethod("GET")
+            ).respond(
+            HttpResponse.response("{}")
+        );
+        new FpBankConnections(
+            new FpEndpoint("http://127.0.0.1:10015"),
+            new FakeAccessToken("user-token")
+        ).one(42L);
     }
 
     @Test
     public void testQuery() {
+        server
+            .when(
+                HttpRequest.request("/api/v1/bankConnections")
+                    .withHeader("Authorization", "Bearer user-token")
+                    .withMethod("GET")
+                    .withQueryStringParameter("ids", "42,43,44")
+            ).respond(
+            HttpResponse.response("{\"connections\":[{\"id\":42}]}")
+        );
         final Iterable<BankConnection> connections = new FpBankConnections(
-            new FakeEndpoint(
-                new FakeRoute(
-                    new ExactPathMatcher("/api/v1/bankConnections"),
-                    '{' +
-                        "  \"connections\": [" +
-                        "    {" +
-                        "      \"id\": 42," +
-                        "      \"bankId\": 277672," +
-                        "      \"bank\": {" +
-                        "        \"id\": 277672," +
-                        "        \"name\": \"FinAPI Test Bank\"," +
-                        "        \"loginHint\": \"Bitte geben Sie Ihre Online-Identifikation und Ihre PIN ein.\"," +
-                        "        \"bic\": \"TESTBANKING\"," +
-                        "        \"blz\": \"00000000\"," +
-                        "        \"blzs\": []," +
-                        "        \"loginFieldUserId\": \"Onlinebanking-ID\"," +
-                        "        \"loginFieldCustomerId\": \"Kunden-ID\"," +
-                        "        \"loginFieldPin\": \"PIN\"," +
-                        "        \"isCustomerIdPassword\": true," +
-                        "        \"isSupported\": true," +
-                        "        \"supportedDataSources\": [" +
-                        "          \"FINTS_SERVER\"," +
-                        "          \"WEB_SCRAPER\"" +
-                        "        ]," +
-                        "        \"pinsAreVolatile\": true," +
-                        "        \"location\": \"DE\"," +
-                        "        \"city\": \"München\"," +
-                        "        \"isTestBank\": true," +
-                        "        \"popularity\": 95," +
-                        "        \"health\": 100," +
-                        "        \"lastCommunicationAttempt\": \"2018-01-01 00:00:00.000\"," +
-                        "        \"lastSuccessfulCommunication\": \"2018-01-01 00:00:00.000\"" +
-                        "      }," +
-                        "      \"name\": \"Bank Connection\"," +
-                        "      \"bankingUserId\": \"XXXXX\"," +
-                        "      \"bankingCustomerId\": \"XXXXX\"," +
-                        "      \"bankingPin\": \"XXXXX\"," +
-                        "      \"type\": \"DEMO\"," +
-                        "      \"updateStatus\": \"READY\"," +
-                        "      \"categorizationStatus\": \"READY\"," +
-                        "      \"lastManualUpdate\": {" +
-                        "        \"result\": \"INTERNAL_SERVER_ERROR\"," +
-                        "        \"errorMessage\": \"Internal server error\"," +
-                        "        \"errorType\": \"TECHNICAL\"," +
-                        "        \"timestamp\": \"2018-01-01 00:00:00.000\"" +
-                        "      }," +
-                        "      \"lastAutoUpdate\": {" +
-                        "        \"result\": \"INTERNAL_SERVER_ERROR\"," +
-                        "        \"errorMessage\": \"Internal server error\"," +
-                        "        \"errorType\": \"TECHNICAL\"," +
-                        "        \"timestamp\": \"2018-01-01 00:00:00.000\"" +
-                        "      }," +
-                        "      \"twoStepProcedures\": [" +
-                        "        {" +
-                        "          \"procedureId\": \"955\"," +
-                        "          \"procedureName\": \"mobileTAN\"," +
-                        "          \"procedureChallengeType\": \"TEXT\"," +
-                        "          \"implicitExecute\": true" +
-                        "        }" +
-                        "      ]," +
-                        "      \"ibanOnlyMoneyTransferSupported\": true," +
-                        "      \"ibanOnlyDirectDebitSupported\": true," +
-                        "      \"collectiveMoneyTransferSupported\": true," +
-                        "      \"defaultTwoStepProcedureId\": \"955\"," +
-                        "      \"accountIds\": [" +
-                        "        1," +
-                        "        2," +
-                        "        3" +
-                        "      ]," +
-                        "      \"owners\": [" +
-                        "        {" +
-                        "          \"firstName\": \"Max\"," +
-                        "          \"lastName\": \"Mustermann\"," +
-                        "          \"salutation\": \"Herr\"," +
-                        "          \"title\": \"Dr.\"," +
-                        "          \"email\": \"email@localhost.de\"," +
-                        "          \"dateOfBirth\": \"1980-01-01\"," +
-                        "          \"postCode\": \"80000\"," +
-                        "          \"country\": \"Deutschland\"," +
-                        "          \"city\": \"München\"," +
-                        "          \"street\": \"Musterstraße\"," +
-                        "          \"houseNumber\": \"99\"" +
-                        "        }" +
-                        "      ]" +
-                        "    }" +
-                        "  ]" +
-                        '}'
-                )
-            ),
-            new FakeAccessToken("random token")
-        ).query(new IterableOf<>(42L));
-
+            new FpEndpoint("http://127.0.0.1:10015"),
+            new FakeAccessToken("user-token")
+        ).query(new IterableOfLongs(42L, 43L, 44L));
         final Iterator<BankConnection> iterator = connections.iterator();
         assertThat(iterator.hasNext(), is(true));
-        final BankConnection connection = iterator.next();
-        assertThat(iterator.hasNext(), is(false));
-
-        this.assertBankConnection(connection);
+        assertThat(iterator.next().id(), is(42L));
     }
 
     @Test
     public void testImportNew() throws Exception {
-        final Future<BankConnection> future = new FpBankConnections(
-            new FakeEndpoint(
-                new FakeRoute(
-                    new ExactPathMatcher("/api/v1/bankConnections/import"),
-                    '{' +
-                        "  \"id\": 42," +
+        server
+            .when(
+                HttpRequest.request("/api/v1/bankConnections/import")
+                    .withHeader("Authorization", "Bearer user-token")
+                    .withBody(new JsonBody('{' +
                         "  \"bankId\": 277672," +
-                        "  \"bank\": {" +
-                        "    \"id\": 277672," +
-                        "    \"name\": \"FinAPI Test Bank\"," +
-                        "    \"loginHint\": \"Bitte geben Sie Ihre Online-Identifikation und Ihre PIN ein.\"," +
-                        "    \"bic\": \"TESTBANKING\"," +
-                        "    \"blz\": \"00000000\"," +
-                        "    \"blzs\": []," +
-                        "    \"loginFieldUserId\": \"Onlinebanking-ID\"," +
-                        "    \"loginFieldCustomerId\": \"Kunden-ID\"," +
-                        "    \"loginFieldPin\": \"PIN\"," +
-                        "    \"isCustomerIdPassword\": true," +
-                        "    \"isSupported\": true," +
-                        "    \"supportedDataSources\": [" +
-                        "      \"FINTS_SERVER\"," +
-                        "      \"WEB_SCRAPER\"" +
-                        "    ]," +
-                        "    \"pinsAreVolatile\": true," +
-                        "    \"location\": \"DE\"," +
-                        "    \"city\": \"München\"," +
-                        "    \"isTestBank\": true," +
-                        "    \"popularity\": 95," +
-                        "    \"health\": 100," +
-                        "    \"lastCommunicationAttempt\": \"2018-01-01 00:00:00.000\"," +
-                        "    \"lastSuccessfulCommunication\": \"2018-01-01 00:00:00.000\"" +
-                        "  }," +
-                        "  \"name\": \"Bank Connection\"," +
-                        "  \"bankingUserId\": \"XXXXX\"," +
-                        "  \"bankingCustomerId\": \"XXXXX\"," +
-                        "  \"bankingPin\": \"XXXXX\"," +
-                        "  \"type\": \"DEMO\"," +
-                        "  \"updateStatus\": \"READY\"," +
-                        "  \"categorizationStatus\": \"READY\"," +
-                        "  \"lastManualUpdate\": {" +
-                        "    \"result\": \"INTERNAL_SERVER_ERROR\"," +
-                        "    \"errorMessage\": \"Internal server error\"," +
-                        "    \"errorType\": \"TECHNICAL\"," +
-                        "    \"timestamp\": \"2018-01-01 00:00:00.000\"" +
-                        "  }," +
-                        "  \"lastAutoUpdate\": {" +
-                        "    \"result\": \"INTERNAL_SERVER_ERROR\"," +
-                        "    \"errorMessage\": \"Internal server error\"," +
-                        "    \"errorType\": \"TECHNICAL\"," +
-                        "    \"timestamp\": \"2018-01-01 00:00:00.000\"" +
-                        "  }," +
-                        "  \"twoStepProcedures\": [" +
-                        "    {" +
-                        "      \"procedureId\": \"955\"," +
-                        "      \"procedureName\": \"mobileTAN\"," +
-                        "      \"procedureChallengeType\": \"TEXT\"," +
-                        "      \"implicitExecute\": true" +
-                        "    }" +
-                        "  ]," +
-                        "  \"ibanOnlyMoneyTransferSupported\": true," +
-                        "  \"ibanOnlyDirectDebitSupported\": true," +
-                        "  \"collectiveMoneyTransferSupported\": true," +
-                        "  \"defaultTwoStepProcedureId\": \"955\"," +
-                        "  \"accountIds\": [" +
-                        "    1," +
-                        "    2," +
-                        "    3" +
-                        "  ]," +
-                        "  \"owners\": [" +
-                        "    {" +
-                        "      \"firstName\": \"Max\"," +
-                        "      \"lastName\": \"Mustermann\"," +
-                        "      \"salutation\": \"Herr\"," +
-                        "      \"title\": \"Dr.\"," +
-                        "      \"email\": \"email@localhost.de\"," +
-                        "      \"dateOfBirth\": \"1980-01-01\"," +
-                        "      \"postCode\": \"80000\"," +
-                        "      \"country\": \"Deutschland\"," +
-                        "      \"city\": \"München\"," +
-                        "      \"street\": \"Musterstraße\"," +
-                        "      \"houseNumber\": \"99\"" +
-                        "    }" +
-                        "  ]" +
-                        '}'
-                )
-            ),
-            new FakeAccessToken("random token")
+                        "  \"bankingUserId\": \"user id\"," +
+                        "  \"bankingCustomerId\": \"customer id\"," +
+                        "  \"bankingPin\": \"pin\"," +
+                        "  \"storePin\": true," +
+                        "  \"name\": \"Bank connection\"," +
+                        "  \"skipPositionsDownload\": true," +
+                        "  \"loadOwnerData\": true," +
+                        "  \"maxDaysForDownload\": 365," +
+                        "  \"accountTypeIds\": [1, 4]," +
+                        "  \"challengeResponse\": \"0123\"" +
+                        '}'))
+            )
+            .respond(
+                HttpResponse.response("{}").withStatusCode(201)
+            );
+        final Future<BankConnection> future = new FpBankConnections(
+            new FpEndpoint("http://127.0.0.1:10015"),
+            new FakeAccessToken("user-token")
         ).importNew(
             new ImportParameters()
+                .withBank(277672L)
                 .withUserId("user id")
+                .withCustomerId("customer id")
                 .withPin("pin")
+                .withStorePin()
+                .withName("Bank connection")
+                .withSkipPositionsDownload()
+                .withLoadOwnerData()
+                .withMaxDaysForDownload(365)
+                .withAccountTypes(new IterableOf<>(Type.Checking, Type.Security))
+                .withChallengeResponse("0123")
         );
         final BankConnection connection = future.get();
-        this.assertBankConnection(connection);
     }
 
     @Test
     public void testUpdate() throws Exception {
+        server
+            .when(
+                HttpRequest.request("/api/v1/bankConnections/update")
+                    .withHeader("Authorization", "Bearer user-token")
+                    .withBody(new JsonBody('{' +
+                        "  \"bankConnectionId\": 42," +
+                        "  \"bankingPin\": \"pin\"," +
+                        "  \"storePin\": true," +
+                        "  \"importNewAccounts\": true," +
+                        "  \"skipPositionsDownload\": true," +
+                        "  \"loadOwnerData\": true," +
+                        "  \"challengeResponse\": \"0123\"" +
+                        '}'))
+            )
+            .respond(
+                HttpResponse.response("{}")
+            );
         final Future<BankConnection> future = new FpBankConnections(
-            new FakeEndpoint(
-                new FakeRoute(
-                    new ExactPathMatcher("/api/v1/bankConnections/update"),
-                    '{' +
-                        "  \"id\": 42," +
-                        "  \"bankId\": 277672," +
-                        "  \"bank\": {" +
-                        "    \"id\": 277672," +
-                        "    \"name\": \"FinAPI Test Bank\"," +
-                        "    \"loginHint\": \"Bitte geben Sie Ihre Online-Identifikation und Ihre PIN ein.\"," +
-                        "    \"bic\": \"TESTBANKING\"," +
-                        "    \"blz\": \"00000000\"," +
-                        "    \"blzs\": []," +
-                        "    \"loginFieldUserId\": \"Onlinebanking-ID\"," +
-                        "    \"loginFieldCustomerId\": \"Kunden-ID\"," +
-                        "    \"loginFieldPin\": \"PIN\"," +
-                        "    \"isCustomerIdPassword\": true," +
-                        "    \"isSupported\": true," +
-                        "    \"supportedDataSources\": [" +
-                        "      \"FINTS_SERVER\"," +
-                        "      \"WEB_SCRAPER\"" +
-                        "    ]," +
-                        "    \"pinsAreVolatile\": true," +
-                        "    \"location\": \"DE\"," +
-                        "    \"city\": \"München\"," +
-                        "    \"isTestBank\": true," +
-                        "    \"popularity\": 95," +
-                        "    \"health\": 100," +
-                        "    \"lastCommunicationAttempt\": \"2018-01-01 00:00:00.000\"," +
-                        "    \"lastSuccessfulCommunication\": \"2018-01-01 00:00:00.000\"" +
-                        "  }," +
-                        "  \"name\": \"Bank Connection\"," +
-                        "  \"bankingUserId\": \"XXXXX\"," +
-                        "  \"bankingCustomerId\": \"XXXXX\"," +
-                        "  \"bankingPin\": \"XXXXX\"," +
-                        "  \"type\": \"DEMO\"," +
-                        "  \"updateStatus\": \"READY\"," +
-                        "  \"categorizationStatus\": \"READY\"," +
-                        "  \"lastManualUpdate\": {" +
-                        "    \"result\": \"INTERNAL_SERVER_ERROR\"," +
-                        "    \"errorMessage\": \"Internal server error\"," +
-                        "    \"errorType\": \"TECHNICAL\"," +
-                        "    \"timestamp\": \"2018-01-01 00:00:00.000\"" +
-                        "  }," +
-                        "  \"lastAutoUpdate\": {" +
-                        "    \"result\": \"INTERNAL_SERVER_ERROR\"," +
-                        "    \"errorMessage\": \"Internal server error\"," +
-                        "    \"errorType\": \"TECHNICAL\"," +
-                        "    \"timestamp\": \"2018-01-01 00:00:00.000\"" +
-                        "  }," +
-                        "  \"twoStepProcedures\": [" +
-                        "    {" +
-                        "      \"procedureId\": \"955\"," +
-                        "      \"procedureName\": \"mobileTAN\"," +
-                        "      \"procedureChallengeType\": \"TEXT\"," +
-                        "      \"implicitExecute\": true" +
-                        "    }" +
-                        "  ]," +
-                        "  \"ibanOnlyMoneyTransferSupported\": true," +
-                        "  \"ibanOnlyDirectDebitSupported\": true," +
-                        "  \"collectiveMoneyTransferSupported\": true," +
-                        "  \"defaultTwoStepProcedureId\": \"955\"," +
-                        "  \"accountIds\": [" +
-                        "    1," +
-                        "    2," +
-                        "    3" +
-                        "  ]," +
-                        "  \"owners\": [" +
-                        "    {" +
-                        "      \"firstName\": \"Max\"," +
-                        "      \"lastName\": \"Mustermann\"," +
-                        "      \"salutation\": \"Herr\"," +
-                        "      \"title\": \"Dr.\"," +
-                        "      \"email\": \"email@localhost.de\"," +
-                        "      \"dateOfBirth\": \"1980-01-01\"," +
-                        "      \"postCode\": \"80000\"," +
-                        "      \"country\": \"Deutschland\"," +
-                        "      \"city\": \"München\"," +
-                        "      \"street\": \"Musterstraße\"," +
-                        "      \"houseNumber\": \"99\"" +
-                        "    }" +
-                        "  ]" +
-                        '}'
-                )
-            ),
-            new FakeAccessToken("random token")
-        ).update(new UpdateParameters().withPin("pin"));
+            new FpEndpoint("http://127.0.0.1:10015"),
+            new FakeAccessToken("user-token")
+        ).update(new UpdateParameters()
+            .withBankConnection(42L)
+            .withPin("pin")
+            .withStorePin()
+            .withImportNewAccounts()
+            .withSkipPositionsDownload()
+            .withLoadOwnerData()
+            .withChallengeResponse("0123")
+        );
         final BankConnection connection = future.get();
-        this.assertBankConnection(connection);
     }
 
     @Test
     public void testDeleteAll() {
-        assertThat(
-            new FpBankConnections(
-                new FakeEndpoint(
-                    new FakeRoute(
-                        new ExactPathMatcher("/api/v1/bankConnections"),
-                        '{' +
-                            "  \"identifiers\": [" +
-                            "    1," +
-                            "    2," +
-                            "    3" +
-                            "  ]" +
-                            '}'
-                    )
-                ),
-                new FakeAccessToken("random token")
-            ).deleteAll(),
-            hasItems(1L, 2L, 3L)
-        );
-    }
-
-    /**
-     * @todo #46 Assert all fields of the bank connection and make sure they are parsed as expected. Think about
-     *  refactoring this method to a new matcher.
-     */
-    @SuppressWarnings("MethodMayBeStatic")
-    private void assertBankConnection(final BankConnection connection) {
-        assertThat(connection.id(), is(42L));
-        assertThat(connection.bank().id(), is(277672L));
-        assertThat(connection.name(), is(Optional.of("Bank Connection")));
-        assertThat(connection.credentials().bankingUserId(), is(Optional.of("XXXXX")));
-        assertThat(connection.credentials().bankingCustomerId(), is(Optional.of("XXXXX")));
-        assertThat(connection.credentials().bankingPin(), is(Optional.of("XXXXX")));
+        server
+            .when(
+                HttpRequest.request("/api/v1/bankConnections")
+                    .withHeader("Authorization", "Bearer user-token")
+            )
+            .respond(
+                HttpResponse.response("{\"identifiers\":[]}")
+            );
+        new FpBankConnections(
+            new FpEndpoint("http://127.0.0.1:10015"),
+            new FakeAccessToken("user-token")
+        ).deleteAll();
     }
 }
