@@ -16,7 +16,7 @@
 [![codebeat badge](https://codebeat.co/badges/907cb4b8-0f65-446a-a874-9ece228ab579)](https://codebeat.co/projects/github-com-proshin-roman-finapi-java-client-master)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=org.proshin%3Afinapi-java-client&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.proshin%3Afinapi-java-client)
 [![Report](https://inspecode.rocro.com/badges/github.com/proshin-roman/finapi-java-client/report?token=XQDM-T86oDab_Cxht2zu7R2Id6M09Uobn6izEWhA8es&branch=master)](https://inspecode.rocro.com/reports/github.com/proshin-roman/finapi-java-client/branch/master/summary)
-[![Hits-of-Code](https://hitsofcode.com/github.com/proshin-roman/finapi-java-client)](https://hitsofcode.com/view/github.com/proshin-roman/finapi-java-client)
+[![Hits-of-Code](https://hitsofcode.com/github/proshin-roman/finapi-java-client)](https://hitsofcode.com/view/github/proshin-roman/finapi-java-client)
 
 ### Puzzle Driven Development
 [![PDD status](http://www.0pdd.com/svg?name=proshin-roman/finapi-java-client)](http://www.0pdd.com/p?name=proshin-roman/finapi-java-client)
