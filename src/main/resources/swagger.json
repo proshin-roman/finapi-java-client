@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.70.0",
+        "version": "v1.71.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -3366,7 +3366,7 @@
                     "Mandator Administration"
                 ],
                 "summary": "Delete users",
-                "description": "Delete one or several users, which are specified by a given list of identifiers. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token. <br/><br/><b>NOTE</b>: finAPI may fail to delete one (or several, or all) of the specified users. A user cannot get deleted when his data is currently locked by an internal process (for instance, update of a bank connection or transactions categorization). The response contains the identifiers of all users that could not get deleted, and all users that could get deleted, separated in two lists. The mandator admin client can retry the request at a later time for the users who could not get deleted.",
+                "description": "Delete one or several users, which are specified by a given list of identifiers. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token. <br/><br/><b>NOTE</b>: finAPI may fail to delete one (or several, or all) of the specified users. A user cannot get deleted when his data is currently locked by an internal process (for instance, update of a bank connection or transactions categorization). The response contains the identifiers of all users that could not get deleted, and all users that could get deleted, separated in two lists. The mandator admin client can retry the request at a later time for the users who could not get deleted.<br/> Note that non-existing user identifiers will be ignored entirely, meaning that those identifiers will not appear in the response at all.",
                 "operationId": "deleteUsers",
                 "parameters": [
                     {
@@ -6752,15 +6752,15 @@
                     "example": 3600,
                     "description": "Expiration time in seconds. A value of 0 means that the token never expires (unless it is explicitly invalidated, e.g. by revocation, or when a user gets locked)."
                 },
-                "token_type": {
-                    "type": "string",
-                    "example": "bearer",
-                    "description": "Token type (it's always 'bearer')"
-                },
                 "access_token": {
                     "type": "string",
                     "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
                     "description": "Access token. Token has a length of up to 128 characters."
+                },
+                "token_type": {
+                    "type": "string",
+                    "example": "bearer",
+                    "description": "Token type (it's always 'bearer')"
                 }
             },
             "description": "User access token info"
