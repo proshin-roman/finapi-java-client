@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.72.0",
+        "version": "v1.73.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -6746,15 +6746,15 @@
                     "example": "all",
                     "description": "Requested scopes (it's always 'all')"
                 },
-                "access_token": {
-                    "type": "string",
-                    "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
-                    "description": "Access token. Token has a length of up to 128 characters."
-                },
                 "refresh_token": {
                     "type": "string",
                     "example": "0b9KjiBVlZLz7a4HshSAIcFuscStiXT1VzT5mgNYwCQ_dWctTDsaIjedAhD1LpsOFJ7x6K8Emf8M3VOQkwNFR9FHijALYSQw2UeRwAC2MvrOKwfF1dHmOq5VEVYEaGf6",
                     "description": "Refresh token. Only set in case of grant_type='password'. Token has a length of up to 128 characters."
+                },
+                "access_token": {
+                    "type": "string",
+                    "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
+                    "description": "Access token. Token has a length of up to 128 characters."
                 },
                 "expires_in": {
                     "type": "integer",
