@@ -28,6 +28,7 @@ import org.mockserver.model.HttpResponse;
 import static org.proshin.finapi.bank.Bank.DataSource.FINTS_SERVER;
 import static org.proshin.finapi.bank.Bank.DataSource.WEB_SCRAPER;
 import org.proshin.finapi.bank.in.BanksCriteria;
+import org.proshin.finapi.bank.out.BankingInterface;
 import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.paging.Page;
@@ -81,7 +82,7 @@ public final class BanksTest {
                     .withQueryStringParameter("isSupported", "true")
                     .withQueryStringParameter("pinsAreVolatile", "true")
                     .withQueryStringParameter("supportedDataSources", "WEB_SCRAPER%2CFINTS_SERVER")
-                    .withQueryStringParameter("supportedInterfaces", "WEB_SCRAPER%2CFINTS_SERVER")
+                    .withQueryStringParameter("supportedInterfaces", "XS2A%2CFINTS_SERVER")
                     .withQueryStringParameter("location", "DE")
                     .withQueryStringParameter("isTestBank", "true")
                     .withQueryStringParameter("page", "2")
@@ -101,6 +102,7 @@ public final class BanksTest {
                 .withSupporting(true)
                 .withPinsAreVolatile(true)
                 .withSupportedDataSources(new IterableOf<>(WEB_SCRAPER, FINTS_SERVER))
+                .withSupportedInterfaces(new IterableOf<>(BankingInterface.XS2A, BankingInterface.FINTS_SERVER))
                 .withLocation(new IterableOf<>("DE"))
                 .withTestBank(true)
                 .withPaging(new PagingCriteria(2, 20, "id,asc", "name,desc"))
