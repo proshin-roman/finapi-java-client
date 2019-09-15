@@ -16,14 +16,15 @@
 package org.proshin.finapi.bankconnection;
 
 import java.util.Optional;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
-import org.proshin.finapi.account.Accounts;
 import org.proshin.finapi.bank.Bank;
 import org.proshin.finapi.bank.FpBank;
 import org.proshin.finapi.bankconnection.in.FpEditParameters;
 import org.proshin.finapi.bankconnection.out.Credentials;
 import org.proshin.finapi.bankconnection.out.FpCredentials;
+import org.proshin.finapi.bankconnection.out.FpOwner;
 import org.proshin.finapi.bankconnection.out.FpStatus;
 import org.proshin.finapi.bankconnection.out.FpTwoStepProcedures;
 import org.proshin.finapi.bankconnection.out.FpUpdateResult;
@@ -33,24 +34,26 @@ import org.proshin.finapi.bankconnection.out.TwoStepProcedures;
 import org.proshin.finapi.bankconnection.out.Type;
 import org.proshin.finapi.bankconnection.out.UpdateResult;
 import org.proshin.finapi.endpoint.Endpoint;
+import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.optional.OptionalObjectOf;
-import org.proshin.finapi.primitives.optional.OptionalOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
 /**
  * Bank Connection model
- * @todo #20 Cover FpBankConnection by unit tests with mocked JSON structures.
  */
 public final class FpBankConnection implements BankConnection {
 
     private final Endpoint endpoint;
     private final AccessToken token;
     private final JSONObject origin;
+    private final String url;
 
-    public FpBankConnection(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpBankConnection(final Endpoint endpoint,
+        final AccessToken token, final JSONObject origin, final String url) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;
+        this.url = url;
     }
 
     @Override
@@ -96,22 +99,40 @@ public final class FpBankConnection implements BankConnection {
     }
 
     @Override
-    public Optional<TwoStepProcedures> twoStepProcedures() {
-        return new OptionalOf<TwoStepProcedures>(
-            this.origin,
-            "twoStepProcedures",
-            (jsonObject, key) -> new FpTwoStepProcedures(jsonObject)
-        ).get();
+    public TwoStepProcedures twoStepProcedures() {
+        return new FpTwoStepProcedures(this.origin);
     }
 
     @Override
-    public Accounts accounts() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+    public boolean ibanOnlyMoneyTransferSupported() {
+        return this.origin.getBoolean("ibanOnlyMoneyTransferSupported");
+    }
+
+    @Override
+    public boolean ibanOnlyDirectDebitSupported() {
+        return this.origin.getBoolean("ibanOnlyDirectDebitSupported");
+    }
+
+    @Override
+    @Deprecated
+    public boolean collectiveMoneyTransferSupported() {
+        return this.origin.getBoolean("collectiveMoneyTransferSupported");
+    }
+
+    @Override
+    public Iterable<Long> accounts() {
+        return new IterableJsonArray<>(
+            this.origin.getJSONArray("accountIds"),
+            JSONArray::getLong
+        );
     }
 
     @Override
     public Iterable<Owner> owners() {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+        return new IterableJsonArray<>(
+            this.origin.getJSONArray("owners"),
+            (array, index) -> new FpOwner(array.getJSONObject(index))
+        );
     }
 
     @Override
@@ -121,16 +142,17 @@ public final class FpBankConnection implements BankConnection {
             this.token,
             new JSONObject(
                 this.endpoint.patch(
-                    String.format("/api/v1/bankConnections/%d", this.id()),
+                    String.format("%s/%d", this.url, this.id()),
                     this.token,
                     parameters
                 )
-            )
+            ),
+            this.url
         );
     }
 
     @Override
     public void delete() {
-        this.endpoint.delete(String.format("/api/v1/bankConnections/%d", this.id()), this.token);
+        this.endpoint.delete(String.format("%s/%d", this.url, this.id()), this.token);
     }
 }

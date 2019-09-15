@@ -16,7 +16,7 @@
 package org.proshin.finapi.transaction.in;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -69,22 +69,22 @@ public final class TransactionsCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
-    public TransactionsCriteria withMinBankBookingDate(final OffsetDateTime minBankBookingDate) {
+    public TransactionsCriteria withMinBankBookingDate(final LocalDate minBankBookingDate) {
         this.pairs.add(new UrlEncodedPair("minBankBookingDate", new StringOf(minBankBookingDate)));
         return this;
     }
 
-    public TransactionsCriteria withMaxBankBookingDate(final OffsetDateTime maxBankBookingDate) {
+    public TransactionsCriteria withMaxBankBookingDate(final LocalDate maxBankBookingDate) {
         this.pairs.add(new UrlEncodedPair("maxBankBookingDate", new StringOf(maxBankBookingDate)));
         return this;
     }
 
-    public TransactionsCriteria withMinFinapiBookingDate(final OffsetDateTime minFinapiBookingDate) {
+    public TransactionsCriteria withMinFinapiBookingDate(final LocalDate minFinapiBookingDate) {
         this.pairs.add(new UrlEncodedPair("minFinapiBookingDate", new StringOf(minFinapiBookingDate)));
         return this;
     }
 
-    public TransactionsCriteria withMaxFinapiBookingDate(final OffsetDateTime maxFinapiBookingDate) {
+    public TransactionsCriteria withMaxFinapiBookingDate(final LocalDate maxFinapiBookingDate) {
         this.pairs.add(new UrlEncodedPair("maxFinapiBookingDate", new StringOf(maxFinapiBookingDate)));
         return this;
     }
@@ -134,12 +134,12 @@ public final class TransactionsCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
-    public TransactionsCriteria withMinImportDate(final OffsetDateTime minImportDate) {
+    public TransactionsCriteria withMinImportDate(final LocalDate minImportDate) {
         this.pairs.add(new UrlEncodedPair("minImportDate", new StringOf(minImportDate)));
         return this;
     }
 
-    public TransactionsCriteria withMaxImportDate(final OffsetDateTime maxImportDate) {
+    public TransactionsCriteria withMaxImportDate(final LocalDate maxImportDate) {
         this.pairs.add(new UrlEncodedPair("maxImportDate", new StringOf(maxImportDate)));
         return this;
     }

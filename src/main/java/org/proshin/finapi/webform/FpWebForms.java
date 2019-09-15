@@ -26,7 +26,7 @@ public final class FpWebForms implements WebForms {
     private final String url;
 
     public FpWebForms(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/webForms/");
+        this(endpoint, token, "/api/v1/webForms");
     }
 
     public FpWebForms(final Endpoint endpoint, final AccessToken token, final String url) {
@@ -39,7 +39,7 @@ public final class FpWebForms implements WebForms {
     public WebForm one(final Long id) {
         return new FpWebForm(
             new JSONObject(
-                this.endpoint.get(this.url + id, this.token)
+                this.endpoint.get(this.url + '/' + id, this.token)
             )
         );
     }

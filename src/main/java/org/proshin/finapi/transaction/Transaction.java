@@ -66,9 +66,22 @@ public interface Transaction {
 
     Iterable<Long> children();
 
+    /**
+     * @deprecated since v1.65.0
+     * @return PayPal data
+     */
+    @Deprecated
     Optional<PayPalData> payPalData();
 
     Optional<String> endToEndReference();
+
+    Optional<BigDecimal> compensationAmount();
+
+    Optional<BigDecimal> originalAmount();
+
+    Optional<String> differentDebitor();
+
+    Optional<String> differentCreditor();
 
     Transaction split(SplitTransactionParameters parameters);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roman Proshin
+ * Copyright 2019 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.label;
+package org.proshin.finapi.account.out;
 
+import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.Is.is;
 import org.json.JSONObject;
 import org.junit.Test;
-import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.fake.FakeEndpoint;
 
-public class LabelTest {
+public class FpSepaExecutingResponseTest {
+
     @Test
-    public void testSuccessCase() {
-        final Label label = new FpLabel(
-            new FakeEndpoint(),
-            new FakeAccessToken("fake token"),
-            new JSONObject("{\"id\": 23, \"name\": \"Label name\"}")
+    public void test() {
+        final SepaExecutingResponse response = new FpSepaExecutingResponse(
+            new JSONObject('{' +
+                "  \"successMessage\": \"Auftrag ausgeführt.\"," +
+                "  \"warnMessage\": \"Es liegen Warnungen vor.\"" +
+                '}')
         );
-        assertThat(label.id(), is(23L));
-        assertThat(label.name(), is("Label name"));
+        assertThat(response.successMessage(), is(Optional.of("Auftrag ausgeführt.")));
+        assertThat(response.warnMessage(), is(Optional.of("Es liegen Warnungen vor.")));
     }
 }

@@ -19,6 +19,10 @@ import org.proshin.finapi.user.in.FpCreateParameters;
 
 public interface Users {
 
+    /**
+     * @todo #164 This method should not be a part of this interface. Because this interface is client-centric: it
+     *  uses client's token for all methods.
+     */
     User authorized();
 
     boolean verified(String userId);

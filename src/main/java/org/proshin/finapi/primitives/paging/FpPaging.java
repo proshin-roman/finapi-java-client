@@ -19,7 +19,6 @@ import org.json.JSONObject;
 
 /**
  * Paging info.
- * @todo #38 Write a test for FpPaging class.
  */
 public final class FpPaging implements Paging {
 

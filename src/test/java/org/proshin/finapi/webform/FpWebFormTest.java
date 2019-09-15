@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.is;
 import org.json.JSONObject;
 import org.junit.Test;
 
-public class WebFormTest {
+public class FpWebFormTest {
 
     @Test
     public void testSuccess() {

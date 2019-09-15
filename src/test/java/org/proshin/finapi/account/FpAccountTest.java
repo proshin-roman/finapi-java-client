@@ -17,11 +17,15 @@ package org.proshin.finapi.account;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.CoreMatchers;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
+import org.hamcrest.Description;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.json.JSONObject;
 import org.junit.Test;
+import org.proshin.finapi.account.out.ClearingAccount;
 import static org.proshin.finapi.account.out.Order.SEPA_B2B_COLLECTIVE_DIRECT_DEBIT;
 import static org.proshin.finapi.account.out.Order.SEPA_B2B_DIRECT_DEBIT;
 import static org.proshin.finapi.account.out.Order.SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT;
@@ -29,8 +33,8 @@ import static org.proshin.finapi.account.out.Order.SEPA_BASIC_DIRECT_DEBIT;
 import static org.proshin.finapi.account.out.Order.SEPA_COLLECTIVE_MONEY_TRANSFER;
 import static org.proshin.finapi.account.out.Order.SEPA_MONEY_TRANSFER;
 import org.proshin.finapi.account.out.Status;
+import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.fake.FakeEndpoint;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
 public class FpAccountTest {
@@ -38,7 +42,7 @@ public class FpAccountTest {
     @Test
     public void testFields() {
         final Account account = new FpAccount(
-            new FakeEndpoint(),
+            new FpEndpoint("http://127.0.0.1"),
             new FakeAccessToken("secure user token"),
             new JSONObject('{' +
                 "  \"id\": 1," +
@@ -106,5 +110,32 @@ public class FpAccountTest {
                 SEPA_B2B_COLLECTIVE_DIRECT_DEBIT
             )
         );
+        assertThat(
+            account.clearingAccounts(),
+            CoreMatchers.everyItem(new ClearingAccountMatcher("Clearing account ID", "Clearing account name"))
+        );
+    }
+
+    private static final class ClearingAccountMatcher extends BaseMatcher<ClearingAccount> {
+
+        private final String id;
+        private final String name;
+
+        private ClearingAccountMatcher(final String id, final String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        @Override
+        public boolean matches(final Object item) {
+            final ClearingAccount clearingAccount = (ClearingAccount) item;
+            return this.id.equals(clearingAccount.id()) &&
+                this.name.equals(clearingAccount.name());
+        }
+
+        @Override
+        public void describeTo(final Description description) {
+            description.appendText("id=" + this.id + " and name=" + this.name);
+        }
     }
 }

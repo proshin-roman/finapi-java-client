@@ -28,6 +28,7 @@ import org.proshin.finapi.label.FpLabel;
 import org.proshin.finapi.label.Label;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
+import org.proshin.finapi.primitives.optional.OptionalBigDecimalOf;
 import org.proshin.finapi.primitives.optional.OptionalLongOf;
 import org.proshin.finapi.primitives.optional.OptionalObjectOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
@@ -118,14 +119,14 @@ public final class FpTransaction implements Transaction {
     @Override
     public Optional<Category> category() {
         return new OptionalObjectOf(this.origin, "category").get()
-            .map(json -> new FpCategory(this.endpoint, this.token, json));
+            .map(json -> new FpCategory(this.endpoint, this.token, json, this.url));
     }
 
     @Override
     public Iterable<Label> labels() {
         return new IterableJsonArray<>(
             this.origin.getJSONArray("labels"),
-            (array, index) -> new FpLabel(this.endpoint, this.token, array.getJSONObject(index))
+            (array, index) -> new FpLabel(this.endpoint, this.token, array.getJSONObject(index), this.url)
         );
     }
 
@@ -158,6 +159,7 @@ public final class FpTransaction implements Transaction {
     }
 
     @Override
+    @Deprecated
     public Optional<PayPalData> payPalData() {
         return new OptionalObjectOf(this.origin, "paypalData").get()
             .map(FpPayPalData::new);
@@ -166,6 +168,26 @@ public final class FpTransaction implements Transaction {
     @Override
     public Optional<String> endToEndReference() {
         return new OptionalStringOf(this.origin, "endToEndReference").get();
+    }
+
+    @Override
+    public Optional<BigDecimal> compensationAmount() {
+        return new OptionalBigDecimalOf(this.origin, "compensationAmount").get();
+    }
+
+    @Override
+    public Optional<BigDecimal> originalAmount() {
+        return new OptionalBigDecimalOf(this.origin, "originalAmount").get();
+    }
+
+    @Override
+    public Optional<String> differentDebitor() {
+        return new OptionalStringOf(this.origin, "differentDebitor").get();
+    }
+
+    @Override
+    public Optional<String> differentCreditor() {
+        return new OptionalStringOf(this.origin, "differentCreditor").get();
     }
 
     @Override
@@ -210,7 +232,7 @@ public final class FpTransaction implements Transaction {
             this.token,
             new JSONObject(
                 this.endpoint.patch(
-                    this.url + this.id(),
+                    this.url + '/' + this.id(),
                     this.token,
                     parameters
                 )
@@ -221,6 +243,6 @@ public final class FpTransaction implements Transaction {
 
     @Override
     public void delete() {
-        this.endpoint.delete(this.url + this.id(), this.token);
+        this.endpoint.delete(this.url + '/' + this.id(), this.token);
     }
 }

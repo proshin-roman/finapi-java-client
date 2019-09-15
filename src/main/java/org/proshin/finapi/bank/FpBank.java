@@ -63,6 +63,11 @@ public final class FpBank implements Bank {
     }
 
     @Override
+    public boolean isCustomerIdPassword() {
+        return this.origin.getBoolean("isCustomerIdPassword");
+    }
+
+    @Override
     public boolean isSupported() {
         return this.origin.getBoolean("isSupported");
     }

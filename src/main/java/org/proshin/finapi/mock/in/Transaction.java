@@ -16,7 +16,7 @@
 package org.proshin.finapi.mock.in;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.function.Supplier;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
@@ -24,14 +24,14 @@ import org.proshin.finapi.primitives.StringOf;
 
 public final class Transaction implements Jsonable {
 
-    private final Supplier<JSONObject> origin;
+    private final Supplier<? extends JSONObject> origin;
 
     public Transaction(final BigDecimal amount) {
         this(() -> new JSONObject()
             .put("amount", amount));
     }
 
-    public Transaction(final Supplier<JSONObject> origin) {
+    public Transaction(final Supplier<? extends JSONObject> origin) {
         this.origin = origin;
     }
 
@@ -59,11 +59,11 @@ public final class Transaction implements Jsonable {
         return new Transaction(() -> this.origin.get().put("counterpartAccountNumber", counterpartAccountNumber));
     }
 
-    public Transaction withBookingDate(final OffsetDateTime bookingDate) {
+    public Transaction withBookingDate(final LocalDate bookingDate) {
         return new Transaction(() -> this.origin.get().put("bookingDate", new StringOf(bookingDate)));
     }
 
-    public Transaction withValueDate(final OffsetDateTime valueDate) {
+    public Transaction withValueDate(final LocalDate valueDate) {
         return new Transaction(() -> this.origin.get().put("valueDate", new StringOf(valueDate)));
     }
 

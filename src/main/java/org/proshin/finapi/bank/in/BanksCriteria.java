@@ -37,7 +37,7 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
     }
 
     public BanksCriteria withIds(final Iterable<Long> ids) {
-        this.pairs.add(new CommaSeparatedPair<>("ids", ids));
+        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("ids", ids)));
         return this;
     }
 
@@ -57,12 +57,12 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
     }
 
     public BanksCriteria withSupportedDataSources(final Iterable<Bank.DataSource> supportedDataSources) {
-        this.pairs.add(new CommaSeparatedPair<>("ids", supportedDataSources));
+        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("supportedDataSources", supportedDataSources)));
         return this;
     }
 
     public BanksCriteria withLocation(final Iterable<String> location) {
-        this.pairs.add(new CommaSeparatedPair<>("ids", location));
+        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("location", location)));
         return this;
     }
 

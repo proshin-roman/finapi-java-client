@@ -15,88 +15,155 @@
  */
 package org.proshin.finapi.user;
 
-import java.util.Optional;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockserver.integration.ClientAndServer;
+import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
+import org.mockserver.model.JsonBody;
+import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.fake.FakeEndpoint;
-import org.proshin.finapi.fake.FakeRoute;
-import org.proshin.finapi.fake.matcher.path.ExactPathMatcher;
 import org.proshin.finapi.user.in.FpCreateParameters;
 
 public final class UsersTest {
 
+    @SuppressWarnings("StaticVariableMayNotBeInitialized")
+    private static ClientAndServer server;
+
+    @BeforeClass
+    public static void startMockServer() {
+        server = startClientAndServer(10001);
+    }
+
+    @Before
+    public void reset() {
+        server.reset();
+    }
+
+    @AfterClass
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
+    public static void stopMockServer() {
+        server.stop();
+    }
+
+    @Test
+    public void testAuthorized() {
+        server
+            .when(
+                request("/api/v1/users")
+                    .withMethod("GET")
+                    .withHeader("Authorization", "Bearer random-token")
+            )
+            .respond(
+                response("{}")
+            );
+        new FpUsers(
+            new FpEndpoint("http://127.0.0.1:10001"),
+            new FakeAccessToken("random-token")
+        ).authorized();
+    }
+
     @Test
     public void testVerified() {
-        assertThat(
-            new FpUsers(
-                new FakeEndpoint(
-                    new FakeRoute(
-                        '{' +
-                            "  \"userId\": \"user ID\"," +
-                            "  \"isUserVerified\": true" +
-                            '}'
-                    )
-                ),
-                new FakeAccessToken("fake token")
-            ).verified("user ID"),
-            is(true)
-        );
+        server
+            .when(
+                request("/api/v1/users/verificationStatus")
+                    .withMethod("GET")
+                    .withHeader("Authorization", "Bearer fake token")
+                    .withQueryStringParameter("userId", "user+id")
+            )
+            .respond(
+                response('{' +
+                    "  \"userId\": \"username\"," +
+                    "  \"isUserVerified\": true" +
+                    '}')
+            );
+        new FpUsers(
+            new FpEndpoint("http://127.0.0.1:10001"),
+            new FakeAccessToken("fake token")
+        ).verified("user id");
     }
 
     @Test
     public void testCreate() {
+        server
+            .when(
+                request("/api/v1/users")
+                    .withMethod("POST")
+                    .withHeader("Authorization", "Bearer fake token")
+                    .withBody(new JsonBody('{' +
+                        "  \"id\": \"username\"," +
+                        "  \"password\": \"password\"," +
+                        "  \"email\": \"email@localhost.de\"," +
+                        "  \"phone\": \"+49 99 999999-999\"," +
+                        "  \"isAutoUpdateEnabled\": true" +
+                        '}'))
+            )
+            .respond(
+                response("{}").withStatusCode(201)
+            );
         final User user = new FpUsers(
-            new FakeEndpoint(
-                new FakeRoute(
-                    '{' +
-                        "  \"id\": \"user ID\"," +
-                        "  \"password\": \"random password\"," +
-                        "  \"email\": \"user's email\"," +
-                        "  \"phone\": \"user's phone\"," +
-                        "  \"isAutoUpdateEnabled\": false" +
-                        '}'
-                )
-            ),
+            new FpEndpoint("http://127.0.0.1:10001"),
             new FakeAccessToken("fake token")
-        ).create(new FpCreateParameters());
-        assertThat(user.id(), is("user ID"));
-        assertThat(user.password(), is("random password"));
-        assertThat(user.email(), is(Optional.of("user's email")));
-        assertThat(user.phone(), is(Optional.of("user's phone")));
-        assertThat(user.isAutoUpdateEnabled(), is(false));
+        ).create(
+            new FpCreateParameters()
+                .withId("username")
+                .withPassword("password")
+                .withEmail("email@localhost.de")
+                .withPhone("+49 99 999999-999")
+                .withAutoUpdateEnabled()
+        );
     }
 
     @Test
     public void testRequestPasswordChange() {
-        assertThat(
-            new FpUsers(
-                new FakeEndpoint(
-                    new FakeRoute(
-                        '{' +
-                            "  \"userId\": \"userId\"," +
-                            "  \"userEmail\": \"user's email\"," +
-                            "  \"passwordChangeToken\": \"random token\"" +
-                            '}'
-                    )
-                ),
-                new FakeAccessToken("fake token")
-            ).requestPasswordChange("userId"),
-            is("random token")
-        );
+        server
+            .when(
+                request("/api/v1/users/requestPasswordChange")
+                    .withMethod("POST")
+                    .withHeader("Authorization", "Bearer fake token")
+                    .withBody(new JsonBody('{' +
+                        "  \"userId\": \"username\"" +
+                        '}'))
+            )
+            .respond(
+                response('{' +
+                    "  \"userId\": \"username\"," +
+                    "  \"userEmail\": \"email@localhost.de\"," +
+                    "  \"passwordChangeToken\": \"EnCRyPTEDPassWordCHAnGEToKen==\"" +
+                    '}')
+            );
+        final String token = new FpUsers(
+            new FpEndpoint("http://127.0.0.1:10001"),
+            new FakeAccessToken("fake token")
+        ).requestPasswordChange("username");
+        assertThat(token, is("EnCRyPTEDPassWordCHAnGEToKen=="));
     }
 
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
     public void testExecutePasswordChange() {
+        server
+            .when(
+                request("/api/v1/users/executePasswordChange")
+                    .withMethod("POST")
+                    .withHeader("Authorization", "Bearer fake token")
+                    .withBody(new JsonBody('{' +
+                        "  \"userId\": \"user ID\"," +
+                        "  \"password\": \"password\"," +
+                        "  \"passwordChangeToken\": \"token\"" +
+                        '}'))
+            )
+            .respond(
+                response("")
+            );
         new FpUsers(
-            new FakeEndpoint(
-                new FakeRoute(
-                    new ExactPathMatcher("/api/v1/users/executePasswordChange"),
-                    ""
-                )
-            ),
+            new FpEndpoint("http://127.0.0.1:10001"),
             new FakeAccessToken("fake token")
         ).executePasswordChange("user ID", "password", "token");
     }
@@ -104,13 +171,17 @@ public final class UsersTest {
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
     public void testVerify() {
+        server
+            .when(
+                request("/api/v1/users/verify/user-1")
+                    .withMethod("POST")
+                    .withHeader("Authorization", "Bearer fake token")
+            )
+            .respond(
+                response("")
+            );
         new FpUsers(
-            new FakeEndpoint(
-                new FakeRoute(
-                    new ExactPathMatcher("/api/v1/users/verify/user-1"),
-                    ""
-                )
-            ),
+            new FpEndpoint("http://127.0.0.1:10001"),
             new FakeAccessToken("fake token")
         ).verify("user-1");
     }
@@ -118,13 +189,17 @@ public final class UsersTest {
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
     public void testDeleteUnverified() {
+        server
+            .when(
+                request("/api/v1/users/user-1")
+                    .withMethod("DELETE")
+                    .withHeader("Authorization", "Bearer fake token")
+            )
+            .respond(
+                response("{}")
+            );
         new FpUsers(
-            new FakeEndpoint(
-                new FakeRoute(
-                    new ExactPathMatcher("/api/v1/users/user-1"),
-                    ""
-                )
-            ),
+            new FpEndpoint("http://127.0.0.1:10001"),
             new FakeAccessToken("fake token")
         ).deleteUnverified("user-1");
     }

@@ -28,11 +28,18 @@ public final class FpCategorizationResult implements CategorizationResult {
     private final Endpoint endpoint;
     private final AccessToken token;
     private final JSONObject origin;
+    private final String url;
 
-    public FpCategorizationResult(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpCategorizationResult(
+        final Endpoint endpoint,
+        final AccessToken token,
+        final JSONObject origin,
+        final String url
+    ) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;
+        this.url = url;
     }
 
     @Override
@@ -45,7 +52,7 @@ public final class FpCategorizationResult implements CategorizationResult {
         return new OptionalOf<Category>(
             this.origin,
             "category",
-            (json, name) -> new FpCategory(this.endpoint, this.token, json)
+            (json, name) -> new FpCategory(this.endpoint, this.token, json.getJSONObject(name), this.url)
         ).get();
     }
 }

@@ -30,7 +30,7 @@ public final class FpNotificationRules implements NotificationRules {
     private final String url;
 
     public FpNotificationRules(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/notificationRules/");
+        this(endpoint, token, "/api/v1/notificationRules");
     }
 
     public FpNotificationRules(final Endpoint endpoint, final AccessToken token, final String url) {
@@ -45,7 +45,7 @@ public final class FpNotificationRules implements NotificationRules {
             this.endpoint,
             this.token,
             new JSONObject(
-                this.endpoint.get(this.url + id, this.token)
+                this.endpoint.get(this.url + '/' + id, this.token)
             ),
             this.url
         );
@@ -72,7 +72,7 @@ public final class FpNotificationRules implements NotificationRules {
             this.endpoint,
             this.token,
             new JSONObject(
-                this.endpoint.post(this.url, this.token, parameters)
+                this.endpoint.post(this.url, this.token, parameters, 201)
             ),
             this.url
         );

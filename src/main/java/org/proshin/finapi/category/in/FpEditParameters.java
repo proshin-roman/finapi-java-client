@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roman Proshin
+ * Copyright 2019 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.account.out;
+package org.proshin.finapi.category.in;
 
-import org.proshin.finapi.account.in.DirectDebitParameters;
+import org.json.JSONObject;
+import org.proshin.finapi.Jsonable;
 
-public interface DirectDebit {
+public class FpEditParameters implements Jsonable {
 
-    SepaRequestingResponse request(final DirectDebitParameters parameters);
+    private final JSONObject origin;
 
-    SepaExecutingResponse execute(Long account, String bankingTan);
+    public FpEditParameters(final String name) {
+        this(new JSONObject().put("name", name));
+    }
+
+    public FpEditParameters(final JSONObject origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public JSONObject asJson() {
+        return this.origin;
+    }
 }

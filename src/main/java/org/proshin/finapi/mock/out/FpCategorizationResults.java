@@ -25,18 +25,30 @@ public final class FpCategorizationResults implements CategorizationResults {
     private final Endpoint endpoint;
     private final AccessToken token;
     private final JSONObject origin;
+    private final String url;
 
-    public FpCategorizationResults(final Endpoint endpoint, final AccessToken token, final JSONObject origin) {
+    public FpCategorizationResults(
+        final Endpoint endpoint,
+        final AccessToken token,
+        final JSONObject origin,
+        final String url
+    ) {
         this.endpoint = endpoint;
         this.token = token;
         this.origin = origin;
+        this.url = url;
     }
 
     @Override
     public Iterable<CategorizationResult> results() {
         return new IterableJsonArray<>(
             this.origin.getJSONArray("categorizationCheckResult"),
-            (array, index) -> new FpCategorizationResult(this.endpoint, this.token, array.getJSONObject(index))
+            (array, index) -> new FpCategorizationResult(
+                this.endpoint,
+                this.token,
+                array.getJSONObject(index),
+                this.url
+            )
         );
     }
 }

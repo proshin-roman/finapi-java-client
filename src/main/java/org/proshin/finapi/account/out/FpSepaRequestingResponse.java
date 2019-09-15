@@ -42,6 +42,11 @@ public final class FpSepaRequestingResponse implements SepaRequestingResponse {
     }
 
     @Override
+    public Long paymentId() {
+        return this.origin.getLong("paymentId");
+    }
+
+    @Override
     public Optional<String> challengeMessage() {
         return new OptionalStringOf(this.origin, "challengeMessage").get();
     }

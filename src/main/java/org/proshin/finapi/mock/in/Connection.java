@@ -16,6 +16,7 @@
 package org.proshin.finapi.mock.in;
 
 import java.util.function.Supplier;
+import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Mapped;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
@@ -32,7 +33,7 @@ public final class Connection implements Jsonable {
         this(() -> new JSONObject()
             .put("bankConnectionId", connection)
             .put("simulateBankLoginError", simulateBankLoginError)
-            .put("mockAccountsData", new Mapped<>(Jsonable::asJson, accounts))
+            .put("mockAccountsData", new CollectionOf<>(new Mapped<>(Jsonable::asJson, accounts)))
         );
     }
 

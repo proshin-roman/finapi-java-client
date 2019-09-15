@@ -16,6 +16,7 @@
 package org.proshin.finapi.category;
 
 import java.util.Optional;
+import org.proshin.finapi.category.in.FpEditParameters;
 
 public interface Category {
 
@@ -30,6 +31,8 @@ public interface Category {
     boolean isCustom();
 
     Iterable<Long> children();
+
+    Category edit(FpEditParameters parameters);
 
     void delete();
 }

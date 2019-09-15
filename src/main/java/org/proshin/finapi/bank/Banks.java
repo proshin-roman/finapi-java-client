@@ -18,9 +18,6 @@ package org.proshin.finapi.bank;
 import org.proshin.finapi.bank.in.BanksCriteria;
 import org.proshin.finapi.primitives.paging.Page;
 
-/**
- * @todo #14 Write tests for FpBank/FpBanks classes.
- */
 public interface Banks {
 
     Bank one(Long id);

@@ -15,24 +15,26 @@
  */
 package org.proshin.finapi.mandator.out;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public interface User {
 
     String id();
 
-    OffsetDateTime registrationDate();
+    LocalDate registrationDate();
 
-    Optional<OffsetDateTime> deletionDate();
+    Optional<LocalDate> deletionDate();
 
-    Optional<OffsetDateTime> lastActiveDate();
+    Optional<LocalDate> lastActiveDate();
 
     int bankConnectionCount();
 
-    Optional<OffsetDateTime> latestBankConnectionImportDate();
+    Optional<LocalDate> latestBankConnectionImportDate();
 
-    Optional<OffsetDateTime> latestBankConnectionDeletionDate();
+    Optional<LocalDate> latestBankConnectionDeletionDate();
 
     Iterable<MonthlyUserStats> monthlyUserStats();
+
+    boolean isLocked();
 }

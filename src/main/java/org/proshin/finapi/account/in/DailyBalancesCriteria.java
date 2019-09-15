@@ -51,7 +51,7 @@ public final class DailyBalancesCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
-    public DailyBalancesCriteria withProjection() {
+    public DailyBalancesCriteria withoutProjection() {
         this.pairs.add(new UrlEncodedPair("withProjection", false));
         return this;
     }

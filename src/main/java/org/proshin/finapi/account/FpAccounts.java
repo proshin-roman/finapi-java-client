@@ -20,15 +20,10 @@ import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.account.in.DailyBalancesCriteria;
 import org.proshin.finapi.account.in.FpQueryCriteria;
 import org.proshin.finapi.account.out.DailyBalances;
-import org.proshin.finapi.account.out.DirectDebit;
 import org.proshin.finapi.account.out.FpDailyBalances;
-import org.proshin.finapi.account.out.FpDirectDebit;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
 
-/**
- * @todo #21 Write unit tests for FpAccounts
- */
 public final class FpAccounts implements Accounts {
 
     private final Endpoint endpoint;
@@ -36,7 +31,7 @@ public final class FpAccounts implements Accounts {
     private final String url;
 
     public FpAccounts(final Endpoint endpoint, final AccessToken token) {
-        this(endpoint, token, "/api/v1/accounts/");
+        this(endpoint, token, "/api/v1/accounts");
     }
 
     public FpAccounts(final Endpoint endpoint, final AccessToken token, final String url) {
@@ -51,7 +46,7 @@ public final class FpAccounts implements Accounts {
             this.endpoint,
             this.token,
             new JSONObject(
-                this.endpoint.get(this.url + id, this.token)
+                this.endpoint.get(this.url + '/' + id, this.token)
             ),
             this.url
         );
@@ -80,7 +75,7 @@ public final class FpAccounts implements Accounts {
     public DailyBalances dailyBalances(final DailyBalancesCriteria criteria) {
         return new FpDailyBalances(
             new JSONObject(
-                this.endpoint.get(this.url + "dailyBalances", this.token, criteria)
+                this.endpoint.get(this.url + "/dailyBalances", this.token, criteria)
             )
         );
     }

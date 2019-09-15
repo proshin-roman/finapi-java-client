@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.61.0",
+        "version": "v1.73.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -36,6 +36,9 @@
         },
         {
             "name": "Notification Rules"
+        },
+        {
+            "name": "Payments"
         },
         {
             "name": "Securities"
@@ -229,13 +232,13 @@
                     "Accounts"
                 ],
                 "summary": "Get daily balances",
-                "description": "Returns the daily balances for the given accounts and the given period. The balances are calculated by finAPI and are based on each account's latest balance.",
+                "description": "Returns the user's daily balances for a given period and a set of specified accounts (or all accounts, if none are specified). The daily balances are calculated by finAPI and are based on the current balances of the regarded accounts.",
                 "operationId": "getDailyBalances",
                 "parameters": [
                     {
                         "name": "accountIds",
                         "in": "query",
-                        "description": "A comma-separated list of (non-security) account identifiers. If no accounts are specified, all (non-security) accounts of the current user are regarded.",
+                        "description": "A comma-separated list of (non-security) account identifiers. If no accounts are specified, all (non-security) accounts of the user are regarded.",
                         "required": false,
                         "type": "array",
                         "items": {
@@ -261,7 +264,7 @@
                     {
                         "name": "withProjection",
                         "in": "query",
-                        "description": "Whether finAPI should project the first and last actually existing balance into the past and future. When passing 'true', then the result will always contain a daily balance for every day of the entire requested date range, even for days before the first actually existing balance, resp. after the last actually existing balance. Those days will have the same balance as the day of the first actual balance, resp. last actual balance, i.e. the first/last balance will be infinitely projected into the past/the future. When passing 'false', then the result will contain daily balances only from the day on where the first actual balance exists for any of the given accounts, and only up to the day where the last actual balance exists for any of the given accounts. Note that when in this case there are no actual balances within the requested date range, then an empty array will be returned. Default value for this parameter is 'true'.",
+                        "description": "Whether finAPI should project the first and last actually existing balance of an account into the past and future. When passing 'true', then the result will always contain a daily balance for every day of the entire requested date range, even for days before the first actually existing balance, resp. after the last actually existing balance. Those days will have the same balance as the day of the first actual balance, resp. last actual balance, i.e. the first/last balance will be infinitely projected into the past/the future. When passing 'false', then the result will contain daily balances only from the day on where the first actual balance exists for any of the regarded accounts, and only up to the day where the last actual balance exists for any of the regarded accounts. Note that when in this case there are no actual balances within the requested date range, then an empty array will be returned. Default value for this parameter is 'true'.",
                         "required": false,
                         "type": "boolean",
                         "default": true
@@ -360,7 +363,7 @@
                     "Accounts"
                 ],
                 "summary": "Execute SEPA Direct Debit",
-                "description": "Execute a SEPA direct debit order that has been previously submitted by the use of the /requestSepaDirectDebit service.<br/><br/>Note: in case of using finAPI's web form flow, the web form is dealing with triggering this service itself.",
+                "description": "Execute a SEPA direct debit order that has been previously submitted by the use of the /requestSepaDirectDebit service.<br/><br/>Note: in case of using finAPI's web form flow, the web form is dealing with triggering this service itself.<br/><br/>Note that this service only works when your client has payments enabled (see client configuration).",
                 "operationId": "executeSepaDirectDebit",
                 "parameters": [
                     {
@@ -377,7 +380,7 @@
                     "200": {
                         "description": "Response for the SEPA Direct Debit execute",
                         "schema": {
-                            "$ref": "#/definitions/BankResponse"
+                            "$ref": "#/definitions/PaymentExecutionResponse"
                         }
                     },
                     "400": {
@@ -393,7 +396,7 @@
                         }
                     },
                     "403": {
-                        "description": "Incorrect authorization role",
+                        "description": "Incorrect authorization role or your client does not have payments enabled (see client configuration)",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -407,7 +410,7 @@
                     "422": {
                         "description": "ILLEGAL_ENTITY_STATE if no pending SEPA direct debit order exists for the account; BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to execute the direct debit order. The response's error message can be forwarded to the user, it will typically contain a german message from the bank server that contains useful information.",
                         "schema": {
-                            "$ref": "#/definitions/BankResponse"
+                            "$ref": "#/definitions/ErrorMessage"
                         }
                     },
                     "423": {
@@ -441,7 +444,7 @@
                     "Accounts"
                 ],
                 "summary": "Execute SEPA Money Transfer",
-                "description": "Execute a SEPA money transfer order that has been previously submitted by the use of the /requestSepaMoneyTransfer service.<br/><br/>Note: in case of using finAPI's web form flow, the web form is dealing with triggering this service itself.",
+                "description": "Execute a SEPA money transfer order that has been previously submitted by the use of the /requestSepaMoneyTransfer service.<br/><br/>Note: in case of using finAPI's web form flow, the web form is dealing with triggering this service itself.<br/><br/>Note that this service only works when your client has payments enabled (see client configuration).",
                 "operationId": "executeSepaMoneyTransfer",
                 "parameters": [
                     {
@@ -458,7 +461,7 @@
                     "200": {
                         "description": "Response for the SEPA Money Transfer execute",
                         "schema": {
-                            "$ref": "#/definitions/BankResponse"
+                            "$ref": "#/definitions/PaymentExecutionResponse"
                         }
                     },
                     "400": {
@@ -474,7 +477,7 @@
                         }
                     },
                     "403": {
-                        "description": "Incorrect authorization role",
+                        "description": "Incorrect authorization role or your client does not have payments enabled (see client configuration)",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -488,7 +491,7 @@
                     "422": {
                         "description": "ILLEGAL_ENTITY_STATE if no pending SEPA money transfer order exists for the account; BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to execute the money transfer order. The response's error message can be forwarded to the user, it will typically contain a german message from the bank server that contains useful information.",
                         "schema": {
-                            "$ref": "#/definitions/BankResponse"
+                            "$ref": "#/definitions/ErrorMessage"
                         }
                     },
                     "423": {
@@ -522,7 +525,7 @@
                     "Accounts"
                 ],
                 "summary": "Request SEPA Direct Debit",
-                "description": "Submit a SEPA direct debit order for one or multiple direct debits. Returns an instruction from the bank server that can be displayed to the user (e.g. \"Enter TAN\"), typically in the language of the bank's country. The order remains valid for execution for only a couple of minutes (the exact validity period depends on the bank). For executing the order, use the /executeSepaDirectDebit service after calling this service. Note that when the order is not executed within the validity period, the bank might take note of that and - if happening too often - ultimately lock the user's online banking access. If there already exists a previously submitted but not yet executed SEPA order for this account (either another direct debit order, or a money transfer order), then that order will be discarded and replaced with the new order that is being created with this service call.<br/><br/>Notes:<br/>&bull; When using a two-step-procedure with flag 'implicitExecute' = true, then this service will immediately execute the direct debit. The response will not contain any challenge message and you won't be required to make a subsequent call to /executeSepaDirectDebit.<br/><br/>NOTE: Depending on your license, this service may respond with HTTP code 451, containing an error message with a identifier of web form in it. In addition to that the response will also have included a 'Location' header, which contains the URL to the web form. In this case, you must forward your user to finAPI's web form. For a detailed explanation of the Web Form Flow, please refer to this article: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's Web Form Flow</a>",
+                "description": "Submit a SEPA direct debit order for one or multiple direct debits. Returns an instruction from the bank server that can be displayed to the user (e.g. \"Enter TAN\"), typically in the language of the bank's country. The order remains valid for execution for only a couple of minutes (the exact validity period depends on the bank). For executing the order, use the /executeSepaDirectDebit service after calling this service. Note that when the order is not executed within the validity period, the bank might take note of that and - if happening too often - ultimately lock the user's online banking access. If there already exists a previously submitted but not yet executed SEPA order for this account (either another direct debit order, or a money transfer order), then that order will be discarded and replaced with the new order that is being created with this service call.<br/><br/>Notes:<br/>&bull; When using a two-step-procedure with flag 'implicitExecute' = true, then this service will immediately execute the direct debit. The response will not contain any challenge message and you won't be required to make a subsequent call to /executeSepaDirectDebit.<br/><br/>NOTE: Depending on your license, this service may respond with HTTP code 451, containing an error message with a identifier of web form in it. In addition to that the response will also have included a 'Location' header, which contains the URL to the web form. In this case, you must forward your user to finAPI's web form. For a detailed explanation of the Web Form Flow, please refer to this article: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's Web Form Flow</a><br/><br/>Note that this service only works when your client has payments enabled (see client configuration).",
                 "operationId": "requestSepaDirectDebit",
                 "parameters": [
                     {
@@ -555,7 +558,7 @@
                         }
                     },
                     "403": {
-                        "description": "Incorrect authorization role",
+                        "description": "Incorrect authorization role or your client does not have payments enabled (see client configuration)",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -567,7 +570,7 @@
                         }
                     },
                     "422": {
-                        "description": "ILLEGAL_FIELD_VALUE if SEPA purpose code is specified incorrectly;<br/>ILLEGAL_ENTITY_STATE if no PIN has been specified and finAPI has no PIN stored for the account's bank connection;<br/>UNSUPPORTED_ORDER if the account does not support the requested order. Check the account's 'supportedOrders' field for available orders;<br/>IBAN_ONLY_DIRECT_DEBIT_NOT_SUPPORTED if the debitor account's BIC is required but was not set (see Bank Connection resource to find out whether the BIC is required or not);<br/>MISSING_TWO_STEP_PROCEDURE if no two-step-procedure was specified in the input parameters of the service call, and there is no default two-step-procedure set in the account's bank connection neither;<br/>INVALID_TWO_STEP_PROCEDURE if the given two-step-procedure does not match any of the procedures that are listed in the account's bank connection;<br/>BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to submit the direct debit order. The response's error message can be forwarded to the user, as it will typically contain a german message from the bank server that contains  useful information for the user.",
+                        "description": "ILLEGAL_FIELD_VALUE if SEPA purpose code is specified incorrectly;<br/>ILLEGAL_ENTITY_STATE if no PIN has been specified and finAPI has no PIN stored for the account's bank connection or if the account used for the request is DEPRECATED/not found on bank side;<br/>UNSUPPORTED_ORDER if the account does not support the requested order. Check the account's 'supportedOrders' field for available orders;<br/>IBAN_ONLY_DIRECT_DEBIT_NOT_SUPPORTED if the debitor account's BIC is required but was not set (see Bank Connection resource to find out whether the BIC is required or not);<br/>MISSING_TWO_STEP_PROCEDURE if no two-step-procedure was specified in the input parameters of the service call, and there is no default two-step-procedure set in the account's bank connection neither;<br/>INVALID_TWO_STEP_PROCEDURE if the given two-step-procedure does not match any of the procedures that are listed in the account's bank connection;<br/>BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to submit the direct debit order. The response's error message can be forwarded to the user, as it will typically contain a german message from the bank server that contains  useful information for the user.",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -615,7 +618,7 @@
                     "Accounts"
                 ],
                 "summary": "Request SEPA Money Transfer",
-                "description": "Submit a SEPA money transfer order for either a single or a collective money transfer. Returns an instruction from the bank server that can be displayed to the user (e.g. \"Enter TAN\"), typically in the language of the bank's country. The order remains valid for execution for only a couple of minutes (the exact validity period depends on the bank). For executing the order, use the /executeSepaMoneyTransfer service after calling this service. Note that when the order is not executed within the validity period, the bank might take note of that and - if happening too often - ultimately lock the user's online banking access. If there already exists a previously submitted but not yet executed SEPA order for this account (either another money transfer order, or a direct debit order), then that order will be discarded and replaced with the new order that is being created with this service call.<br/><br/>Notes:<br/>&bull; Some banks may require a multi-step authentication, in which case the service will respond with HTTP code 510 and an error message containing a challenge for the user from the bank. You must display the challenge message to the user, and then retry the service call, passing the user's answer to the bank's challenge in the 'challengeResponse' field.<br/>&bull; When using a two-step-procedure with flag 'implicitExecute' = true, then this service will immediately execute the money transfer. The response will not contain any challenge message and you won't be required to make a subsequent call to /executeSepaMoneyTransfer.<br/><br/>NOTE: Depending on your license, this service may respond with HTTP code 451, containing an error message with a identifier of web form in it. In addition to that the response will also have included a 'Location' header, which contains the URL to the web form. In this case, you must forward your user to finAPI's web form. For a detailed explanation of the Web Form Flow, please refer to this article: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's Web Form Flow</a>",
+                "description": "Submit a SEPA money transfer order for either a single or a collective money transfer. Returns an instruction from the bank server that can be displayed to the user (e.g. \"Enter TAN\"), typically in the language of the bank's country. The order remains valid for execution for only a couple of minutes (the exact validity period depends on the bank). For executing the order, use the /executeSepaMoneyTransfer service after calling this service. Note that when the order is not executed within the validity period, the bank might take note of that and - if happening too often - ultimately lock the user's online banking access. If there already exists a previously submitted but not yet executed SEPA order for this account (either another money transfer order, or a direct debit order), then that order will be discarded and replaced with the new order that is being created with this service call.<br/><br/>Notes:<br/>&bull; Some banks may require a multi-step authentication, in which case the service will respond with HTTP code 510 and an error message containing a challenge for the user from the bank. You must display the challenge message to the user, and then retry the service call, passing the user's answer to the bank's challenge in the 'challengeResponse' field.<br/>&bull; When using a two-step-procedure with flag 'implicitExecute' = true, then this service will immediately execute the money transfer. The response will not contain any challenge message and you won't be required to make a subsequent call to /executeSepaMoneyTransfer.<br/><br/>NOTE: Depending on your license, this service may respond with HTTP code 451, containing an error message with a identifier of web form in it. In addition to that the response will also have included a 'Location' header, which contains the URL to the web form. In this case, you must forward your user to finAPI's web form. For a detailed explanation of the Web Form Flow, please refer to this article: <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's Web Form Flow</a><br/><br/>Note that this service only works when your client has payments enabled (see client configuration).",
                 "operationId": "requestSepaMoneyTransfer",
                 "parameters": [
                     {
@@ -648,7 +651,7 @@
                         }
                     },
                     "403": {
-                        "description": "Incorrect authorization role",
+                        "description": "Incorrect authorization role or your client does not have payments enabled (see client configuration)",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -660,7 +663,7 @@
                         }
                     },
                     "422": {
-                        "description": "ILLEGAL_ENTITY_STATE if no PIN has been specified and finAPI has no PIN stored for the account's bank connection;<br/>UNSUPPORTED_ORDER if the account does not support the requested order. Check the account's 'supportedOrders' field for available orders;<br/>IBAN_ONLY_MONEY_TRANSFER_NOT_SUPPORTED if the recipient account's BIC is required but was not set (see Bank Connection resource to find out whether the BIC is required or not);<br/>COLLECTIVE_MONEY_TRANSFER_NOT_SUPPORTED - DEPRECATED! This code will never be returned. If a collective money transfer request was submitted but the account does not support collective money transfers, then the service will return with the code UNSUPPORTED_ORDER;<br/>MISSING_TWO_STEP_PROCEDURE if no two-step-procedure was specified in the input parameters of the service call, and there is no default two-step-procedure set in the account's bank connection either;<br/>INVALID_TWO_STEP_PROCEDURE if the given two-step-procedure does not match any of the procedures that are listed in the account's bank connection;<br/>BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to submit the money transfer order. The response's error message can be forwarded to the user, as it will typically contain a german message from the bank server that contains  useful information for the user;<br/>ILLEGAL_FIELD_VALUE if recipient IBAN/Name or clearing account id is not specified or specified incorrectly; if SEPA purpose code is specified incorrectly",
+                        "description": "ILLEGAL_ENTITY_STATE if no PIN has been specified and finAPI has no PIN stored for the account's bank connection or if the account used for the request is DEPRECATED/not found on bank side;<br/>UNSUPPORTED_ORDER if the account does not support the requested order. Check the account's 'supportedOrders' field for available orders;<br/>IBAN_ONLY_MONEY_TRANSFER_NOT_SUPPORTED if the recipient account's BIC is required but was not set (see Bank Connection resource to find out whether the BIC is required or not);<br/>COLLECTIVE_MONEY_TRANSFER_NOT_SUPPORTED - DEPRECATED! This code will never be returned. If a collective money transfer request was submitted but the account does not support collective money transfers, then the service will return with the code UNSUPPORTED_ORDER;<br/>MISSING_TWO_STEP_PROCEDURE if no two-step-procedure was specified in the input parameters of the service call, and there is no default two-step-procedure set in the account's bank connection either;<br/>INVALID_TWO_STEP_PROCEDURE if the given two-step-procedure does not match any of the procedures that are listed in the account's bank connection;<br/>BANK_SERVER_REJECTION if the bank server responded with an error message when finAPI tried to submit the money transfer order. The response's error message can be forwarded to the user, as it will typically contain a german message from the bank server that contains  useful information for the user;<br/>ILLEGAL_FIELD_VALUE if recipient IBAN/Name or clearing account id is not specified or specified incorrectly; if SEPA purpose code is specified incorrectly",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -2096,7 +2099,7 @@
                     }
                 ],
                 "x-finapi": {
-                    "order": "8"
+                    "order": "9"
                 }
             }
         },
@@ -2245,7 +2248,7 @@
                     {
                         "name": "includeSubCashFlows",
                         "in": "query",
-                        "description": "If it is true, then the income, spending and balance of a main category results from all transactions that have either this (main) category or any of its subcategories assigned (of course all transactions depends from the other filtering settings); If it is false, then the income, spending and balance of a main category only results from the transactions that have exactly this (main) category assigned. Default value for this parameter is 'true'.",
+                        "description": "If it is true, then the income, spending, balance and count of transactions of a main category results from all transactions that have either this (main) category or any of its subcategories assigned (of course all transactions depends from the other filtering settings); If it is false, then the income, spending, balance and count of transactions of a main category only results from the transactions that have exactly this (main) category assigned. Default value for this parameter is 'true'.",
                         "required": false,
                         "type": "boolean",
                         "default": true
@@ -2569,6 +2572,88 @@
                     },
                     "422": {
                         "description": "Category cannot be deleted",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "An unexpected error occurred",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "finapi_auth": [
+                            "all"
+                        ]
+                    }
+                ],
+                "x-finapi": {
+                    "order": "8"
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Edit a category",
+                "description": "Change the name of a custom transaction category belonging to the authorized user. Must pass the user's access_token.",
+                "operationId": "editCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier of the category to edit",
+                        "required": true,
+                        "type": "integer",
+                        "pattern": "[\\d]+",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "New category name",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/EditCategoryParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Edited transaction category",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Not authenticated or invalid access_token",
+                        "schema": {
+                            "$ref": "#/definitions/BadCredentialsError"
+                        }
+                    },
+                    "403": {
+                        "description": "Incorrect authorization role",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "422": {
+                        "description": "Category cannot be edited",
                         "schema": {
                             "$ref": "#/definitions/ErrorMessage"
                         }
@@ -3281,7 +3366,7 @@
                     "Mandator Administration"
                 ],
                 "summary": "Delete users",
-                "description": "Delete one or several users, which are specified by a given list of identifiers. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token. <br/><br/><b>NOTE</b>: finAPI may fail to delete one (or several, or all) of the specified users. A user cannot get deleted when his data is currently locked by an internal process (for instance, update of a bank connection or transactions categorization). The response contains the identifiers of all users that could not get deleted, and all users that could get deleted, separated in two lists. The mandator admin client can retry the request at a later time for the users who could not get deleted.",
+                "description": "Delete one or several users, which are specified by a given list of identifiers. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token. <br/><br/><b>NOTE</b>: finAPI may fail to delete one (or several, or all) of the specified users. A user cannot get deleted when his data is currently locked by an internal process (for instance, update of a bank connection or transactions categorization). The response contains the identifiers of all users that could not get deleted, and all users that could get deleted, separated in two lists. The mandator admin client can retry the request at a later time for the users who could not get deleted.<br/> Note that non-existing user identifiers will be ignored entirely, meaning that those identifiers will not appear in the response at all.",
                 "operationId": "deleteUsers",
                 "parameters": [
                     {
@@ -3424,6 +3509,13 @@
                         "name": "isDeleted",
                         "in": "query",
                         "description": "If NOT specified, then the service will regard both active and deleted users in the search. If set to 'true', then ONLY deleted users will be regarded. If set to 'false', then ONLY active users will be regarded.",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "isLocked",
+                        "in": "query",
+                        "description": "If NOT specified, then the service will regard both locked and not locked users in the search. If set to 'true', then ONLY locked users will be regarded. If set to 'false', then ONLY not locked users will be regarded.",
                         "required": false,
                         "type": "boolean"
                     },
@@ -4276,6 +4368,129 @@
                 ],
                 "x-finapi": {
                     "order": "4"
+                }
+            }
+        },
+        "/api/v1/payments": {
+            "get": {
+                "tags": [
+                    "Payments"
+                ],
+                "summary": "Get payments",
+                "description": "Get payments of the user that is authorized by the access_token. <p>Note: For requesting / executing payments, please refer to the 'Accounts' section of the API.</p>",
+                "operationId": "getPayments",
+                "parameters": [
+                    {
+                        "name": "ids",
+                        "in": "query",
+                        "description": "A comma-separated list of payment identifiers. If specified, then only payments whose identifier is matching any of the given identifiers will be regarded. The maximum number of identifiers is 1000.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "accountIds",
+                        "in": "query",
+                        "description": "A comma-separated list of account identifiers. If specified, then only payments that relate to the given account(s) will be regarded. The maximum number of identifiers is 1000.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    {
+                        "name": "minAmount",
+                        "in": "query",
+                        "description": "If specified, then only those payments are regarded whose (absolute) total amount is equal or greater than the given amount will be regarded. The value must be a positive (absolute) amount.",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "maxAmount",
+                        "in": "query",
+                        "description": "If specified, then only those payments are regarded whose (absolute) total amount is equal or less than the given amount will be regarded. Value must be a positive (absolute) amount.",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Result page that you want to retrieve",
+                        "required": false,
+                        "type": "integer",
+                        "default": 1,
+                        "minimum": 1.0
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Maximum number of records per page. Can be at most 500. NOTE: Due to its validation and visualization, the swagger frontend might show very low performance, or even crashes, when a service responds with a lot of data. It is recommended to use a HTTP client like Postman or DHC instead of our swagger frontend for service calls with large page sizes.",
+                        "required": false,
+                        "type": "integer",
+                        "default": 20,
+                        "maximum": 500.0,
+                        "minimum": 1.0
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Determines the order of the results. You can use the following fields for ordering the response: 'id', 'amount', 'requestDate' and 'executionDate'. The default order for all services is 'id,asc'.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "default": "id,ASC"
+                        },
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of requested payments",
+                        "schema": {
+                            "$ref": "#/definitions/PageablePaymentResources"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication required",
+                        "schema": {
+                            "$ref": "#/definitions/BadCredentialsError"
+                        }
+                    },
+                    "403": {
+                        "description": "Incorrect authorization role",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected error occurred",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorMessage"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "finapi_auth": [
+                            "all"
+                        ]
+                    }
+                ],
+                "x-finapi": {
+                    "order": "1"
                 }
             }
         },
@@ -6521,25 +6736,25 @@
                 "token_type"
             ],
             "properties": {
-                "scope": {
-                    "type": "string",
-                    "example": "all",
-                    "description": "Requested scopes (it's always 'all')"
-                },
                 "token_type": {
                     "type": "string",
                     "example": "bearer",
                     "description": "Token type (it's always 'bearer')"
                 },
-                "access_token": {
+                "scope": {
                     "type": "string",
-                    "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
-                    "description": "Access token. Token has a length of up to 128 characters."
+                    "example": "all",
+                    "description": "Requested scopes (it's always 'all')"
                 },
                 "refresh_token": {
                     "type": "string",
                     "example": "0b9KjiBVlZLz7a4HshSAIcFuscStiXT1VzT5mgNYwCQ_dWctTDsaIjedAhD1LpsOFJ7x6K8Emf8M3VOQkwNFR9FHijALYSQw2UeRwAC2MvrOKwfF1dHmOq5VEVYEaGf6",
                     "description": "Refresh token. Only set in case of grant_type='password'. Token has a length of up to 128 characters."
+                },
+                "access_token": {
+                    "type": "string",
+                    "example": "yvMbx_TgwdYE0hgOVb8N4ZOvxOukqfjzYOGRZcJiCjQuRGkVIBfjjV3YG4zKTGiY2aPn2cQTGaQOT8uo5uo7_QOXts1s5UBSVuRHc6a8X30RrGBTyqV9h26SUHcZPNbZ",
+                    "description": "Access token. Token has a length of up to 128 characters."
                 },
                 "expires_in": {
                     "type": "integer",
@@ -6652,9 +6867,9 @@
                     "description": "Timestamp of when the account was last tried to be updated (or initially imported); more precisely: time when the update (or initial import) was triggered. The value is returned in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german time)."
                 },
                 "isNew": {
-                    "type": "boolean",
                     "description": "Indicating whether this account is 'new' or not. Any newly imported account will have this flag initially set to true, and remain so until you set it to false (see PATCH /accounts/<id>). How you use this field is up to your interpretation, however it is recommended to set the flag to false for all accounts right after the initial import of the bank connection. This way, you will be able recognize accounts that get newly imported during a later update of the bank connection, by checking for any accounts with the flag set to true right after an update.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "status": {
                     "type": "string",
@@ -6733,9 +6948,9 @@
                     "maximum": 7.0
                 },
                 "isNew": {
-                    "type": "boolean",
                     "description": "Whether this account should be flagged as 'new' or not. Any newly imported account will have this flag initially set to true, and remain so until you set it to false (see PATCH /accounts/<id>). How you use this field is up to your interpretation, however it is recommended to set the flag to false for all accounts right after the initial import of the bank connection. This way, you will be able recognize accounts that get newly imported during a later update of the bank connection, by checking for any accounts with the flag set to true after every update of the bank connection.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 }
             },
             "description": "Container for an account's name, type and 'isNew' flag'."
@@ -6766,6 +6981,7 @@
                 "blzs",
                 "health",
                 "id",
+                "isCustomerIdPassword",
                 "isSupported",
                 "isTestBank",
                 "name",
@@ -6823,10 +7039,15 @@
                     "example": "PIN",
                     "description": "Label for the PIN field, as it is called on the bank's website (mostly \"PIN\"). If this field is set (i.e. not null) then you should prompt your users to enter the required data in a text field which you can label with this field's value."
                 },
+                "isCustomerIdPassword": {
+                    "description": "Whether the banking customer ID has to be treated like a password. Certain banks require a second password (besides the PIN) for the user to login. In this case your application should use a password input field when prompting users for their credentials.",
+                    "example": false,
+                    "type": "boolean"
+                },
                 "isSupported": {
-                    "type": "boolean",
                     "description": "Whether this bank is supported by finAPI, i.e. whether you can import/update a bank connection of this bank.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "supportedDataSources": {
                     "type": "array",
@@ -6844,9 +7065,9 @@
                     }
                 },
                 "pinsAreVolatile": {
-                    "type": "boolean",
                     "description": "Whether the PINs that are used for authentication with the bank are volatile. If the PINs are volatile, it means that a PIN is usually valid only for a single authentication, and is then invalidated. If a bank uses volatile PINs, it is strongly inadvisable to store PINs in finAPI, as a stored PIN will not work for future authentications.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "location": {
                     "type": "string",
@@ -6859,9 +7080,9 @@
                     "description": "City that this bank is located in. Note that this field may not be set for some banks."
                 },
                 "isTestBank": {
-                    "type": "boolean",
                     "description": "If true, then this bank does not depict a real bank, but rather a testing endpoint provided by a bank or by finAPI. You probably want to regard these banks only during the development of your application, but not in production. You can filter out these banks in production by making sure that the 'isTestBank' parameter is always set to 'false' whenever your application is calling the 'Get and search all banks' service.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "popularity": {
                     "type": "integer",
@@ -6934,7 +7155,7 @@
                 "bankingCustomerId": {
                     "type": "string",
                     "example": "XXXXX",
-                    "description": "Stored online banking customer ID credential. Note that if your client has no license for processing banking credentials then a banking customer ID will always be 'XXXXX'."
+                    "description": "Stored online banking customer ID credential. Note that if your client has no license for processing banking credentials or if this field contains a value that requires password protection (see field ‘isCustomerIdPassword’ in Bank Resource) then the banking customer ID will always be 'XXXXX'."
                 },
                 "bankingPin": {
                     "type": "string",
@@ -6953,7 +7174,7 @@
                 "updateStatus": {
                     "type": "string",
                     "example": "READY",
-                    "description": "Current status of transactions download. The POST /bankConnections/import and POST /bankConnections/<id>/update services will set this flag to IN_PROGRESS before they return. Once the import or update has finished, the status will be changed to READY.",
+                    "description": "Current status of data download (account balances and transactions/securities). The POST /bankConnections/import and POST /bankConnections/<id>/update services will set this flag to IN_PROGRESS before they return. Once the import or update has finished, the status will be changed to READY.",
                     "enum": [
                         "IN_PROGRESS",
                         "READY"
@@ -6985,18 +7206,18 @@
                     }
                 },
                 "ibanOnlyMoneyTransferSupported": {
-                    "type": "boolean",
                     "description": "Whether this bank connection accepts money transfer requests where the recipient's account is defined just by the IBAN (without an additional BIC). This field is re-evaluated each time this bank connection is updated. See also: /accounts/requestSepaMoneyTransfer",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "ibanOnlyDirectDebitSupported": {
-                    "type": "boolean",
                     "description": "Whether this bank connection accepts direct debit requests where the debitor's account is defined just by the IBAN (without an additional BIC). This field is re-evaluated each time this bank connection is updated. See also: /accounts/requestSepaDirectDebit",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "collectiveMoneyTransferSupported": {
-                    "type": "boolean",
-                    "description": "<b>DEPRECATED! DO NOT USE THIS FIELD, AS IT IS UNRELIABLE. INSTEAD, REFER TO THE 'supportedOrders' FIELD IN THE ACCOUNT RESOURCE.</b><br/><br/>Whether this bank connection supports submitting collective money transfers. This field is re-evaluated each time this bank connection is updated. See also: /accounts/requestSepaMoneyTransfer"
+                    "description": "<b>DEPRECATED! DO NOT USE THIS FIELD, AS IT IS UNRELIABLE. INSTEAD, REFER TO THE 'supportedOrders' FIELD IN THE ACCOUNT RESOURCE.</b><br/><br/>Whether this bank connection supports submitting collective money transfers. This field is re-evaluated each time this bank connection is updated. See also: /accounts/requestSepaMoneyTransfer",
+                    "type": "boolean"
                 },
                 "defaultTwoStepProcedureId": {
                     "type": "string",
@@ -7119,26 +7340,13 @@
             },
             "description": "Container for data of multiple banks"
         },
-        "BankResponse": {
-            "type": "object",
-            "properties": {
-                "successMessage": {
-                    "type": "string",
-                    "example": "Auftrag ausgeführt.",
-                    "description": "Technical message from the bank server, confirming the success of the request. Typically, you would not want to present this message to the user. Note that this field may not be set. However if it is not set, it does not necessarily mean that there was an error in processing the request."
-                },
-                "warnMessage": {
-                    "type": "string",
-                    "example": "Auftrag konnte nicht ausgeführt werden.",
-                    "description": "In some cases, a bank server may accept the requested order, but return a warn message. This message may be of technical nature, but could also be of interest to the user."
-                }
-            },
-            "description": "Bank server's response to some request"
-        },
         "CashFlow": {
             "type": "object",
             "required": [
                 "balance",
+                "countAllTransactions",
+                "countIncomeTransactions",
+                "countSpendingTransactions",
                 "income",
                 "spending"
             ],
@@ -7161,6 +7369,24 @@
                     "type": "number",
                     "example": 100.0,
                     "description": "The calculated balance for the given category"
+                },
+                "countIncomeTransactions": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 5,
+                    "description": "The total count of income transactions for the given category"
+                },
+                "countSpendingTransactions": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 3,
+                    "description": "The total count of spending transactions for the given category"
+                },
+                "countAllTransactions": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 8,
+                    "description": "The total count of all transactions for the given category"
                 }
             },
             "description": "Cash flow"
@@ -7247,7 +7473,7 @@
                 },
                 "name": {
                     "type": "string",
-                    "example": "Restaurant / Cafe / Bar",
+                    "example": "Sport & Fitness",
                     "description": "Category name"
                 },
                 "parentId": {
@@ -7262,9 +7488,9 @@
                     "description": "Name of the parent category (if a parent category exists)"
                 },
                 "isCustom": {
-                    "type": "boolean",
                     "description": "Whether the category is a finAPI global category (in which case this field will be false), or the category was created by a user (in which case this field will be true)",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "children": {
                     "type": "array",
@@ -7306,7 +7532,7 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "example": "Restaurant / Cafe / Bar",
+                    "example": "Sport & Fitness",
                     "description": "Name of the category. Maximum length is 128.",
                     "pattern": "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
                 },
@@ -7421,8 +7647,7 @@
                 "mcCode": {
                     "type": "string",
                     "example": "5542",
-                    "description": "Merchant category code (for credit card transactions only). May only contain up to 4 digits. Default value: null.",
-                    "pattern": "[0-9]+"
+                    "description": "Merchant category code (for credit card transactions only). May only contain up to 4 digits. Default value: null."
                 },
                 "typeCodeZka": {
                     "type": "string",
@@ -7460,13 +7685,14 @@
                 "isUserAutoVerificationEnabled",
                 "isWebScrapingEnabled",
                 "maxUserLoginAttempts",
+                "paymentsEnabled",
                 "pinStorageAvailableInWebForm"
             ],
             "properties": {
                 "isAutomaticBatchUpdateEnabled": {
-                    "type": "boolean",
                     "description": "Whether finAPI performs a regular automatic update of your users' bank connections. To find out how the automatic batch update is configured for your client, i.e. which bank connections get updated, and at which time and interval, please contact your Sys-Admin. Note that even if the automatic batch update is enabled for your client, individual users can still disable the feature for their own bank connections.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "userNotificationCallbackUrl": {
                     "type": "string",
@@ -7503,19 +7729,19 @@
                     "description": "Number of consecutive failed login attempts of a user into his finAPI account that is allowed before finAPI locks the user's account. When a user's account is locked, finAPI will invalidate all user's tokens and it will deny any service call in the context of this user (i.e. any call to a service using one of the user's authorization tokens, as well as the service for requesting a new token for this user). To unlock a user's account, a new password must be set for the account by the client (see the services /users/requestPasswordChange and /users/executePasswordChange). Once a new password has been set, all services will be available again for this user and the user's failed login attempts counter is reset to 0. The user's failed login attempts counter is also reset whenever a new authorization token has been successfully retrieved, or whenever the user himself changes his password.<br/><br/>Note that when this field has a value of 0, it means that there is no limit for user login attempts, i.e. finAPI will never lock user accounts."
                 },
                 "isUserAutoVerificationEnabled": {
-                    "type": "boolean",
                     "description": "Whether users that are created with this client are automatically verified on creation. If this field is set to 'false', then any user that is created with this client must first be verified with the \"Verify a user\" service before he can be authorized. If the field is 'true', then no verification is required by the client and the user can be authorized immediately after creation.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "isMandatorAdmin": {
-                    "type": "boolean",
                     "description": "Whether this client is a 'Mandator Admin'. Mandator Admins are special clients that can access the 'Mandator Administration' section of finAPI. If you do not yet have credentials for a Mandator Admin, please contact us at support@finapi.io. For further information, please refer to <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>this article</a> on our Dev Portal.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "isWebScrapingEnabled": {
-                    "type": "boolean",
                     "description": "Whether finAPI is allowed to use web scrapers for data download. If this field is set to 'true', then finAPI might download data from the online banking websites of banks (either in addition to using the FinTS interface, or as the sole data source for the download). If this field is set to 'false', then finAPI will not use any web scrapers and instead download data only from FinTS servers. For banks where no FinTS interface is available, finAPI will not allow any data download at all if web scraping is disabled for your client. Please contact your Sys-Admin if you want to change this setting.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "availableBankGroups": {
                     "type": "array",
@@ -7535,9 +7761,14 @@
                     "description": "Application name. When an application name is set (e.g. \"My App\"), then <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's web form</a> will display a text to the user \"Weiterleitung auf finAPI von ...\" (e.g. \"Weiterleitung auf finAPI von MyApp\")."
                 },
                 "pinStorageAvailableInWebForm": {
-                    "type": "boolean",
                     "description": "Whether <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's web form</a> will provide a checkbox for the user allowing him to choose whether to store his banking PIN in finAPI. If this field is set to false, then the user won't have an option to store his PIN.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
+                },
+                "paymentsEnabled": {
+                    "description": "Whether this client is allowed to do payments",
+                    "example": true,
+                    "type": "boolean"
                 }
             },
             "description": "Client configuration parameters"
@@ -7574,9 +7805,9 @@
                     "description": "The validity period that newly requested access tokens for clients initially have (in seconds). The value must be greater than or equal to 60, or 0. A value of 0 means that the tokens never expire."
                 },
                 "isPinStorageAvailableInWebForm": {
-                    "type": "boolean",
                     "description": "Whether <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's web form</a> should provide a checkbox for the user allowing him to choose whether to store his banking PIN in finAPI. If this field is set to false, then the user won't have an option to store his PIN.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "applicationName": {
                     "type": "string",
@@ -7604,17 +7835,17 @@
                 "balance": {
                     "type": "number",
                     "example": 999.0,
-                    "description": "Calculated account balance at the end of the given day."
+                    "description": "Calculated balance at the end of day (aggregation of all regarded accounts)."
                 },
                 "income": {
                     "type": "number",
                     "example": 99.99,
-                    "description": "The sum of income of the given day."
+                    "description": "The sum of income of the given day (aggregation of all regarded accounts)."
                 },
                 "spending": {
                     "type": "number",
                     "example": -99.99,
-                    "description": "The sum of spending of the given day."
+                    "description": "The sum of spending of the given day (aggregation of all regarded accounts)."
                 },
                 "transactions": {
                     "type": "array",
@@ -7642,11 +7873,11 @@
                 "latestCommonBalanceTimestamp": {
                     "type": "string",
                     "example": "2018-01-01 00:00:00.000",
-                    "description": "The latestCommonBalanceTimestamp is the latest timestamp at which all given accounts have been up to date. Only balances with their date being smaller than the latestCommonBalanceTimestamp are reliable. Example: A user has two accounts: A (last update today, so balance from today) and B (last update yesterday, so balance from yesterday). The service /accounts/dailyBalances will return a balance for yesterday and for today, with the info latestCommonBalanceTimestamp=yesterday. Since account B might have received transactions this morning, today's balance might be wrong. So either make sure that all selected accounts are up to date before calling this service, or use the results carefully in combination with the latestCommonBalanceTimestamp. The format is 'YYYY-MM-DD HH:MM:SS.SSS' (german time)."
+                    "description": "The latestCommonBalanceTimestamp is the latest timestamp at which all regarded  accounts have been up to date. Only balances with their date being smaller than the latestCommonBalanceTimestamp are reliable. Example: A user has two accounts: A (last update today, so balance from today) and B (last update yesterday, so balance from yesterday). The service /accounts/dailyBalances will return a balance for yesterday and for today, with the info latestCommonBalanceTimestamp=yesterday. Since account B might have received transactions this morning, today's balance might be wrong. So either make sure that all regarded accounts are up to date before calling this service, or use the results carefully in combination with the latestCommonBalanceTimestamp. The format is 'YYYY-MM-DD HH:MM:SS.SSS' (german time)."
                 },
                 "dailyBalances": {
                     "type": "array",
-                    "description": "List of daily balances for specified accounts and dates range",
+                    "description": "List of daily balances for the requested period and account(s)",
                     "items": {
                         "$ref": "#/definitions/DailyBalance"
                     }
@@ -7660,6 +7891,9 @@
         },
         "DirectDebitOrderingResponse": {
             "type": "object",
+            "required": [
+                "paymentId"
+            ],
             "properties": {
                 "successMessage": {
                     "type": "string",
@@ -7668,8 +7902,14 @@
                 },
                 "warnMessage": {
                     "type": "string",
-                    "example": "Auftrag konnte nicht ausgeführt werden.",
+                    "example": "Es liegen Warnungen vor.",
                     "description": "In some cases, a bank server may accept the requested order, but return a warn message. This message may be of technical nature, but could also be of interest to the user."
+                },
+                "paymentId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1,
+                    "description": "Payment identifier. Can be used to retrieve the status of the payment (see 'Get payments' service)."
                 },
                 "challengeMessage": {
                     "type": "string",
@@ -7734,6 +7974,21 @@
                 }
             },
             "description": "Container for bank connection edit params"
+        },
+        "EditCategoryParams": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Sport & Fitness",
+                    "description": "New name of the category. Maximum length is 128.",
+                    "pattern": "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
+                }
+            },
+            "description": "Container for category edit params"
         },
         "ErrorDetails": {
             "type": "object",
@@ -7859,7 +8114,7 @@
                 },
                 "passwordChangeToken": {
                     "type": "string",
-                    "example": "PassWordCHAnGEToKen",
+                    "example": "45a611d8-8a19-4a02-8726-a24b6a691ce9",
                     "description": "Decrypted password change token (the token that you received from the /users/requestPasswordChange service, decrypted with your data decryption key)",
                     "pattern": "[0-9a-f\\-]*"
                 }
@@ -8085,9 +8340,9 @@
                 },
                 "storePin": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether to store the PIN. If the PIN is stored, it is not required to pass the PIN again when updating this bank connection or when executing orders (like money transfers). Default is false. <br/><br/>NOTES:<br/> - before you set this field to true, please regard the 'pinsAreVolatile' flag of this connection's bank;<br/> - this field is ignored in case when the user will need to use finAPI's web form. The user will be able to decide whether to store the PIN or not in the web form, depending on the 'pinStorageAvailableInWebForm' setting (see Client Configuration).",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "name": {
                     "type": "string",
@@ -8096,15 +8351,15 @@
                 },
                 "skipPositionsDownload": {
                     "default": false,
-                    "type": "boolean",
-                    "description": "Whether to skip the download of transactions and securities or not. If set to true, then finAPI will download just the accounts list with the accounts' information (like account name, number, holder, etc), as well as the accounts' balances (if possible), but skip the download of transactions and securities. Default is false.<br/><br/>NOTES:<br/>&bull; If you skip the download of transactions and securities during an import or update, you can still download them on a later update (though you might not get all positions at a later point, because the date range in which the bank servers provide this data is usually limited). However, once finAPI has downloaded the transactions or securities for the first time, you will not be able to go back to skipping the download of transactions and securities! In other words: Once you make your first request with skipPositionsDownload=false for a certain bank connection, you will no longer be able to make a request with skipPositionsDownload=true for that same bank connection.<br/>&bull; If this bank connection is updated via finAPI's automatic batch update, then transactions and security positions <u>will</u> be downloaded in any case!<br/>&bull; For security accounts, skipping the downloading of the securities might result in the account's balance also not being downloaded.<br/>&bull; For Bausparen accounts, this field is ignored. finAPI will always download transactions for Bausparen accounts.<br/><br/><b>This flag is currently not guaranteed to work for all banks!</b>",
-                    "example": false
+                    "description": "Whether to skip the download of transactions and securities or not. If set to true, then finAPI will download just the accounts list with the accounts' information (like account name, number, holder, etc), as well as the accounts' balances (if possible), but skip the download of transactions and securities. Default is false.<br/><br/>NOTES:<br/>&bull; If you skip the download of transactions and securities during an import or update, you can still download them on a later update (though you might not get all positions at a later point, because the date range in which the bank servers provide this data is usually limited). However, once finAPI has downloaded the transactions or securities for the first time, you will not be able to go back to skipping the download of transactions and securities! In other words: Once you make your first request with skipPositionsDownload=false for a certain bank connection, you will no longer be able to make a request with skipPositionsDownload=true for that same bank connection.<br/>&bull; If this bank connection is updated via finAPI's automatic batch update, then transactions and security positions <u>will</u> be downloaded in any case!<br/>&bull; For security accounts, skipping the downloading of the securities might result in the account's balance also not being downloaded.<br/>&bull; For Bausparen accounts, this field is ignored. finAPI will always download transactions for Bausparen accounts.<br/>",
+                    "example": false,
+                    "type": "boolean"
                 },
                 "loadOwnerData": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether to load information about the bank connection owner(s) - see field 'owners'. Default value is 'false'.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "maxDaysForDownload": {
                     "type": "integer",
@@ -8357,9 +8612,9 @@
                 },
                 "simulateBankLoginError": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether to simulate the case that the update fails due to incorrect banking credentials. Note that there is no real communication to any bank server involved, so you won't lock your accounts when enabling this flag. Default value is 'false'.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "mockAccountsData": {
                     "type": "array",
@@ -8386,15 +8641,18 @@
                 },
                 "triggerNotifications": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether this call should trigger the dispatching of notifications. Default is 'false'.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 }
             },
             "description": "Data for mock bank connection updates"
         },
         "MoneyTransferOrderingResponse": {
             "type": "object",
+            "required": [
+                "paymentId"
+            ],
             "properties": {
                 "successMessage": {
                     "type": "string",
@@ -8403,8 +8661,14 @@
                 },
                 "warnMessage": {
                     "type": "string",
-                    "example": "Auftrag konnte nicht ausgeführt werden.",
+                    "example": "Es liegen Warnungen vor.",
                     "description": "In some cases, a bank server may accept the requested order, but return a warn message. This message may be of technical nature, but could also be of interest to the user."
+                },
+                "paymentId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1,
+                    "description": "Payment identifier. Can be used to retrieve the status of the payment (see 'Get payments' service)."
                 },
                 "challengeMessage": {
                     "type": "string",
@@ -8566,9 +8830,9 @@
                     "description": "The string that finAPI includes into the notifications that it sends based on this rule."
                 },
                 "includeDetails": {
-                    "type": "boolean",
                     "description": "Whether the notification messages that will be sent based on this rule contain encrypted detailed data or not",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 }
             },
             "description": "Data of notification rule"
@@ -8625,9 +8889,9 @@
                 },
                 "includeDetails": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether the notification messages that will be sent based on this rule should contain encrypted detailed data or not",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 }
             },
             "description": "Parameters of notification rule"
@@ -8736,6 +9000,27 @@
                 }
             },
             "description": "Label resources with paging information"
+        },
+        "PageablePaymentResources": {
+            "type": "object",
+            "required": [
+                "paging",
+                "payments"
+            ],
+            "properties": {
+                "payments": {
+                    "type": "array",
+                    "description": "List of received account payments",
+                    "items": {
+                        "$ref": "#/definitions/Payment"
+                    }
+                },
+                "paging": {
+                    "description": "Information for pagination",
+                    "$ref": "#/definitions/Paging"
+                }
+            },
+            "description": "Payment resources with paging information"
         },
         "PageableSecurityList": {
             "type": "object",
@@ -8876,28 +9161,125 @@
             },
             "description": "Password changing details"
         },
+        "Payment": {
+            "type": "object",
+            "required": [
+                "accountId",
+                "amount",
+                "id",
+                "orderCount",
+                "requestDate",
+                "status",
+                "type"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1,
+                    "description": "Payment identifier"
+                },
+                "accountId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1,
+                    "description": "Identifier of the account to which this payment relates"
+                },
+                "requestDate": {
+                    "type": "string",
+                    "example": "2019-01-01 00:00:00.000",
+                    "description": "Time of when this payment was requested, in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german time)"
+                },
+                "executionDate": {
+                    "type": "string",
+                    "example": "2019-01-01 00:00:00.000",
+                    "description": "Time of when this payment was executed, in the format 'YYYY-MM-DD HH:MM:SS.SSS' (german time)"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "MONEY_TRANSFER",
+                    "description": "Payment type",
+                    "enum": [
+                        "MONEY_TRANSFER",
+                        "DIRECT_DEBIT"
+                    ]
+                },
+                "status": {
+                    "type": "string",
+                    "example": "PENDING",
+                    "description": "Current payment status:<br/> &bull; PENDING: means that this payment has been requested, but not yet executed.<br/> &bull; SUCCESSFUL: means that this payment has been successfully executed.<br/> &bull; NOT_SUCCESSFUL: means that this payment could not be executed successfully.<br/> &bull; DISCARDED: means that this payment was discarded because another payment was requested for the same account before this payment was executed.",
+                    "enum": [
+                        "PENDING",
+                        "SUCCESSFUL",
+                        "NOT_SUCCESSFUL",
+                        "DISCARDED"
+                    ]
+                },
+                "bankMessage": {
+                    "type": "string",
+                    "description": "Contains the bank's response to the execution of this payment. This field is not set until the payment gets executed. Note that even after the execution of the payment, the field might still not be set, if the bank did not send any response message."
+                },
+                "amount": {
+                    "type": "number",
+                    "example": 99.99,
+                    "description": "Total money amount of the payment order(s), as absolute value"
+                },
+                "orderCount": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1,
+                    "description": "Total count of orders included in this payment"
+                }
+            },
+            "description": "Container for a payment's data"
+        },
+        "PaymentExecutionResponse": {
+            "type": "object",
+            "required": [
+                "paymentId"
+            ],
+            "properties": {
+                "successMessage": {
+                    "type": "string",
+                    "example": "Auftrag ausgeführt.",
+                    "description": "Technical message from the bank server, confirming the success of the request. Typically, you would not want to present this message to the user. Note that this field may not be set. However if it is not set, it does not necessarily mean that there was an error in processing the request."
+                },
+                "warnMessage": {
+                    "type": "string",
+                    "example": "Es liegen Warnungen vor.",
+                    "description": "In some cases, a bank server may accept the requested order, but return a warn message. This message may be of technical nature, but could also be of interest to the user."
+                },
+                "paymentId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1,
+                    "description": "Payment identifier. Can be used to retrieve the status of the payment (see 'Get payments' service)."
+                }
+            },
+            "description": "Bank server's response to Money Transfer / Direct Debit execution"
+        },
         "PaypalTransactionData": {
             "type": "object",
             "properties": {
                 "invoiceNumber": {
                     "type": "string",
                     "example": "INV2-KXVU-7Z64-DT6W-MG2X",
-                    "description": "Invoice Number"
+                    "description": "Invoice Number.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point."
                 },
                 "fee": {
                     "type": "number",
-                    "example": "-0.99",
-                    "description": "Fee value"
+                    "example": -0.99,
+                    "description": "Fee value.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point."
                 },
                 "net": {
                     "type": "number",
-                    "example": "9.99",
-                    "description": "Net value"
+                    "example": 9.99,
+                    "description": "Net value.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point."
                 },
                 "auctionSite": {
                     "type": "string",
                     "example": "eBay",
-                    "description": "Auction Site"
+                    "description": "Auction Site.<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point."
                 }
             },
             "description": "Additional, PayPal-specific transaction data. This field is only set for transactions that belong to an account of the 'PayPal' bank (BLZ 'PAYPAL')."
@@ -8940,9 +9322,9 @@
                 },
                 "storePin": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether to store the PIN. If the PIN is stored, it is not required to pass the PIN again when executing SEPA orders. Default value is 'false'. <br/><br/>NOTES:<br/> - before you set this field to true, please regard the 'pinsAreVolatile' flag of the bank connection that the account belongs to;<br/> - this field is ignored in case when the user will need to use finAPI's web form. The user will be able to decide whether to store the PIN or not in the web form, depending on the 'pinStorageAvailableInWebForm' setting (see Client Configuration).",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "twoStepProcedureId": {
                     "type": "string",
@@ -8976,9 +9358,9 @@
                 },
                 "singleBooking": {
                     "default": false,
-                    "type": "boolean",
                     "description": "This field is only regarded when you pass multiple orders. It determines whether the orders should be processed by the bank as one collective booking (in case of 'false'), or as single bookings (in case of 'true'). Default value is 'false'.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "directDebits": {
                     "type": "array",
@@ -9045,9 +9427,9 @@
                 },
                 "storePin": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether to store the PIN. If the PIN is stored, it is not required to pass the PIN again when executing SEPA orders. Default value is 'false'. <br/><br/>NOTES:<br/> - before you set this field to true, please regard the 'pinsAreVolatile' flag of the bank connection that the account belongs to;<br/> - this field is ignored in case when the user will need to use finAPI's web form. The user will be able to decide whether to store the PIN or not in the web form, depending on the 'pinStorageAvailableInWebForm' setting (see Client Configuration).",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "twoStepProcedureId": {
                     "type": "string",
@@ -9066,9 +9448,9 @@
                 },
                 "singleBooking": {
                     "default": false,
-                    "type": "boolean",
                     "description": "This field is only regarded when you pass multiple orders. It determines whether the orders should be processed by the bank as one collective booking (in case of 'false'), or as single bookings (in case of 'true'). Default value is 'false'.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "additionalMoneyTransfers": {
                     "type": "array",
@@ -9106,7 +9488,7 @@
                 },
                 "isin": {
                     "type": "string",
-                    "example": "DE0008404005.",
+                    "example": "DE0008404005",
                     "description": "ISIN"
                 },
                 "wkn": {
@@ -9164,7 +9546,7 @@
                 },
                 "entryQuote": {
                     "type": "number",
-                    "example": "99.999999",
+                    "example": 99.999999,
                     "description": "Entry quote"
                 },
                 "entryQuoteCurrency": {
@@ -9174,7 +9556,7 @@
                 },
                 "profitOrLoss": {
                     "type": "number",
-                    "example": "99.999999",
+                    "example": 99.999999,
                     "description": "Current profit or loss"
                 }
             },
@@ -9567,7 +9949,12 @@
                 "counterpartCreditorId": {
                     "type": "string",
                     "example": "CRI123",
-                    "description": "The creditor ID of the counterpart"
+                    "description": "The creditor ID of the counterpart. Exists only for SEPA direct debit transactions (\"Lastschrift\")."
+                },
+                "counterpartDebitorId": {
+                    "type": "string",
+                    "example": "CRI098",
+                    "description": "The originator's identification code. Exists only for SEPA money transfer transactions (\"Überweisung\")."
                 },
                 "type": {
                     "type": "string",
@@ -9606,19 +9993,19 @@
                     }
                 },
                 "isPotentialDuplicate": {
-                    "type": "boolean",
                     "description": "While finAPI uses a well-elaborated algorithm for uniquely identifying transactions, there is still the possibility that during an account update, a transaction that was imported previously may be imported a second time as a new transaction. For example, this can happen if some transaction data changes on the bank server side. However, finAPI also includes an algorithm of identifying such \"potential duplicate\" transactions. If this field is set to true, it means that finAPI detected a similar transaction that might actually be the same. It is recommended to communicate this information to the end user, and give him an option to delete the transaction in case he confirms that it really is a duplicate.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "isAdjustingEntry": {
-                    "type": "boolean",
                     "description": "Indicating whether this transaction is an adjusting entry ('Zwischensaldo').<br/><br/>Adjusting entries do not originate from the bank, but are added by finAPI during an account update when the bank reported account balance does not add up to the set of transactions that finAPI receives for the account. In this case, the adjusting entry will fix the deviation between the balance and the received transactions so that both adds up again.<br/><br/>Possible causes for such deviations are:<br/>- Inconsistencies in how the bank calculates the balance, for instance when not yet booked transactions are already included in the balance, but not included in the set of transactions<br/>- Gaps in the transaction history that finAPI receives, for instance because the account has not been updated for a while and older transactions are no longer available",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "isNew": {
-                    "type": "boolean",
                     "description": "Indicating whether this transaction is 'new' or not. Any newly imported transaction will have this flag initially set to true. How you use this field is up to your interpretation. For example, you might want to set it to false once a user has clicked on/seen the transaction. You can change this flag to 'false' with the PATCH method.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "importDate": {
                     "type": "string",
@@ -9639,13 +10026,33 @@
                     }
                 },
                 "paypalData": {
-                    "description": "Additional, PayPal-specific transaction data. This field is only set for transactions that belong to an account of the 'PayPal' bank (BLZ 'PAYPAL').",
+                    "description": "Additional, PayPal-specific transaction data. This field is only set for transactions that belong to an account of the 'PayPal' bank (BLZ 'PAYPAL').<br/>NOTE: This field is deprecated as the bank with blz 'PAYPAL' is no longer supported. Do not use this field, as it will be removed at some point.",
                     "$ref": "#/definitions/PaypalTransactionData"
                 },
                 "endToEndReference": {
                     "type": "string",
                     "example": "001100550526",
                     "description": "End-To-End reference"
+                },
+                "compensationAmount": {
+                    "type": "number",
+                    "example": -1.11,
+                    "description": "Compensation Amount. Sum of reimbursement of out-of-pocket expenses plus processing brokerage in case of a national return / refund debit as well as an optional interest equalisation. Exists predominantly for SEPA direct debit returns."
+                },
+                "originalAmount": {
+                    "type": "number",
+                    "example": -9.99,
+                    "description": "Original Amount of the original direct debit. Exists predominantly for SEPA direct debit returns."
+                },
+                "differentDebitor": {
+                    "type": "string",
+                    "example": "DIFD70204",
+                    "description": "Payer's/debtor's reference party (in the case of a credit transfer) or payee's/creditor's reference party (in the case of a direct debit)"
+                },
+                "differentCreditor": {
+                    "type": "string",
+                    "example": "DIFC98450",
+                    "description": "Payee's/creditor's reference party (in the case of a credit transfer) or payer's/debtor's reference party (in the case of a direct debit)"
                 }
             },
             "description": "Container for a transaction's data"
@@ -9709,9 +10116,9 @@
                     "description": "The challenge type of the procedure. Possible values are:<br/><br/>&bull; <code>TEXT</code> - the challenge will be a text that contains instructions for the user on how to retrieve the TAN.<br/>&bull; <code>PHOTO</code> - the challenge will contain a BASE-64 string depicting a photo (or any kind of QR-code-like data) that must be shown to the user.<br/>&bull; <code>FLICKER_CODE</code> - the challenge will contain a BASE-64 string depicting a flicker code animation that must be shown to the user.<br/><br/>Note that this challenge type information does not originate from the bank server, but is determined by finAPI internally. There is no guarantee that the determined challenge type is correct. Note also that this field may not be set, meaning that finAPI could not determine the challenge type of the procedure.<br/><br/>For further information on how to deal with the challenges, please see <a href='https://finapi.zendesk.com/hc/en-us/articles/219117247-SEPA-Money-Transfer'>this article</a> on our Dev Portal."
                 },
                 "implicitExecute": {
-                    "type": "boolean",
                     "description": "If 'true', then requesting a SEPA order with this procedure will implicitly trigger the execution of the order. For example, if you do a money transfer with this procedure, then calling the /requestSepaMoneyTransfer service will immediately execute the order (a call to /executeSepaMoneyTransfer will not be necessary). On the other hand, if this flag is 'false', then doing a money transfer with this procedure will require you to first call /requestSepaMoneyTransfer, and then call /executeSepaMoneyTransfer.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 }
             },
             "description": "Two-step-procedure for a communication with a bank server, e.g. for doing a money transfer"
@@ -9735,27 +10142,27 @@
                 },
                 "storePin": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether to store the PIN. If the PIN is stored, it is not required to pass the PIN again when updating this bank connection or when executing orders (like money transfers). Default is false. <br/><br/>NOTES:<br/> - before you set this field to true, please regard the 'pinsAreVolatile' flag of this connection's bank;<br/> - this field is ignored in case when the user will need to use finAPI's web form. The user will be able to decide whether to store the PIN or not in the web form, depending on the 'pinStorageAvailableInWebForm' setting (see Client Configuration).",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "importNewAccounts": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether new accounts that have not yet been imported will be imported or not. Default is false. <br/><br/>NOTES:<br/>&bull; For best performance of the bank connection update, you should not enable this flag unless you really expect new accounts to be available in the connection. It is recommended to let your users tell you through your application when they want the service to look for new accounts.<br/>&bull; If you have imported a bank connection using specific <code>accountTypeIds</code> (e.g. <code>1,2</code> to import checking and saving accounts), you would import all other accounts (e.g. security accounts or credit cards) by setting <code>importNewAccounts</code> to <code>true</code>. To avoid importing account types that you are not interested in, make sure this field is undefined or set to false.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "skipPositionsDownload": {
                     "default": false,
-                    "type": "boolean",
-                    "description": "Whether to skip the download of transactions and securities or not. If set to true, then finAPI will download just the accounts list with the accounts' information (like account name, number, holder, etc), as well as the accounts' balances (if possible), but skip the download of transactions and securities. Default is false.<br/><br/>NOTES:<br/>&bull; If you skip the download of transactions and securities during an import or update, you can still download them on a later update (though you might not get all positions at a later point, because the date range in which the bank servers provide this data is usually limited). However, once finAPI has downloaded the transactions or securities for the first time, you will not be able to go back to skipping the download of transactions and securities! In other words: Once you make your first request with <code>skipPositionsDownload=false</code> for a certain bank connection, you will no longer be able to make a request with <code>skipPositionsDownload=true</code> for that same bank connection.<br/>&bull; If this bank connection is updated via finAPI's automatic batch update, then transactions and security positions <u>will</u> be downloaded in any case!<br/>&bull; For security accounts, skipping the downloading of the securities might result in the account's balance also not being downloaded.<br/><br/><b>This flag is currently not guaranteed to work for all banks!</b>",
-                    "example": false
+                    "description": "Whether to skip the download of transactions and securities or not. If set to true, then finAPI will download just the accounts list with the accounts' information (like account name, number, holder, etc), as well as the accounts' balances (if possible), but skip the download of transactions and securities. Default is false.<br/><br/>NOTES:<br/>&bull; If you skip the download of transactions and securities during an import or update, you can still download them on a later update (though you might not get all positions at a later point, because the date range in which the bank servers provide this data is usually limited). However, once finAPI has downloaded the transactions or securities for the first time, you will not be able to go back to skipping the download of transactions and securities! In other words: Once you make your first request with <code>skipPositionsDownload=false</code> for a certain bank connection, you will no longer be able to make a request with <code>skipPositionsDownload=true</code> for that same bank connection.<br/>&bull; If this bank connection is updated via finAPI's automatic batch update, then transactions and security positions <u>will</u> be downloaded in any case!<br/>&bull; For security accounts, skipping the downloading of the securities might result in the account's balance also not being downloaded.<br/>",
+                    "example": false,
+                    "type": "boolean"
                 },
                 "loadOwnerData": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether to load/refresh information about the bank connection owner(s) - see field 'owners'. Default value is 'false'. Note that owner data is NOT loaded/refreshed during finAPI's automatic bank connection update.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "challengeResponse": {
                     "type": "string",
@@ -9769,14 +10176,14 @@
             "type": "object",
             "properties": {
                 "isNew": {
-                    "type": "boolean",
                     "description": "Whether this transactions should be flagged as 'new' or not. Any newly imported transaction will have this flag initially set to true. How you use this field is up to your interpretation. For example, you might want to set it to false once a user has clicked on/seen the transaction.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "isPotentialDuplicate": {
-                    "type": "boolean",
                     "description": "You can set this field only to 'false'. finAPI marks transactions as a potential duplicates  when its internal duplicate detection algorithm is signaling so. Transactions that are flagged as duplicates can be deleted by the user. To prevent the user from deleting original transactions, which might lead to incorrect balances, it is not possible to manually set this flag to 'true'.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "categoryId": {
                     "type": "integer",
@@ -9786,9 +10193,9 @@
                 },
                 "trainCategorization": {
                     "default": true,
-                    "type": "boolean",
                     "description": "This field is only regarded when the field 'categoryId' is set. It controls whether finAPI's categorization system should learn from the given categorization(s). If set to 'true', then the user's categorization rules will be updated so that similar transactions will get categorized accordingly in future. If set to 'false', then the service will simply change the category of the given transaction(s), without updating the user's categorization rules. The field defaults to 'true' if not specified.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "labelIds": {
                     "type": "array",
@@ -9875,14 +10282,14 @@
             "type": "object",
             "properties": {
                 "isNew": {
-                    "type": "boolean",
                     "description": "Whether this transactions should be flagged as 'new' or not. Any newly imported transaction will have this flag initially set to true. How you use this field is up to your interpretation. For example, you might want to set it to false once a user has clicked on/seen the transaction.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "isPotentialDuplicate": {
-                    "type": "boolean",
                     "description": "You can set this field only to 'false'. finAPI marks transactions as a potential duplicates  when its internal duplicate detection algorithm is signaling so. Transactions that are flagged as duplicates can be deleted by the user. To prevent the user from deleting original transactions, which might lead to incorrect balances, it is not possible to manually set this flag to 'true'.",
-                    "example": false
+                    "example": false,
+                    "type": "boolean"
                 },
                 "categoryId": {
                     "type": "integer",
@@ -9892,9 +10299,9 @@
                 },
                 "trainCategorization": {
                     "default": true,
-                    "type": "boolean",
                     "description": "This field is only regarded when the field 'categoryId' is set. It controls whether finAPI's categorization system should learn from the given categorization(s). If set to 'true', then the user's categorization rules will be updated so that similar transactions will get categorized accordingly in future. If set to 'false', then the service will simply change the category of the given transaction(s), without updating the user's categorization rules. The field defaults to 'true' if not specified.",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 },
                 "labelIds": {
                     "type": "array",
@@ -9941,9 +10348,9 @@
                     "description": "User's phone number"
                 },
                 "isAutoUpdateEnabled": {
-                    "type": "boolean",
-                    "description": "Whether the user's bank connections will get updated in the course of finAPI's automatic batch update. Note that the automatic batch update will only update bank connections where all of the following applies:<br><br> - the PIN is stored in finAPI for the bank connection<br> - the user has accepted the latest Terms and Conditions (this only applies to users whose mandator has PISP license or doesn't have a license at all)<br> - the user has allowed finAPI to use his old stored credentials (this only applies to users which had stored credentials before introducing a web form feature and whose mandator has PISP license or doesn't have a license at all)<br> - the previous update using the stored credentials did not fail due to the credentials being incorrect (or there was no previous update with the stored credentials)<br> - the bank that the bank connection relates to is included in the automatic batch update (please contact your Sys-Admin for details about the batch update configuration)<br> - at least one of the bank's supported data sources can be used by finAPI for your client (i.e.: if a bank supports only web scraping, but web scraping is disabled for your client, then bank connections of that bank will not get updated by the automatic batch update)<br><br>Also note that the automatic batch update must generally be enabled for your client in order for this field to have any effect.<br/><br/>WARNING: The automatic update will always download transactions and security positions for any account that it updates! This means that the user will no longer be able to download just the balances for his accounts once the automatic update has run (The 'skipPositionsDownload' flag in the bankConnections/update service can no longer be set to true).",
-                    "example": true
+                    "description": "Whether the user's bank connections will get updated in the course of finAPI's automatic batch update. Note that the automatic batch update will only update bank connections where all of the following applies:<br><br> - the PIN is stored in finAPI for the bank connection, and the related bank does not have volatile PINs (see the ‘pinsAreVolatile’ flag of the Bank Resource)<br> - the user has accepted the latest Terms and Conditions (this only applies to users whose mandator has PISP license or doesn't have a license at all)<br> - the user has allowed finAPI to use his old stored credentials (this only applies to users which had stored credentials before introducing a web form feature and whose mandator has PISP license or doesn't have a license at all)<br> - the previous update using the stored credentials did not fail due to the credentials being incorrect (or there was no previous update with the stored credentials)<br> - the bank that the bank connection relates to is included in the automatic batch update (please contact your Sys-Admin for details about the batch update configuration)<br> - at least one of the bank's supported data sources can be used by finAPI for your client (i.e.: if a bank supports only web scraping, but web scraping is disabled for your client, then bank connections of that bank will not get updated by the automatic batch update)<br><br>Also note that the automatic batch update must generally be enabled for your client in order for this field to have any effect.<br/><br/>WARNING: The automatic update will always download transactions and security positions for any account that it updates! This means that the user will no longer be able to download just the balances for his accounts once the automatic update has run (The 'skipPositionsDownload' flag in the bankConnections/update service can no longer be set to true).",
+                    "example": true,
+                    "type": "boolean"
                 }
             },
             "description": "Container for a user's data"
@@ -9977,9 +10384,9 @@
                 },
                 "isAutoUpdateEnabled": {
                     "default": false,
-                    "type": "boolean",
                     "description": "Whether the user's bank connections will get updated in the course of finAPI's automatic batch update. Note that the automatic batch update will only update bank connections where all of the following applies:<br><br> - the PIN is stored in finAPI for the bank connection<br> - the user has accepted the latest Terms and Conditions (this only applies to users whose mandator has PISP license or doesn't have a license at all)<br> - the user has allowed finAPI to use his old stored credentials (this only applies to users which had stored credentials before introducing a web form feature and whose mandator has PISP license or doesn't have a license at all)<br> - the previous update using the stored credentials did not fail due to the credentials being incorrect (or there was no previous update with the stored credentials)<br> - the bank that the bank connection relates to is included in the automatic batch update (please contact your Sys-Admin for details about the batch update configuration)<br><br>Also note that the automatic batch update must generally be enabled for your client in order for this field to have any effect.<br/><br/>WARNING: The automatic update will always download transactions and security positions for any account that it updates! This means that the user will no longer be able to download just the balances for his accounts once the automatic update has run (The 'skipPositionsDownload' flag in the bankConnections/update service can no longer be set to true).<br/><br/>If not specified, then the automatic update will be disabled by default (false).",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 }
             },
             "description": "User details"
@@ -10090,6 +10497,11 @@
                     "items": {
                         "$ref": "#/definitions/MonthlyUserStats"
                     }
+                },
+                "isLocked": {
+                    "description": "Whether the user is currently locked (for further information, see the 'maxUserLoginAttempts' setting in your client's configuration). Note that deleted users will always have this field set to 'false'.",
+                    "example": false,
+                    "type": "boolean"
                 }
             },
             "description": "Container for user information"
@@ -10110,9 +10522,9 @@
                     "pattern": "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
                 },
                 "isAutoUpdateEnabled": {
-                    "type": "boolean",
                     "description": "Whether the user's bank connections will get updated in the course of finAPI's automatic batch update. Note that the automatic batch update will only update bank connections where all of the following applies:<br><br> - the PIN is stored in finAPI for the bank connection<br> - the user has accepted the latest Terms and Conditions (this only applies to users whose mandator has PISP license or doesn't have a license at all)<br> - the user has allowed finAPI to use his old stored credentials (this only applies to users which had stored credentials before introducing a web form feature and whose mandator has PISP license or doesn't have a license at all)<br> - the previous update using the stored credentials did not fail due to the credentials being incorrect (or there was no previous update with the stored credentials)<br> - the bank that the bank connection relates to is included in the automatic batch update (please contact your Sys-Admin for details about the batch update configuration)<br><br>Also note that the automatic batch update must generally be enabled for your client in order for this field to have any effect.<br/><br/>WARNING: The automatic update will always download transactions and security positions for any account that it updates! This means that the user will no longer be able to download just the balances for his accounts once the automatic update has run (The 'skipPositionsDownload' flag in the bankConnections/update service can no longer be set to true).",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 }
             },
             "description": "User details"
@@ -10130,9 +10542,9 @@
                     "description": "User's identifier"
                 },
                 "isUserVerified": {
-                    "type": "boolean",
                     "description": "User's verification status",
-                    "example": true
+                    "example": true,
+                    "type": "boolean"
                 }
             },
             "description": "User's verification status"

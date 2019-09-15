@@ -81,15 +81,23 @@ public final class UsersCriteria implements Iterable<NameValuePair> {
     }
 
     public UsersCriteria withMinBankConnectionCountInMonthlyStats(
-        final OffsetDateTime minBankConnectionCountInMonthlyStats) {
-        this.pairs.add(new UrlEncodedPair("minBankConnectionCountInMonthlyStats",
-            new StringOf(minBankConnectionCountInMonthlyStats)
-        ));
+        final int minBankConnectionCountInMonthlyStats) {
+        this.pairs.add(
+            new UrlEncodedPair(
+                "minBankConnectionCountInMonthlyStats",
+                minBankConnectionCountInMonthlyStats
+            )
+        );
         return this;
     }
 
     public UsersCriteria withIsDeleted(final boolean isDeleted) {
         this.pairs.add(new UrlEncodedPair("isDeleted", isDeleted));
+        return this;
+    }
+
+    public UsersCriteria withIsLocked(final boolean isLocked) {
+        this.pairs.add(new UrlEncodedPair("isLocked", isLocked));
         return this;
     }
 

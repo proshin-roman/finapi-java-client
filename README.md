@@ -2,14 +2,27 @@
 [![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
+### Releases
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.proshin/finapi-java-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.proshin/finapi-java-client)
+[![](https://jitpack.io/v/proshin-roman/finapi-java-client.svg)](https://jitpack.io/#proshin-roman/finapi-java-client)
+
+### Builds
 [![Build Status](https://travis-ci.org/proshin-roman/finapi-java-client.svg?branch=master)](https://travis-ci.org/proshin-roman/finapi-java-client)
 [![Build status](https://ci.appveyor.com/api/projects/status/n88wydxq8oa0eou0/branch/master?svg=true)](https://ci.appveyor.com/project/proshin-roman/finapi-java-client/branch/master)
+
+### Code quality
 [![codecov](https://codecov.io/gh/proshin-roman/finapi-java-client/branch/master/graph/badge.svg)](https://codecov.io/gh/proshin-roman/finapi-java-client)
 [![codebeat badge](https://codebeat.co/badges/907cb4b8-0f65-446a-a874-9ece228ab579)](https://codebeat.co/projects/github-com-proshin-roman-finapi-java-client-master)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=org.proshin%3Afinapi-java-client&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.proshin%3Afinapi-java-client)
 [![Report](https://inspecode.rocro.com/badges/github.com/proshin-roman/finapi-java-client/report?token=XQDM-T86oDab_Cxht2zu7R2Id6M09Uobn6izEWhA8es&branch=master)](https://inspecode.rocro.com/reports/github.com/proshin-roman/finapi-java-client/branch/master/summary)
-[![PDD status](http://www.0pdd.com/svg?name=proshin-roman/finapi-java-client)](http://www.0pdd.com/p?name=proshin-roman/finapi-java-client) [![Join the chat at https://gitter.im/finapi-java-client/Lobby](https://badges.gitter.im/finapi-java-client/Lobby.svg)](https://gitter.im/finapi-java-client/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Hits-of-Code](https://hitsofcode.com/github/proshin-roman/finapi-java-client)](https://hitsofcode.com/view/github/proshin-roman/finapi-java-client)
+
+### Puzzle Driven Development
+[![PDD status](http://www.0pdd.com/svg?name=proshin-roman/finapi-java-client)](http://www.0pdd.com/p?name=proshin-roman/finapi-java-client)
+
+### Community
+[![Join the chat at https://gitter.im/finapi-java-client/Lobby](https://badges.gitter.im/finapi-java-client/Lobby.svg)](https://gitter.im/finapi-java-client/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 **finapi-java-client** is a true-OOP Java client for API provided by [finAPI](https://finapi.io).
@@ -35,108 +48,6 @@ Just add the following lines into your `pom.xml`
 </dependency>
 ```
 You can find the latest `version` on [`Releases`](https://github.com/proshin-roman/finapi-java-client/releases) page.
-
-## Implementation status
-
-This library is in early alpha version and not all API methods are implemented yet. This is a status of implementation:
-
-- Authorization
-    - [x] Get client's token
-    - [x] Get user's token using credentials
-    - [x] Get user's token using refresh token
-    - [x] Revoke a token
-- Mandator administration
-    - [x] Get user list
-    - [x] Delete users
-    - [x] Change client credentials
-    - [x] Get keyword rules
-    - [x] Create keyword rules
-    - [x] Delete keyword rules
-    - [x] Get IBAN rules
-    - [x] Create IBAN rules
-    - [x] Delete IBAN rules
-- Client configuration
-    - [x] Get client configuration
-    - [x] Edit client configuration
-- Users
-    - [x] Get the authorized user
-    - [x] Get a user's verification status
-    - [x] Create a new user
-    - [x] Request password change
-    - [x] Execute password change
-    - [x] Verify a user
-    - [x] Edit the authorized user
-    - [x] Delete the authorized user
-    - [x] Delete an unverified user 
-- Banks
-    - [x] Get a bank
-    - [ ] ~~Get a multiple banks~~ (won't be implemented as deprecated)
-    - [x] Get and search all banks
-- Bank connections
-    - [x] Get a bank connection
-    - [ ] ~~Get multiple bank connections~~ (won't be implemented as deprecated)
-    - [x] Get all bank connections
-    - [x] Import a new bank connection
-    - [x] Update a bank connection
-    - [x] Edit a bank connection
-    - [x] Delete a bank connection
-    - [x] Delete all bank connections
-- Accounts
-    - [x] Get an account
-    - [ ] ~~Get multiple accounts~~ (won't be implemented as deprecated)
-    - [x] Get and search all accounts
-    - [x] Get daily balances
-    - [x] Edit an account
-    - [x] Request SEPA Money Transfer
-    - [x] Execute SEPA Money Transfer
-    - [x] Request SEPA Direct Debit
-    - [x] Execute SEPA Direct Debit
-    - [x] Delete an account
-    - [x] Delete all accounts
-- Transactions
-    - [x] Get a transaction
-    - [ ] ~~Get multiple transactions~~ (won't be implemented as deprecated)
-    - [x] Get and search all transactions
-    - [x] Split a transaction
-    - [x] Restore a transaction
-    - [x] Edit a transaction
-    - [ ] ~~Edit multiple transactions (DEPRECATED)~~ (won't be implemented as deprecated)
-    - [x] Edit multiple transactions
-    - [x] Trigger categorization
-    - [x] Delete a transaction
-    - [x] Delete all transactions
-- Securities
-    - [x] Get a security
-    - [ ] ~~Get multiple securities~~ (won't be implemented as deprecated)
-    - [x] Get and search all securities
-- Categories
-    - [x] Get a category
-    - [ ] ~~Get multiple categories~~ (won't be implemented as deprecated)
-    - [x] Get and search all categories
-    - [x] Get cash flows
-    - [x] Create a new category
-    - [x] Train categorization 
-    - [x] Delete a category
-    - [x] Delete all categories
-- Labels
-    - [x] Get a label
-    - [ ] ~~Get multiple labels~~ (won't be implemented as deprecated)
-    - [x] Get and search all labels
-    - [x] Create a new label
-    - [x] Edit a label
-    - [x] Delete a label
-    - [x] Delete all labels
-- Notification rules
-    - [x] Get a notification rule
-    - [x] Get and search all notification rules
-    - [x] Create a new notification rule
-    - [x] Delete a notification rule
-    - [x] Delete all notification rules
-- Web forms
-    - [x] Get a web form
-- Mocks and tests
-    - [x] Mock batch update
-    - [x] Check categorization
 
 ## What about logging?
 
