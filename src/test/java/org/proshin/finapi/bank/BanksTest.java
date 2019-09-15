@@ -81,6 +81,7 @@ public final class BanksTest {
                     .withQueryStringParameter("isSupported", "true")
                     .withQueryStringParameter("pinsAreVolatile", "true")
                     .withQueryStringParameter("supportedDataSources", "WEB_SCRAPER%2CFINTS_SERVER")
+                    .withQueryStringParameter("supportedInterfaces", "WEB_SCRAPER%2CFINTS_SERVER")
                     .withQueryStringParameter("location", "DE")
                     .withQueryStringParameter("isTestBank", "true")
                     .withQueryStringParameter("page", "2")

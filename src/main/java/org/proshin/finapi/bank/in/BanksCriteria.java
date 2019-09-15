@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.bank.Bank;
+import org.proshin.finapi.bank.out.BankInterface;
 import org.proshin.finapi.primitives.paging.PagingCriteria;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
@@ -58,6 +59,11 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
 
     public BanksCriteria withSupportedDataSources(final Iterable<Bank.DataSource> supportedDataSources) {
         this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("supportedDataSources", supportedDataSources)));
+        return this;
+    }
+
+    public BanksCriteria withSupportedInterfaces(final Iterable<BankInterface> supportedInterfaces) {
+        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("supportedInterfaces", supportedInterfaces)));
         return this;
     }
 
