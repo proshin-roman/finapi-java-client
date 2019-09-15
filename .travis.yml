@@ -1,11 +1,12 @@
+dist: xenial
 language: java
 sudo: false
 jdk:
-- oraclejdk8
+  - openjdk8
 cache:
   directories:
-  - "$HOME/.m2/repository"
-  - "$HOME/.sonar/cache"
+    - "$HOME/.m2/repository"
+    - "$HOME/.sonar/cache"
 addons:
   sonarcloud:
     organization: proshin-roman-github
