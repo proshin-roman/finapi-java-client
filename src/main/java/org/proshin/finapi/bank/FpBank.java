@@ -18,6 +18,8 @@ package org.proshin.finapi.bank;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 import org.json.JSONObject;
+import org.proshin.finapi.bank.out.BankInterface;
+import org.proshin.finapi.bank.out.FpBankInterface;
 import org.proshin.finapi.bank.out.FpLoginFields;
 import org.proshin.finapi.bank.out.LoginFields;
 import org.proshin.finapi.primitives.IterableJsonArray;
@@ -58,34 +60,6 @@ public final class FpBank implements Bank {
     }
 
     @Override
-    public LoginFields loginFields() {
-        return new FpLoginFields(this.origin);
-    }
-
-    @Override
-    public boolean isCustomerIdPassword() {
-        return this.origin.getBoolean("isCustomerIdPassword");
-    }
-
-    @Override
-    public boolean isSupported() {
-        return this.origin.getBoolean("isSupported");
-    }
-
-    @Override
-    public Iterable<DataSource> supportedDataSources() {
-        return new IterableJsonArray<>(
-            this.origin.getJSONArray("supportedDataSources"),
-            (array, index) -> DataSource.valueOf(array.getString(index))
-        );
-    }
-
-    @Override
-    public boolean pinsAreVolatile() {
-        return this.origin.getBoolean("pinsAreVolatile");
-    }
-
-    @Override
     public Optional<String> location() {
         return new OptionalStringOf(this.origin, "location").get();
     }
@@ -93,6 +67,11 @@ public final class FpBank implements Bank {
     @Override
     public Optional<String> city() {
         return new OptionalStringOf(this.origin, "city").get();
+    }
+
+    @Override
+    public boolean isSupported() {
+        return this.origin.getBoolean("isSupported");
     }
 
     @Override
@@ -108,6 +87,38 @@ public final class FpBank implements Bank {
     @Override
     public int health() {
         return this.origin.getInt("health");
+    }
+
+
+    @Override
+    public LoginFields loginFields() {
+        return new FpLoginFields(this.origin);
+    }
+
+    @Override
+    public boolean pinsAreVolatile() {
+        return this.origin.getBoolean("pinsAreVolatile");
+    }
+
+    @Override
+    public boolean isCustomerIdPassword() {
+        return this.origin.getBoolean("isCustomerIdPassword");
+    }
+
+    @Override
+    public Iterable<DataSource> supportedDataSources() {
+        return new IterableJsonArray<>(
+            this.origin.getJSONArray("supportedDataSources"),
+            (array, index) -> DataSource.valueOf(array.getString(index))
+        );
+    }
+
+    @Override
+    public Iterable<BankInterface> interfaces() {
+        return new IterableJsonArray<>(
+            this.origin.getJSONArray("interfaces"),
+            (array, index) -> new FpBankInterface(array.getJSONObject(index))
+        );
     }
 
     @Override
