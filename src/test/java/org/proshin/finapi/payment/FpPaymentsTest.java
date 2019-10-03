@@ -17,43 +17,19 @@ package org.proshin.finapi.payment;
 
 import java.math.BigDecimal;
 import org.cactoos.iterable.IterableOfLongs;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.payment.in.FpQueryCriteria;
 import org.proshin.finapi.primitives.paging.Page;
 
-public class FpPaymentsTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10019);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpPaymentsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testQuery() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/payments")
                     .withMethod("GET")
@@ -70,7 +46,7 @@ public class FpPaymentsTest {
                 HttpResponse.response("{}")
             );
         final Page<Payment> page = new FpPayments(
-            new FpEndpoint("http://127.0.0.1:10019"),
+            this.endpoint(),
             new FakeAccessToken("random token")
         ).query(
             new FpQueryCriteria()

@@ -17,16 +17,11 @@ package org.proshin.finapi.notificationrule;
 
 import java.math.BigDecimal;
 import org.cactoos.iterable.IterableOfLongs;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.notificationrule.in.CreatingParameters;
 import org.proshin.finapi.notificationrule.in.NotificationRulesCriteria;
@@ -38,30 +33,11 @@ import org.proshin.finapi.notificationrule.in.params.LowAccountBalanceParams;
 import org.proshin.finapi.notificationrule.in.params.NewAccountBalanceParams;
 import org.proshin.finapi.notificationrule.in.params.NewTransactionsParams;
 
-public class FpNotificationRulesTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10012);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpNotificationRulesTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules/123")
                     .withMethod("GET")
@@ -71,14 +47,14 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{}")
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).one(123L);
     }
 
     @Test
     public void testQuery() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("GET")
@@ -91,7 +67,7 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{\"notificationRules\":[{}]}")
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).query(
             new NotificationRulesCriteria()
@@ -103,7 +79,7 @@ public class FpNotificationRulesTest {
 
     @Test
     public void testCreateNewAccountBalance() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
@@ -121,7 +97,7 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{}").withStatusCode(201)
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).create(
             new CreatingParameters(TriggerEvent.NEW_ACCOUNT_BALANCE)
@@ -135,7 +111,7 @@ public class FpNotificationRulesTest {
 
     @Test
     public void testCreateNewTransactions() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
@@ -154,7 +130,7 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{}").withStatusCode(201)
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).create(
             new CreatingParameters(TriggerEvent.NEW_TRANSACTIONS)
@@ -169,7 +145,7 @@ public class FpNotificationRulesTest {
 
     @Test
     public void testCreateBankLoginError() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
@@ -187,7 +163,7 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{}").withStatusCode(201)
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).create(
             new CreatingParameters(TriggerEvent.BANK_LOGIN_ERROR)
@@ -201,7 +177,7 @@ public class FpNotificationRulesTest {
 
     @Test
     public void testCreateForeignMoneyTransfer() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
@@ -219,7 +195,7 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{}").withStatusCode(201)
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).create(
             new CreatingParameters(TriggerEvent.FOREIGN_MONEY_TRANSFER)
@@ -233,7 +209,7 @@ public class FpNotificationRulesTest {
 
     @Test
     public void testCreateLowAccountBalance() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
@@ -252,7 +228,7 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{}").withStatusCode(201)
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).create(
             new CreatingParameters(TriggerEvent.LOW_ACCOUNT_BALANCE)
@@ -267,7 +243,7 @@ public class FpNotificationRulesTest {
 
     @Test
     public void testCreateHighTransactionAmount() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
@@ -287,7 +263,7 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{}").withStatusCode(201)
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).create(
             new CreatingParameters(TriggerEvent.HIGH_TRANSACTION_AMOUNT)
@@ -303,7 +279,7 @@ public class FpNotificationRulesTest {
 
     @Test
     public void testCreateCategoryCashFlow() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
@@ -323,7 +299,7 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{}").withStatusCode(201)
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).create(
             new CreatingParameters(TriggerEvent.CATEGORY_CASH_FLOW)
@@ -339,7 +315,7 @@ public class FpNotificationRulesTest {
 
     @Test
     public void testCreateNewTermsAndConditions() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("POST")
@@ -354,7 +330,7 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{}").withStatusCode(201)
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).create(
             new CreatingParameters(TriggerEvent.NEW_TERMS_AND_CONDITIONS)
@@ -365,7 +341,7 @@ public class FpNotificationRulesTest {
 
     @Test
     public void testDeleteAll() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("DELETE")
@@ -375,7 +351,7 @@ public class FpNotificationRulesTest {
                 HttpResponse.response("{\"identifiers\":[]}")
             );
         new FpNotificationRules(
-            new FpEndpoint("http://127.0.0.1:10012"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).deleteAll();
     }

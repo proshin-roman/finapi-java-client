@@ -21,42 +21,18 @@ import org.cactoos.map.MapOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import org.json.JSONObject;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public class FpNotificationRuleTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10011);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpNotificationRuleTest extends TestWithMockedEndpoint {
 
     @Test
     public void testWithParams() {
         final FpNotificationRule rule = new FpNotificationRule(
-            new FpEndpoint("http://127.0.0.1"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject('{' +
                 "  \"id\": 1," +
@@ -79,7 +55,7 @@ public class FpNotificationRuleTest {
     @Test
     public void testWithoutParams() {
         final FpNotificationRule rule = new FpNotificationRule(
-            new FpEndpoint("http://127.0.0.1:10011"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject('{' +
                 "  \"id\": 1," +
@@ -98,7 +74,7 @@ public class FpNotificationRuleTest {
 
     @Test
     public void testDelete() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules/123")
                     .withMethod("DELETE")
@@ -108,7 +84,7 @@ public class FpNotificationRuleTest {
                 HttpResponse.response().withStatusCode(200)
             );
         new FpNotificationRule(
-            new FpEndpoint("http://127.0.0.1:10011"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject("{\"id\": 123}"),
             "/api/v1/notificationRules"

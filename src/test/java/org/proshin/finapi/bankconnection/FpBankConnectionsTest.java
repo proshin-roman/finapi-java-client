@@ -21,45 +21,21 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfLongs;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.account.Type;
 import org.proshin.finapi.bankconnection.in.ImportParameters;
 import org.proshin.finapi.bankconnection.in.UpdateParameters;
-import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public class FpBankConnectionsTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10015);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpBankConnectionsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/42")
                     .withHeader("Authorization", "Bearer user-token")
@@ -68,14 +44,14 @@ public class FpBankConnectionsTest {
             HttpResponse.response("{}")
         );
         new FpBankConnections(
-            new FpEndpoint("http://127.0.0.1:10015"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).one(42L);
     }
 
     @Test
     public void testQuery() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections")
                     .withHeader("Authorization", "Bearer user-token")
@@ -85,7 +61,7 @@ public class FpBankConnectionsTest {
             HttpResponse.response("{\"connections\":[{\"id\":42}]}")
         );
         final Iterable<BankConnection> connections = new FpBankConnections(
-            new FpEndpoint("http://127.0.0.1:10015"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).query(new IterableOfLongs(42L, 43L, 44L));
         final Iterator<BankConnection> iterator = connections.iterator();
@@ -95,7 +71,7 @@ public class FpBankConnectionsTest {
 
     @Test
     public void testImportNew() throws Exception {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/import")
                     .withHeader("Authorization", "Bearer user-token")
@@ -117,7 +93,7 @@ public class FpBankConnectionsTest {
                 HttpResponse.response("{}").withStatusCode(201)
             );
         final Future<BankConnection> future = new FpBankConnections(
-            new FpEndpoint("http://127.0.0.1:10015"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).importNew(
             new ImportParameters()
@@ -138,7 +114,7 @@ public class FpBankConnectionsTest {
 
     @Test
     public void testUpdate() throws Exception {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/update")
                     .withHeader("Authorization", "Bearer user-token")
@@ -156,7 +132,7 @@ public class FpBankConnectionsTest {
                 HttpResponse.response("{}")
             );
         final Future<BankConnection> future = new FpBankConnections(
-            new FpEndpoint("http://127.0.0.1:10015"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).update(new UpdateParameters()
             .withBankConnection(42L)
@@ -172,7 +148,7 @@ public class FpBankConnectionsTest {
 
     @Test
     public void testDeleteAll() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections")
                     .withHeader("Authorization", "Bearer user-token")
@@ -181,7 +157,7 @@ public class FpBankConnectionsTest {
                 HttpResponse.response("{\"identifiers\":[]}")
             );
         new FpBankConnections(
-            new FpEndpoint("http://127.0.0.1:10015"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).deleteAll();
     }

@@ -24,16 +24,11 @@ import org.hamcrest.Description;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import org.json.JSONObject;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.label.Label;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
@@ -41,31 +36,12 @@ import org.proshin.finapi.transaction.in.EditTransactionParameters;
 import org.proshin.finapi.transaction.in.SplitTransactionParameters;
 import org.proshin.finapi.transaction.in.Subtransaction;
 
-public class FpTransactionTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10007);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpTransactionTest extends TestWithMockedEndpoint {
 
     @Test
     public void test() {
         final Transaction tx = new FpTransaction(
-            new FpEndpoint("http://127.0.0.1:10007"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject('{' +
                 "  \"id\": 1," +
@@ -173,39 +149,39 @@ public class FpTransactionTest {
         assertThat(tx.originalAmount(), is(Optional.of(new BigDecimal("-9.99"))));
         assertThat(tx.differentDebitor(), is(Optional.of("DIFD70204")));
         assertThat(tx.differentCreditor(), is(Optional.of("DIFC98450")));
-
     }
 
     @Test
     public void testSplit() {
-        server.when(
-            HttpRequest.request("/api/v1/transactions/123/split")
-                .withMethod("POST")
-                .withHeader("Authorization", "Bearer user-token")
-                .withBody(new JsonBody('{' +
-                    "  \"subTransactions\": [" +
-                    "    {" +
-                    "      \"amount\": -99.99," +
-                    "      \"categoryId\": 378," +
-                    "      \"purpose\": \"Restaurantbesuch\"," +
-                    "      \"counterpart\": \"TueV Bayern\"," +
-                    "      \"counterpartAccountNumber\": \"61110500\"," +
-                    "      \"counterpartIban\": \"DE13700800000061110500\"," +
-                    "      \"counterpartBic\": \"DRESDEFF700\"," +
-                    "      \"counterpartBlz\": \"70080000\"," +
-                    "      \"labelIds\": [" +
-                    "        1," +
-                    "        2," +
-                    "        3" +
-                    "      ]" +
-                    "    }" +
-                    "  ]" +
-                    '}'))
-        ).respond(
+        this.server()
+            .when(
+                HttpRequest.request("/api/v1/transactions/123/split")
+                    .withMethod("POST")
+                    .withHeader("Authorization", "Bearer user-token")
+                    .withBody(new JsonBody('{' +
+                        "  \"subTransactions\": [" +
+                        "    {" +
+                        "      \"amount\": -99.99," +
+                        "      \"categoryId\": 378," +
+                        "      \"purpose\": \"Restaurantbesuch\"," +
+                        "      \"counterpart\": \"TueV Bayern\"," +
+                        "      \"counterpartAccountNumber\": \"61110500\"," +
+                        "      \"counterpartIban\": \"DE13700800000061110500\"," +
+                        "      \"counterpartBic\": \"DRESDEFF700\"," +
+                        "      \"counterpartBlz\": \"70080000\"," +
+                        "      \"labelIds\": [" +
+                        "        1," +
+                        "        2," +
+                        "        3" +
+                        "      ]" +
+                        "    }" +
+                        "  ]" +
+                        '}'))
+            ).respond(
             HttpResponse.response("{}")
         );
         new FpTransaction(
-            new FpEndpoint("http://127.0.0.1:10007"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject("{\"id\":123}"),
             "/api/v1/transactions"
@@ -228,7 +204,7 @@ public class FpTransactionTest {
 
     @Test
     public void testRestore() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/123/restore")
                     .withMethod("POST")
@@ -238,7 +214,7 @@ public class FpTransactionTest {
                 HttpResponse.response("{}")
             );
         new FpTransaction(
-            new FpEndpoint("http://127.0.0.1:10007"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject("{\"id\":123}"),
             "/api/v1/transactions"
@@ -247,7 +223,7 @@ public class FpTransactionTest {
 
     @Test
     public void testEdit() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/123")
                     .withMethod("PATCH")
@@ -268,7 +244,7 @@ public class FpTransactionTest {
                 HttpResponse.response("{}")
             );
         new FpTransaction(
-            new FpEndpoint("http://127.0.0.1:10007"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject("{\"id\":123}"),
             "/api/v1/transactions"
@@ -284,7 +260,7 @@ public class FpTransactionTest {
 
     @Test
     public void testDelete() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/123")
                     .withMethod("DELETE")
@@ -294,7 +270,7 @@ public class FpTransactionTest {
                 HttpResponse.response().withStatusCode(200)
             );
         new FpTransaction(
-            new FpEndpoint("http://127.0.0.1:10007"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject("{\"id\":123}"),
             "/api/v1/transactions"

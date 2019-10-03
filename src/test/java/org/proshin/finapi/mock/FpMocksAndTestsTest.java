@@ -17,17 +17,12 @@ package org.proshin.finapi.mock;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.account.Type;
-import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.mock.in.Account;
 import org.proshin.finapi.mock.in.BatchUpdateParameters;
@@ -37,29 +32,11 @@ import org.proshin.finapi.mock.in.Transaction;
 import org.proshin.finapi.mock.out.CategorizationResult;
 import org.proshin.finapi.mock.out.CategorizationResults;
 
-public class FpMocksAndTestsTest {
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10017);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpMocksAndTestsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testMockBatchUpdate() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/tests/mockBatchUpdate")
                     .withMethod("POST")
@@ -99,7 +76,7 @@ public class FpMocksAndTestsTest {
                 HttpResponse.response("")
             );
         new FpMocksAndTests(
-            new FpEndpoint("http://127.0.0.1:10017"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).mockBatchUpdate(
             new BatchUpdateParameters(true,
@@ -123,7 +100,7 @@ public class FpMocksAndTestsTest {
 
     @Test
     public void testCheckCategorization() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/tests/checkCategorization")
                     .withMethod("POST")
@@ -150,7 +127,7 @@ public class FpMocksAndTestsTest {
                 HttpResponse.response("{\"categorizationCheckResult\":[{}]}")
             );
         final CategorizationResults results = new FpMocksAndTests(
-            new FpEndpoint("http://127.0.0.1:10017"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).checkCategorization(
             new CategorizationParameter("transaction", Type.Checking, new BigDecimal("-99.99"))
