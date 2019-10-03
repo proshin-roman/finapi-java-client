@@ -16,43 +16,19 @@
 package org.proshin.finapi.label;
 
 import org.cactoos.iterable.IterableOf;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.label.in.LabelsCriteria;
 import org.proshin.finapi.primitives.paging.Page;
 
-public class LabelsTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10018);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class LabelsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/labels/12")
                     .withMethod("GET")
@@ -62,14 +38,14 @@ public class LabelsTest {
                 HttpResponse.response("{}")
             );
         final Label label = new FpLabels(
-            new FpEndpoint("http://127.0.0.1:10018"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).one(12L);
     }
 
     @Test
     public void testQuery() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/labels")
                     .withMethod("GET")
@@ -82,7 +58,7 @@ public class LabelsTest {
                 HttpResponse.response("{}")
             );
         final Page<Label> labels = new FpLabels(
-            new FpEndpoint("http://127.0.0.1:10018"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).query(
             new LabelsCriteria()

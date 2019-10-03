@@ -19,16 +19,11 @@ import java.math.BigDecimal;
 import org.cactoos.iterable.IterableOfLongs;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.Direction;
 import org.proshin.finapi.primitives.LocalDateOf;
@@ -37,29 +32,11 @@ import org.proshin.finapi.transaction.in.EditTransactionsParameters;
 import org.proshin.finapi.transaction.in.TransactionsCriteria;
 import org.proshin.finapi.transaction.out.TransactionsPage;
 
-public class FpTransactionsTest {
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10008);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpTransactionsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/123")
                     .withMethod("GET")
@@ -67,14 +44,14 @@ public class FpTransactionsTest {
             )
             .respond(HttpResponse.response("{}"));
         new FpTransactions(
-            new FpEndpoint("http://127.0.0.1:10008"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).one(123L);
     }
 
     @Test
     public void testQuery() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions")
                     .withMethod("GET")
@@ -117,7 +94,7 @@ public class FpTransactionsTest {
                 "  \"balance\": 59.99" +
                 '}'));
         final TransactionsPage page = new FpTransactions(
-            new FpEndpoint("http://127.0.0.1:10008"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).query(
             new TransactionsCriteria()
@@ -157,7 +134,7 @@ public class FpTransactionsTest {
 
     @Test
     public void testEdit() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions")
                     .withMethod("PATCH")
@@ -174,7 +151,7 @@ public class FpTransactionsTest {
             )
             .respond(HttpResponse.response("{\"identifiers\":[]}"));
         new FpTransactions(
-            new FpEndpoint("http://127.0.0.1:10008"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).edit(
             new EditTransactionsParameters()
@@ -190,7 +167,7 @@ public class FpTransactionsTest {
 
     @Test
     public void testTriggerCategorization() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/triggerCategorization")
                     .withMethod("POST")
@@ -199,14 +176,14 @@ public class FpTransactionsTest {
             )
             .respond(HttpResponse.response().withStatusCode(200));
         new FpTransactions(
-            new FpEndpoint("http://127.0.0.1:10008"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).triggerCategorization(new IterableOfLongs(1L, 2L, 3L));
     }
 
     @Test
     public void testDeleteAll() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions")
                     .withMethod("DELETE")
@@ -217,7 +194,7 @@ public class FpTransactionsTest {
             )
             .respond(HttpResponse.response("{\"identifiers\":[]}"));
         new FpTransactions(
-            new FpEndpoint("http://127.0.0.1:10008"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).deleteAll(
             new DeleteTransactionsCriteria()

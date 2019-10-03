@@ -17,46 +17,22 @@ package org.proshin.finapi.bank;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfLongs;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import static org.proshin.finapi.bank.Bank.DataSource.FINTS_SERVER;
 import static org.proshin.finapi.bank.Bank.DataSource.WEB_SCRAPER;
 import org.proshin.finapi.bank.in.BanksCriteria;
-import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.primitives.paging.PagingCriteria;
 
-public final class BanksTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10016);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public final class BanksTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/banks/123")
                     .withHeader("Authorization", "Bearer user-token")
@@ -65,14 +41,14 @@ public final class BanksTest {
                 HttpResponse.response("{}")
             );
         new FpBanks(
-            new FpEndpoint("http://127.0.0.1:10016"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).one(123L);
     }
 
     @Test
     public void testSearch() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/banks")
                     .withHeader("Authorization", "Bearer user-token")
@@ -91,7 +67,7 @@ public final class BanksTest {
                 HttpResponse.response("{\"banks\":[{}]}")
             );
         final Page<Bank> banks = new FpBanks(
-            new FpEndpoint("http://127.0.0.1:10016"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).search(
             new BanksCriteria()
