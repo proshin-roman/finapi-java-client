@@ -116,7 +116,8 @@ public final class FpEndpoint implements Endpoint {
                         "Couldn't delete '%s'",
                         path
                     )
-                ).asString()
+                ).asString(),
+                e
             );
         }
     }

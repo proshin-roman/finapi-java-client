@@ -20,14 +20,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import org.json.JSONObject;
 import org.junit.Test;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public class FpCashFlowTest {
+public class FpCashFlowTest extends TestWithMockedEndpoint {
     @Test
     public void test() {
         final FpCashFlow cashFlow = new FpCashFlow(
-            new FpEndpoint("http://127.0.0.1"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject('{' +
                 "      \"category\": {" +
