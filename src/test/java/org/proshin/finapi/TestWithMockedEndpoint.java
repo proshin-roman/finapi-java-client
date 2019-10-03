@@ -15,31 +15,36 @@
  */
 package org.proshin.finapi;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import org.junit.After;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import org.junit.Before;
+import org.junit.Rule;
+import org.mockserver.client.MockServerClient;
+import org.mockserver.junit.MockServerRule;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.endpoint.FpEndpoint;
 
+@SuppressWarnings("AbstractClassWithoutAbstractMethods")
 public abstract class TestWithMockedEndpoint {
 
-    private static final AtomicInteger PORT_COUNTER = new AtomicInteger(10000);
+    @Rule
+    @SuppressWarnings("ThisEscapedInObjectConstruction")
+    public MockServerRule mockServerRule = new MockServerRule(this);
 
-    private final int port = PORT_COUNTER.getAndIncrement();
-    private final ClientAndServer server = startClientAndServer(this.port);
-    private final Endpoint endpoint = new FpEndpoint("http://localhost:" + this.port);
+    @SuppressWarnings("InstanceVariableMayNotBeInitialized")
+    private MockServerClient server;
+    @SuppressWarnings("InstanceVariableMayNotBeInitialized")
+    private Endpoint endpoint;
 
-    @After
-    public void stopServer() {
-        this.server.stop(true);
+    @Before
+    public void init() {
+        this.server = this.mockServerRule.getClient();
+        this.endpoint = new FpEndpoint("http://localhost:" + this.server.remoteAddress().getPort());
     }
 
     protected Endpoint endpoint() {
         return this.endpoint;
     }
 
-    protected ClientAndServer server() {
+    protected MockServerClient server() {
         return this.server;
     }
 }
