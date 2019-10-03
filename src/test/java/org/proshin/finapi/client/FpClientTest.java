@@ -19,50 +19,27 @@ import java.util.Optional;
 import org.hamcrest.CoreMatchers;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.client.in.EditClientParameters;
 import org.proshin.finapi.client.out.Configuration;
-import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.user.User;
 import org.proshin.finapi.user.Users;
 import org.proshin.finapi.user.in.FpCreateParameters;
 
-public class FpClientTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10002);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpClientTest extends TestWithMockedEndpoint {
 
     @Test
     public void testConfiguration() {
-        server.when(
-            HttpRequest.request("/api/v1/clientConfiguration")
-                .withMethod("GET")
-                .withHeader("Authorization", "Bearer random-token"))
+        this.server()
+            .when(
+                HttpRequest.request("/api/v1/clientConfiguration")
+                    .withMethod("GET")
+                    .withHeader("Authorization", "Bearer random-token"))
             .respond(
                 HttpResponse.response('{' +
                     "  \"isAutomaticBatchUpdateEnabled\": true," +
@@ -86,7 +63,7 @@ public class FpClientTest {
                     '}')
             );
         final Configuration configuration = new FpClient(
-            new FpEndpoint("http://127.0.0.1:10002"),
+            this.endpoint(),
             new FakeAccessToken("random-token")
         ).configuration();
         assertThat(configuration.isAutomaticBatchUpdateEnabled(), is(true));
@@ -118,19 +95,20 @@ public class FpClientTest {
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
     public void testEdit() {
-        server.when(
-            HttpRequest.request("/api/v1/clientConfiguration")
-                .withMethod("PATCH")
-                .withHeader("Authorization", "Bearer random-token")
-                .withBody(new JsonBody('{' +
-                    "  \"userNotificationCallbackUrl\": \"https://bank.server.com/notification\"," +
-                    "  \"userSynchronizationCallbackUrl\": \"https://bank.server.com/synchronization\"," +
-                    "  \"refreshTokensValidityPeriod\": 123," +
-                    "  \"userAccessTokensValidityPeriod\": 234," +
-                    "  \"clientAccessTokensValidityPeriod\": 345," +
-                    "  \"isPinStorageAvailableInWebForm\": true," +
-                    "  \"applicationName\": \"New name\"" +
-                    '}')))
+        this.server()
+            .when(
+                HttpRequest.request("/api/v1/clientConfiguration")
+                    .withMethod("PATCH")
+                    .withHeader("Authorization", "Bearer random-token")
+                    .withBody(new JsonBody('{' +
+                        "  \"userNotificationCallbackUrl\": \"https://bank.server.com/notification\"," +
+                        "  \"userSynchronizationCallbackUrl\": \"https://bank.server.com/synchronization\"," +
+                        "  \"refreshTokensValidityPeriod\": 123," +
+                        "  \"userAccessTokensValidityPeriod\": 234," +
+                        "  \"clientAccessTokensValidityPeriod\": 345," +
+                        "  \"isPinStorageAvailableInWebForm\": true," +
+                        "  \"applicationName\": \"New name\"" +
+                        '}')))
             .respond(
                 HttpResponse.response('{' +
                     "  \"isAutomaticBatchUpdateEnabled\": true," +
@@ -154,7 +132,7 @@ public class FpClientTest {
                     '}')
             );
         new FpClient(
-            new FpEndpoint("http://127.0.0.1:10002"),
+            this.endpoint(),
             new FakeAccessToken("random-token")
         ).edit(
             new EditClientParameters()
@@ -171,16 +149,17 @@ public class FpClientTest {
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
     public void testUsers() {
-        server.when(
-            HttpRequest.request("/api/v1/users")
-                .withMethod("POST")
-                .withHeader("Authorization", "Bearer random-token"))
+        this.server()
+            .when(
+                HttpRequest.request("/api/v1/users")
+                    .withMethod("POST")
+                    .withHeader("Authorization", "Bearer random-token"))
             .respond(
                 HttpResponse.response("{}")
                     .withStatusCode(201)
             );
         final Users users = new FpClient(
-            new FpEndpoint("http://127.0.0.1:10002"),
+            this.endpoint(),
             new FakeAccessToken("random-token")
         ).users();
         final User user = users.create(new FpCreateParameters());

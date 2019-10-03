@@ -16,38 +16,20 @@
 package org.proshin.finapi.mandator;
 
 import org.cactoos.iterable.IterableOf;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.mandator.in.UsersCriteria;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public class FpMandatorTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10006);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
+public class FpMandatorTest extends TestWithMockedEndpoint {
 
     @Test
     public void testUsers() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/mandatorAdmin/getUserList")
                     .withMethod("GET")
@@ -72,7 +54,7 @@ public class FpMandatorTest {
                 HttpResponse.response("{\"users\":[{}]}")
             );
         new FpMandator(
-            new FpEndpoint("http://127.0.0.1:10006"),
+            this.endpoint(),
             new FakeAccessToken("admin-token")
         ).users(
             new UsersCriteria()
@@ -95,7 +77,7 @@ public class FpMandatorTest {
 
     @Test
     public void testDeleteUsers() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/mandatorAdmin/deleteUsers")
                     .withMethod("POST")
@@ -113,14 +95,14 @@ public class FpMandatorTest {
                 HttpResponse.response("{}")
             );
         new FpMandator(
-            new FpEndpoint("http://127.0.0.1:10006"),
+            this.endpoint(),
             new FakeAccessToken("admin-token")
         ).deleteUsers(new IterableOf<>("first_user", "second_user", "third_user", "fourth_user"));
     }
 
     @Test
     public void testChangeClientCredentials() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/mandatorAdmin/changeClientCredentials")
                     .withMethod("POST")
@@ -135,14 +117,8 @@ public class FpMandatorTest {
                 HttpResponse.response("")
             );
         new FpMandator(
-            new FpEndpoint("http://127.0.0.1:10006"),
+            this.endpoint(),
             new FakeAccessToken("admin-token")
         ).changeClientCredentials("client ID", "old secret", "new secret");
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
     }
 }

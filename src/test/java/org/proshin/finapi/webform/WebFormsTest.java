@@ -15,41 +15,17 @@
  */
 package org.proshin.finapi.webform;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public class WebFormsTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10019);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class WebFormsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/webForms/12")
                     .withMethod("GET")
@@ -59,7 +35,7 @@ public class WebFormsTest {
                 HttpResponse.response("{}")
             );
         new FpWebForms(
-            new FpEndpoint("http://127.0.0.1:10019"),
+            this.endpoint(),
             new FakeAccessToken("user access token")
         ).one(12L);
     }

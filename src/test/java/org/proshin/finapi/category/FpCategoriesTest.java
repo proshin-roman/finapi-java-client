@@ -19,51 +19,27 @@ import java.math.BigDecimal;
 import org.cactoos.iterable.IterableOfLongs;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.account.Type;
 import org.proshin.finapi.category.in.CashFlowsCriteria;
 import org.proshin.finapi.category.in.CategoriesCriteria;
 import org.proshin.finapi.category.in.CreateCategoryParameters;
 import org.proshin.finapi.category.in.TrainCategorizationParameters;
 import org.proshin.finapi.category.out.CashFlows;
-import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.Direction;
 import org.proshin.finapi.primitives.LocalDateOf;
 import org.proshin.finapi.primitives.paging.Page;
 
-public class FpCategoriesTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10010);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpCategoriesTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/categories/378")
                     .withMethod("GET")
@@ -73,14 +49,14 @@ public class FpCategoriesTest {
                 HttpResponse.response("{}")
             );
         new FpCategories(
-            new FpEndpoint("http://127.0.0.1:10010"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).one(378L);
     }
 
     @Test
     public void testQuery() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/categories")
                     .withMethod("GET")
@@ -96,7 +72,7 @@ public class FpCategoriesTest {
                 HttpResponse.response("{\"categories\":[{}]}")
             );
         final Page<Category> page = new FpCategories(
-            new FpEndpoint("http://127.0.0.1:10010"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).query(
             new CategoriesCriteria()
@@ -111,7 +87,7 @@ public class FpCategoriesTest {
 
     @Test
     public void testCashFlows() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/categories/cashFlows")
                     .withMethod("GET")
@@ -144,7 +120,7 @@ public class FpCategoriesTest {
                     '}')
             );
         final CashFlows cashFlows = new FpCategories(
-            new FpEndpoint("http://127.0.0.1:10010"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).cashFlows(
             new CashFlowsCriteria()
@@ -175,7 +151,7 @@ public class FpCategoriesTest {
 
     @Test
     public void testCreate() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/categories")
                     .withMethod("POST")
@@ -189,7 +165,7 @@ public class FpCategoriesTest {
                 HttpResponse.response("{}").withStatusCode(201)
             );
         new FpCategories(
-            new FpEndpoint("http://127.0.0.1:10010"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).create(
             new CreateCategoryParameters()
@@ -200,7 +176,7 @@ public class FpCategoriesTest {
 
     @Test
     public void testTrainCategorization() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/categories/trainCategorization")
                     .withMethod("POST")
@@ -226,7 +202,7 @@ public class FpCategoriesTest {
                 HttpResponse.response().withStatusCode(200)
             );
         new FpCategories(
-            new FpEndpoint("http://127.0.0.1:10010"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).trainCategorization(
             new TrainCategorizationParameters()
@@ -248,7 +224,7 @@ public class FpCategoriesTest {
 
     @Test
     public void testDeleteAll() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/categories")
                     .withMethod("DELETE")
@@ -256,7 +232,7 @@ public class FpCategoriesTest {
             )
             .respond(HttpResponse.response("{\"identifiers\":[1,2,3]}"));
         new FpCategories(
-            new FpEndpoint("http://127.0.0.1:10010"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).deleteAll();
     }

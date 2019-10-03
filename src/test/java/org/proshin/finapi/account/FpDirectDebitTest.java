@@ -16,32 +16,20 @@
 package org.proshin.finapi.account;
 
 import java.math.BigDecimal;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.account.in.DirectDebitParameters;
-import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public class FpDirectDebitTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10005);
-    }
+public class FpDirectDebitTest extends TestWithMockedEndpoint {
 
     @Test
     public void testRequest() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts/requestSepaDirectDebit")
                     .withMethod("POST")
@@ -73,7 +61,7 @@ public class FpDirectDebitTest {
             )
             .respond(HttpResponse.response("{}"));
         new FpDirectDebit(
-            new FpEndpoint("http://127.0.0.1:10005"),
+            this.endpoint(),
             new FakeAccessToken("access-token"),
             "/api/v1/accounts/"
         ).request(
@@ -104,7 +92,7 @@ public class FpDirectDebitTest {
 
     @Test
     public void testExecute() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts/executeSepaDirectDebit")
                     .withMethod("POST")
@@ -116,15 +104,9 @@ public class FpDirectDebitTest {
             )
             .respond(HttpResponse.response("{}"));
         new FpDirectDebit(
-            new FpEndpoint("http://127.0.0.1:10005"),
+            this.endpoint(),
             new FakeAccessToken("access-token"),
             "/api/v1/accounts/"
         ).execute(1L, "0123");
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
     }
 }

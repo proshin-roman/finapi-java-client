@@ -17,44 +17,20 @@ package org.proshin.finapi.account;
 
 import java.math.BigDecimal;
 import org.cactoos.iterable.IterableOfLongs;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.account.in.DailyBalancesCriteria;
 import org.proshin.finapi.account.in.FpQueryCriteria;
-import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public class FpAccountsTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10003);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpAccountsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts/2")
                     .withMethod("GET")
@@ -63,15 +39,16 @@ public class FpAccountsTest {
             .respond(
                 HttpResponse.response("{}")
             );
+
         final Account account = new FpAccounts(
-            new FpEndpoint("http://127.0.0.1:10003"),
+            this.endpoint(),
             new FakeAccessToken("random-token")
         ).one(2L);
     }
 
     @Test
     public void testQuery() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts")
                     .withQueryStringParameter("ids", "1%2C2")
@@ -89,7 +66,7 @@ public class FpAccountsTest {
                 HttpResponse.response("{\"accounts\": [{}]}")
             );
         new FpAccounts(
-            new FpEndpoint("http://127.0.0.1:10003"),
+            this.endpoint(),
             new FakeAccessToken("random-token")
         ).query(new FpQueryCriteria()
             .withIds(new IterableOfLongs(1L, 2L))
@@ -105,7 +82,7 @@ public class FpAccountsTest {
 
     @Test
     public void testDailyBalances() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts/dailyBalances")
                     .withQueryStringParameter("accountIds", "1%2C2")
@@ -122,7 +99,7 @@ public class FpAccountsTest {
                 HttpResponse.response("{\"accounts\": [{}]}")
             );
         new FpAccounts(
-            new FpEndpoint("http://127.0.0.1:10003"),
+            this.endpoint(),
             new FakeAccessToken("random-token")
         ).dailyBalances(
             new DailyBalancesCriteria()
