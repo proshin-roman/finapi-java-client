@@ -1,6 +1,11 @@
 [![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
 [![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
+<a href="https://www.yegor256.com/2018/09/30/award-2019.html">
+<img src="https://www.yegor256.com/images/award/2019/winner-proshin-roman.png" height="45" alt='winner'/>
+</a>
+<br/>
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ### Releases
