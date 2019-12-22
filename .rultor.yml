@@ -1,2 +1,11 @@
 architect:
   - proshin-roman
+assets:
+  - settings.xml: "proshin-roman/finapi-java-client-secrets#settings.xml"
+  - pubring.gpg: "proshin-roman/finapi-java-client-secrets#pubring.gpg"
+  - secring.gpg: "proshin-roman/finapi-java-client-secrets#secring.gpg"
+release:
+  script: |
+    mvn versions:set "-DnewVersion=${tag}"
+    git commit -am "${tag}"
+    mvn clean deploy -Pjcabi --settings /home/r/settings.xml
