@@ -17,6 +17,7 @@ package org.proshin.finapi.bank;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
+import org.proshin.finapi.bank.out.BankInterface;
 import org.proshin.finapi.bank.out.LoginFields;
 
 public interface Bank {
@@ -31,25 +32,27 @@ public interface Bank {
 
     String blz();
 
-    LoginFields loginFields();
-
-    boolean isCustomerIdPassword();
-
-    boolean isSupported();
-
-    Iterable<DataSource> supportedDataSources();
-
-    boolean pinsAreVolatile();
-
     Optional<String> location();
 
     Optional<String> city();
+
+    boolean isSupported();
 
     boolean isTestBank();
 
     int popularity();
 
     int health();
+
+    LoginFields loginFields();
+
+    boolean pinsAreVolatile();
+
+    boolean isCustomerIdPassword();
+
+    Iterable<DataSource> supportedDataSources();
+
+    Iterable<BankInterface> interfaces();
 
     Optional<OffsetDateTime> lastCommunicationAttempt();
 
