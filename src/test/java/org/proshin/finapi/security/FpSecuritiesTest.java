@@ -16,42 +16,18 @@
 package org.proshin.finapi.security;
 
 import org.cactoos.iterable.IterableOfLongs;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.security.in.SecuritiesCriteria;
 
-public class FpSecuritiesTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10009);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpSecuritiesTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/securities/123")
                     .withMethod("GET")
@@ -61,14 +37,14 @@ public class FpSecuritiesTest {
                 HttpResponse.response("{}")
             );
         new FpSecurities(
-            new FpEndpoint("http://127.0.0.1:10009"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).one(123L);
     }
 
     @Test
     public void testQuery() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/securities")
                     .withMethod("GET")
@@ -84,7 +60,7 @@ public class FpSecuritiesTest {
                 HttpResponse.response("{\"securities\":[{}]}")
             );
         new FpSecurities(
-            new FpEndpoint("http://127.0.0.1:10009"),
+            this.endpoint(),
             new FakeAccessToken("user-token")
         ).query(
             new SecuritiesCriteria()

@@ -18,43 +18,19 @@ package org.proshin.finapi.accesstoken;
 import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public final class FpAccessTokensTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10013);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public final class FpAccessTokensTest extends TestWithMockedEndpoint {
 
     @Test
     public void testThatClientTokenReturnsValidToken() {
         final String clientId = "client ID #1";
         final String clientSecret = "client secret #1";
-        server.when(
+        this.server().when(
             HttpRequest.request("/oauth/token")
                 .withMethod("POST")
                 .withQueryStringParameter("grant_type", "client_credentials")
@@ -72,10 +48,7 @@ public final class FpAccessTokensTest {
                 )
             )
         );
-        final AccessToken token =
-            new FpAccessTokens(
-                new FpEndpoint("http://127.0.0.1:10013")
-            ).clientToken(clientId, clientSecret);
+        final AccessToken token = new FpAccessTokens(this.endpoint()).clientToken(clientId, clientSecret);
         assertThat(token.accessToken(), is("access token"));
         assertThat(token.tokenType(), is("bearer"));
         assertThat(token.refreshToken().isPresent(), is(false));
@@ -89,7 +62,7 @@ public final class FpAccessTokensTest {
         final String clientSecret = "client secret #2";
         final String username = "username #2";
         final String password = "password #2";
-        server.when(
+        this.server().when(
             HttpRequest.request("/oauth/token")
                 .withMethod("POST")
                 .withQueryStringParameter("grant_type", "password")
@@ -110,9 +83,8 @@ public final class FpAccessTokensTest {
                 )
             )
         );
-        final AccessToken token = new FpAccessTokens(
-            new FpEndpoint("http://127.0.0.1:10013")
-        ).userToken(clientId, clientSecret, username, password);
+        final AccessToken token = new FpAccessTokens(this.endpoint())
+            .userToken(clientId, clientSecret, username, password);
         assertThat(token.accessToken(), is("access token"));
         assertThat(token.tokenType(), is("bearer"));
         assertThat(token.refreshToken(), is(Optional.of("refresh token")));
@@ -125,7 +97,7 @@ public final class FpAccessTokensTest {
         final String clientId = "client ID #2";
         final String clientSecret = "client secret #2";
         final String refreshToken = "refresh token";
-        server.when(
+        this.server().when(
             HttpRequest.request("/oauth/token")
                 .withMethod("POST")
                 .withQueryStringParameter("grant_type", "refresh_token")
@@ -145,9 +117,8 @@ public final class FpAccessTokensTest {
                 )
             )
         );
-        final AccessToken token = new FpAccessTokens(
-            new FpEndpoint("http://127.0.0.1:10013")
-        ).userToken(clientId, clientSecret, refreshToken);
+        final AccessToken token = new FpAccessTokens(this.endpoint())
+            .userToken(clientId, clientSecret, refreshToken);
         assertThat(token.accessToken(), is("access token"));
         assertThat(token.tokenType(), is("bearer"));
         assertThat(token.refreshToken(), is(Optional.of("refresh token")));
@@ -160,7 +131,7 @@ public final class FpAccessTokensTest {
         final String clientId = "client ID #2";
         final String clientSecret = "client secret #2";
         final String refreshToken = "refresh token";
-        server.when(
+        this.server().when(
             HttpRequest.request("/oauth/revoke")
                 .withMethod("POST")
                 .withHeader("Authorization", "Bearer client-token")
@@ -169,13 +140,12 @@ public final class FpAccessTokensTest {
         ).respond(
             HttpResponse.response().withStatusCode(200)
         );
-        new FpAccessTokens(
-            new FpEndpoint("http://127.0.0.1:10013")
-        ).revoke(
-            new FakeAccessToken("client-token"),
-            new FakeAccessToken("user-token"),
-            AccessTokens.RevokeToken.ACCESS_TOKEN_ONLY
-        );
+        new FpAccessTokens(this.endpoint())
+            .revoke(
+                new FakeAccessToken("client-token"),
+                new FakeAccessToken("user-token"),
+                AccessTokens.RevokeToken.ACCESS_TOKEN_ONLY
+            );
     }
 
     @Test
@@ -183,7 +153,7 @@ public final class FpAccessTokensTest {
         final String clientId = "client ID #2";
         final String clientSecret = "client secret #2";
         final String refreshToken = "refresh token";
-        server.when(
+        this.server().when(
             HttpRequest.request("/oauth/revoke")
                 .withMethod("POST")
                 .withHeader("Authorization", "Bearer client-token")
@@ -192,12 +162,11 @@ public final class FpAccessTokensTest {
         ).respond(
             HttpResponse.response().withStatusCode(200)
         );
-        new FpAccessTokens(
-            new FpEndpoint("http://127.0.0.1:10013")
-        ).revoke(
-            new FakeAccessToken("client-token"),
-            new FakeAccessToken("user-token"),
-            AccessTokens.RevokeToken.REFRESH_TOKEN_ONLY
-        );
+        new FpAccessTokens(this.endpoint())
+            .revoke(
+                new FakeAccessToken("client-token"),
+                new FakeAccessToken("user-token"),
+                AccessTokens.RevokeToken.REFRESH_TOKEN_ONLY
+            );
     }
 }

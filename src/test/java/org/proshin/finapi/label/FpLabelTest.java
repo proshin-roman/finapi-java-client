@@ -19,14 +19,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import org.json.JSONObject;
 import org.junit.Test;
-import org.proshin.finapi.endpoint.FpEndpoint;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public class FpLabelTest {
+public class FpLabelTest extends TestWithMockedEndpoint {
     @Test
     public void test() {
         final Label label = new FpLabel(
-            new FpEndpoint("http://127.0.0.1"),
+            this.endpoint(),
             new FakeAccessToken("fake token"),
             new JSONObject("{\"id\": 23, \"name\": \"Label name\"}"),
             "/api/v1/labels"

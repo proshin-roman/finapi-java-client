@@ -18,7 +18,6 @@ package org.proshin.finapi.endpoint;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
@@ -30,6 +29,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -43,9 +43,12 @@ import org.cactoos.text.UncheckedText;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.exception.FinapiException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 public final class FpEndpoint implements Endpoint {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FpEndpoint.class);
 
     private final HttpClient client;
     private final String endpoint;
@@ -64,7 +67,7 @@ public final class FpEndpoint implements Endpoint {
         try {
             final URIBuilder builder = new URIBuilder(this.endpoint + path);
             builder.setParameters(new ListOf<>(parameters));
-            final HttpGet get = new HttpGet(builder.build());
+            final HttpUriRequest get = new HttpGet(builder.build());
             get.addHeader(new AuthorizationHeader(token.accessToken()));
             final HttpResponse response = this.client.execute(get);
             if (response.getStatusLine().getStatusCode() != 200) {
@@ -74,7 +77,7 @@ public final class FpEndpoint implements Endpoint {
                 new InputOf(response.getEntity().getContent()),
                 StandardCharsets.UTF_8
             ).asString();
-            log.info("Response body was: {}", responseBody);
+            LOGGER.info("Response body was: {}", responseBody);
             return responseBody;
         } catch (final IOException | URISyntaxException e) {
             throw new RuntimeException(
@@ -94,7 +97,7 @@ public final class FpEndpoint implements Endpoint {
         try {
             final URIBuilder builder = new URIBuilder(this.endpoint + path);
             builder.setParameters(new ListOf<>(parameters));
-            final HttpDelete delete = new HttpDelete(builder.build());
+            final HttpUriRequest delete = new HttpDelete(builder.build());
             delete.addHeader(new AuthorizationHeader(token.accessToken()));
             final HttpResponse response = this.client.execute(delete);
             if (response.getStatusLine().getStatusCode() != 200) {
@@ -104,7 +107,7 @@ public final class FpEndpoint implements Endpoint {
                 new InputOf(response.getEntity().getContent()),
                 StandardCharsets.UTF_8
             ).asString();
-            log.info("Response body was: {}", responseBody);
+            LOGGER.info("Response body was: {}", responseBody);
             return responseBody;
         } catch (final IOException | URISyntaxException e) {
             throw new IllegalStateException(
@@ -113,7 +116,8 @@ public final class FpEndpoint implements Endpoint {
                         "Couldn't delete '%s'",
                         path
                     )
-                ).asString()
+                ).asString(),
+                e
             );
         }
     }
@@ -165,7 +169,7 @@ public final class FpEndpoint implements Endpoint {
     @Override
     public String post(final String path, final AccessToken token, final int expected) {
         try {
-            final HttpPost post = new HttpPost(this.endpoint + path);
+            final HttpUriRequest post = new HttpPost(this.endpoint + path);
             post.addHeader(new AuthorizationHeader(token.accessToken()));
             final HttpResponse response = this.client.execute(post);
             if (response.getStatusLine().getStatusCode() != expected) {

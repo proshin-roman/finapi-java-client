@@ -23,49 +23,25 @@ import org.hamcrest.Description;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import org.json.JSONObject;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
+import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.bankconnection.in.FpEditParameters;
 import org.proshin.finapi.bankconnection.out.Status;
 import org.proshin.finapi.bankconnection.out.TwoStepProcedure;
 import org.proshin.finapi.bankconnection.out.Type;
 import org.proshin.finapi.bankconnection.out.UpdateResult;
-import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public class FpBankConnectionTest {
-
-    @SuppressWarnings("StaticVariableMayNotBeInitialized")
-    private static ClientAndServer server;
-
-    @BeforeClass
-    public static void startMockServer() {
-        server = startClientAndServer(10014);
-    }
-
-    @Before
-    public void reset() {
-        server.reset();
-    }
-
-    @AfterClass
-    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static void stopMockServer() {
-        server.stop();
-    }
+public class FpBankConnectionTest extends TestWithMockedEndpoint {
 
     @Test
     public void testParsingJsonStructure() {
         final FpBankConnection connection = new FpBankConnection(
-            new FpEndpoint("http://10014"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject('{' +
                 "  \"id\": 42," +
@@ -179,7 +155,7 @@ public class FpBankConnectionTest {
 
     @Test
     public void testEdit() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/42")
                     .withMethod("PATCH")
@@ -196,7 +172,7 @@ public class FpBankConnectionTest {
         );
 
         new FpBankConnection(
-            new FpEndpoint("http://127.0.0.1:10014"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject().put("id", 42L),
             "/api/v1/bankConnections"
@@ -211,7 +187,7 @@ public class FpBankConnectionTest {
 
     @Test
     public void testDelete() {
-        server
+        this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/42")
                     .withMethod("DELETE")
@@ -221,7 +197,7 @@ public class FpBankConnectionTest {
         );
 
         new FpBankConnection(
-            new FpEndpoint("http://127.0.0.1:10014"),
+            this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject().put("id", 42L),
             "/api/v1/bankConnections"
