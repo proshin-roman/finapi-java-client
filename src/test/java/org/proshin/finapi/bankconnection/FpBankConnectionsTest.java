@@ -27,8 +27,8 @@ import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.account.Type;
-import org.proshin.finapi.bankconnection.in.ImportParameters;
-import org.proshin.finapi.bankconnection.in.UpdateParameters;
+import org.proshin.finapi.bankconnection.in.ImportBankConnectionParameters;
+import org.proshin.finapi.bankconnection.in.UpdateBankConnectionParameters;
 import org.proshin.finapi.fake.FakeAccessToken;
 
 public class FpBankConnectionsTest extends TestWithMockedEndpoint {
@@ -85,7 +85,7 @@ public class FpBankConnectionsTest extends TestWithMockedEndpoint {
                         "  \"skipPositionsDownload\": true," +
                         "  \"loadOwnerData\": true," +
                         "  \"maxDaysForDownload\": 365," +
-                        "  \"accountTypeIds\": [1, 4]," +
+                        "  \"accountTypes\": [ \"Checking\", \"Security\" ]," +
                         "  \"challengeResponse\": \"0123\"" +
                         '}'))
             )
@@ -96,7 +96,7 @@ public class FpBankConnectionsTest extends TestWithMockedEndpoint {
             this.endpoint(),
             new FakeAccessToken("user-token")
         ).importNew(
-            new ImportParameters()
+            new ImportBankConnectionParameters()
                 .withBank(277672L)
                 .withUserId("user id")
                 .withCustomerId("customer id")
@@ -134,7 +134,7 @@ public class FpBankConnectionsTest extends TestWithMockedEndpoint {
         final Future<BankConnection> future = new FpBankConnections(
             this.endpoint(),
             new FakeAccessToken("user-token")
-        ).update(new UpdateParameters()
+        ).update(new UpdateBankConnectionParameters()
             .withBankConnection(42L)
             .withPin("pin")
             .withStorePin()

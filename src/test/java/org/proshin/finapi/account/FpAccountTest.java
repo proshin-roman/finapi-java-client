@@ -48,14 +48,15 @@ public class FpAccountTest extends TestWithMockedEndpoint {
                 "  \"id\": 1," +
                 "  \"bankConnectionId\": 2," +
                 "  \"accountName\": \"Testaccount\"," +
+                "  \"iban\": \"DE89370400440532013000\"," +
                 "  \"accountNumber\": \"12345678\"," +
                 "  \"subAccountNumber\": \"1234\"," +
-                "  \"iban\": \"DE89370400440532013000\"," +
                 "  \"accountHolderName\": \"Herr Max Mustermann\"," +
                 "  \"accountHolderId\": \"XXXXX\"," +
                 "  \"accountCurrency\": \"EUR\"," +
                 "  \"accountTypeId\": 1," +
                 "  \"accountTypeName\": \"Checking\"," +
+                "  \"accountType\": \"Checking\"," +
                 "  \"balance\": 91.99," +
                 "  \"overdraft\": 92.99," +
                 "  \"overdraftLimit\": 93.99," +
@@ -71,6 +72,25 @@ public class FpAccountTest extends TestWithMockedEndpoint {
                 "    \"SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT\"," +
                 "    \"SEPA_B2B_DIRECT_DEBIT\"," +
                 "    \"SEPA_B2B_COLLECTIVE_DIRECT_DEBIT\"" +
+                "  ]," +
+                "  \"interfaces\": [" +
+                "    {" +
+                "      \"interface\": \"FINTS_SERVER\"," +
+                "      \"status\": \"UPDATED\"," +
+                "      \"capabilities\": [" +
+                "        \"DATA_DOWNLOAD\"," +
+                "        \"IBAN_ONLY_SEPA_MONEY_TRANSFER\"," +
+                "        \"IBAN_ONLY_SEPA_DIRECT_DEBIT\"," +
+                "        \"SEPA_MONEY_TRANSFER\"," +
+                "        \"SEPA_COLLECTIVE_MONEY_TRANSFER\"," +
+                "        \"SEPA_BASIC_DIRECT_DEBIT\"," +
+                "        \"SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT\"," +
+                "        \"SEPA_B2B_DIRECT_DEBIT\"," +
+                "        \"SEPA_B2B_COLLECTIVE_DIRECT_DEBIT\"" +
+                "      ]," +
+                "      \"lastSuccessfulUpdate\": \"2018-01-01 00:00:00.000\"," +
+                "      \"lastUpdateAttempt\": \"2018-01-01 00:00:00.000\"" +
+                "    }" +
                 "  ]," +
                 "  \"clearingAccounts\": [" +
                 "    {" +

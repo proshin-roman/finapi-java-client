@@ -15,12 +15,15 @@
  */
 package org.proshin.finapi.bank.out;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
 import org.json.JSONObject;
+import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.primitives.IterableJsonArray;
+import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
-import org.proshin.finapi.tppCredential.FpTppAuthenticationGroup;
-import org.proshin.finapi.tppCredential.TppAuthenticationGroup;
+import org.proshin.finapi.tppcredential.FpTppAuthenticationGroup;
+import org.proshin.finapi.tppcredential.TppAuthenticationGroup;
 
 public class FpBankInterface implements BankInterface {
 
@@ -60,5 +63,20 @@ public class FpBankInterface implements BankInterface {
     @Override
     public Optional<String> loginHint() {
         return new OptionalStringOf(this.origin, "loginHint").get();
+    }
+
+    @Override
+    public int health() {
+        return this.origin.getInt("health");
+    }
+
+    @Override
+    public Optional<OffsetDateTime> lastCommunicationAttempt() {
+        return new OptionalOffsetDateTimeOf(this.origin, "lastCommunicationAttempt").get();
+    }
+
+    @Override
+    public Optional<OffsetDateTime> lastSuccessfulCommunication() {
+        return new OptionalOffsetDateTimeOf(this.origin, "lastSuccessfulCommunication").get();
     }
 }

@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
+import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.account.Type;
 import org.proshin.finapi.fake.FakeAccessToken;
@@ -80,7 +81,7 @@ public class FpMocksAndTestsTest extends TestWithMockedEndpoint {
             new FakeAccessToken("user-token")
         ).mockBatchUpdate(
             new BatchUpdateParameters(true,
-                new Connection(42L, true,
+                new Connection(42L, BankingInterface.FINTS_SERVER, true,
                     new Account(43L, new BigDecimal("99.99"),
                         new Transaction(new BigDecimal("-99.99"))
                             .withPurpose("Restaurantbesuch")
@@ -93,7 +94,7 @@ public class FpMocksAndTestsTest extends TestWithMockedEndpoint {
                             .withValueDate(LocalDate.of(2018, 2, 2))
                     )
                 ),
-                new Connection(43L)
+                new Connection(43L, BankingInterface.FINTS_SERVER)
             )
         );
     }

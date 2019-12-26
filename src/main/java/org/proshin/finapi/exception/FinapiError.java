@@ -28,19 +28,23 @@ public class FinapiError {
 
     public Optional<String> message() {
         return this.origin.has("message")
-                   ? Optional.of(this.origin.getString("message"))
-                   : Optional.empty();
+            ? Optional.of(this.origin.getString("message"))
+            : Optional.empty();
     }
 
     public Optional<ErrorCode> errorCode() {
         return this.origin.has("code")
-                   ? Optional.of(ErrorCode.valueOf(this.origin.getString("code")))
-                   : Optional.empty();
+            ? Optional.of(ErrorCode.valueOf(this.origin.getString("code")))
+            : Optional.empty();
     }
 
     public Optional<ErrorType> errorType() {
         return this.origin.has("type")
-                   ? Optional.of(ErrorType.valueOf(this.origin.getString("type")))
-                   : Optional.empty();
+            ? Optional.of(ErrorType.valueOf(this.origin.getString("type")))
+            : Optional.empty();
+    }
+
+    public MultiStepAuthenticationChallenge multiStepAuthentication() {
+        return new MultiStepAuthenticationChallenge(this.origin.getJSONObject("multiStepAuthentication"));
     }
 }

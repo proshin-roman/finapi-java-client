@@ -16,8 +16,8 @@
 package org.proshin.finapi.bankconnection;
 
 import java.util.concurrent.Future;
-import org.proshin.finapi.bankconnection.in.ImportParameters;
-import org.proshin.finapi.bankconnection.in.UpdateParameters;
+import org.proshin.finapi.bankconnection.in.ImportBankConnectionParameters;
+import org.proshin.finapi.bankconnection.in.UpdateBankConnectionParameters;
 
 public interface BankConnections {
 
@@ -25,9 +25,9 @@ public interface BankConnections {
 
     Iterable<BankConnection> query(Iterable<Long> ids);
 
-    Future<BankConnection> importNew(ImportParameters parameters);
+    Future<BankConnection> importNew(ImportBankConnectionParameters parameters);
 
-    Future<BankConnection> update(UpdateParameters parameters);
+    Future<BankConnection> update(UpdateBankConnectionParameters parameters);
 
     Iterable<Long> deleteAll();
 }

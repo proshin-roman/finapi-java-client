@@ -18,11 +18,15 @@ package org.proshin.finapi.bankconnection;
 import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.bank.Bank;
 import org.proshin.finapi.bank.FpBank;
-import org.proshin.finapi.bankconnection.in.FpEditParameters;
+import org.proshin.finapi.bankconnection.in.ConnectInterfaceParameters;
+import org.proshin.finapi.bankconnection.in.EditBankConnectionParameters;
+import org.proshin.finapi.bankconnection.out.BankConnectionInterface;
 import org.proshin.finapi.bankconnection.out.Credentials;
+import org.proshin.finapi.bankconnection.out.FpBankConnectionInterface;
 import org.proshin.finapi.bankconnection.out.FpCredentials;
 import org.proshin.finapi.bankconnection.out.FpOwner;
 import org.proshin.finapi.bankconnection.out.FpStatus;
@@ -136,7 +140,15 @@ public final class FpBankConnection implements BankConnection {
     }
 
     @Override
-    public BankConnection edit(final FpEditParameters parameters) {
+    public Iterable<BankConnectionInterface> interfaces() {
+        return new IterableJsonArray<>(
+            this.origin.getJSONArray("interfaces"),
+            (array, index) -> new FpBankConnectionInterface(array.getJSONObject(index))
+        );
+    }
+
+    @Override
+    public BankConnection edit(final EditBankConnectionParameters parameters) {
         return new FpBankConnection(
             this.endpoint,
             this.token,
@@ -148,6 +160,33 @@ public final class FpBankConnection implements BankConnection {
                 )
             ),
             this.url
+        );
+    }
+
+    @Override
+    public BankConnection connectInterface(final ConnectInterfaceParameters parameters) {
+        return new FpBankConnection(
+            this.endpoint,
+            this.token,
+            new JSONObject(
+                this.endpoint.post(
+                    String.format("%s/%s", this.url, "connectInterface"),
+                    this.token,
+                    parameters
+                )
+            ),
+            this.url
+        );
+    }
+
+    @Override
+    public void removeInterface(final BankingInterface bankingInterface) {
+        this.endpoint.post(
+            String.format("%s/%s", this.url, "removeInterface"),
+            this.token,
+            () -> new JSONObject()
+                .put("bankConnectionId", this.id())
+                .put("interface", bankingInterface.name())
         );
     }
 

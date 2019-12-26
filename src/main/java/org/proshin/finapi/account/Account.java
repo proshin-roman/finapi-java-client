@@ -25,6 +25,7 @@ import org.proshin.finapi.account.out.Order;
 import org.proshin.finapi.account.out.Status;
 import org.proshin.finapi.bankconnection.BankConnection;
 
+// @todo #240 Find and mark as deprecated all fields that became deprecated due to PSD2-related changes
 public interface Account {
 
     Long id();
@@ -53,17 +54,35 @@ public interface Account {
 
     Optional<BigDecimal> availableFunds();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<OffsetDateTime> lastSuccessfulUpdate();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<OffsetDateTime> lastUpdateAttempt();
 
     boolean isNew();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Status status();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Iterable<Order> supportedOrders();
 
     Iterable<ClearingAccount> clearingAccounts();
+
+    Iterable<AccountInterface> interfaces();
 
     void edit(FpEditParameters parameters);
 

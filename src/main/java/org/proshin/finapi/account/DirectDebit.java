@@ -21,7 +21,7 @@ import org.proshin.finapi.account.out.SepaRequestingResponse;
 
 public interface DirectDebit {
 
-    SepaRequestingResponse request(final DirectDebitParameters parameters);
+    SepaRequestingResponse request(DirectDebitParameters parameters);
 
     SepaExecutingResponse execute(Long account, String bankingTan);
 }

@@ -44,18 +44,18 @@ public class FpPayment implements Payment {
     }
 
     @Override
-    public OffsetDateTime requestDate() {
-        return new OffsetDateTimeOf(this.origin.getString("requestDate")).get();
-    }
-
-    @Override
-    public Optional<OffsetDateTime> executionDate() {
-        return new OptionalOffsetDateTimeOf(this.origin, "executionDate").get();
-    }
-
-    @Override
     public Type type() {
         return Type.valueOf(this.origin.getString("type"));
+    }
+
+    @Override
+    public BigDecimal amount() {
+        return this.origin.getBigDecimal("amount");
+    }
+
+    @Override
+    public int orderCount() {
+        return this.origin.getInt("orderCount");
     }
 
     @Override
@@ -69,12 +69,12 @@ public class FpPayment implements Payment {
     }
 
     @Override
-    public BigDecimal amount() {
-        return this.origin.getBigDecimal("amount");
+    public OffsetDateTime requestDate() {
+        return new OffsetDateTimeOf(this.origin.getString("requestDate")).get();
     }
 
     @Override
-    public int orderCount() {
-        return this.origin.getInt("orderCount");
+    public Optional<OffsetDateTime> executionDate() {
+        return new OptionalOffsetDateTimeOf(this.origin, "executionDate").get();
     }
 }

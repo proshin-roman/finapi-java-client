@@ -60,8 +60,18 @@ public final class EditClientParameters implements Jsonable {
         return this;
     }
 
+    public EditClientParameters withStoreSecretsAvailableInWebForm(final boolean storeSecretsAvailableInWebForm) {
+        this.origin.put("storeSecretsAvailableInWebForm", storeSecretsAvailableInWebForm);
+        return this;
+    }
+
     public EditClientParameters withApplicationName(final String applicationName) {
         this.origin.put("applicationName", applicationName);
+        return this;
+    }
+
+    public EditClientParameters withFinTSProductRegistrationNumber(final String finTSProductRegistrationNumber) {
+        this.origin.put("finTSProductRegistrationNumber", finTSProductRegistrationNumber);
         return this;
     }
 

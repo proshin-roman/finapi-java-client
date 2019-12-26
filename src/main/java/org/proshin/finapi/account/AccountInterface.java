@@ -13,9 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.bank.out;
+package org.proshin.finapi.account;
 
-public enum BankingInterface {
+import java.time.OffsetDateTime;
+import java.util.Optional;
+import org.proshin.finapi.BankingInterface;
+import org.proshin.finapi.account.out.Capability;
+import org.proshin.finapi.account.out.Status;
 
-    FINTS_SERVER, WEB_SCRAPER, XS2A
+public interface AccountInterface {
+
+    BankingInterface bankingInterface();
+
+    Status status();
+
+    Iterable<Capability> capabilities();
+
+    Optional<OffsetDateTime> lastSuccessfulUpdate();
+
+    Optional<OffsetDateTime> lastUpdateAttempt();
 }

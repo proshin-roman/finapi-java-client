@@ -21,6 +21,7 @@ import java.util.Iterator;
 import org.cactoos.iterator.IteratorOf;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
+import org.proshin.finapi.primitives.MultiStepAuthentication;
 import org.proshin.finapi.primitives.StringOf;
 
 public final class MoneyTransferParameters implements Jsonable {
@@ -45,8 +46,17 @@ public final class MoneyTransferParameters implements Jsonable {
         return this;
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     public MoneyTransferParameters withStoringPin() {
         this.origin.put("storePin", true);
+        return this;
+    }
+
+    public MoneyTransferParameters withStoringSecrets() {
+        this.origin.put("storeSecrets", true);
         return this;
     }
 
@@ -84,6 +94,16 @@ public final class MoneyTransferParameters implements Jsonable {
         return this;
     }
 
+    public MoneyTransferParameters withHidingTransactionDetailsInWebForm() {
+        this.origin.put("hideTransactionDetailsInWebForm", true);
+        return this;
+    }
+
+    public MoneyTransferParameters withMultiStepAuthentication(final MultiStepAuthentication multiStepAuthentication) {
+        this.origin.put("multiStepAuthentication", multiStepAuthentication.asJson());
+        return this;
+    }
+
     @Override
     public JSONObject asJson() {
         return this.origin;
@@ -118,6 +138,11 @@ public final class MoneyTransferParameters implements Jsonable {
 
         public Recipient withClearingAccount(final String id) {
             this.origin.put("clearingAccountId", id);
+            return this;
+        }
+
+        public Recipient withEndToEndId(final String endToEndId) {
+            this.origin.put("endToEndId", endToEndId);
             return this;
         }
 

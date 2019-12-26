@@ -19,9 +19,21 @@ import java.util.Optional;
 
 public interface Credentials {
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<String> bankingUserId();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<String> bankingCustomerId();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<String> bankingPin();
 }

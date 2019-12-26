@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.http.NameValuePair;
+import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.bank.Bank;
-import org.proshin.finapi.bank.out.BankingInterface;
 import org.proshin.finapi.primitives.paging.PagingCriteria;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
@@ -69,6 +69,16 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
 
     public BanksCriteria withLocation(final Iterable<String> location) {
         this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("location", location)));
+        return this;
+    }
+
+    public BanksCriteria withTppAuthenticationGroups(final Iterable<Long> tppAuthenticationGroups) {
+        this.pairs.add(
+            new UrlEncodedPair(
+                new CommaSeparatedPair<>(
+                    "tppAuthenticationGroupIds",
+                    tppAuthenticationGroups
+                )));
         return this;
     }
 

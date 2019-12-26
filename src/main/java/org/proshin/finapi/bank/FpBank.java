@@ -89,7 +89,6 @@ public final class FpBank implements Bank {
         return this.origin.getInt("health");
     }
 
-
     @Override
     public LoginFields loginFields() {
         return new FpLoginFields(this.origin);

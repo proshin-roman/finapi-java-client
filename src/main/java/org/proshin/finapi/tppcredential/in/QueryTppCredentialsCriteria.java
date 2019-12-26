@@ -13,25 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.tppCredential;
+package org.proshin.finapi.tppcredential.in;
 
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.apache.http.NameValuePair;
 
-public class FpTppAuthenticationGroup implements TppAuthenticationGroup{
+// @todo #240: Define all parameters supported by "Get all TPP credentials" endpoint
+public class QueryTppCredentialsCriteria implements Iterable<NameValuePair> {
 
-    private final JSONObject origin;
+    private final List<NameValuePair> pairs;
 
-    public FpTppAuthenticationGroup(final JSONObject origin) {
-        this.origin = origin;
+    public QueryTppCredentialsCriteria() {
+        this(new ArrayList<>());
+    }
+
+    public QueryTppCredentialsCriteria(final List<NameValuePair> pairs) {
+        this.pairs = pairs;
     }
 
     @Override
-    public Long id() {
-        return this.origin.getLong("id");
-    }
-
-    @Override
-    public String name() {
-        return this.origin.getString("name");
+    public Iterator<NameValuePair> iterator() {
+        return this.pairs.iterator();
     }
 }

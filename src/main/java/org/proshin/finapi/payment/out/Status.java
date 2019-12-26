@@ -16,5 +16,9 @@
 package org.proshin.finapi.payment.out;
 
 public enum Status {
-    PENDING, SUCCESSFUL, NOT_SUCCESSFUL, DISCARDED
+    OPEN,
+    PENDING,
+    SUCCESSFUL,
+    NOT_SUCCESSFUL,
+    DISCARDED
 }

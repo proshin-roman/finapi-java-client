@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.tppCredential;
+package org.proshin.finapi.tppcredential;
 
-public interface TppAuthenticationGroup {
+import org.proshin.finapi.primitives.paging.Page;
+import org.proshin.finapi.tppcredential.in.QueryTppAuthenticationGroupsCriteria;
 
-    Long id();
+public interface TppAuthenticationGroups {
 
-    String name();
+    Page<TppAuthenticationGroup> query(QueryTppAuthenticationGroupsCriteria criteria);
 }

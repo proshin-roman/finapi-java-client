@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.optional.OptionalOf;
+import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
 public final class FpConfiguration implements Configuration {
 
@@ -80,6 +81,11 @@ public final class FpConfiguration implements Configuration {
     }
 
     @Override
+    public boolean isXs2aEnabled() {
+        return this.origin.getBoolean("isXs2aEnabled");
+    }
+
+    @Override
     public Iterable<String> availableBankGroups() {
         return new IterableJsonArray<>(
             this.origin.getJSONArray("availableBankGroups"),
@@ -90,6 +96,16 @@ public final class FpConfiguration implements Configuration {
     @Override
     public Optional<String> applicationName() {
         return new OptionalOf<>(this.origin, "applicationName", JSONObject::getString).get();
+    }
+
+    @Override
+    public Optional<String> finTSProductRegistrationNumber() {
+        return new OptionalStringOf(this.origin, "finTSProductRegistrationNumber").get();
+    }
+
+    @Override
+    public boolean storeSecretsAvailableInWebForm() {
+        return this.origin.getBoolean("storeSecretsAvailableInWebForm");
     }
 
     @Override

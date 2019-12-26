@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
+import org.proshin.finapi.primitives.MultiStepAuthentication;
 import org.proshin.finapi.primitives.StringOf;
 
 public final class DirectDebitParameters implements Jsonable {
@@ -43,8 +44,17 @@ public final class DirectDebitParameters implements Jsonable {
         return this;
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     public DirectDebitParameters withStoringPin() {
         this.origin.put("storePin", true);
+        return this;
+    }
+
+    public DirectDebitParameters withStoringSecrets() {
+        this.origin.put("storeSecrets", true);
         return this;
     }
 
@@ -77,6 +87,16 @@ public final class DirectDebitParameters implements Jsonable {
         for (final Debtor debtor : debtors) {
             this.origin.append("directDebits", debtor.asJson());
         }
+        return this;
+    }
+
+    public DirectDebitParameters withHidingTransactionDetailsInWebForm() {
+        this.origin.put("hideTransactionDetailsInWebForm", true);
+        return this;
+    }
+
+    public DirectDebitParameters withMultiStepAuthentication(final MultiStepAuthentication multiStepAuthentication) {
+        this.origin.put("multiStepAuthentication", multiStepAuthentication.asJson());
         return this;
     }
 

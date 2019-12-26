@@ -15,8 +15,10 @@
  */
 package org.proshin.finapi.bank.out;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
-import org.proshin.finapi.tppCredential.TppAuthenticationGroup;
+import org.proshin.finapi.BankingInterface;
+import org.proshin.finapi.tppcredential.TppAuthenticationGroup;
 
 public interface BankInterface {
 
@@ -29,6 +31,12 @@ public interface BankInterface {
     Iterable<BankInterfaceProperty> properties();
 
     Optional<String> loginHint();
+
+    int health();
+
+    Optional<OffsetDateTime> lastCommunicationAttempt();
+
+    Optional<OffsetDateTime> lastSuccessfulCommunication();
 
     enum BankInterfaceProperty {
         REDIRECT_APPROACH, DECOUPLED_APPROACH, DETAILED_CONSENT

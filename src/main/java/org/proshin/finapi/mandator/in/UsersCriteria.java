@@ -91,6 +91,11 @@ public final class UsersCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
+    public UsersCriteria withUserId(final String userId) {
+        this.pairs.add(new UrlEncodedPair("userId", userId));
+        return this;
+    }
+
     public UsersCriteria withIsDeleted(final boolean isDeleted) {
         this.pairs.add(new UrlEncodedPair("isDeleted", isDeleted));
         return this;

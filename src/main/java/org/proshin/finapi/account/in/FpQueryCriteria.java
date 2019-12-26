@@ -54,9 +54,9 @@ public final class FpQueryCriteria implements Iterable<NameValuePair> {
         this.pairs.add(
             new UrlEncodedPair(
                 new CommaSeparatedPair<>(
-                    "accountTypeIds",
+                    "accountTypes",
                     Arrays.stream(types)
-                        .map(Type::asCode)
+                        .map(Type::name)
                         .collect(Collectors.toList())
                 )
             )

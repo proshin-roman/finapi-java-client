@@ -38,9 +38,15 @@ public interface Configuration {
 
     boolean isWebScrapingEnabled();
 
+    boolean isXs2aEnabled();
+
     Iterable<String> availableBankGroups();
 
     Optional<String> applicationName();
+
+    Optional<String> finTSProductRegistrationNumber();
+
+    boolean storeSecretsAvailableInWebForm();
 
     boolean paymentsEnabled();
 

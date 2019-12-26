@@ -97,7 +97,7 @@ public final class FpAccount implements Account {
 
     @Override
     public Type type() {
-        return new Type.TypeOf(this.origin.getInt("accountTypeId")).get();
+        return Type.valueOf(this.origin.getString("accountType"));
     }
 
     @Override
@@ -153,6 +153,14 @@ public final class FpAccount implements Account {
         return new IterableJsonArray<>(
             this.origin.getJSONArray("clearingAccounts"),
             (array, index) -> new FpClearingAccount(array.getJSONObject(index))
+        );
+    }
+
+    @Override
+    public Iterable<AccountInterface> interfaces() {
+        return new IterableJsonArray<>(
+            this.origin.getJSONArray("interfaces"),
+            (array, index) -> new FpAccountInterface(array.getJSONObject(index))
         );
     }
 

@@ -37,7 +37,7 @@ public class FpDirectDebitTest extends TestWithMockedEndpoint {
                     .withBody(new JsonBody('{' +
                         "  \"accountId\": 1," +
                         "  \"bankingPin\": \"123456\"," +
-                        "  \"storePin\": true," +
+                        "  \"storeSecrets\": true," +
                         "  \"twoStepProcedureId\": \"955\"," +
                         "  \"directDebitType\": \"B2B\"," +
                         "  \"sequenceType\": \"OOFF\"," +
@@ -68,7 +68,7 @@ public class FpDirectDebitTest extends TestWithMockedEndpoint {
             new DirectDebitParameters()
                 .withAccount(1L)
                 .withBankingPin("123456")
-                .withStoringPin()
+                .withStoringSecrets()
                 .withTwoStepProcedure("955")
                 .withDirectDebitType(DirectDebitParameters.DirectDebitType.B2B)
                 .withSequenceType(DirectDebitParameters.SequenceType.OOFF)

@@ -26,6 +26,10 @@ public interface Bank {
 
     String name();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<String> loginHint();
 
     Optional<String> bic();
@@ -36,28 +40,60 @@ public interface Bank {
 
     Optional<String> city();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     boolean isSupported();
 
     boolean isTestBank();
 
     int popularity();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     int health();
 
     LoginFields loginFields();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     boolean pinsAreVolatile();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     boolean isCustomerIdPassword();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Iterable<DataSource> supportedDataSources();
 
     Iterable<BankInterface> interfaces();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<OffsetDateTime> lastCommunicationAttempt();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<OffsetDateTime> lastSuccessfulCommunication();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     enum DataSource {
         FINTS_SERVER, WEB_SCRAPER
     }

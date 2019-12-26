@@ -27,17 +27,17 @@ public interface Payment {
 
     Long accountId();
 
-    OffsetDateTime requestDate();
-
-    Optional<OffsetDateTime> executionDate();
-
     Type type();
+
+    BigDecimal amount();
+
+    int orderCount();
 
     Status status();
 
     Optional<String> bankMessage();
 
-    BigDecimal amount();
+    OffsetDateTime requestDate();
 
-    int orderCount();
+    Optional<OffsetDateTime> executionDate();
 }

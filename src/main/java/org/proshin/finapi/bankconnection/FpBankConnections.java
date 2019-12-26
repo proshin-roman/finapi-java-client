@@ -20,8 +20,8 @@ import java.util.concurrent.Future;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
-import org.proshin.finapi.bankconnection.in.ImportParameters;
-import org.proshin.finapi.bankconnection.in.UpdateParameters;
+import org.proshin.finapi.bankconnection.in.ImportBankConnectionParameters;
+import org.proshin.finapi.bankconnection.in.UpdateBankConnectionParameters;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
@@ -81,7 +81,7 @@ public final class FpBankConnections implements BankConnections {
     }
 
     @Override
-    public Future<BankConnection> importNew(final ImportParameters parameters) {
+    public Future<BankConnection> importNew(final ImportBankConnectionParameters parameters) {
         return Executors.newSingleThreadExecutor().submit(
             () -> new FpBankConnection(
                 this.endpoint,
@@ -99,7 +99,7 @@ public final class FpBankConnections implements BankConnections {
     }
 
     @Override
-    public Future<BankConnection> update(final UpdateParameters parameters) {
+    public Future<BankConnection> update(final UpdateBankConnectionParameters parameters) {
         return Executors.newSingleThreadExecutor().submit(
             () -> new FpBankConnection(
                 this.endpoint,

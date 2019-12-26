@@ -45,7 +45,7 @@ public class FpMoneyTransferTest extends TestWithMockedEndpoint {
                         "  \"sepaPurposeCode\": \"OTHR1\"," +
                         "  \"accountId\": 1," +
                         "  \"bankingPin\": \"123456\"," +
-                        "  \"storePin\": true," +
+                        "  \"storeSecrets\": true," +
                         "  \"twoStepProcedureId\": \"955\"," +
                         "  \"challengeResponse\": \"0123\"," +
                         "  \"executionDate\": \"2019-04-03\"," +
@@ -74,7 +74,7 @@ public class FpMoneyTransferTest extends TestWithMockedEndpoint {
             new MoneyTransferParameters()
                 .withAccount(1L)
                 .withBankingPin("123456")
-                .withStoringPin()
+                .withStoringSecrets()
                 .withTwoStepProcedure("955")
                 .withChallengeResponse("0123")
                 .withExecutionDate(new LocalDateOf("2019-04-03").get())

@@ -16,8 +16,11 @@
 package org.proshin.finapi.bankconnection;
 
 import java.util.Optional;
+import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.bank.Bank;
-import org.proshin.finapi.bankconnection.in.FpEditParameters;
+import org.proshin.finapi.bankconnection.in.ConnectInterfaceParameters;
+import org.proshin.finapi.bankconnection.in.EditBankConnectionParameters;
+import org.proshin.finapi.bankconnection.out.BankConnectionInterface;
 import org.proshin.finapi.bankconnection.out.Credentials;
 import org.proshin.finapi.bankconnection.out.Owner;
 import org.proshin.finapi.bankconnection.out.Status;
@@ -33,20 +36,44 @@ public interface BankConnection {
 
     Optional<String> name();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Credentials credentials();
 
     Type type();
 
     Status status();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<UpdateResult> lastManualUpdate();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<UpdateResult> lastAutoUpdate();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     TwoStepProcedures twoStepProcedures();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     boolean ibanOnlyMoneyTransferSupported();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     boolean ibanOnlyDirectDebitSupported();
 
     @Deprecated
@@ -56,7 +83,13 @@ public interface BankConnection {
 
     Iterable<Owner> owners();
 
-    BankConnection edit(FpEditParameters parameters);
+    Iterable<BankConnectionInterface> interfaces();
+
+    BankConnection edit(EditBankConnectionParameters parameters);
+
+    BankConnection connectInterface(ConnectInterfaceParameters parameters);
+
+    void removeInterface(BankingInterface bankingInterface);
 
     void delete();
 }

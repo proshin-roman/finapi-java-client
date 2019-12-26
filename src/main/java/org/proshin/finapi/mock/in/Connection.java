@@ -19,19 +19,26 @@ import java.util.function.Supplier;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Mapped;
 import org.json.JSONObject;
+import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.Jsonable;
 
 public final class Connection implements Jsonable {
 
     private final Supplier<JSONObject> origin;
 
-    public Connection(final Long connection) {
-        this(connection, false);
+    public Connection(final Long connection, final BankingInterface bankingInterface) {
+        this(connection, bankingInterface, false);
     }
 
-    public Connection(final Long connection, final boolean simulateBankLoginError, final Account... accounts) {
+    public Connection(
+        final Long connection,
+        final BankingInterface bankingInterface,
+        final boolean simulateBankLoginError,
+        final Account... accounts
+    ) {
         this(() -> new JSONObject()
             .put("bankConnectionId", connection)
+            .put("interface", bankingInterface)
             .put("simulateBankLoginError", simulateBankLoginError)
             .put("mockAccountsData", new CollectionOf<>(new Mapped<>(Jsonable::asJson, accounts)))
         );

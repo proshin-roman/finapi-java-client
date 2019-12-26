@@ -21,7 +21,7 @@ import org.proshin.finapi.account.out.SepaRequestingResponse;
 
 public interface MoneyTransfer {
 
-    SepaRequestingResponse request(final MoneyTransferParameters parameters);
+    SepaRequestingResponse request(MoneyTransferParameters parameters);
 
     SepaExecutingResponse execute(Long account, String bankingTan);
 }

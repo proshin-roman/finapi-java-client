@@ -28,7 +28,7 @@ import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
 import org.proshin.finapi.TestWithMockedEndpoint;
-import org.proshin.finapi.bankconnection.in.FpEditParameters;
+import org.proshin.finapi.bankconnection.in.EditBankConnectionParameters;
 import org.proshin.finapi.bankconnection.out.Status;
 import org.proshin.finapi.bankconnection.out.TwoStepProcedure;
 import org.proshin.finapi.bankconnection.out.Type;
@@ -176,7 +176,7 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
             new FakeAccessToken("user-token"),
             new JSONObject().put("id", 42L),
             "/api/v1/bankConnections"
-        ).edit(new FpEditParameters()
+        ).edit(new EditBankConnectionParameters()
             .withUserId("new user ID")
             .withCustomerId("new customer ID")
             .withPin("new pin")
