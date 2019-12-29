@@ -21,12 +21,12 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
 import org.json.JSONObject;
 import org.junit.Test;
-import org.proshin.finapi.BankingInterface;
 import static org.proshin.finapi.bank.Bank.DataSource.FINTS_SERVER;
 import static org.proshin.finapi.bank.Bank.DataSource.WEB_SCRAPER;
 import org.proshin.finapi.bank.out.BankInterface;
 import static org.proshin.finapi.bank.out.BankInterface.BankInterfaceProperty.REDIRECT_APPROACH;
 import org.proshin.finapi.bank.out.LoginCredential;
+import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.tppcredential.TppAuthenticationGroup;
 

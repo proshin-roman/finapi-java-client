@@ -17,7 +17,7 @@ package org.proshin.finapi.bank.out;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
-import org.proshin.finapi.BankingInterface;
+import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.tppcredential.TppAuthenticationGroup;
 
 public interface BankInterface {

@@ -17,9 +17,9 @@ package org.proshin.finapi.account;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
-import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.account.out.Capability;
 import org.proshin.finapi.account.out.Status;
+import org.proshin.finapi.primitives.BankingInterface;
 
 public interface AccountInterface {
 

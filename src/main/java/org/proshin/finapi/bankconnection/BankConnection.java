@@ -16,7 +16,6 @@
 package org.proshin.finapi.bankconnection;
 
 import java.util.Optional;
-import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.bank.Bank;
 import org.proshin.finapi.bankconnection.in.ConnectInterfaceParameters;
 import org.proshin.finapi.bankconnection.in.EditBankConnectionParameters;
@@ -27,6 +26,7 @@ import org.proshin.finapi.bankconnection.out.Status;
 import org.proshin.finapi.bankconnection.out.TwoStepProcedures;
 import org.proshin.finapi.bankconnection.out.Type;
 import org.proshin.finapi.bankconnection.out.UpdateResult;
+import org.proshin.finapi.primitives.BankingInterface;
 
 public interface BankConnection {
 

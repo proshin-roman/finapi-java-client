@@ -17,8 +17,8 @@ package org.proshin.finapi.bankconnection.in;
 
 import java.util.Map;
 import org.json.JSONObject;
-import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.Jsonable;
+import org.proshin.finapi.primitives.BankingInterface;
 
 public final class EditBankConnectionParameters implements Jsonable {
 
@@ -70,9 +70,12 @@ public final class EditBankConnectionParameters implements Jsonable {
     }
 
     public EditBankConnectionParameters withLoginCredentials(final Map<String, String> credentials) {
-        credentials.forEach((label, value) -> {
-            this.origin.append("loginCredentials", new JSONObject().put("label", label).put("value", value));
-        });
+        credentials.forEach((label, value) -> this.origin.append(
+            "loginCredentials",
+            new JSONObject()
+                .put("label", label)
+                .put("value", value)
+        ));
         return this;
     }
 

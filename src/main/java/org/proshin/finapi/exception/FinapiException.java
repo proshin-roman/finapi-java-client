@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.Optional;
+import java.util.function.Supplier;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.cactoos.io.InputOf;
@@ -37,24 +38,34 @@ public final class FinapiException extends RuntimeException {
     private final transient Optional<String> location;
 
     public FinapiException(final int expected, final HttpResponse response) {
-        super(
+        this(
             String.format(
                 "Unexpected response code: expected=%d, actual=%s",
                 expected, response.getStatusLine().getStatusCode()
-            )
+            ),
+            ((Supplier<JSONObject>) () -> {
+                try {
+                    return new JSONObject(
+                        new TextOf(
+                            new InputOf(response.getEntity().getContent()),
+                            StandardCharsets.UTF_8
+                        ).asString()
+                    );
+                } catch (final IOException e) {
+                    throw new RuntimeException("Couldn't read the response body", e);
+                }
+            }
+            ).get(),
+            Optional.ofNullable(response.getFirstHeader("Location"))
+                .map(NameValuePair::getValue)
+                .orElse(null)
         );
-        final String content;
-        try {
-            content = new TextOf(
-                new InputOf(response.getEntity().getContent()),
-                StandardCharsets.UTF_8
-            ).asString();
-        } catch (final IOException e) {
-            throw new RuntimeException("Couldn't read the response body", e);
-        }
-        this.origin = new JSONObject(content);
-        this.location = Optional.ofNullable(response.getFirstHeader("Location"))
-            .map(NameValuePair::getValue);
+    }
+
+    public FinapiException(final String message, final JSONObject origin, final String location) {
+        super(message);
+        this.origin = origin;
+        this.location = Optional.ofNullable(location);
     }
 
     public Iterable<FinapiError> errors() {

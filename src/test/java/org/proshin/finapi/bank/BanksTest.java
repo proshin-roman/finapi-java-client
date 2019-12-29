@@ -20,15 +20,16 @@ import org.cactoos.iterable.IterableOfLongs;
 import org.junit.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
-import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import static org.proshin.finapi.bank.Bank.DataSource.FINTS_SERVER;
 import static org.proshin.finapi.bank.Bank.DataSource.WEB_SCRAPER;
 import org.proshin.finapi.bank.in.BanksCriteria;
 import org.proshin.finapi.fake.FakeAccessToken;
+import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.primitives.paging.PagingCriteria;
 
+@SuppressWarnings("JUnitTestMethodWithNoAssertions")
 public final class BanksTest extends TestWithMockedEndpoint {
 
     @Test

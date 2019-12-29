@@ -26,15 +26,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.proshin.finapi.TestWithMockedEndpoint;
+import org.proshin.finapi.account.out.Capability;
 import org.proshin.finapi.account.out.ClearingAccount;
-import static org.proshin.finapi.account.out.Order.SEPA_B2B_COLLECTIVE_DIRECT_DEBIT;
-import static org.proshin.finapi.account.out.Order.SEPA_B2B_DIRECT_DEBIT;
-import static org.proshin.finapi.account.out.Order.SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT;
-import static org.proshin.finapi.account.out.Order.SEPA_BASIC_DIRECT_DEBIT;
-import static org.proshin.finapi.account.out.Order.SEPA_COLLECTIVE_MONEY_TRANSFER;
-import static org.proshin.finapi.account.out.Order.SEPA_MONEY_TRANSFER;
+import org.proshin.finapi.account.out.Order;
 import org.proshin.finapi.account.out.Status;
 import org.proshin.finapi.fake.FakeAccessToken;
+import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
 public class FpAccountTest extends TestWithMockedEndpoint {
@@ -89,7 +86,7 @@ public class FpAccountTest extends TestWithMockedEndpoint {
                 "        \"SEPA_B2B_COLLECTIVE_DIRECT_DEBIT\"" +
                 "      ]," +
                 "      \"lastSuccessfulUpdate\": \"2018-01-01 00:00:00.000\"," +
-                "      \"lastUpdateAttempt\": \"2018-01-01 00:00:00.000\"" +
+                "      \"lastUpdateAttempt\": \"2018-01-02 00:00:00.000\"" +
                 "    }" +
                 "  ]," +
                 "  \"clearingAccounts\": [" +
@@ -122,18 +119,39 @@ public class FpAccountTest extends TestWithMockedEndpoint {
         assertThat(account.status(), is(Status.UPDATED));
         assertThat(account.supportedOrders(),
             hasItems(
-                SEPA_MONEY_TRANSFER,
-                SEPA_COLLECTIVE_MONEY_TRANSFER,
-                SEPA_BASIC_DIRECT_DEBIT,
-                SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT,
-                SEPA_B2B_DIRECT_DEBIT,
-                SEPA_B2B_COLLECTIVE_DIRECT_DEBIT
+                Order.SEPA_MONEY_TRANSFER,
+                Order.SEPA_COLLECTIVE_MONEY_TRANSFER,
+                Order.SEPA_BASIC_DIRECT_DEBIT,
+                Order.SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT,
+                Order.SEPA_B2B_DIRECT_DEBIT,
+                Order.SEPA_B2B_COLLECTIVE_DIRECT_DEBIT
             )
         );
         assertThat(
             account.clearingAccounts(),
             CoreMatchers.everyItem(new ClearingAccountMatcher("Clearing account ID", "Clearing account name"))
         );
+        account.interfaces().forEach(ai -> {
+            assertThat(ai.bankingInterface(), is(BankingInterface.FINTS_SERVER));
+            assertThat(ai.capabilities(), hasItems(
+                Capability.DATA_DOWNLOAD,
+                Capability.SEPA_MONEY_TRANSFER,
+                Capability.SEPA_COLLECTIVE_MONEY_TRANSFER,
+                Capability.SEPA_BASIC_DIRECT_DEBIT,
+                Capability.SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT,
+                Capability.SEPA_B2B_DIRECT_DEBIT,
+                Capability.SEPA_B2B_COLLECTIVE_DIRECT_DEBIT
+            ));
+            assertThat(ai.status(), is(Status.UPDATED));
+            assertThat(
+                ai.lastSuccessfulUpdate(),
+                is(Optional.of(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get()))
+            );
+            assertThat(
+                ai.lastUpdateAttempt(),
+                is(Optional.of(new OffsetDateTimeOf("2018-01-02 00:00:00.000").get()))
+            );
+        });
     }
 
     private static final class ClearingAccountMatcher extends BaseMatcher<ClearingAccount> {

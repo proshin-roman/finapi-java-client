@@ -18,7 +18,7 @@ package org.proshin.finapi.bank.out;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 import org.json.JSONObject;
-import org.proshin.finapi.BankingInterface;
+import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;

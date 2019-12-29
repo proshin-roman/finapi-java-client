@@ -18,9 +18,9 @@ package org.proshin.finapi.bankconnection.in;
 import java.util.Map;
 import org.cactoos.collection.Mapped;
 import org.json.JSONObject;
-import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.account.Type;
+import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.MultiStepAuthentication;
 
 public final class ImportBankConnectionParameters implements Jsonable {
@@ -87,14 +87,12 @@ public final class ImportBankConnectionParameters implements Jsonable {
     }
 
     public ImportBankConnectionParameters withLoginCredentials(final Map<String, String> credentials) {
-        credentials.forEach((label, value) -> {
-            this.origin.append(
-                "loginCredentials",
-                new JSONObject()
-                    .put("label", label)
-                    .put("value", value)
-            );
-        });
+        credentials.forEach((label, value) -> this.origin.append(
+            "loginCredentials",
+            new JSONObject()
+                .put("label", label)
+                .put("value", value)
+        ));
         return this;
     }
 
@@ -124,9 +122,7 @@ public final class ImportBankConnectionParameters implements Jsonable {
     }
 
     public ImportBankConnectionParameters withAccountReferences(final Iterable<String> ibans) {
-        ibans.forEach(iban -> {
-            this.origin.append("accountReferences", new JSONObject().put("iban", iban));
-        });
+        ibans.forEach(iban -> this.origin.append("accountReferences", new JSONObject().put("iban", iban)));
         return this;
     }
 

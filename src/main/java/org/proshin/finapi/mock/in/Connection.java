@@ -19,12 +19,12 @@ import java.util.function.Supplier;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Mapped;
 import org.json.JSONObject;
-import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.Jsonable;
+import org.proshin.finapi.primitives.BankingInterface;
 
 public final class Connection implements Jsonable {
 
-    private final Supplier<JSONObject> origin;
+    private final Supplier<? extends JSONObject> origin;
 
     public Connection(final Long connection, final BankingInterface bankingInterface) {
         this(connection, bankingInterface, false);
@@ -44,7 +44,7 @@ public final class Connection implements Jsonable {
         );
     }
 
-    public Connection(final Supplier<JSONObject> origin) {
+    public Connection(final Supplier<? extends JSONObject> origin) {
         this.origin = origin;
     }
 

@@ -16,7 +16,7 @@
 package org.proshin.finapi.bankconnection.out;
 
 import java.util.Optional;
-import org.proshin.finapi.BankingInterface;
+import org.proshin.finapi.primitives.BankingInterface;
 
 public interface BankConnectionInterface {
 

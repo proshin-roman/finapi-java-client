@@ -17,7 +17,7 @@ package org.proshin.finapi.bankconnection.out;
 
 import java.util.Optional;
 import org.json.JSONObject;
-import org.proshin.finapi.BankingInterface;
+import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.optional.OptionalObjectOf;
 

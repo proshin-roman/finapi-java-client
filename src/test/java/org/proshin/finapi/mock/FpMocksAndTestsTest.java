@@ -21,7 +21,6 @@ import org.junit.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
-import org.proshin.finapi.BankingInterface;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.account.Type;
 import org.proshin.finapi.fake.FakeAccessToken;
@@ -32,7 +31,9 @@ import org.proshin.finapi.mock.in.Connection;
 import org.proshin.finapi.mock.in.Transaction;
 import org.proshin.finapi.mock.out.CategorizationResult;
 import org.proshin.finapi.mock.out.CategorizationResults;
+import org.proshin.finapi.primitives.BankingInterface;
 
+@SuppressWarnings("JUnitTestMethodWithNoAssertions")
 public class FpMocksAndTestsTest extends TestWithMockedEndpoint {
 
     @Test
