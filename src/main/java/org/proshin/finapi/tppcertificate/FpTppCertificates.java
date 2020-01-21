@@ -29,6 +29,10 @@ public class FpTppCertificates implements TppCertificates {
     private final AccessToken token;
     private final String url;
 
+    public FpTppCertificates(final Endpoint endpoint, final AccessToken token) {
+        this(endpoint, token, "/api/v1/tppCertificates");
+    }
+
     public FpTppCertificates(final Endpoint endpoint, final AccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;
