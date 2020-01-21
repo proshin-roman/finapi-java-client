@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.http.NameValuePair;
+import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
-// @todo #240: Define all parameters supported by "Get all certificates" endpoint
 public class QueryTppCertificatesCriteria implements Iterable<NameValuePair> {
 
     private final List<NameValuePair> pairs;
@@ -31,6 +31,12 @@ public class QueryTppCertificatesCriteria implements Iterable<NameValuePair> {
 
     public QueryTppCertificatesCriteria(final List<NameValuePair> pairs) {
         this.pairs = pairs;
+    }
+
+    public QueryTppCertificatesCriteria withPage(final int page, final int perPage) {
+        this.pairs.add(new UrlEncodedPair("page", page));
+        this.pairs.add(new UrlEncodedPair("perPage", perPage));
+        return this;
     }
 
     @Override
