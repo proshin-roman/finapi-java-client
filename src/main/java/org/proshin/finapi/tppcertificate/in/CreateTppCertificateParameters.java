@@ -15,20 +15,51 @@
  */
 package org.proshin.finapi.tppcertificate.in;
 
+import java.time.LocalDate;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
+import org.proshin.finapi.primitives.StringOf;
+import org.proshin.finapi.tppcertificate.CertificateType;
 
-// @todo #240 Define all parameters supported by "Create a new certificate" endpoint
 public class CreateTppCertificateParameters implements Jsonable {
 
     private final JSONObject origin;
 
-    public CreateTppCertificateParameters() {
-        this(new JSONObject());
+    public CreateTppCertificateParameters(
+        final CertificateType type,
+        final String publicKey,
+        final String privateKey
+    ) {
+        this(
+            new JSONObject()
+                .put("type", type.name())
+                .put("publicKey", publicKey)
+                .put("privateKey", privateKey)
+        );
     }
 
     public CreateTppCertificateParameters(final JSONObject origin) {
         this.origin = origin;
+    }
+
+    public CreateTppCertificateParameters withPassphrase(final String passphrase) {
+        this.origin.put("passphrase", passphrase);
+        return this;
+    }
+
+    public CreateTppCertificateParameters withLabel(final String label) {
+        this.origin.put("label", label);
+        return this;
+    }
+
+    public CreateTppCertificateParameters withValidFromDate(final LocalDate validFromDate) {
+        this.origin.put("validFromDate", new StringOf(validFromDate));
+        return this;
+    }
+
+    public CreateTppCertificateParameters withValidUntilDate(final LocalDate validUntilDate) {
+        this.origin.put("validUntilDate", new StringOf(validUntilDate));
+        return this;
     }
 
     @Override
