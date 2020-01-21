@@ -172,7 +172,7 @@ public final class FpBankConnection implements BankConnection {
                 this.endpoint.post(
                     String.format("%s/%s", this.url, "connectInterface"),
                     this.token,
-                    parameters
+                    () -> parameters.asJson().put("bankConnectionId", this.id())
                 )
             ),
             this.url

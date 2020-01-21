@@ -15,10 +15,12 @@
  */
 package org.proshin.finapi.bankconnection.in;
 
+import java.util.Map;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
+import org.proshin.finapi.primitives.BankingInterface;
+import org.proshin.finapi.primitives.MultiStepAuthentication;
 
-// @todo #240 Add parameters of the Connect a new interface REST endpoint
 public class ConnectInterfaceParameters implements Jsonable {
 
     private final JSONObject origin;
@@ -29,6 +31,53 @@ public class ConnectInterfaceParameters implements Jsonable {
 
     public ConnectInterfaceParameters(final JSONObject origin) {
         this.origin = origin;
+    }
+
+    public ConnectInterfaceParameters withInterface(final BankingInterface bankingInterface) {
+        this.origin.put("interface", bankingInterface.name());
+        return this;
+    }
+
+    public ConnectInterfaceParameters withLoginCredentials(final Map<String, String> credentials) {
+        credentials.forEach((label, value) -> this.origin.append(
+            "loginCredentials",
+            new JSONObject()
+                .put("label", label)
+                .put("value", value)
+        ));
+        return this;
+    }
+
+    public ConnectInterfaceParameters withStoreSecrets() {
+        this.origin.put("storeSecrets", true);
+        return this;
+    }
+
+    public ConnectInterfaceParameters withSkipPositionsDownload() {
+        this.origin.put("skipPositionsDownload", true);
+        return this;
+    }
+
+    public ConnectInterfaceParameters withLoadOwnerData() {
+        this.origin.put("loadOwnerData", true);
+        return this;
+    }
+
+    public ConnectInterfaceParameters withAccountReferences(final Iterable<String> ibans) {
+        ibans.forEach(iban -> this.origin.append("accountReferences", new JSONObject().put("iban", iban)));
+        return this;
+    }
+
+    public ConnectInterfaceParameters withMultiStepAuthentication(
+        final MultiStepAuthentication multiStepAuthentication
+    ) {
+        this.origin.put("multiStepAuthentication", multiStepAuthentication.asJson());
+        return this;
+    }
+
+    public ConnectInterfaceParameters withRedirectUrl(final String redirectUrl) {
+        this.origin.put("redirectUrl", redirectUrl);
+        return this;
     }
 
     @Override
