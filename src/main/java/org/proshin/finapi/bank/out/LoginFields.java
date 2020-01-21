@@ -17,11 +17,27 @@ package org.proshin.finapi.bank.out;
 
 import java.util.Optional;
 
+/**
+ * @deprecated since v0.1.92 due to PSD2-related changes
+ */
+@Deprecated
 public interface LoginFields {
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<String> userId();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<String> customerId();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     Optional<String> pin();
 }

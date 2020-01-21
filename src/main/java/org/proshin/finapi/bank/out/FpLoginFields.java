@@ -19,6 +19,10 @@ import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.optional.OptionalOf;
 
+/**
+ * @deprecated since v0.1.92 due to PSD2-related changes
+ */
+@Deprecated
 public final class FpLoginFields implements LoginFields {
 
     private final JSONObject origin;
@@ -27,17 +31,29 @@ public final class FpLoginFields implements LoginFields {
         this.origin = origin;
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
     @Override
+    @Deprecated
     public Optional<String> userId() {
         return new OptionalOf<>(this.origin, "loginFieldUserId", JSONObject::getString).get();
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
     @Override
+    @Deprecated
     public Optional<String> customerId() {
         return new OptionalOf<>(this.origin, "loginFieldCustomerId", JSONObject::getString).get();
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
     @Override
+    @Deprecated
     public Optional<String> pin() {
         return new OptionalOf<>(this.origin, "loginFieldPin", JSONObject::getString).get();
     }

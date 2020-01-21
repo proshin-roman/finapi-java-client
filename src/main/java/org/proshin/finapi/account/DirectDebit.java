@@ -19,9 +19,21 @@ import org.proshin.finapi.account.in.DirectDebitParameters;
 import org.proshin.finapi.account.out.SepaExecutingResponse;
 import org.proshin.finapi.account.out.SepaRequestingResponse;
 
+/**
+ * @deprecated since v0.1.92 due to PSD2-related changes
+ */
+@Deprecated
 public interface DirectDebit {
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     SepaRequestingResponse request(DirectDebitParameters parameters);
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     SepaExecutingResponse execute(Long account, String bankingTan);
 }

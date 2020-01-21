@@ -89,7 +89,11 @@ public final class FpBank implements Bank {
         return this.origin.getInt("health");
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
     @Override
+    @Deprecated
     public LoginFields loginFields() {
         return new FpLoginFields(this.origin);
     }

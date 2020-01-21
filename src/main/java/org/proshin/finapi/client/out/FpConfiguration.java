@@ -81,6 +81,7 @@ public final class FpConfiguration implements Configuration {
     }
 
     @Override
+    @Deprecated
     public boolean isXs2aEnabled() {
         return this.origin.getBoolean("isXs2aEnabled");
     }
@@ -114,6 +115,7 @@ public final class FpConfiguration implements Configuration {
     }
 
     @Override
+    @Deprecated
     public boolean pinStorageAvailableInWebForm() {
         return this.origin.getBoolean("pinStorageAvailableInWebForm");
     }

@@ -27,8 +27,16 @@ public interface Accounts {
 
     DailyBalances dailyBalances(DailyBalancesCriteria criteria);
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     MoneyTransfer moneyTransfer();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     DirectDebit directDebit();
 
     void deleteAll();

@@ -47,16 +47,28 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     public BanksCriteria withSupporting(final boolean supporting) {
         this.pairs.add(new UrlEncodedPair("isSupported", supporting));
         return this;
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     public BanksCriteria withPinsAreVolatile(final boolean pinsAreVolatile) {
         this.pairs.add(new UrlEncodedPair("pinsAreVolatile", pinsAreVolatile));
         return this;
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     public BanksCriteria withSupportedDataSources(final Iterable<Bank.DataSource> supportedDataSources) {
         this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("supportedDataSources", supportedDataSources)));
         return this;

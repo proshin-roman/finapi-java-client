@@ -36,16 +36,28 @@ public enum Type {
 
     Bausparen(8);
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     private final int code;
 
     Type(final int code) {
         this.code = code;
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     public int asCode() {
         return this.code;
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     public static class TypeOf {
         private final int code;
 

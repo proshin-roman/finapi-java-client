@@ -38,6 +38,10 @@ public interface Configuration {
 
     boolean isWebScrapingEnabled();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     boolean isXs2aEnabled();
 
     Iterable<String> availableBankGroups();
@@ -50,5 +54,9 @@ public interface Configuration {
 
     boolean paymentsEnabled();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     boolean pinStorageAvailableInWebForm();
 }

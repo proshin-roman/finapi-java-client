@@ -56,6 +56,10 @@ public interface Bank {
     @Deprecated
     int health();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     LoginFields loginFields();
 
     /**

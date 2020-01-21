@@ -18,6 +18,10 @@ package org.proshin.finapi.transaction.out;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+/**
+ * @deprecated since v0.1.92 due to PSD2-related changes
+ */
+@Deprecated
 public interface PayPalData {
     Optional<String> invoiceNumber();
 

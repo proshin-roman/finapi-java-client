@@ -65,6 +65,10 @@ public final class MoneyTransferParameters implements Jsonable {
         return this;
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     public MoneyTransferParameters withChallengeResponse(final String response) {
         this.origin.put("challengeResponse", response);
         return this;

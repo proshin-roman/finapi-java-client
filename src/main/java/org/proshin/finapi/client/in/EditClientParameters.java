@@ -55,6 +55,10 @@ public final class EditClientParameters implements Jsonable {
         return this;
     }
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
+    @Deprecated
     public EditClientParameters withPinStorageAvailableInWebForm(final boolean isPinStorageAvailableInWebForm) {
         this.origin.put("isPinStorageAvailableInWebForm", isPinStorageAvailableInWebForm);
         return this;
