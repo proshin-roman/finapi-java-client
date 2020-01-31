@@ -19,12 +19,15 @@ import java.util.Iterator;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
+import org.mockserver.model.JsonBody;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.paging.Page;
+import org.proshin.finapi.tppcredential.in.EditTppCredentialParameters;
 import org.proshin.finapi.tppcredential.in.QueryTppCredentialsCriteria;
 
 public class FpTppCredentialsTest extends TestWithMockedEndpoint {
@@ -90,5 +93,25 @@ public class FpTppCredentialsTest extends TestWithMockedEndpoint {
         final Iterator<TppCredential> iterator = credentials.items().iterator();
         assertThat(iterator.next(), is(notNullValue()));
         assertThat(iterator.hasNext(), is(false));
+    }
+
+    @Test
+    public void testEdit() {
+        this.server()
+            .when(
+                HttpRequest.request("/api/v1/tppCredentials/378")
+                    .withMethod("PATCH")
+                    .withHeader("Authorization", "Bearer random-token")
+                    .withBody(new JsonBody("{\"label\": \"Changed label\"}")))
+            .respond(
+                HttpResponse.response("{}")
+            );
+        new FpTppCredential(
+            this.endpoint(),
+            new FakeAccessToken("random-token"),
+            new JSONObject("{\"id\":378}"),
+            "/api/v1/tppCredentials"
+        ).edit(new EditTppCredentialParameters()
+            .withLabel("Changed label"));
     }
 }

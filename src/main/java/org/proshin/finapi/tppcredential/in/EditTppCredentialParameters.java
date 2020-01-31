@@ -15,10 +15,11 @@
  */
 package org.proshin.finapi.tppcredential.in;
 
+import java.time.LocalDate;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
+import org.proshin.finapi.primitives.StringOf;
 
-// @todo #240 Define all parameters supported by "Edit a set of TPP credentials" endpoint
 public class EditTppCredentialParameters implements Jsonable {
 
     private final JSONObject origin;
@@ -30,6 +31,42 @@ public class EditTppCredentialParameters implements Jsonable {
     public EditTppCredentialParameters(final JSONObject origin) {
         this.origin = origin;
     }
+
+    public EditTppCredentialParameters withTppAuthenticationGroupId(final String tppAuthenticationGroupId) {
+        this.origin.put("tppAuthenticationGroupId", tppAuthenticationGroupId);
+        return this;
+    }
+
+    public EditTppCredentialParameters withLabel(final String label) {
+        this.origin.put("label", label);
+        return this;
+    }
+
+    public EditTppCredentialParameters withTppClientId(final String tppClientId) {
+        this.origin.put("tppClientId", tppClientId);
+        return this;
+    }
+
+    public EditTppCredentialParameters withTppClientSecret(final String tppClientSecret) {
+        this.origin.put("tppClientSecret", tppClientSecret);
+        return this;
+    }
+
+    public EditTppCredentialParameters withTppApiKey(final String tppApiKey) {
+        this.origin.put("tppApiKey", tppApiKey);
+        return this;
+    }
+
+    public EditTppCredentialParameters withValidFromDate(final LocalDate validFromDate) {
+        this.origin.put("validFromDate", new StringOf(validFromDate));
+        return this;
+    }
+
+    public EditTppCredentialParameters withValidUntilDate(final LocalDate validUntilDate) {
+        this.origin.put("validUntilDate", new StringOf(validUntilDate));
+        return this;
+    }
+
 
     @Override
     public JSONObject asJson() {
