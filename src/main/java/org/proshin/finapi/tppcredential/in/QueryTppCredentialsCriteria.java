@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.http.NameValuePair;
+import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
-// @todo #240: Define all parameters supported by "Get all TPP credentials" endpoint
 public class QueryTppCredentialsCriteria implements Iterable<NameValuePair> {
 
     private final List<NameValuePair> pairs;
@@ -31,6 +31,17 @@ public class QueryTppCredentialsCriteria implements Iterable<NameValuePair> {
 
     public QueryTppCredentialsCriteria(final List<NameValuePair> pairs) {
         this.pairs = pairs;
+    }
+
+    public QueryTppCredentialsCriteria withSearch(final String search) {
+        this.pairs.add(new UrlEncodedPair("search", search));
+        return this;
+    }
+
+    public QueryTppCredentialsCriteria withPage(final int page, final int perPage) {
+        this.pairs.add(new UrlEncodedPair("page", page));
+        this.pairs.add(new UrlEncodedPair("perPage", perPage));
+        return this;
     }
 
     @Override

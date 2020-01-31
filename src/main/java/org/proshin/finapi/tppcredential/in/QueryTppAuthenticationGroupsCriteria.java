@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.http.NameValuePair;
+import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
-// @todo #240: Define all parameters supported by "Get all TPP Authentication Groups" endpoint
 public class QueryTppAuthenticationGroupsCriteria implements Iterable<NameValuePair> {
 
     private final List<NameValuePair> pairs;
@@ -31,6 +31,27 @@ public class QueryTppAuthenticationGroupsCriteria implements Iterable<NameValueP
 
     public QueryTppAuthenticationGroupsCriteria(final List<NameValuePair> pairs) {
         this.pairs = pairs;
+    }
+
+    public QueryTppAuthenticationGroupsCriteria withName(final String name) {
+        this.pairs.add(new UrlEncodedPair("search", name));
+        return this;
+    }
+
+    public QueryTppAuthenticationGroupsCriteria withBankBlz(final String bankBlz) {
+        this.pairs.add(new UrlEncodedPair("search", bankBlz));
+        return this;
+    }
+
+    public QueryTppAuthenticationGroupsCriteria withBankName(final String bankName) {
+        this.pairs.add(new UrlEncodedPair("search", bankName));
+        return this;
+    }
+
+    public QueryTppAuthenticationGroupsCriteria withPage(final int page, final int perPage) {
+        this.pairs.add(new UrlEncodedPair("page", page));
+        this.pairs.add(new UrlEncodedPair("perPage", perPage));
+        return this;
     }
 
     @Override

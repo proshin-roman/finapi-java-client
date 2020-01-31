@@ -112,9 +112,9 @@ public class FpBankTest {
            assertThat(bankInterface.bankingInterface(), is(BankingInterface.FINTS_SERVER));
 
            assertThat(bankInterface.tppAuthenticationGroup().isPresent(), is(true));
-           final TppAuthenticationGroup tppAuthenticationGroup = bankInterface.tppAuthenticationGroup().get();
-           assertThat(tppAuthenticationGroup.id(), is(1L));
-           assertThat(tppAuthenticationGroup.name(), is("AirBank XS2A CZ"));
+           final TppAuthenticationGroup authenticationGroup = bankInterface.tppAuthenticationGroup().get();
+           assertThat(authenticationGroup.id(), is(1L));
+           assertThat(authenticationGroup.name(), is("AirBank XS2A CZ"));
 
            final LoginCredential loginCredential = bankInterface.loginCredentials().iterator().next();
            assertThat(loginCredential.label(), is("Nutzerkennung"));

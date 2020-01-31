@@ -28,6 +28,10 @@ public class FpTppAuthenticationGroups implements TppAuthenticationGroups {
     private final AccessToken token;
     private final String url;
 
+    public FpTppAuthenticationGroups(final Endpoint endpoint, final AccessToken token) {
+        this(endpoint, token, "/api/v1/tppCredentials/tppAuthenticationGroups");
+    }
+
     public FpTppAuthenticationGroups(final Endpoint endpoint, final AccessToken token, final String url) {
         this.endpoint = endpoint;
         this.token = token;

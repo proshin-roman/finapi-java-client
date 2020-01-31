@@ -21,7 +21,6 @@ import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.optional.OptionalLocalDateOf;
-import org.proshin.finapi.primitives.optional.OptionalLongOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
 import org.proshin.finapi.tppcredential.in.EditTppCredentialParameters;
 
@@ -55,8 +54,8 @@ public class FpTppCredential implements TppCredential {
     }
 
     @Override
-    public Optional<Long> tppAuthenticationGroupId() {
-        return new OptionalLongOf(this.origin, "tppAuthenticationGroupId").get();
+    public Long tppAuthenticationGroupId() {
+        return this.origin.getLong("tppAuthenticationGroupId");
     }
 
     @Override

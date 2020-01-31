@@ -15,14 +15,15 @@
  */
 package org.proshin.finapi.tppcredential;
 
-import org.proshin.finapi.tppcredential.in.EditTppCredentialParameters;
-import org.proshin.finapi.tppcredential.in.QueryTppAuthenticationGroupsCriteria;
+import org.proshin.finapi.primitives.paging.Page;
+import org.proshin.finapi.tppcredential.in.CreateTppCredentialParameters;
+import org.proshin.finapi.tppcredential.in.QueryTppCredentialsCriteria;
 
 public interface TppCredentials {
 
     TppCredential one(Long id);
 
-    Iterable<TppCredential> query(QueryTppAuthenticationGroupsCriteria criteria);
+    Page<TppCredential> query(QueryTppCredentialsCriteria criteria);
 
-    TppCredential create(EditTppCredentialParameters parameters);
+    TppCredential create(CreateTppCredentialParameters parameters);
 }

@@ -25,7 +25,7 @@ public interface TppCredential {
 
     Optional<String> label();
 
-    Optional<Long> tppAuthenticationGroupId();
+    Long tppAuthenticationGroupId();
 
     Optional<LocalDate> validFrom();
 
