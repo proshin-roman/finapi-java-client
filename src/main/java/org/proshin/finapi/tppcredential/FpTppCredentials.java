@@ -43,7 +43,6 @@ public class FpTppCredentials implements TppCredentials {
         this.url = url;
     }
 
-
     @Override
     public TppCredential one(final Long id) {
         return new FpTppCredential(
