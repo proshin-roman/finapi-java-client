@@ -23,6 +23,7 @@ import org.proshin.finapi.bank.Bank;
 import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.paging.PagingCriteria;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
+import org.proshin.finapi.primitives.pair.SpaceSeparatedPair;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
 public final class BanksCriteria implements Iterable<NameValuePair> {
@@ -43,7 +44,7 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
     }
 
     public BanksCriteria withSearch(final String search) {
-        this.pairs.add(new UrlEncodedPair("search", search));
+        this.pairs.add(new SpaceSeparatedPair("search", search));
         return this;
     }
 

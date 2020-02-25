@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-public final class UrlEncodedPair implements NameValuePair {
+public class UrlEncodedPair implements NameValuePair {
 
     private final NameValuePair origin;
 
