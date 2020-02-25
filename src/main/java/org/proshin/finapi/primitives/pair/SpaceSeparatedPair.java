@@ -22,6 +22,6 @@ public final class SpaceSeparatedPair extends UrlEncodedPair {
 
     @Override
     public String getValue() {
-        return super.getValue().replaceAll("\\+", "%20");
+        return super.getValue().replaceAll("\\+", " ");
     }
 }
