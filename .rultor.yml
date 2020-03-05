@@ -4,6 +4,8 @@ assets:
   - settings.xml: "proshin-roman/finapi-java-client-secrets#settings.xml"
   - pubring.gpg: "proshin-roman/finapi-java-client-secrets#pubring.gpg"
   - secring.gpg: "proshin-roman/finapi-java-client-secrets#secring.gpg"
+docker:
+  yegor256/rultor-image
 release:
   script: |
     mvn versions:set "-DnewVersion=${tag}"
