@@ -28,7 +28,7 @@ public final class PagingCriteria implements Iterable<NameValuePair> {
 
     public PagingCriteria(final int page, final int perPage, final String... orders) {
         this(() -> {
-            final Collection<NameValuePair> list = new ArrayList<>();
+                final Collection<NameValuePair> list = new ArrayList<>();
                 list.add(new UrlEncodedPair("page", page));
                 list.add(new UrlEncodedPair("perPage", perPage));
                 for (final String order : orders) {
