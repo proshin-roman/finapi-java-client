@@ -15,15 +15,12 @@
  */
 package org.proshin.finapi.bankconnection.out;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
 public class FpTwoStepProceduresTest {
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void testThatExceptionIsThrownIfDefaultDoesNotMatchAnyProcedure() {
@@ -41,9 +38,9 @@ public class FpTwoStepProceduresTest {
                 '}')
         );
 
-        this.expectedException.expect(IllegalStateException.class);
-        this.expectedException.expectMessage(
-            "List of all two-step procedures doesn't contain an item matches ID of the default one");
-        twoStepProcedures.defaultOne();
+        final Exception exception =
+            assertThrows(IllegalStateException.class, twoStepProcedures::defaultOne);
+        assertThat(exception.getMessage())
+            .isEqualTo(("List of all two-step procedures doesn't contain an item matches ID of the default one"));
     }
 }

@@ -15,13 +15,12 @@
  */
 package org.proshin.finapi.primitives.paging;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.text.Joined;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FpPageTest {
 
@@ -36,11 +35,9 @@ public class FpPageTest {
                 '}'),
             JSONArray::getInt
         );
-        assertThat(
-            "Joined text doesn't match to the expected one",
-            new Joined(" - ", new Mapped<>(String::valueOf, items.items())).asString(),
-            is("1 - 2 - 3 - 5 - 8 - 11")
-        );
+        assertThat(new Joined(" - ", new Mapped<>(String::valueOf, items.items())).asString())
+            .as("Joined text doesn't match to the expected one")
+            .isEqualTo("1 - 2 - 3 - 5 - 8 - 11");
     }
 
     @Test
@@ -61,9 +58,9 @@ public class FpPageTest {
             JSONArray::getInt
         );
         final Paging paging = items.paging();
-        assertThat(paging.page(), is(1));
-        assertThat(paging.perPage(), is(20));
-        assertThat(paging.pageCount(), is(10));
-        assertThat(paging.totalCount(), is(200));
+        assertThat(paging.page()).isEqualTo(1);
+        assertThat(paging.perPage()).isEqualTo(20);
+        assertThat(paging.pageCount()).isEqualTo(10);
+        assertThat(paging.totalCount()).isEqualTo(200);
     }
 }

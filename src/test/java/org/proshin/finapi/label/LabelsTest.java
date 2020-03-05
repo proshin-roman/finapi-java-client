@@ -16,7 +16,7 @@
 package org.proshin.finapi.label;
 
 import org.cactoos.iterable.IterableOf;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;

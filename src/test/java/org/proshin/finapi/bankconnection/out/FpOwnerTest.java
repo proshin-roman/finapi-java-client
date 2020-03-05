@@ -17,10 +17,9 @@ package org.proshin.finapi.bankconnection.out;
 
 import java.time.LocalDate;
 import java.util.Optional;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FpOwnerTest {
     @Test
@@ -40,16 +39,16 @@ public class FpOwnerTest {
                 "  \"houseNumber\": \"99\"" +
                 '}')
         );
-        assertThat(owner.firstName(), is(Optional.of("Max")));
-        assertThat(owner.lastName(), is(Optional.of("Mustermann")));
-        assertThat(owner.salutation(), is(Optional.of("Herr")));
-        assertThat(owner.title(), is(Optional.of("Dr.")));
-        assertThat(owner.email(), is(Optional.of("email@localhost.de")));
-        assertThat(owner.dateOfBirth(), is(Optional.of(LocalDate.of(1980, 1, 1))));
-        assertThat(owner.postCode(), is(Optional.of("80000")));
-        assertThat(owner.country(), is(Optional.of("Deutschland")));
-        assertThat(owner.city(), is(Optional.of("München")));
-        assertThat(owner.street(), is(Optional.of("Musterstraße")));
-        assertThat(owner.houseNumber(), is(Optional.of("99")));
+        assertThat(owner.firstName()).isEqualTo(Optional.of("Max"));
+        assertThat(owner.lastName()).isEqualTo(Optional.of("Mustermann"));
+        assertThat(owner.salutation()).isEqualTo(Optional.of("Herr"));
+        assertThat(owner.title()).isEqualTo(Optional.of("Dr."));
+        assertThat(owner.email()).isEqualTo(Optional.of("email@localhost.de"));
+        assertThat(owner.dateOfBirth()).isEqualTo(Optional.of(LocalDate.of(1980, 1, 1)));
+        assertThat(owner.postCode()).isEqualTo(Optional.of("80000"));
+        assertThat(owner.country()).isEqualTo(Optional.of("Deutschland"));
+        assertThat(owner.city()).isEqualTo(Optional.of("München"));
+        assertThat(owner.street()).isEqualTo(Optional.of("Musterstraße"));
+        assertThat(owner.houseNumber()).isEqualTo(Optional.of("99"));
     }
 }

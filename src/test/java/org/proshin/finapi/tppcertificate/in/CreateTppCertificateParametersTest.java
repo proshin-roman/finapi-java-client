@@ -15,9 +15,8 @@
  */
 package org.proshin.finapi.tppcertificate.in;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 import org.proshin.finapi.tppcertificate.CertificateType;
 
@@ -35,14 +34,15 @@ public class CreateTppCertificateParametersTest {
                 .withPassphrase("custom passphrase")
                 .withValidFromDate(new LocalDateOf("2019-11-29").get())
                 .withValidUntilDate(new LocalDateOf("2020-12-31").get())
-                .asJson().toString(),
-            is("{\"privateKey\":\"private key\"," +
+                .asJson().toString())
+            .isEqualTo('{' +
+                "\"privateKey\":\"private key\"," +
                 "\"validFromDate\":\"2019-11-29\"," +
                 "\"passphrase\":\"custom passphrase\"," +
                 "\"publicKey\":\"public key\"," +
                 "\"label\":\"custom label\"," +
                 "\"validUntilDate\":\"2020-12-31\"," +
-                "\"type\":\"QWAC\"}")
-        );
+                "\"type\":\"QWAC\"}"
+            );
     }
 }

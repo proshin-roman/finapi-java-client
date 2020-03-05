@@ -16,10 +16,9 @@
 package org.proshin.finapi.account.out;
 
 import java.util.Optional;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FpSepaRequestingResponseTest {
 
@@ -36,16 +35,15 @@ public class FpSepaRequestingResponseTest {
             "  \"photoTanMimeType\": \"image/svg+xml\"," +
             "  \"photoTanData\": \"some image data\"" +
             '}'));
-        assertThat(response.successMessage(), is(Optional.of("Auftrag ausgeführt.")));
-        assertThat(response.warnMessage(), is(Optional.of("Es liegen Warnungen vor.")));
-        assertThat(response.paymentId(), is(1L));
-        assertThat(response.challengeMessage(),
-            is(Optional.of("Bitte geben Sie die TAN ein, die Sie per SMS erhalten."))
-        );
-        assertThat(response.answerFieldLabel(), is(Optional.of("TAN-Nummer")));
-        assertThat(response.tanListNumber(), is(Optional.of("001")));
-        assertThat(response.opticalData(), is(Optional.of("11048813833205002812775114302C30315D")));
-        assertThat(response.photoTanMimeType(), is(Optional.of("image/svg+xml")));
-        assertThat(response.photoTanData(), is(Optional.of("some image data")));
+        assertThat(response.successMessage()).isEqualTo(Optional.of("Auftrag ausgeführt."));
+        assertThat(response.warnMessage()).isEqualTo(Optional.of("Es liegen Warnungen vor."));
+        assertThat(response.paymentId()).isEqualTo(1L);
+        assertThat(response.challengeMessage())
+            .isEqualTo(Optional.of("Bitte geben Sie die TAN ein, die Sie per SMS erhalten."));
+        assertThat(response.answerFieldLabel()).isEqualTo(Optional.of("TAN-Nummer"));
+        assertThat(response.tanListNumber()).isEqualTo(Optional.of("001"));
+        assertThat(response.opticalData()).isEqualTo(Optional.of("11048813833205002812775114302C30315D"));
+        assertThat(response.photoTanMimeType()).isEqualTo(Optional.of("image/svg+xml"));
+        assertThat(response.photoTanData()).isEqualTo(Optional.of("some image data"));
     }
 }

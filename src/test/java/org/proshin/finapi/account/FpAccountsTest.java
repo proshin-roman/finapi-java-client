@@ -17,7 +17,7 @@ package org.proshin.finapi.account;
 
 import java.math.BigDecimal;
 import org.cactoos.iterable.IterableOfLongs;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;

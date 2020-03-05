@@ -17,20 +17,16 @@ package org.proshin.finapi.transaction;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import org.cactoos.iterable.IterableOfLongs;
-import org.hamcrest.BaseMatcher;
-import static org.hamcrest.CoreMatchers.hasItems;
-import org.hamcrest.Description;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
-import org.proshin.finapi.label.Label;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.transaction.in.EditTransactionParameters;
 import org.proshin.finapi.transaction.in.SplitTransactionParameters;
@@ -108,47 +104,47 @@ public class FpTransactionTest extends TestWithMockedEndpoint {
                 '}'),
             "/api/v1/transactions"
         );
-        assertThat(tx.id(), is(1L));
-        assertThat(tx.parent(), is(Optional.of(2L)));
-        assertThat(tx.account(), is(3L));
-        assertThat(tx.valueDate(), is(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get()));
-        assertThat(tx.bankBookingDate(), is(new OffsetDateTimeOf("2018-01-02 00:00:00.000").get()));
-        assertThat(tx.finapiBookingDate(), is(new OffsetDateTimeOf("2018-01-03 00:00:00.000").get()));
-        assertThat(tx.amount(), is(new BigDecimal("-99.99")));
-        assertThat(tx.purpose(), is(Optional.of("Restaurantbesuch")));
-        assertThat(tx.counterpart().name(), is(Optional.of("Bar Centrale")));
-        assertThat(tx.counterpart().accountNumber(), is(Optional.of("0061110500")));
-        assertThat(tx.counterpart().iban(), is(Optional.of("DE13700800000061110500")));
-        assertThat(tx.counterpart().blz(), is(Optional.of("70080000")));
-        assertThat(tx.counterpart().bic(), is(Optional.of("DRESDEFF700")));
-        assertThat(tx.counterpart().bankName(), is(Optional.of("Commerzbank vormals Dresdner Bank")));
-        assertThat(tx.counterpart().mandateReference(), is(Optional.of("MR123")));
-        assertThat(tx.counterpart().customerReference(), is(Optional.of("CUR123")));
-        assertThat(tx.counterpart().creditorId(), is(Optional.of("CRI123")));
-        assertThat(tx.counterpart().debitorId(), is(Optional.of("CRI098")));
-        assertThat(tx.type().type(), is(Optional.of("Überweisungsauftrag")));
-        assertThat(tx.type().typeCodeZka(), is(Optional.of("999")));
-        assertThat(tx.type().typeCodeSwift(), is(Optional.of("RAPRDE51")));
-        assertThat(tx.sepaPurposeCode(), is(Optional.of("OTHR")));
-        assertThat(tx.primanota(), is(Optional.of("Primanota")));
-        assertThat(tx.category().isPresent(), is(true));
-        assertThat(tx.category().get().id(), is(4L));
-        assertThat(tx.labels(), hasItems(new LabelMatcher(1L, "test")));
-        assertThat(tx.isPotentialDuplicate(), is(true));
-        assertThat(tx.isAdjustingEntry(), is(true));
-        assertThat(tx.isNew(), is(true));
-        assertThat(tx.importDate(), is(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get()));
-        assertThat(tx.children(), hasItems(1L, 2L, 3L));
-        assertThat(tx.payPalData().isPresent(), is(true));
-        assertThat(tx.payPalData().get().invoiceNumber(), is(Optional.of("INV2-KXVU-7Z64-DT6W-MG2X")));
-        assertThat(tx.payPalData().get().fee(), is(Optional.of(new BigDecimal("-0.99"))));
-        assertThat(tx.payPalData().get().net(), is(Optional.of(new BigDecimal("9.99"))));
-        assertThat(tx.payPalData().get().auctionSite(), is(Optional.of("eBay")));
-        assertThat(tx.endToEndReference(), is(Optional.of("001100550526")));
-        assertThat(tx.compensationAmount(), is(Optional.of(new BigDecimal("-1.11"))));
-        assertThat(tx.originalAmount(), is(Optional.of(new BigDecimal("-9.99"))));
-        assertThat(tx.differentDebitor(), is(Optional.of("DIFD70204")));
-        assertThat(tx.differentCreditor(), is(Optional.of("DIFC98450")));
+        assertThat(tx.id()).isEqualTo(1L);
+        assertThat(tx.parent()).isEqualTo(Optional.of(2L));
+        assertThat(tx.account()).isEqualTo(3L);
+        assertThat(tx.valueDate()).isEqualTo(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get());
+        assertThat(tx.bankBookingDate()).isEqualTo(new OffsetDateTimeOf("2018-01-02 00:00:00.000").get());
+        assertThat(tx.finapiBookingDate()).isEqualTo(new OffsetDateTimeOf("2018-01-03 00:00:00.000").get());
+        assertThat(tx.amount()).isEqualTo(new BigDecimal("-99.99"));
+        assertThat(tx.purpose()).isEqualTo(Optional.of("Restaurantbesuch"));
+        assertThat(tx.counterpart().name()).isEqualTo(Optional.of("Bar Centrale"));
+        assertThat(tx.counterpart().accountNumber()).isEqualTo(Optional.of("0061110500"));
+        assertThat(tx.counterpart().iban()).isEqualTo(Optional.of("DE13700800000061110500"));
+        assertThat(tx.counterpart().blz()).isEqualTo(Optional.of("70080000"));
+        assertThat(tx.counterpart().bic()).isEqualTo(Optional.of("DRESDEFF700"));
+        assertThat(tx.counterpart().bankName()).isEqualTo(Optional.of("Commerzbank vormals Dresdner Bank"));
+        assertThat(tx.counterpart().mandateReference()).isEqualTo(Optional.of("MR123"));
+        assertThat(tx.counterpart().customerReference()).isEqualTo(Optional.of("CUR123"));
+        assertThat(tx.counterpart().creditorId()).isEqualTo(Optional.of("CRI123"));
+        assertThat(tx.counterpart().debitorId()).isEqualTo(Optional.of("CRI098"));
+        assertThat(tx.type().type()).isEqualTo(Optional.of("Überweisungsauftrag"));
+        assertThat(tx.type().typeCodeZka()).isEqualTo(Optional.of("999"));
+        assertThat(tx.type().typeCodeSwift()).isEqualTo(Optional.of("RAPRDE51"));
+        assertThat(tx.sepaPurposeCode()).isEqualTo(Optional.of("OTHR"));
+        assertThat(tx.primanota()).isEqualTo(Optional.of("Primanota"));
+        assertThat(tx.category().isPresent()).isTrue();
+        assertThat(tx.category().get().id()).isEqualTo(4L);
+        assertThat(tx.labels()).flatExtracting("id", "name").contains(tuple(1L, "test"));
+        assertThat(tx.isPotentialDuplicate()).isTrue();
+        assertThat(tx.isAdjustingEntry()).isTrue();
+        assertThat(tx.isNew()).isTrue();
+        assertThat(tx.importDate()).isEqualTo(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get());
+        assertThat(tx.children()).containsExactlyInAnyOrder(1L, 2L, 3L);
+        assertThat(tx.payPalData().isPresent()).isTrue();
+        assertThat(tx.payPalData().get().invoiceNumber()).isEqualTo(Optional.of("INV2-KXVU-7Z64-DT6W-MG2X"));
+        assertThat(tx.payPalData().get().fee()).isEqualTo(Optional.of(new BigDecimal("-0.99")));
+        assertThat(tx.payPalData().get().net()).isEqualTo(Optional.of(new BigDecimal("9.99")));
+        assertThat(tx.payPalData().get().auctionSite()).isEqualTo(Optional.of("eBay"));
+        assertThat(tx.endToEndReference()).isEqualTo(Optional.of("001100550526"));
+        assertThat(tx.compensationAmount()).isEqualTo(Optional.of(new BigDecimal("-1.11")));
+        assertThat(tx.originalAmount()).isEqualTo(Optional.of(new BigDecimal("-9.99")));
+        assertThat(tx.differentDebitor()).isEqualTo(Optional.of("DIFD70204"));
+        assertThat(tx.differentCreditor()).isEqualTo(Optional.of("DIFC98450"));
     }
 
     @Test
@@ -275,27 +271,5 @@ public class FpTransactionTest extends TestWithMockedEndpoint {
             new JSONObject("{\"id\":123}"),
             "/api/v1/transactions"
         ).delete();
-    }
-
-    private static final class LabelMatcher extends BaseMatcher<Label> {
-
-        private final Long id;
-        private final String name;
-
-        private LabelMatcher(final Long id, final String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        @Override
-        public boolean matches(final Object item) {
-            final Label label = (Label) item;
-            return label.id().equals(this.id) && label.name().equals(this.name);
-        }
-
-        @Override
-        public void describeTo(final Description description) {
-
-        }
     }
 }

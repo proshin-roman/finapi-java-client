@@ -16,10 +16,9 @@
 package org.proshin.finapi.category;
 
 import java.math.BigDecimal;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.cactoos.iterable.IterableOfLongs;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
@@ -144,9 +143,9 @@ public class FpCategoriesTest extends TestWithMockedEndpoint {
                 .withOrdering("id,asc", "name,desc")
         );
         cashFlows.iterator().next();
-        assertThat(cashFlows.income(), is(new BigDecimal("199.99")));
-        assertThat(cashFlows.spending(), is(new BigDecimal("-99.99")));
-        assertThat(cashFlows.balance(), is(new BigDecimal("100")));
+        assertThat(cashFlows.income()).isEqualTo(new BigDecimal("199.99"));
+        assertThat(cashFlows.spending()).isEqualTo(new BigDecimal("-99.99"));
+        assertThat(cashFlows.balance()).isEqualTo(new BigDecimal("100"));
     }
 
     @Test

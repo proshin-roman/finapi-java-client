@@ -15,10 +15,9 @@
  */
 package org.proshin.finapi.mock.out;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
@@ -41,8 +40,8 @@ public class FpCategorizationResultTest {
                 '}'),
             "/some-url"
         );
-        assertThat(result.category().isPresent(), is(true));
-        assertThat(result.category().get().id(), is(378L));
-        assertThat(result.transaction(), is("transaction"));
+        assertThat(result.category().isPresent()).isTrue();
+        assertThat(result.category().get().id()).isEqualTo(378L);
+        assertThat(result.transaction()).isEqualTo("transaction");
     }
 }

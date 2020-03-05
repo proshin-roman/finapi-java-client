@@ -16,10 +16,9 @@
 package org.proshin.finapi.exception;
 
 import java.util.Optional;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.proshin.finapi.bankconnection.out.TwoStepProcedure;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
@@ -65,34 +64,34 @@ public class FinapiExceptionTest {
                 '}'),
             "fake location"
         );
-        assertThat(exception.getMessage(), is("Test error message"));
-        assertThat(exception.date(), is(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get()));
-        assertThat(exception.requestId(), is("request-id-01234567890123456789"));
-        assertThat(exception.endpoint(), is("https://finapi.localhost"));
-        assertThat(exception.authContext(), is("1/2"));
-        assertThat(exception.bank(), is("00000000"));
-        assertThat(exception.location(), is(Optional.of("fake location")));
+        assertThat(exception.getMessage()).isEqualTo("Test error message");
+        assertThat(exception.date()).isEqualTo(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get());
+        assertThat(exception.requestId()).isEqualTo("request-id-01234567890123456789");
+        assertThat(exception.endpoint()).isEqualTo("https://finapi.localhost");
+        assertThat(exception.authContext()).isEqualTo("1/2");
+        assertThat(exception.bank()).isEqualTo("00000000");
+        assertThat(exception.location()).isEqualTo(Optional.of("fake location"));
 
         exception.errors().forEach(error -> {
-            assertThat(error.message(), is(Optional.of("An unexpected error occurred")));
-            assertThat(error.errorCode(), is(Optional.of(ErrorCode.UNEXPECTED_ERROR)));
-            assertThat(error.errorType(), is(Optional.of(ErrorType.TECHNICAL)));
+            assertThat(error.message()).isEqualTo(Optional.of("An unexpected error occurred"));
+            assertThat(error.errorCode()).isEqualTo(Optional.of(ErrorCode.UNEXPECTED_ERROR));
+            assertThat(error.errorType()).isEqualTo(Optional.of(ErrorType.TECHNICAL));
             final MultiStepAuthenticationChallenge msa = error.multiStepAuthentication();
-            assertThat(msa.hash(), is("c7af602c031117458affd825305fb56d"));
-            assertThat(msa.status(), is(MultiStepAuthenticationChallenge.Status.CHALLENGE_RESPONSE_REQUIRED));
-            assertThat(msa.challengeMessage(), is(Optional.of("Fake challenge message")));
-            assertThat(msa.answerFieldLabel(), is(Optional.of("TAN-Nummer")));
-            assertThat(msa.redirectUrl(), is(Optional.of("https://user-login.bank.de/")));
-            assertThat(msa.redirectContext(), is(Optional.of("12345")));
-            assertThat(msa.redirectContextField(), is(Optional.of("state")));
-            assertThat(msa.opticalData(), is(Optional.of("11048813833205002812775114302C30315D")));
-            assertThat(msa.photoTanMimeType(), is(Optional.of("image/svg+xml")));
-            assertThat(msa.photoTanData(), is(Optional.of("fake photo tan data")));
+            assertThat(msa.hash()).isEqualTo("c7af602c031117458affd825305fb56d");
+            assertThat(msa.status()).isEqualTo(MultiStepAuthenticationChallenge.Status.CHALLENGE_RESPONSE_REQUIRED);
+            assertThat(msa.challengeMessage()).isEqualTo(Optional.of("Fake challenge message"));
+            assertThat(msa.answerFieldLabel()).isEqualTo(Optional.of("TAN-Nummer"));
+            assertThat(msa.redirectUrl()).isEqualTo(Optional.of("https://user-login.bank.de/"));
+            assertThat(msa.redirectContext()).isEqualTo(Optional.of("12345"));
+            assertThat(msa.redirectContextField()).isEqualTo(Optional.of("state"));
+            assertThat(msa.opticalData()).isEqualTo(Optional.of("11048813833205002812775114302C30315D"));
+            assertThat(msa.photoTanMimeType()).isEqualTo(Optional.of("image/svg+xml"));
+            assertThat(msa.photoTanData()).isEqualTo(Optional.of("fake photo tan data"));
             msa.twoStepProcedures().forEach(tsp -> {
-                assertThat(tsp.id(), is("955"));
-                assertThat(tsp.name(), is("mobileTAN"));
-                assertThat(tsp.type(), is(Optional.of(TwoStepProcedure.Type.TEXT)));
-                assertThat(tsp.implicitExecute(), is(true));
+                assertThat(tsp.id()).isEqualTo("955");
+                assertThat(tsp.name()).isEqualTo("mobileTAN");
+                assertThat(tsp.type()).isEqualTo(Optional.of(TwoStepProcedure.Type.TEXT));
+                assertThat(tsp.implicitExecute()).isTrue();
             });
         });
     }

@@ -16,10 +16,9 @@
 package org.proshin.finapi.account.out;
 
 import java.util.Optional;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FpSepaExecutingResponseTest {
 
@@ -31,7 +30,7 @@ public class FpSepaExecutingResponseTest {
                 "  \"warnMessage\": \"Es liegen Warnungen vor.\"" +
                 '}')
         );
-        assertThat(response.successMessage(), is(Optional.of("Auftrag ausgeführt.")));
-        assertThat(response.warnMessage(), is(Optional.of("Es liegen Warnungen vor.")));
+        assertThat(response.successMessage()).isEqualTo(Optional.of("Auftrag ausgeführt."));
+        assertThat(response.warnMessage()).isEqualTo(Optional.of("Es liegen Warnungen vor."));
     }
 }

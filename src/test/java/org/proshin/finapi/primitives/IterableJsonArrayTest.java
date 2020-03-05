@@ -17,17 +17,12 @@ package org.proshin.finapi.primitives;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONArray;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
 public class IterableJsonArrayTest {
-
-    @Rule
-    public ExpectedException rule = ExpectedException.none();
 
     @Test
     public void testHasNext() {
@@ -35,9 +30,9 @@ public class IterableJsonArrayTest {
             new JSONArray(new int[]{1}),
             JSONArray::getInt
         ).iterator();
-        assertThat(iterator.hasNext(), is(true));
+        assertThat(iterator.hasNext()).isTrue();
         iterator.next();
-        assertThat(iterator.hasNext(), is(false));
+        assertThat(iterator.hasNext()).isFalse();
     }
 
     @Test
@@ -47,9 +42,10 @@ public class IterableJsonArrayTest {
             JSONArray::getInt
         ).iterator();
 
-        rule.expect(NoSuchElementException.class);
-        rule.expectMessage("Array has 1 items when you tried to get an item with index=1");
         iterator.next();// it should be fine
-        iterator.next();// it must fail
+        final Exception exception =
+            assertThrows(NoSuchElementException.class, iterator::next);
+        assertThat(exception.getMessage())
+            .isEqualTo(("Array has 1 items when you tried to get an item with index=1"));
     }
 }

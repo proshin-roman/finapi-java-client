@@ -16,10 +16,9 @@
 package org.proshin.finapi.tppcredential;
 
 import java.util.Optional;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 import org.proshin.finapi.TestWithMockedEndpoint;
@@ -42,11 +41,11 @@ public class FpTppCredentialTest extends TestWithMockedEndpoint {
                 '}'),
             ""
         );
-        assertThat(credential.id(), is(1L));
-        assertThat(credential.label(), is(Optional.of("Test credentials")));
-        assertThat(credential.tppAuthenticationGroupId(), is(1L));
-        assertThat(credential.validFrom(), is(Optional.of(new LocalDateOf("2019-07-20").get())));
-        assertThat(credential.validUntil(), is(Optional.of(new LocalDateOf("2019-07-20").get())));
+        assertThat(credential.id()).isEqualTo(1L);
+        assertThat(credential.label()).isEqualTo(Optional.of("Test credentials"));
+        assertThat(credential.tppAuthenticationGroupId()).isEqualTo(1L);
+        assertThat(credential.validFrom()).isEqualTo(Optional.of(new LocalDateOf("2019-07-20").get()));
+        assertThat(credential.validUntil()).isEqualTo(Optional.of(new LocalDateOf("2019-07-20").get()));
     }
 
     @Test

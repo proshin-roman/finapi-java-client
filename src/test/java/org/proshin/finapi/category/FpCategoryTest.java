@@ -16,11 +16,9 @@
 package org.proshin.finapi.category;
 
 import java.util.Optional;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
@@ -45,12 +43,12 @@ public class FpCategoryTest extends TestWithMockedEndpoint {
                 '}'),
             "/api/v1/categories"
         );
-        assertThat(category.id(), is(378L));
-        assertThat(category.name(), is("Sport & Fitness"));
-        assertThat(category.parentId(), is(Optional.of(373L)));
-        assertThat(category.parentName(), is(Optional.of("Freizeit, Hobbys & Soziales")));
-        assertThat(category.isCustom(), is(true));
-        assertThat(category.children(), hasItems(1L, 2L, 3L));
+        assertThat(category.id()).isEqualTo(378L);
+        assertThat(category.name()).isEqualTo("Sport & Fitness");
+        assertThat(category.parentId()).isEqualTo(Optional.of(373L));
+        assertThat(category.parentName()).isEqualTo(Optional.of("Freizeit, Hobbys & Soziales"));
+        assertThat(category.isCustom()).isTrue();
+        assertThat(category.children()).containsExactlyInAnyOrder(1L, 2L, 3L);
     }
 
     @Test

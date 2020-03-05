@@ -15,9 +15,8 @@
  */
 package org.proshin.finapi.user;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 import org.mockserver.model.JsonBody;
@@ -118,7 +117,7 @@ public final class UsersTest extends TestWithMockedEndpoint {
             this.endpoint(),
             new FakeAccessToken("fake token")
         ).requestPasswordChange("username");
-        assertThat(token, is("EnCRyPTEDPassWordCHAnGEToKen=="));
+        assertThat(token).isEqualTo("EnCRyPTEDPassWordCHAnGEToKen==");
     }
 
     @Test

@@ -15,10 +15,9 @@
  */
 package org.proshin.finapi.bankconnection.out;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static org.proshin.finapi.bankconnection.out.BankConsent.Status.PRESENT;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
@@ -34,7 +33,7 @@ public class FpBankConsentTest {
                     '}'
             )
         );
-        assertThat(consent.status(), is(PRESENT));
-        assertThat(consent.expiresAt(), is(new OffsetDateTimeOf("2019-07-20 09:05:10.546").get()));
+        assertThat(consent.status()).isEqualTo(PRESENT);
+        assertThat(consent.expiresAt()).isEqualTo(new OffsetDateTimeOf("2019-07-20 09:05:10.546").get());
     }
 }

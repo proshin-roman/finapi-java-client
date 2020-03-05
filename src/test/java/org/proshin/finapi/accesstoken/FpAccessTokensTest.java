@@ -16,9 +16,8 @@
 package org.proshin.finapi.accesstoken;
 
 import java.util.Optional;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;
@@ -49,11 +48,11 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
             )
         );
         final AccessToken token = new FpAccessTokens(this.endpoint()).clientToken(clientId, clientSecret);
-        assertThat(token.accessToken(), is("access token"));
-        assertThat(token.tokenType(), is("bearer"));
-        assertThat(token.refreshToken().isPresent(), is(false));
-        assertThat(token.expiresIn(), is(156));
-        assertThat(token.scope(), is("all"));
+        assertThat(token.accessToken()).isEqualTo("access token");
+        assertThat(token.tokenType()).isEqualTo("bearer");
+        assertThat(token.refreshToken().isPresent()).isFalse();
+        assertThat(token.expiresIn()).isEqualTo(156);
+        assertThat(token.scope()).isEqualTo("all");
     }
 
     @Test
@@ -85,11 +84,11 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
         );
         final AccessToken token = new FpAccessTokens(this.endpoint())
             .userToken(clientId, clientSecret, username, password);
-        assertThat(token.accessToken(), is("access token"));
-        assertThat(token.tokenType(), is("bearer"));
-        assertThat(token.refreshToken(), is(Optional.of("refresh token")));
-        assertThat(token.expiresIn(), is(156));
-        assertThat(token.scope(), is("all"));
+        assertThat(token.accessToken()).isEqualTo("access token");
+        assertThat(token.tokenType()).isEqualTo("bearer");
+        assertThat(token.refreshToken()).isEqualTo(Optional.of("refresh token"));
+        assertThat(token.expiresIn()).isEqualTo(156);
+        assertThat(token.scope()).isEqualTo("all");
     }
 
     @Test
@@ -119,11 +118,11 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
         );
         final AccessToken token = new FpAccessTokens(this.endpoint())
             .userToken(clientId, clientSecret, refreshToken);
-        assertThat(token.accessToken(), is("access token"));
-        assertThat(token.tokenType(), is("bearer"));
-        assertThat(token.refreshToken(), is(Optional.of("refresh token")));
-        assertThat(token.expiresIn(), is(156));
-        assertThat(token.scope(), is("all"));
+        assertThat(token.accessToken()).isEqualTo("access token");
+        assertThat(token.tokenType()).isEqualTo("bearer");
+        assertThat(token.refreshToken()).isEqualTo(Optional.of("refresh token"));
+        assertThat(token.expiresIn()).isEqualTo(156);
+        assertThat(token.scope()).isEqualTo("all");
     }
 
     @Test

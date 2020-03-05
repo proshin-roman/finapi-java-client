@@ -16,17 +16,14 @@
 package org.proshin.finapi.tppcredential;
 
 import java.util.Iterator;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.tppcredential.in.QueryTppAuthenticationGroupsCriteria;
-import org.proshin.finapi.tppcredential.in.QueryTppCredentialsCriteria;
 
 public class FpTppAuthenticationGroupTest extends TestWithMockedEndpoint {
 
@@ -61,13 +58,13 @@ public class FpTppAuthenticationGroupTest extends TestWithMockedEndpoint {
             this.endpoint(),
             new FakeAccessToken("fake-access-token")
         ).query(new QueryTppAuthenticationGroupsCriteria().withPage(2, 99));
-        assertThat(authenticationGroups.paging().page(), is(2));
-        assertThat(authenticationGroups.paging().perPage(), is(99));
-        assertThat(authenticationGroups.paging().pageCount(), is(10));
-        assertThat(authenticationGroups.paging().totalCount(), is(200));
+        assertThat(authenticationGroups.paging().page()).isEqualTo(2);
+        assertThat(authenticationGroups.paging().perPage()).isEqualTo(99);
+        assertThat(authenticationGroups.paging().pageCount()).isEqualTo(10);
+        assertThat(authenticationGroups.paging().totalCount()).isEqualTo(200);
 
         final Iterator<TppAuthenticationGroup> iterator = authenticationGroups.items().iterator();
-        assertThat(iterator.next(), is(notNullValue()));
-        assertThat(iterator.hasNext(), is(false));
+        assertThat(iterator.next()).isNotNull();
+        assertThat(iterator.hasNext()).isFalse();
     }
 }
