@@ -17,7 +17,7 @@ package org.proshin.finapi.tppcredential;
 
 import org.json.JSONObject;
 
-public class FpTppAuthenticationGroup implements TppAuthenticationGroup{
+public class FpTppAuthenticationGroup implements TppAuthenticationGroup {
 
     private final JSONObject origin;
 

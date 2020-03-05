@@ -33,6 +33,10 @@ public final class CategorizationParameter implements Jsonable {
         );
     }
 
+    public CategorizationParameter(final Supplier<JSONObject> origin) {
+        this.origin = origin;
+    }
+
     public CategorizationParameter withPurpose(final String purpose) {
         return new CategorizationParameter(() -> this.origin.get().put("purpose", purpose));
     }
@@ -64,10 +68,6 @@ public final class CategorizationParameter implements Jsonable {
 
     public CategorizationParameter withTypeCodeZka(final String typeCodeZka) {
         return new CategorizationParameter(() -> this.origin.get().put("typeCodeZka", typeCodeZka));
-    }
-
-    public CategorizationParameter(final Supplier<JSONObject> origin) {
-        this.origin = origin;
     }
 
     @Override

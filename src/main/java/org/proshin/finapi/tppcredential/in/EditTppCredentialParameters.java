@@ -67,7 +67,6 @@ public class EditTppCredentialParameters implements Jsonable {
         return this;
     }
 
-
     @Override
     public JSONObject asJson() {
         return this.origin;

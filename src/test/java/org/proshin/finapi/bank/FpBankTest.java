@@ -108,23 +108,24 @@ public class FpBankTest {
             is(Optional.of(new OffsetDateTimeOf("2018-01-02 00:00:00.000").get()))
         );
 
-       for (final BankInterface bankInterface : bank.interfaces()) {
-           assertThat(bankInterface.bankingInterface(), is(BankingInterface.FINTS_SERVER));
+        for (final BankInterface bankInterface : bank.interfaces()) {
+            assertThat(bankInterface.bankingInterface(), is(BankingInterface.FINTS_SERVER));
 
-           assertThat(bankInterface.tppAuthenticationGroup().isPresent(), is(true));
-           final TppAuthenticationGroup authenticationGroup = bankInterface.tppAuthenticationGroup().get();
-           assertThat(authenticationGroup.id(), is(1L));
-           assertThat(authenticationGroup.name(), is("AirBank XS2A CZ"));
+            assertThat(bankInterface.tppAuthenticationGroup().isPresent(), is(true));
+            final TppAuthenticationGroup authenticationGroup = bankInterface.tppAuthenticationGroup().get();
+            assertThat(authenticationGroup.id(), is(1L));
+            assertThat(authenticationGroup.name(), is("AirBank XS2A CZ"));
 
-           final LoginCredential loginCredential = bankInterface.loginCredentials().iterator().next();
-           assertThat(loginCredential.label(), is("Nutzerkennung"));
-           assertThat(loginCredential.isSecret(), is(true));
-           assertThat(loginCredential.isVolatile(), is(true));
+            final LoginCredential loginCredential = bankInterface.loginCredentials().iterator().next();
+            assertThat(loginCredential.label(), is("Nutzerkennung"));
+            assertThat(loginCredential.isSecret(), is(true));
+            assertThat(loginCredential.isVolatile(), is(true));
 
-           assertThat(bankInterface.properties(), containsInAnyOrder(REDIRECT_APPROACH));
+            assertThat(bankInterface.properties(), containsInAnyOrder(REDIRECT_APPROACH));
 
-           assertThat(bankInterface.loginHint(),
-               is(Optional.of("Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein.")));
-       }
+            assertThat(bankInterface.loginHint(),
+                is(Optional.of("Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."))
+            );
+        }
     }
 }

@@ -42,7 +42,7 @@ public final class FpUpdateResult implements UpdateResult {
     @Override
     public Optional<ErrorType> errorType() {
         return new OptionalStringOf(this.origin, "errorType").get()
-                   .map(ErrorType::valueOf);
+            .map(ErrorType::valueOf);
     }
 
     @Override

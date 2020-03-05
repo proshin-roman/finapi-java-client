@@ -37,7 +37,7 @@ public final class CommaSeparatedPair<T> implements NameValuePair {
     @Override
     public String getValue() {
         return StreamSupport.stream(this.values.spliterator(), false)
-                   .map(Object::toString)
-                   .collect(Collectors.joining(","));
+            .map(Object::toString)
+            .collect(Collectors.joining(","));
     }
 }
