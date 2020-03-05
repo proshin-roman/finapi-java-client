@@ -19,6 +19,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <groupId>org.proshin</groupId>
   <artifactId>finapi-java-client</artifactId>
   <version>0.1.92-SNAPSHOT</version>
@@ -188,6 +192,14 @@
               <Implementation-SCM-Revision>${buildNumber}</Implementation-SCM-Revision>
             </manifestEntries>
           </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.eluder.coveralls</groupId>
+        <artifactId>coveralls-maven-plugin</artifactId>
+        <version>4.3.0</version>
+        <configuration>
+          <timestampFormat>EpochMillis</timestampFormat>
         </configuration>
       </plugin>
       <plugin>
