@@ -137,7 +137,9 @@ public class FpAccountTest extends TestWithMockedEndpoint {
                     Capability.SEPA_BASIC_DIRECT_DEBIT,
                     Capability.SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT,
                     Capability.SEPA_B2B_DIRECT_DEBIT,
-                    Capability.SEPA_B2B_COLLECTIVE_DIRECT_DEBIT
+                    Capability.SEPA_B2B_COLLECTIVE_DIRECT_DEBIT,
+                    Capability.IBAN_ONLY_SEPA_MONEY_TRANSFER,
+                    Capability.IBAN_ONLY_SEPA_DIRECT_DEBIT
                 );
             assertThat(ai.status()).isEqualTo(Status.UPDATED);
             assertThat(ai.lastSuccessfulUpdate())

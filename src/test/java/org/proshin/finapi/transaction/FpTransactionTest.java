@@ -18,7 +18,6 @@ package org.proshin.finapi.transaction;
 import java.math.BigDecimal;
 import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
 import org.cactoos.iterable.IterableOfLongs;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -129,7 +128,10 @@ public class FpTransactionTest extends TestWithMockedEndpoint {
         assertThat(tx.primanota()).isEqualTo(Optional.of("Primanota"));
         assertThat(tx.category().isPresent()).isTrue();
         assertThat(tx.category().get().id()).isEqualTo(4L);
-        assertThat(tx.labels()).flatExtracting("id", "name").contains(tuple(1L, "test"));
+        tx.labels().forEach(label -> {
+            assertThat(label.id()).isEqualTo(1L);
+            assertThat(label.name()).isEqualTo("test");
+        });
         assertThat(tx.isPotentialDuplicate()).isTrue();
         assertThat(tx.isAdjustingEntry()).isTrue();
         assertThat(tx.isNew()).isTrue();
