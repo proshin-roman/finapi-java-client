@@ -15,10 +15,9 @@
  */
 package org.proshin.finapi.mandator.out;
 
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FpDeletionResultTest {
     @Test
@@ -35,7 +34,7 @@ public class FpDeletionResultTest {
                 "  ]" +
                 '}')
         );
-        assertThat(result.deletedUsers(), hasItems("first_user", "second_user"));
-        assertThat(result.nonDeletedUsers(), hasItems("third_user", "fourth_user"));
+        assertThat(result.deletedUsers()).containsExactlyInAnyOrder("first_user", "second_user");
+        assertThat(result.nonDeletedUsers()).containsExactlyInAnyOrder("third_user", "fourth_user");
     }
 }

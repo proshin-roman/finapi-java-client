@@ -16,14 +16,9 @@
 package org.proshin.finapi.bankconnection;
 
 import java.util.Optional;
-import org.hamcrest.BaseMatcher;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.hasItems;
-import org.hamcrest.Description;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
@@ -99,58 +94,54 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
                 '}'),
             "/api/v1/bankConnections"
         );
-        assertThat(connection.id(), is(42L));
-        assertThat(connection.bank().id(), is(277672L));
-        assertThat(connection.name(), is(Optional.of("Bank Connection")));
+        assertThat(connection.id()).isEqualTo(42L);
+        assertThat(connection.bank().id()).isEqualTo(277672L);
+        assertThat(connection.name()).isEqualTo(Optional.of("Bank Connection"));
 
-        assertThat(connection.credentials().bankingUserId(), is(Optional.of("user ID")));
-        assertThat(connection.credentials().bankingCustomerId(), is(Optional.of("customer ID")));
-        assertThat(connection.credentials().bankingPin(), is(Optional.of("pin")));
+        assertThat(connection.credentials().bankingUserId()).isEqualTo(Optional.of("user ID"));
+        assertThat(connection.credentials().bankingCustomerId()).isEqualTo(Optional.of("customer ID"));
+        assertThat(connection.credentials().bankingPin()).isEqualTo(Optional.of("pin"));
 
-        assertThat(connection.type(), is(Type.DEMO));
+        assertThat(connection.type()).isEqualTo(Type.DEMO);
 
-        assertThat(connection.status().update(), is(Status.UpdateStatus.READY));
-        assertThat(connection.status().categorization(), is(Status.CategorizationStatus.PENDING));
+        assertThat(connection.status().update()).isEqualTo(Status.UpdateStatus.READY);
+        assertThat(connection.status().categorization()).isEqualTo(Status.CategorizationStatus.PENDING);
 
-        assertThat(connection.lastManualUpdate().isPresent(), is(true));
-        assertThat(connection.lastManualUpdate().get().result(), is(UpdateResult.Result.INTERNAL_SERVER_ERROR));
-        assertThat(connection.lastManualUpdate().get().errorMessage(), is(Optional.of("Internal server error")));
-        assertThat(connection.lastManualUpdate().get().errorType(), is(Optional.of(UpdateResult.ErrorType.TECHNICAL)));
-        assertThat(
-            connection.lastManualUpdate().get().timestamp(),
-            is(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get())
-        );
+        assertThat(connection.lastManualUpdate().isPresent()).isTrue();
+        assertThat(connection.lastManualUpdate().get().result()).isEqualTo(UpdateResult.Result.INTERNAL_SERVER_ERROR);
+        assertThat(connection.lastManualUpdate().get().errorMessage())
+            .isEqualTo(Optional.of("Internal server error"));
+        assertThat(connection.lastManualUpdate().get().errorType())
+            .isEqualTo(Optional.of(UpdateResult.ErrorType.TECHNICAL));
+        assertThat(connection.lastManualUpdate().get().timestamp())
+            .isEqualTo(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get());
 
-        assertThat(connection.lastAutoUpdate().isPresent(), is(true));
-        assertThat(connection.lastAutoUpdate().get().result(), is(UpdateResult.Result.BANK_SERVER_REJECTION));
-        assertThat(connection.lastAutoUpdate().get().errorMessage(), is(Optional.of("Internal bank error")));
-        assertThat(connection.lastAutoUpdate().get().errorType(), is(Optional.of(UpdateResult.ErrorType.BUSINESS)));
-        assertThat(
-            connection.lastAutoUpdate().get().timestamp(),
-            is(new OffsetDateTimeOf("2018-01-11 00:00:00.000").get())
-        );
+        assertThat(connection.lastAutoUpdate().isPresent()).isTrue();
+        assertThat(connection.lastAutoUpdate().get().result()).isEqualTo(UpdateResult.Result.BANK_SERVER_REJECTION);
+        assertThat(connection.lastAutoUpdate().get().errorMessage())
+            .isEqualTo(Optional.of("Internal bank error"));
+        assertThat(connection.lastAutoUpdate().get().errorType())
+            .isEqualTo(Optional.of(UpdateResult.ErrorType.BUSINESS));
+        assertThat(connection.lastAutoUpdate().get().timestamp())
+            .isEqualTo(new OffsetDateTimeOf("2018-01-11 00:00:00.000").get());
 
-        assertThat(connection.twoStepProcedures().defaultOne().isPresent(), is(true));
-        assertThat(connection.twoStepProcedures().defaultOne().get().id(), is("955"));
-        assertThat(
-            connection.twoStepProcedures().all(),
-            hasItem(
-                new TwoStepProcedureMatcher(
-                    "955",
-                    "mobileTAN",
-                    TwoStepProcedure.Type.TEXT,
-                    true
-                )
-            )
-        );
+        assertThat(connection.twoStepProcedures().defaultOne().isPresent()).isTrue();
+        assertThat(connection.twoStepProcedures().defaultOne().get().id()).isEqualTo("955");
 
-        assertThat(connection.ibanOnlyDirectDebitSupported(), is(true));
-        assertThat(connection.ibanOnlyMoneyTransferSupported(), is(true));
+        connection.twoStepProcedures().all().forEach(tsp -> {
+            assertThat(tsp.id()).isEqualTo("955");
+            assertThat(tsp.name()).isEqualTo("mobileTAN");
+            assertThat(tsp.type()).isEqualTo(Optional.of(TwoStepProcedure.Type.TEXT));
+            assertThat(tsp.implicitExecute()).isTrue();
+        });
+
+        assertThat(connection.ibanOnlyDirectDebitSupported()).isTrue();
+        assertThat(connection.ibanOnlyMoneyTransferSupported()).isTrue();
         //noinspection deprecation
-        assertThat(connection.collectiveMoneyTransferSupported(), is(true));
+        assertThat(connection.collectiveMoneyTransferSupported()).isTrue();
 
-        assertThat(connection.accounts(), hasItems(1L, 2L, 3L));
-        assertThat(connection.owners().iterator().next().firstName(), is(Optional.of("Max")));
+        assertThat(connection.accounts()).containsExactlyInAnyOrder(1L, 2L, 3L);
+        assertThat(connection.owners().iterator().next().firstName()).isEqualTo(Optional.of("Max"));
     }
 
     @Test
@@ -202,36 +193,5 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
             new JSONObject().put("id", 42L),
             "/api/v1/bankConnections"
         ).delete();
-    }
-
-    private static final class TwoStepProcedureMatcher extends BaseMatcher<TwoStepProcedure> {
-
-        private final String id;
-        private final String name;
-        private final TwoStepProcedure.Type type;
-        private final boolean implicit;
-
-        private TwoStepProcedureMatcher(final String id, final String name, final TwoStepProcedure.Type type,
-            final boolean implicit) {
-            this.id = id;
-            this.name = name;
-            this.type = type;
-            this.implicit = implicit;
-        }
-
-        @Override
-        public boolean matches(final Object item) {
-            final TwoStepProcedure tsp = (TwoStepProcedure) item;
-            //noinspection UnclearExpression,OverlyComplexBooleanExpression
-            return this.id.equals(tsp.id())
-                && this.name.equals(tsp.name())
-                && this.type == tsp.type().get()
-                && this.implicit == tsp.implicitExecute();
-        }
-
-        @Override
-        public void describeTo(final Description description) {
-
-        }
     }
 }

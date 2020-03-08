@@ -15,9 +15,8 @@
  */
 package org.proshin.finapi.tppcredential.in;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 
 public class CreateTppCredentialParametersTest {
@@ -25,16 +24,14 @@ public class CreateTppCredentialParametersTest {
     @Test
     public void test() {
         assertThat(
-            new CreateTppCredentialParameters(
-                99L, "custom label"
-            )
+            new CreateTppCredentialParameters(99L, "custom label")
                 .withTppClientId("custom client id")
                 .withTppClientSecret("custom client secret")
                 .withTppApiKey("custom api key")
                 .withValidFromDate(new LocalDateOf("2019-01-22").get())
                 .withValidUntilDate(new LocalDateOf("2020-01-31").get())
-                .asJson().toString(),
-            is('{' +
+                .asJson().toString())
+            .isEqualTo('{' +
                 "\"tppClientId\":\"custom client id\"," +
                 "\"validFromDate\":\"2019-01-22\"," +
                 "\"label\":\"custom label\"," +
@@ -42,7 +39,7 @@ public class CreateTppCredentialParametersTest {
                 "\"validUntilDate\":\"2020-01-31\"," +
                 "\"tppAuthenticationGroupId\":99," +
                 "\"tppApiKey\":\"custom api key\"" +
-                '}')
-        );
+                '}'
+            );
     }
 }

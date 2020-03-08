@@ -17,17 +17,11 @@ package org.proshin.finapi.account;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.CoreMatchers;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
-import org.hamcrest.Description;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.account.out.Capability;
-import org.proshin.finapi.account.out.ClearingAccount;
 import org.proshin.finapi.account.out.Order;
 import org.proshin.finapi.account.out.Status;
 import org.proshin.finapi.fake.FakeAccessToken;
@@ -98,82 +92,61 @@ public class FpAccountTest extends TestWithMockedEndpoint {
                 '}'),
             ""
         );
-        assertThat(account.id(), is(1L));
-        assertThat(account.name(), is(Optional.of("Testaccount")));
-        assertThat(account.number(), is("12345678"));
-        assertThat(account.subNumber(), is(Optional.of("1234")));
-        assertThat(account.iban(), is(Optional.of("DE89370400440532013000")));
-        assertThat(account.holder().name(), is(Optional.of("Herr Max Mustermann")));
-        assertThat(account.holder().id(), is(Optional.of("XXXXX")));
-        assertThat(account.currency(), is(Optional.of("EUR")));
-        assertThat(account.type(), is(Type.Checking));
-        assertThat(account.balance(), is(Optional.of(new BigDecimal("91.99"))));
-        assertThat(account.overdraft(), is(Optional.of(new BigDecimal("92.99"))));
-        assertThat(account.overdraftLimit(), is(Optional.of(new BigDecimal("93.99"))));
-        assertThat(account.availableFunds(), is(Optional.of(new BigDecimal("94.99"))));
-        assertThat(account.lastSuccessfulUpdate(),
-            is(Optional.of(new OffsetDateTimeOf("2018-01-01 02:03:04.555").get()))
+        assertThat(account.id()).isEqualTo(1L);
+        assertThat(account.name()).isEqualTo(Optional.of("Testaccount"));
+        assertThat(account.number()).isEqualTo("12345678");
+        assertThat(account.subNumber()).isEqualTo(Optional.of("1234"));
+        assertThat(account.iban()).isEqualTo(Optional.of("DE89370400440532013000"));
+        assertThat(account.holder().name()).isEqualTo(Optional.of("Herr Max Mustermann"));
+        assertThat(account.holder().id()).isEqualTo(Optional.of("XXXXX"));
+        assertThat(account.currency()).isEqualTo(Optional.of("EUR"));
+        assertThat(account.type()).isEqualTo(Type.Checking);
+        assertThat(account.balance()).isEqualTo(Optional.of(new BigDecimal("91.99")));
+        assertThat(account.overdraft()).isEqualTo(Optional.of(new BigDecimal("92.99")));
+        assertThat(account.overdraftLimit()).isEqualTo(Optional.of(new BigDecimal("93.99")));
+        assertThat(account.availableFunds()).isEqualTo(Optional.of(new BigDecimal("94.99")));
+        assertThat(account.lastSuccessfulUpdate()).isEqualTo(
+            (Optional.of(new OffsetDateTimeOf("2018-01-01 02:03:04.555").get()))
         );
-        assertThat(account.lastUpdateAttempt(), is(Optional.of(new OffsetDateTimeOf("2018-01-02 03:04:05.666").get())));
-        assertThat(account.isNew(), is(true));
-        assertThat(account.status(), is(Status.UPDATED));
-        assertThat(account.supportedOrders(),
-            hasItems(
+        assertThat(account.lastUpdateAttempt()).isEqualTo(Optional.of(new OffsetDateTimeOf("2018-01-02 03:04:05.666")
+            .get()));
+        assertThat(account.isNew()).isTrue();
+        assertThat(account.status()).isEqualTo(Status.UPDATED);
+        assertThat(account.supportedOrders())
+            .containsExactlyInAnyOrder(
                 Order.SEPA_MONEY_TRANSFER,
                 Order.SEPA_COLLECTIVE_MONEY_TRANSFER,
                 Order.SEPA_BASIC_DIRECT_DEBIT,
                 Order.SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT,
                 Order.SEPA_B2B_DIRECT_DEBIT,
                 Order.SEPA_B2B_COLLECTIVE_DIRECT_DEBIT
-            )
-        );
-        assertThat(
-            account.clearingAccounts(),
-            CoreMatchers.everyItem(new ClearingAccountMatcher("Clearing account ID", "Clearing account name"))
-        );
-        account.interfaces().forEach(ai -> {
-            assertThat(ai.bankingInterface(), is(BankingInterface.FINTS_SERVER));
-            assertThat(ai.capabilities(), hasItems(
-                Capability.DATA_DOWNLOAD,
-                Capability.SEPA_MONEY_TRANSFER,
-                Capability.SEPA_COLLECTIVE_MONEY_TRANSFER,
-                Capability.SEPA_BASIC_DIRECT_DEBIT,
-                Capability.SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT,
-                Capability.SEPA_B2B_DIRECT_DEBIT,
-                Capability.SEPA_B2B_COLLECTIVE_DIRECT_DEBIT
-            ));
-            assertThat(ai.status(), is(Status.UPDATED));
-            assertThat(
-                ai.lastSuccessfulUpdate(),
-                is(Optional.of(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get()))
             );
-            assertThat(
-                ai.lastUpdateAttempt(),
-                is(Optional.of(new OffsetDateTimeOf("2018-01-02 00:00:00.000").get()))
-            );
+
+        account.clearingAccounts().forEach(clearingAccount -> {
+            assertThat(clearingAccount.id()).isEqualTo("Clearing account ID");
+            assertThat(clearingAccount.name()).isEqualTo("Clearing account name");
         });
-    }
 
-    private static final class ClearingAccountMatcher extends BaseMatcher<ClearingAccount> {
-
-        private final String id;
-        private final String name;
-
-        private ClearingAccountMatcher(final String id, final String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        @Override
-        public boolean matches(final Object item) {
-            final ClearingAccount clearingAccount = (ClearingAccount) item;
-            return this.id.equals(clearingAccount.id()) &&
-                this.name.equals(clearingAccount.name());
-        }
-
-        @Override
-        public void describeTo(final Description description) {
-            description.appendText("id=" + this.id + " and name=" + this.name);
-        }
+        account.interfaces().forEach(ai -> {
+            assertThat(ai.bankingInterface()).isEqualTo(BankingInterface.FINTS_SERVER);
+            assertThat(ai.capabilities())
+                .containsExactlyInAnyOrder(
+                    Capability.DATA_DOWNLOAD,
+                    Capability.SEPA_MONEY_TRANSFER,
+                    Capability.SEPA_COLLECTIVE_MONEY_TRANSFER,
+                    Capability.SEPA_BASIC_DIRECT_DEBIT,
+                    Capability.SEPA_BASIC_COLLECTIVE_DIRECT_DEBIT,
+                    Capability.SEPA_B2B_DIRECT_DEBIT,
+                    Capability.SEPA_B2B_COLLECTIVE_DIRECT_DEBIT,
+                    Capability.IBAN_ONLY_SEPA_MONEY_TRANSFER,
+                    Capability.IBAN_ONLY_SEPA_DIRECT_DEBIT
+                );
+            assertThat(ai.status()).isEqualTo(Status.UPDATED);
+            assertThat(ai.lastSuccessfulUpdate())
+                .isEqualTo(Optional.of(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get()));
+            assertThat(
+                ai.lastUpdateAttempt()).isEqualTo(
+                Optional.of(new OffsetDateTimeOf("2018-01-02 00:00:00.000").get()));
+        });
     }
 }

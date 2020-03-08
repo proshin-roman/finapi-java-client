@@ -15,28 +15,26 @@
  */
 package org.proshin.finapi;
 
-import org.junit.Before;
-import org.junit.Rule;
+import javax.annotation.Nonnull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockserver.client.MockServerClient;
-import org.mockserver.junit.MockServerRule;
+import org.mockserver.junit.jupiter.MockServerExtension;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.endpoint.FpEndpoint;
 
 @SuppressWarnings("AbstractClassWithoutAbstractMethods")
+@ExtendWith(MockServerExtension.class)
 public abstract class TestWithMockedEndpoint {
-
-    @Rule
-    @SuppressWarnings("ThisEscapedInObjectConstruction")
-    public MockServerRule mockServerRule = new MockServerRule(this);
 
     @SuppressWarnings("InstanceVariableMayNotBeInitialized")
     private MockServerClient server;
     @SuppressWarnings("InstanceVariableMayNotBeInitialized")
     private Endpoint endpoint;
 
-    @Before
-    public void init() {
-        this.server = this.mockServerRule.getClient();
+    @BeforeEach
+    public void init(@Nonnull final MockServerClient server) {
+        this.server = server;
         this.endpoint = new FpEndpoint("http://localhost:" + this.server.remoteAddress().getPort());
     }
 

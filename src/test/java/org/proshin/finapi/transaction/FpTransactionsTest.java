@@ -16,10 +16,9 @@
 package org.proshin.finapi.transaction;
 
 import java.math.BigDecimal;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.cactoos.iterable.IterableOfLongs;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
@@ -122,13 +121,13 @@ public class FpTransactionsTest extends TestWithMockedEndpoint {
                 .withPage(3, 21)
                 .orderBy("id,desc", "date,asc")
         );
-        assertThat(page.paging().page(), is(1));
-        assertThat(page.paging().perPage(), is(20));
-        assertThat(page.paging().pageCount(), is(10));
-        assertThat(page.paging().totalCount(), is(200));
-        assertThat(page.income(), is(new BigDecimal("23.45")));
-        assertThat(page.spending(), is(new BigDecimal("34.56")));
-        assertThat(page.balance(), is(new BigDecimal("59.99")));
+        assertThat(page.paging().page()).isEqualTo(1);
+        assertThat(page.paging().perPage()).isEqualTo(20);
+        assertThat(page.paging().pageCount()).isEqualTo(10);
+        assertThat(page.paging().totalCount()).isEqualTo(200);
+        assertThat(page.income()).isEqualTo(new BigDecimal("23.45"));
+        assertThat(page.spending()).isEqualTo(new BigDecimal("34.56"));
+        assertThat(page.balance()).isEqualTo(new BigDecimal("59.99"));
         page.items().iterator().next();
     }
 

@@ -18,24 +18,19 @@ package org.proshin.finapi.primitives;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 public class StringOfTest {
     @Test
     public void testStringOfOffsetDateTime() {
-        assertThat(
-            new StringOf(OffsetDateTime.of(2018, 10, 25, 1, 2, 3, 4, ZoneOffset.UTC)).toString(),
-            is("2018-10-25")
-        );
+        assertThat(new StringOf(OffsetDateTime.of(2018, 10, 25, 1, 2, 3, 4, ZoneOffset.UTC)).toString())
+            .isEqualTo("2018-10-25");
     }
 
     @Test
     public void testStringOfBigDecimal() {
-        assertThat(
-            new StringOf(new BigDecimal("123456.012")).toString(),
-            is("123456.01")
-        );
+        assertThat(new StringOf(new BigDecimal("123456.012")).toString())
+            .isEqualTo("123456.01");
     }
 }

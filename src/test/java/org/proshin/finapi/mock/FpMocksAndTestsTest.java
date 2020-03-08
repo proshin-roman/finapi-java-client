@@ -17,7 +17,7 @@ package org.proshin.finapi.mock;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;

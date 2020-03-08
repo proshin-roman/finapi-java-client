@@ -15,7 +15,7 @@
  */
 package org.proshin.finapi.webform;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;

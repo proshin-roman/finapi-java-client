@@ -17,7 +17,7 @@ package org.proshin.finapi.bank;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfLongs;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;

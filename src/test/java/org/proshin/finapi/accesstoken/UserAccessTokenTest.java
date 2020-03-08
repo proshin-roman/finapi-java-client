@@ -1,15 +1,12 @@
 package org.proshin.finapi.accesstoken;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 import org.proshin.finapi.exception.NoFieldException;
 
 public class UserAccessTokenTest {
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void testThatUserTokenFailsIfNoRefreshTokenIsSent() {
@@ -23,8 +20,9 @@ public class UserAccessTokenTest {
                 "}"
             )
         ));
-        this.expectedException.expect(NoFieldException.class);
-        this.expectedException.expectMessage("Field 'refresh_token' may not be null for user's access token");
-        token.refreshToken();
+
+        final Exception exception =
+            assertThrows(NoFieldException.class, token::refreshToken);
+        assertThat(exception.getMessage()).isEqualTo(("Field 'refresh_token' may not be null for user's access token"));
     }
 }

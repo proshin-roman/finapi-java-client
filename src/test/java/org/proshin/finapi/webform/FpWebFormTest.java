@@ -16,10 +16,9 @@
 package org.proshin.finapi.webform;
 
 import java.util.Optional;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FpWebFormTest {
 
@@ -36,10 +35,10 @@ public class FpWebFormTest {
                     '}'
             )
         );
-        assertThat(webForm.id(), is(12L));
-        assertThat(webForm.token(), is("random token"));
-        assertThat(webForm.status(), is(WebForm.Status.NOT_YET_OPENED));
-        assertThat(webForm.serviceResponseCode(), is(Optional.of(422)));
-        assertThat(webForm.serviceResponseBody(), is(Optional.of("some JSON here")));
+        assertThat(webForm.id()).isEqualTo(12L);
+        assertThat(webForm.token()).isEqualTo("random token");
+        assertThat(webForm.status()).isEqualTo(WebForm.Status.NOT_YET_OPENED);
+        assertThat(webForm.serviceResponseCode()).isEqualTo(Optional.of(422));
+        assertThat(webForm.serviceResponseBody()).isEqualTo(Optional.of("some JSON here"));
     }
 }

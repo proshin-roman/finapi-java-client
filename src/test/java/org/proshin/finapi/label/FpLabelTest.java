@@ -15,10 +15,9 @@
  */
 package org.proshin.finapi.label;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
@@ -31,7 +30,7 @@ public class FpLabelTest extends TestWithMockedEndpoint {
             new JSONObject("{\"id\": 23, \"name\": \"Label name\"}"),
             "/api/v1/labels"
         );
-        assertThat(label.id(), is(23L));
-        assertThat(label.name(), is("Label name"));
+        assertThat(label.id()).isEqualTo(23L);
+        assertThat(label.name()).isEqualTo("Label name");
     }
 }

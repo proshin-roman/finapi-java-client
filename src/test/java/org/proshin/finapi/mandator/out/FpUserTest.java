@@ -17,13 +17,9 @@ package org.proshin.finapi.mandator.out;
 
 import java.time.YearMonth;
 import java.util.Optional;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Description;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 
 public class FpUserTest {
@@ -46,56 +42,20 @@ public class FpUserTest {
             "      ]," +
             "      \"isLocked\": true" +
             "    }"));
-        assertThat(user.id(), is("1"));
-        assertThat(user.registrationDate(), is(new LocalDateOf("2018-01-01").get()));
-        assertThat(user.deletionDate(), is(Optional.of(new LocalDateOf("2018-01-31").get())));
-        assertThat(user.lastActiveDate(), is(Optional.of(new LocalDateOf("2018-02-01").get())));
-        assertThat(user.bankConnectionCount(), is(5));
-        assertThat(
-            user.latestBankConnectionImportDate(),
-            is(Optional.of(new LocalDateOf("2018-01-02").get()))
-        );
-        assertThat(
-            user.latestBankConnectionDeletionDate(),
-            is(Optional.of(new LocalDateOf("2018-02-02").get()))
-        );
-        assertThat(
-            user.monthlyUserStats(),
-            CoreMatchers.hasItem(
-                new MonthlyUserStatsMatcher(
-                    YearMonth.of(2018, 1),
-                    1,
-                    5
-                )
-            )
-        );
-        assertThat(user.isLocked(), is(true));
-    }
-
-    private static final class MonthlyUserStatsMatcher extends BaseMatcher<MonthlyUserStats> {
-
-        private final YearMonth month;
-        private final int minBankConnectionCount;
-        private final int maxBankConnectionCount;
-
-        private MonthlyUserStatsMatcher(final YearMonth month, final int minBankConnectionCount,
-            final int maxBankConnectionCount) {
-            this.month = month;
-            this.minBankConnectionCount = minBankConnectionCount;
-            this.maxBankConnectionCount = maxBankConnectionCount;
-        }
-
-        @Override
-        public boolean matches(final Object item) {
-            final MonthlyUserStats stats = (MonthlyUserStats) item;
-            return stats.month().compareTo(this.month) == 0
-                && stats.minBankConnectionCount() == this.minBankConnectionCount
-                && stats.maxBankConnectionCount() == this.maxBankConnectionCount;
-        }
-
-        @Override
-        public void describeTo(final Description description) {
-
-        }
+        assertThat(user.id()).isEqualTo("1");
+        assertThat(user.registrationDate()).isEqualTo(new LocalDateOf("2018-01-01").get());
+        assertThat(user.deletionDate()).isEqualTo(Optional.of(new LocalDateOf("2018-01-31").get()));
+        assertThat(user.lastActiveDate()).isEqualTo(Optional.of(new LocalDateOf("2018-02-01").get()));
+        assertThat(user.bankConnectionCount()).isEqualTo(5);
+        assertThat(user.latestBankConnectionImportDate())
+            .isEqualTo(Optional.of(new LocalDateOf("2018-01-02").get()));
+        assertThat(user.latestBankConnectionDeletionDate())
+            .isEqualTo(Optional.of(new LocalDateOf("2018-02-02").get()));
+        user.monthlyUserStats().forEach(mus -> {
+            assertThat(mus.month()).isEqualByComparingTo(YearMonth.of(2018, 1));
+            assertThat(mus.minBankConnectionCount()).isEqualTo(1);
+            assertThat(mus.maxBankConnectionCount()).isEqualTo(5);
+        });
+        assertThat(user.isLocked()).isTrue();
     }
 }

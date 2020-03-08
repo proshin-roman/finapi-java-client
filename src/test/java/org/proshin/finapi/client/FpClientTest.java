@@ -16,10 +16,8 @@
 package org.proshin.finapi.client;
 
 import java.util.Optional;
-import org.hamcrest.CoreMatchers;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
@@ -66,26 +64,22 @@ public class FpClientTest extends TestWithMockedEndpoint {
             this.endpoint(),
             new FakeAccessToken("random-token")
         ).configuration();
-        assertThat(configuration.isAutomaticBatchUpdateEnabled(), is(true));
-        assertThat(
-            configuration.userNotificationCallbackUrl(),
-            is(Optional.of("https://bank.server.com/notification"))
-        );
-        assertThat(
-            configuration.userSynchronizationCallbackUrl(),
-            is(Optional.of("https://bank.server.com/synchronization"))
-        );
-        assertThat(configuration.refreshTokensValidityPeriod(), is(Optional.of(123)));
-        assertThat(configuration.userAccessTokensValidityPeriod(), is(Optional.of(234)));
-        assertThat(configuration.clientAccessTokensValidityPeriod(), is(Optional.of(345)));
-        assertThat(configuration.maxUserLoginAttempts(), is(3));
-        assertThat(configuration.isUserAutoVerificationEnabled(), is(true));
-        assertThat(configuration.isMandatorAdmin(), is(false));
-        assertThat(configuration.isWebScrapingEnabled(), is(true));
-        assertThat(configuration.availableBankGroups(), CoreMatchers.hasItems("DE", "AT", "IT"));
-        assertThat(configuration.applicationName(), is(Optional.of("My App")));
-        assertThat(configuration.paymentsEnabled(), is(true));
-        assertThat(configuration.pinStorageAvailableInWebForm(), is(true));
+        assertThat(configuration.isAutomaticBatchUpdateEnabled()).isTrue();
+        assertThat(configuration.userNotificationCallbackUrl())
+            .isEqualTo(Optional.of("https://bank.server.com/notification"));
+        assertThat(configuration.userSynchronizationCallbackUrl())
+            .isEqualTo(Optional.of("https://bank.server.com/synchronization"));
+        assertThat(configuration.refreshTokensValidityPeriod()).isEqualTo(Optional.of(123));
+        assertThat(configuration.userAccessTokensValidityPeriod()).isEqualTo(Optional.of(234));
+        assertThat(configuration.clientAccessTokensValidityPeriod()).isEqualTo(Optional.of(345));
+        assertThat(configuration.maxUserLoginAttempts()).isEqualTo(3);
+        assertThat(configuration.isUserAutoVerificationEnabled()).isTrue();
+        assertThat(configuration.isMandatorAdmin()).isFalse();
+        assertThat(configuration.isWebScrapingEnabled()).isTrue();
+        assertThat(configuration.availableBankGroups()).containsExactlyInAnyOrder("DE", "AT", "IT");
+        assertThat(configuration.applicationName()).isEqualTo(Optional.of("My App"));
+        assertThat(configuration.paymentsEnabled()).isTrue();
+        assertThat(configuration.pinStorageAvailableInWebForm()).isTrue();
     }
 
     /**

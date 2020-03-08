@@ -16,12 +16,11 @@
 package org.proshin.finapi.notificationrule;
 
 import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;
@@ -45,11 +44,11 @@ public class FpNotificationRuleTest extends TestWithMockedEndpoint {
                 '}'),
             "/api/v1/notificationRules"
         );
-        assertThat(rule.id(), is(1L));
-        assertThat(rule.triggerEvent(), is(TriggerEvent.NEW_ACCOUNT_BALANCE));
-        assertThat(rule.params(), is(new MapOf<>(new MapEntry<>("accountIds", "1,2,3"))));
-        assertThat(rule.callbackHandle(), is(Optional.of("handle")));
-        assertThat(rule.includeDetails(), is(true));
+        assertThat(rule.id()).isEqualTo(1L);
+        assertThat(rule.triggerEvent()).isEqualTo(TriggerEvent.NEW_ACCOUNT_BALANCE);
+        assertThat(rule.params()).isEqualTo(new MapOf<>(new MapEntry<>("accountIds", "1,2,3")));
+        assertThat(rule.callbackHandle()).isEqualTo(Optional.of("handle"));
+        assertThat(rule.includeDetails()).isTrue();
     }
 
     @Test
@@ -65,11 +64,11 @@ public class FpNotificationRuleTest extends TestWithMockedEndpoint {
                 '}'),
             "/api/v1/notificationRules"
         );
-        assertThat(rule.id(), is(1L));
-        assertThat(rule.triggerEvent(), is(TriggerEvent.NEW_ACCOUNT_BALANCE));
-        assertThat(rule.params().size(), is(0));
-        assertThat(rule.callbackHandle(), is(Optional.of("handle")));
-        assertThat(rule.includeDetails(), is(true));
+        assertThat(rule.id()).isEqualTo(1L);
+        assertThat(rule.triggerEvent()).isEqualTo(TriggerEvent.NEW_ACCOUNT_BALANCE);
+        assertThat(rule.params().size()).isEqualTo(0);
+        assertThat(rule.callbackHandle()).isEqualTo(Optional.of("handle"));
+        assertThat(rule.includeDetails()).isTrue();
     }
 
     @Test

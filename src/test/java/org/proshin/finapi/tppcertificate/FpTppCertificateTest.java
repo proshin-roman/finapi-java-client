@@ -16,10 +16,9 @@
 package org.proshin.finapi.tppcertificate;
 
 import java.util.Optional;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 import org.proshin.finapi.TestWithMockedEndpoint;
@@ -42,11 +41,11 @@ public class FpTppCertificateTest extends TestWithMockedEndpoint {
                 '}'),
             ""
         );
-        assertThat(certificate.id(), is(1L));
-        assertThat(certificate.type(), is(CertificateType.QWAC));
-        assertThat(certificate.label(), is(Optional.of("Global QWAC till 2022")));
-        assertThat(certificate.validFrom(), is(Optional.of(new LocalDateOf("2019-07-20").get())));
-        assertThat(certificate.validUntil(), is(Optional.of(new LocalDateOf("2019-07-20").get())));
+        assertThat(certificate.id()).isEqualTo(1L);
+        assertThat(certificate.type()).isEqualTo(CertificateType.QWAC);
+        assertThat(certificate.label()).isEqualTo(Optional.of("Global QWAC till 2022"));
+        assertThat(certificate.validFrom()).isEqualTo(Optional.of(new LocalDateOf("2019-07-20").get()));
+        assertThat(certificate.validUntil()).isEqualTo(Optional.of(new LocalDateOf("2019-07-20").get()));
     }
 
     @Test

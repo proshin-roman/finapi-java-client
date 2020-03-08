@@ -16,10 +16,8 @@
 package org.proshin.finapi.tppcertificate;
 
 import java.util.Iterator;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;
@@ -45,7 +43,7 @@ public class FpTppCertificatesTest extends TestWithMockedEndpoint {
             this.endpoint(),
             new FakeAccessToken("fake-access-token")
         ).one(99L);
-        assertThat(certificate.id(), is(99L));
+        assertThat(certificate.id()).isEqualTo(99L);
     }
 
     @Test
@@ -82,13 +80,13 @@ public class FpTppCertificatesTest extends TestWithMockedEndpoint {
             this.endpoint(),
             new FakeAccessToken("fake-access-token")
         ).query(new QueryTppCertificatesCriteria().withPage(2, 99));
-        assertThat(certificates.paging().page(), is(2));
-        assertThat(certificates.paging().perPage(), is(99));
-        assertThat(certificates.paging().pageCount(), is(10));
-        assertThat(certificates.paging().totalCount(), is(200));
+        assertThat(certificates.paging().page()).isEqualTo(2);
+        assertThat(certificates.paging().perPage()).isEqualTo(99);
+        assertThat(certificates.paging().pageCount()).isEqualTo(10);
+        assertThat(certificates.paging().totalCount()).isEqualTo(200);
 
         final Iterator<TppCertificate> iterator = certificates.items().iterator();
-        assertThat(iterator.next(), is(notNullValue()));
-        assertThat(iterator.hasNext(), is(false));
+        assertThat(iterator.next()).isNotNull();
+        assertThat(iterator.hasNext()).isFalse();
     }
 }

@@ -15,10 +15,9 @@
  */
 package org.proshin.finapi.primitives.paging;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FpPagingTest {
     @Test
@@ -31,9 +30,9 @@ public class FpPagingTest {
                 "  \"totalCount\": 200" +
                 '}')
         );
-        assertThat(paging.page(), is(1));
-        assertThat(paging.perPage(), is(20));
-        assertThat(paging.pageCount(), is(10));
-        assertThat(paging.totalCount(), is(200));
+        assertThat(paging.page()).isEqualTo(1);
+        assertThat(paging.perPage()).isEqualTo(20);
+        assertThat(paging.pageCount()).isEqualTo(10);
+        assertThat(paging.totalCount()).isEqualTo(200);
     }
 }

@@ -16,10 +16,9 @@
 package org.proshin.finapi.category.out;
 
 import java.math.BigDecimal;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
@@ -51,13 +50,13 @@ public class FpCashFlowTest extends TestWithMockedEndpoint {
                 "    }"),
             "/api/v1/accounts"
         );
-        assertThat(cashFlow.category().isPresent(), is(true));
-        assertThat(cashFlow.category().get().id(), is(378L));
-        assertThat(cashFlow.income(), is(new BigDecimal("199.99")));
-        assertThat(cashFlow.spending(), is(new BigDecimal("-99.99")));
-        assertThat(cashFlow.balance(), is(new BigDecimal("100")));
-        assertThat(cashFlow.countIncomeTransactions(), is(5));
-        assertThat(cashFlow.countSpendingTransactions(), is(3));
-        assertThat(cashFlow.countAllTransactions(), is(8));
+        assertThat(cashFlow.category().isPresent()).isTrue();
+        assertThat(cashFlow.category().get().id()).isEqualTo(378L);
+        assertThat(cashFlow.income()).isEqualTo(new BigDecimal("199.99"));
+        assertThat(cashFlow.spending()).isEqualTo(new BigDecimal("-99.99"));
+        assertThat(cashFlow.balance()).isEqualTo(new BigDecimal("100"));
+        assertThat(cashFlow.countIncomeTransactions()).isEqualTo(5);
+        assertThat(cashFlow.countSpendingTransactions()).isEqualTo(3);
+        assertThat(cashFlow.countAllTransactions()).isEqualTo(8);
     }
 }

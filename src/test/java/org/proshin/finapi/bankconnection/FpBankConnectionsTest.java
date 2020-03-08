@@ -17,11 +17,10 @@ package org.proshin.finapi.bankconnection;
 
 import java.util.Iterator;
 import java.util.concurrent.Future;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfLongs;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
@@ -65,8 +64,8 @@ public class FpBankConnectionsTest extends TestWithMockedEndpoint {
             new FakeAccessToken("user-token")
         ).query(new IterableOfLongs(42L, 43L, 44L));
         final Iterator<BankConnection> iterator = connections.iterator();
-        assertThat(iterator.hasNext(), is(true));
-        assertThat(iterator.next().id(), is(42L));
+        assertThat(iterator.hasNext()).isTrue();
+        assertThat(iterator.next().id()).isEqualTo(42L);
     }
 
     @Test
