@@ -17,6 +17,7 @@ package org.proshin.finapi.endpoint;
 
 import java.nio.charset.StandardCharsets;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
@@ -57,7 +58,7 @@ public interface Endpoint {
                 body.asString(),
                 ContentType.create("application/json", StandardCharsets.UTF_8)
             ),
-            200
+            HttpStatus.SC_OK
         );
     }
 

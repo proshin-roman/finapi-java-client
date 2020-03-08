@@ -17,6 +17,7 @@ package org.proshin.finapi.bankconnection;
 
 import java.util.Iterator;
 import java.util.concurrent.Future;
+import org.apache.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfLongs;
@@ -89,7 +90,7 @@ public class FpBankConnectionsTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response("{}").withStatusCode(201)
+                HttpResponse.response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         final Future<BankConnection> future = new FpBankConnections(
             this.endpoint(),

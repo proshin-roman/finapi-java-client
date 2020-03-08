@@ -1,8 +1,7 @@
 package org.proshin.finapi.accesstoken;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.json.JSONObject;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.proshin.finapi.exception.NoFieldException;
 
@@ -21,8 +20,8 @@ public class UserAccessTokenTest {
             )
         ));
 
-        final Exception exception =
-            assertThrows(NoFieldException.class, token::refreshToken);
-        assertThat(exception.getMessage()).isEqualTo(("Field 'refresh_token' may not be null for user's access token"));
+        assertThatExceptionOfType(NoFieldException.class)
+            .isThrownBy(token::refreshToken)
+            .withMessage("Field 'refresh_token' may not be null for user's access token");
     }
 }

@@ -22,6 +22,7 @@ import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
@@ -251,7 +252,7 @@ public final class FpEndpoint implements Endpoint {
                 body.asString(),
                 ContentType.create("application/json", StandardCharsets.UTF_8)
             ),
-            200
+            HttpStatus.SC_OK
         );
     }
 

@@ -15,9 +15,8 @@
  */
 package org.proshin.finapi.bankconnection.out;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.json.JSONObject;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 public class FpTwoStepProceduresTest {
@@ -38,9 +37,8 @@ public class FpTwoStepProceduresTest {
                 '}')
         );
 
-        final Exception exception =
-            assertThrows(IllegalStateException.class, twoStepProcedures::defaultOne);
-        assertThat(exception.getMessage())
-            .isEqualTo(("List of all two-step procedures doesn't contain an item matches ID of the default one"));
+        assertThatExceptionOfType(IllegalStateException.class)
+            .isThrownBy(twoStepProcedures::defaultOne)
+            .withMessage("List of all two-step procedures doesn't contain an item matches ID of the default one");
     }
 }

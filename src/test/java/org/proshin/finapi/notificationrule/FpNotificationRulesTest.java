@@ -16,6 +16,7 @@
 package org.proshin.finapi.notificationrule;
 
 import java.math.BigDecimal;
+import org.apache.http.HttpStatus;
 import org.cactoos.iterable.IterableOfLongs;
 import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
@@ -94,7 +95,7 @@ public class FpNotificationRulesTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response("{}").withStatusCode(201)
+                HttpResponse.response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         new FpNotificationRules(
             this.endpoint(),
@@ -127,7 +128,7 @@ public class FpNotificationRulesTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response("{}").withStatusCode(201)
+                HttpResponse.response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         new FpNotificationRules(
             this.endpoint(),
@@ -160,7 +161,7 @@ public class FpNotificationRulesTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response("{}").withStatusCode(201)
+                HttpResponse.response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         new FpNotificationRules(
             this.endpoint(),
@@ -192,7 +193,7 @@ public class FpNotificationRulesTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response("{}").withStatusCode(201)
+                HttpResponse.response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         new FpNotificationRules(
             this.endpoint(),
@@ -225,7 +226,7 @@ public class FpNotificationRulesTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response("{}").withStatusCode(201)
+                HttpResponse.response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         new FpNotificationRules(
             this.endpoint(),
@@ -260,7 +261,7 @@ public class FpNotificationRulesTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response("{}").withStatusCode(201)
+                HttpResponse.response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         new FpNotificationRules(
             this.endpoint(),
@@ -296,7 +297,7 @@ public class FpNotificationRulesTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response("{}").withStatusCode(201)
+                HttpResponse.response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         new FpNotificationRules(
             this.endpoint(),
@@ -327,7 +328,7 @@ public class FpNotificationRulesTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response("{}").withStatusCode(201)
+                HttpResponse.response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         new FpNotificationRules(
             this.endpoint(),

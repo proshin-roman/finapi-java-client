@@ -25,7 +25,7 @@ import org.proshin.finapi.fake.FakeAccessToken;
 public class FpCashFlowTest extends TestWithMockedEndpoint {
     @Test
     public void test() {
-        final FpCashFlow cashFlow = new FpCashFlow(
+        final CashFlow cashFlow = new FpCashFlow(
             this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject('{' +

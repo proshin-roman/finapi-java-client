@@ -17,6 +17,7 @@ package org.proshin.finapi.transaction;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import org.apache.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.cactoos.iterable.IterableOfLongs;
 import org.json.JSONObject;
@@ -265,7 +266,7 @@ public class FpTransactionTest extends TestWithMockedEndpoint {
                     .withHeader("Authorization", "Bearer user-token")
             )
             .respond(
-                HttpResponse.response().withStatusCode(200)
+                HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
             );
         new FpTransaction(
             this.endpoint(),

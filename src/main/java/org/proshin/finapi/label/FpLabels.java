@@ -15,6 +15,7 @@
  */
 package org.proshin.finapi.label;
 
+import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
@@ -73,7 +74,7 @@ public final class FpLabels implements Labels {
                     this.url,
                     this.token,
                     () -> new JSONObject().put("name", name),
-                    201
+                    HttpStatus.SC_CREATED
                 )
             ),
             this.url

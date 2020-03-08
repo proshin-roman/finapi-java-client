@@ -16,6 +16,7 @@
 package org.proshin.finapi.client;
 
 import java.util.Optional;
+import org.apache.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
@@ -150,7 +151,7 @@ public class FpClientTest extends TestWithMockedEndpoint {
                     .withHeader("Authorization", "Bearer random-token"))
             .respond(
                 HttpResponse.response("{}")
-                    .withStatusCode(201)
+                    .withStatusCode(HttpStatus.SC_CREATED)
             );
         final Users users = new FpClient(
             this.endpoint(),

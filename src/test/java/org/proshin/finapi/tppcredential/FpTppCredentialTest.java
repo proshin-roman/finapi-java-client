@@ -16,6 +16,7 @@
 package org.proshin.finapi.tppcredential;
 
 import java.util.Optional;
+import org.apache.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -57,7 +58,7 @@ public class FpTppCredentialTest extends TestWithMockedEndpoint {
                 .withHeader("Authorization", "Bearer fake-access-token")
         ).respond(
             response()
-                .withStatusCode(200)
+                .withStatusCode(HttpStatus.SC_OK)
         );
         final TppCredential credential = new FpTppCredential(
             this.endpoint(),

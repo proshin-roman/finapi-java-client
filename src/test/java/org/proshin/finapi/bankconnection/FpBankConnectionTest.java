@@ -16,6 +16,7 @@
 package org.proshin.finapi.bankconnection;
 
 import java.util.Optional;
+import org.apache.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -184,7 +185,7 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
                     .withMethod("DELETE")
                     .withHeader("Authorization", "Bearer user-token")
             ).respond(
-            HttpResponse.response().withStatusCode(200)
+            HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
         );
 
         new FpBankConnection(

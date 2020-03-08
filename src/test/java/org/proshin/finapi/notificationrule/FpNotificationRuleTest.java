@@ -16,6 +16,7 @@
 package org.proshin.finapi.notificationrule;
 
 import java.util.Optional;
+import org.apache.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
@@ -80,7 +81,7 @@ public class FpNotificationRuleTest extends TestWithMockedEndpoint {
                     .withHeader("Authorization", "Bearer user-token")
             )
             .respond(
-                HttpResponse.response().withStatusCode(200)
+                HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
             );
         new FpNotificationRule(
             this.endpoint(),

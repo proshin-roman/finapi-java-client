@@ -15,6 +15,7 @@
  */
 package org.proshin.finapi.user;
 
+import org.apache.http.HttpStatus;
 import org.cactoos.iterable.IterableOf;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
@@ -68,7 +69,7 @@ public final class FpUsers implements Users {
                     this.url,
                     this.token,
                     parameters,
-                    201
+                    HttpStatus.SC_CREATED
                 )
             )
         );
@@ -102,7 +103,7 @@ public final class FpUsers implements Users {
         this.endpoint.post(
             this.url + "/verify/" + userId,
             this.token,
-            200
+            HttpStatus.SC_OK
         );
     }
 

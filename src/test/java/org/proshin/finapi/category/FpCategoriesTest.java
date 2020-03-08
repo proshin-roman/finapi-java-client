@@ -16,6 +16,7 @@
 package org.proshin.finapi.category;
 
 import java.math.BigDecimal;
+import org.apache.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.cactoos.iterable.IterableOfLongs;
 import org.junit.jupiter.api.Test;
@@ -161,7 +162,7 @@ public class FpCategoriesTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response("{}").withStatusCode(201)
+                HttpResponse.response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         new FpCategories(
             this.endpoint(),
@@ -198,7 +199,7 @@ public class FpCategoriesTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                HttpResponse.response().withStatusCode(200)
+                HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
             );
         new FpCategories(
             this.endpoint(),

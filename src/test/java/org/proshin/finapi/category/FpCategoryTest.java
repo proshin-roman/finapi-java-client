@@ -16,6 +16,7 @@
 package org.proshin.finapi.category;
 
 import java.util.Optional;
+import org.apache.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -77,7 +78,7 @@ public class FpCategoryTest extends TestWithMockedEndpoint {
                 .withMethod("DELETE")
                 .withHeader("Authorization", "Bearer random-token"))
             .respond(
-                HttpResponse.response().withStatusCode(200)
+                HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
             );
         new FpCategory(
             this.endpoint(),

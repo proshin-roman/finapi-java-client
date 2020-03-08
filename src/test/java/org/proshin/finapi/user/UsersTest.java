@@ -15,6 +15,7 @@
  */
 package org.proshin.finapi.user;
 
+import org.apache.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import static org.mockserver.model.HttpRequest.request;
@@ -80,7 +81,7 @@ public final class UsersTest extends TestWithMockedEndpoint {
                         '}'))
             )
             .respond(
-                response("{}").withStatusCode(201)
+                response("{}").withStatusCode(HttpStatus.SC_CREATED)
             );
         final User user = new FpUsers(
             this.endpoint(),

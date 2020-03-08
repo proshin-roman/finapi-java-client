@@ -17,6 +17,7 @@ package org.proshin.finapi.bankconnection;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
@@ -91,7 +92,7 @@ public final class FpBankConnections implements BankConnections {
                         this.url + "/import",
                         this.token,
                         parameters,
-                        201
+                        HttpStatus.SC_CREATED
                     )
                 ),
                 this.url

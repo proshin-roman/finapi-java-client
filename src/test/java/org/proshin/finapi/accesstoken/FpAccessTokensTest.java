@@ -16,6 +16,7 @@
 package org.proshin.finapi.accesstoken;
 
 import java.util.Optional;
+import org.apache.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
@@ -137,7 +138,7 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
                 .withQueryStringParameter("token", "user-token")
                 .withQueryStringParameter("token_type_hint", "access_token")
         ).respond(
-            HttpResponse.response().withStatusCode(200)
+            HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
         );
         new FpAccessTokens(this.endpoint())
             .revoke(
@@ -159,7 +160,7 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
                 .withQueryStringParameter("token", "user-token")
                 .withQueryStringParameter("token_type_hint", "refresh_token")
         ).respond(
-            HttpResponse.response().withStatusCode(200)
+            HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
         );
         new FpAccessTokens(this.endpoint())
             .revoke(

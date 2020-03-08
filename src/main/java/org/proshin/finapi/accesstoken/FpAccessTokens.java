@@ -18,6 +18,7 @@ package org.proshin.finapi.accesstoken;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -58,7 +59,7 @@ public final class FpAccessTokens implements AccessTokens {
                         "",
                         ContentType.create("application/json", StandardCharsets.UTF_8)
                     ),
-                    200
+                    HttpStatus.SC_OK
                 )
             )
         );
@@ -86,7 +87,7 @@ public final class FpAccessTokens implements AccessTokens {
                         "",
                         ContentType.create("application/json", StandardCharsets.UTF_8)
                     ),
-                    200
+                    HttpStatus.SC_OK
                 )
             )
         );
@@ -108,7 +109,7 @@ public final class FpAccessTokens implements AccessTokens {
                         "",
                         ContentType.create("application/json", StandardCharsets.UTF_8)
                     ),
-                    200
+                    HttpStatus.SC_OK
                 )
             )
         );
@@ -146,7 +147,7 @@ public final class FpAccessTokens implements AccessTokens {
                 "",
                 ContentType.create("application/json", StandardCharsets.UTF_8)
             ),
-            200
+            HttpStatus.SC_OK
         );
     }
 }

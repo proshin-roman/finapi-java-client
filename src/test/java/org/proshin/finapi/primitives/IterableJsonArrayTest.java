@@ -18,8 +18,8 @@ package org.proshin.finapi.primitives;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.json.JSONArray;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 public class IterableJsonArrayTest {
@@ -42,10 +42,10 @@ public class IterableJsonArrayTest {
             JSONArray::getInt
         ).iterator();
 
-        iterator.next();// it should be fine
-        final Exception exception =
-            assertThrows(NoSuchElementException.class, iterator::next);
-        assertThat(exception.getMessage())
-            .isEqualTo(("Array has 1 items when you tried to get an item with index=1"));
+        iterator.next(); // it should be fine
+        // next call should throw an exception
+        assertThatExceptionOfType(NoSuchElementException.class)
+            .isThrownBy(iterator::next)
+            .withMessage("Array has 1 items when you tried to get an item with index=1");
     }
 }

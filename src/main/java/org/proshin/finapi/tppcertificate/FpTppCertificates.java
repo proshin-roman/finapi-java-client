@@ -15,6 +15,7 @@
  */
 package org.proshin.finapi.tppcertificate;
 
+import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
@@ -75,7 +76,7 @@ public class FpTppCertificates implements TppCertificates {
                     this.url,
                     this.token,
                     parameters,
-                    201
+                    HttpStatus.SC_CREATED
                 )
             ),
             this.url

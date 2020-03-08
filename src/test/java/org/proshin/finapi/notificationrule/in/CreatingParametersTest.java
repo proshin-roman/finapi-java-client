@@ -15,9 +15,8 @@
  */
 package org.proshin.finapi.notificationrule.in;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.cactoos.iterable.IterableOfLongs;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.proshin.finapi.notificationrule.TriggerEvent;
 import org.proshin.finapi.notificationrule.in.params.BankLoginErrorParams;
@@ -26,11 +25,10 @@ public class CreatingParametersTest {
 
     @Test
     public void testIncompatibleEventAndParams() {
-        final Exception exception =
-            assertThrows(RuntimeException.class,
+        assertThatExceptionOfType(RuntimeException.class)
+            .isThrownBy(
                 () -> new CreatingParameters(TriggerEvent.NEW_TRANSACTIONS)
-                    .withParams(new BankLoginErrorParams(new IterableOfLongs(1L)))
-            );
-        assertThat(exception.getMessage()).isEqualTo(("Incompatible params and triggerEvent arguments"));
+                    .withParams(new BankLoginErrorParams(new IterableOfLongs(1L))))
+            .withMessage("Incompatible params and triggerEvent arguments");
     }
 }

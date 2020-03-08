@@ -15,6 +15,7 @@
  */
 package org.proshin.finapi.tppcredential;
 
+import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
@@ -79,7 +80,7 @@ public class FpTppCredentials implements TppCredentials {
                     this.url,
                     this.token,
                     parameters,
-                    201
+                    HttpStatus.SC_CREATED
                 )
             ),
             this.url
