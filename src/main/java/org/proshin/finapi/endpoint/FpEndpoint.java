@@ -250,7 +250,7 @@ public final class FpEndpoint implements Endpoint {
             path, token,
             new StringEntity(
                 body.asString(),
-                ContentType.create("application/json", StandardCharsets.UTF_8)
+                ContentType.APPLICATION_JSON
             ),
             HttpStatus.SC_OK
         );
