@@ -57,7 +57,7 @@ public final class FpAccessTokens implements AccessTokens {
                         ).get(),
                     new StringEntity(
                         "",
-                        ContentType.create("application/json", StandardCharsets.UTF_8)
+                        ContentType.APPLICATION_JSON
                     ),
                     HttpStatus.SC_OK
                 )
@@ -85,7 +85,7 @@ public final class FpAccessTokens implements AccessTokens {
                         ).get(),
                     new StringEntity(
                         "",
-                        ContentType.create("application/json", StandardCharsets.UTF_8)
+                        ContentType.APPLICATION_JSON
                     ),
                     HttpStatus.SC_OK
                 )
@@ -107,7 +107,7 @@ public final class FpAccessTokens implements AccessTokens {
                         ).get(),
                     new StringEntity(
                         "",
-                        ContentType.create("application/json", StandardCharsets.UTF_8)
+                        ContentType.APPLICATION_JSON
                     ),
                     HttpStatus.SC_OK
                 )

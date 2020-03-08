@@ -118,7 +118,6 @@ public final class FpBankConnection implements BankConnection {
     }
 
     @Override
-    @Deprecated
     public boolean collectiveMoneyTransferSupported() {
         return this.origin.getBoolean("collectiveMoneyTransferSupported");
     }
