@@ -110,6 +110,16 @@ public final class FpConfiguration implements Configuration {
     }
 
     @Override
+    public Optional<String> supportSubjectDefault() {
+        return new OptionalStringOf(this.origin, "supportSubjectDefault").get();
+    }
+
+    @Override
+    public Optional<String> supportEmail() {
+        return new OptionalStringOf(this.origin, "supportEmail").get();
+    }
+
+    @Override
     public boolean paymentsEnabled() {
         return this.origin.getBoolean("paymentsEnabled");
     }

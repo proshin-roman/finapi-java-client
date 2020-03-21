@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "finAPI RESTful Services",
-        "version": "v1.92.0",
+        "version": "v1.93.0",
         "title": "finAPI RESTful Services"
     },
     "basePath": "/",
@@ -9104,6 +9104,16 @@
                     "description": "Whether <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's web form</a> will provide a checkbox for the user allowing him to choose whether to store login secrets (like a PIN) in finAPI. If this field is set to false, then the user won't have an option to store this data.",
                     "type": "boolean"
                 },
+                "supportSubjectDefault": {
+                    "type": "string",
+                    "example": "Some subject",
+                    "description": "Default value for the subject element of support emails."
+                },
+                "supportEmail": {
+                    "type": "string",
+                    "example": "email@localhost.de",
+                    "description": "Email address to sent support requests to from the web form."
+                },
                 "paymentsEnabled": {
                     "example": true,
                     "description": "Whether this client is allowed to do payments",
@@ -9168,6 +9178,17 @@
                     "example": "ABCDEF1234567890ABCDEF123",
                     "description": "The FinTS product registration number. Please follow <a href='https://www.hbci-zka.de/register/prod_register.htm' target='_blank'>this link</a> to apply for a registration number. Only customers who have an AISP or PISP license must define their FinTS product registration number. Customers who are relying on the finAPI web form will be assigned to finAPI's FinTS product registration number automatically and do not have to register themselves. During a batch update, finAPI is using the FinTS product registration number of the client, that was used to create the user. If you have previously set a FinTS product registration number and now want to clear it, you can pass an empty string (\"\"). Only hexa decimal characters in capital case with a maximum length of 25 characters are allowed. E.g. 'ABCDEF1234567890ABCDEF123'",
                     "pattern": "[0-9A-F]*"
+                },
+                "supportSubjectDefault": {
+                    "type": "string",
+                    "example": "Some subject",
+                    "description": "Default value for the subject element of support emails. Maximum length is 100. Pass an empty string ('') if you want to clear the current subject default value."
+                },
+                "supportEmail": {
+                    "type": "string",
+                    "example": "email@localhost.de",
+                    "description": "Email address to sent support requests to from the web form. Maximum length is 320. Pass an empty string ('') if you want to clear the current email address.",
+                    "pattern": "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
                 }
             },
             "description": "Client configuration parameters"
@@ -9381,7 +9402,8 @@
                     "type": "string",
                     "example": "Bank Connection",
                     "position": 1,
-                    "description": "New name for the bank connection. Maximum length is 64. If you do not want to change the current name let this field remain unset. If you want to clear the current name, set the field's value to an empty string (\"\")."
+                    "description": "New name for the bank connection. Maximum length is 64. If you do not want to change the current name let this field remain unset. If you want to clear the current name, set the field's value to an empty string (\"\").",
+                    "pattern": "[A-Za-z0-9¡-ʯ &\\(\\)\\{\\}\\[\\]\\.:,;\\?!\\+\\-_\\$@#~`\\^€]*"
                 },
                 "bankingUserId": {
                     "type": "string",
