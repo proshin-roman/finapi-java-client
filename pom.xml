@@ -25,7 +25,7 @@
 
   <groupId>org.proshin</groupId>
   <artifactId>finapi-java-client</artifactId>
-  <version>0.1.92-SNAPSHOT</version>
+  <version>0.1.92</version>
   <packaging>jar</packaging>
 
   <name>finAPI Java client</name>
