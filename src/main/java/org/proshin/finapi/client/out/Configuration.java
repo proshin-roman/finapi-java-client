@@ -52,6 +52,10 @@ public interface Configuration {
 
     boolean storeSecretsAvailableInWebForm();
 
+    Optional<String> supportSubjectDefault();
+
+    Optional<String> supportEmail();
+
     boolean paymentsEnabled();
 
     /**
