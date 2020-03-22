@@ -1,26 +1,28 @@
-name: "tagged-release"
+name: "snapshot"
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - "master"
 
 jobs:
-  tagged-release:
-    name: "Tagged Release"
-    runs-on: "ubuntu-latest"
+  pre-release:
+    name: "Snapshot"
+    runs-on: "3-jdk-8-openj9"
 
     steps:
-      # ...
       - name: "Build & test"
         run: |
+          cd ..
           mvn clean package
           echo "done!"
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
           prerelease: true
+          title: "Development Build"
           files: |
             LICENSE.txt
             *.jar
