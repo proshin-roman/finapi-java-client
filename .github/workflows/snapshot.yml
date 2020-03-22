@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: "Build & test"
         run: |
-          cd ..
-          mvn clean package
           echo "done!"
 
       - uses: "marvinpinto/action-automatic-releases@latest"
@@ -23,6 +21,3 @@ jobs:
           automatic_release_tag: "latest"
           prerelease: true
           title: "Development Build"
-          files: |
-            LICENSE.txt
-            *.jar
