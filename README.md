@@ -10,6 +10,7 @@
 
 ### Releases
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.proshin/finapi-java-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.proshin/finapi-java-client)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fproshin-roman%2Ffinapi-java-client.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fproshin-roman%2Ffinapi-java-client?ref=badge_shield)
 [![](https://jitpack.io/v/proshin-roman/finapi-java-client.svg)](https://jitpack.io/#proshin-roman/finapi-java-client)
 
 ### Builds
@@ -93,3 +94,6 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fproshin-roman%2Ffinapi-java-client.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fproshin-roman%2Ffinapi-java-client?ref=badge_large)
