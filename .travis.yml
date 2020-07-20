@@ -1,6 +1,7 @@
 dist: xenial
 language: java
-sudo: false
+os:
+  - linux
 jdk:
   - openjdk8
 cache:
