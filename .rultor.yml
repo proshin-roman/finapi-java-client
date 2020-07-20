@@ -5,12 +5,18 @@ assets:
   - pubring.gpg: "proshin-roman/finapi-java-client-secrets#pubring.gpg"
   - secring.gpg: "proshin-roman/finapi-java-client-secrets#secring.gpg"
 docker:
-  yegor256/rultor-image
+  image: "yegor256/rultor-image"
 install: |-
   sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
+merge:
+  commanders:
+  - proshin-roman
+  - ccostin93
+  script: mvn clean install
+  squash: true
 release:
   script: |
     echo "Author of the request: ${author}"
     mvn versions:set "-DnewVersion=${tag}" --quiet
     git commit -am "${tag}"
-    mvn clean deploy -Pjcabi --settings /home/r/settings.xml
+    mvn clean deploy -Pjcabi --settings ../settings.xml

@@ -79,6 +79,16 @@ public final class EditClientParameters implements Jsonable {
         return this;
     }
 
+    public EditClientParameters withSupportSubjectDefault(final String supportSubjectDefault) {
+        this.origin.put("supportSubjectDefault", supportSubjectDefault);
+        return this;
+    }
+
+    public EditClientParameters withSupportEmail(final String supportEmail) {
+        this.origin.put("supportEmail", supportEmail);
+        return this;
+    }
+
     @Override
     public JSONObject asJson() {
         return this.origin;

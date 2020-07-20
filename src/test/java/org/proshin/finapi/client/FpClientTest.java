@@ -57,6 +57,8 @@ public class FpClientTest extends TestWithMockedEndpoint {
                     "    \"IT\"" +
                     "  ]," +
                     "  \"applicationName\": \"My App\"," +
+                    "  \"supportSubjectDefault\": \"Some subject\"," +
+                    "  \"supportEmail\": \"support@email.com\"," +
                     "  \"paymentsEnabled\": true," +
                     "  \"pinStorageAvailableInWebForm\": true" +
                     '}')
@@ -79,6 +81,8 @@ public class FpClientTest extends TestWithMockedEndpoint {
         assertThat(configuration.isWebScrapingEnabled()).isTrue();
         assertThat(configuration.availableBankGroups()).containsExactlyInAnyOrder("DE", "AT", "IT");
         assertThat(configuration.applicationName()).isEqualTo(Optional.of("My App"));
+        assertThat(configuration.supportSubjectDefault()).isEqualTo(Optional.of("Some subject"));
+        assertThat(configuration.supportEmail()).isEqualTo(Optional.of("support@email.com"));
         assertThat(configuration.paymentsEnabled()).isTrue();
         assertThat(configuration.pinStorageAvailableInWebForm()).isTrue();
     }
@@ -137,7 +141,11 @@ public class FpClientTest extends TestWithMockedEndpoint {
                 .withUserAccessTokensValidityPeriod(234)
                 .withClientAccessTokensValidityPeriod(345)
                 .withPinStorageAvailableInWebForm(true)
+                .withStoreSecretsAvailableInWebForm(true)
                 .withApplicationName("New name")
+                .withSupportSubjectDefault("Some subject")
+                .withSupportEmail("test@email.com")
+                .withFinTSProductRegistrationNumber("finTSProductRegistrationNumber")
         );
     }
 
