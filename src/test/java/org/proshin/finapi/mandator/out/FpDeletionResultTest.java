@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 public class FpDeletionResultTest {
     @Test
     public void test() {
-        final FpDeletionResult result = new FpDeletionResult(
+        final DeletionResult result = new FpDeletionResult(
             new JSONObject('{' +
                 "  \"deletedUsers\": [" +
                 "    \"first_user\"," +

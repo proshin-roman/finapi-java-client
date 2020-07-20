@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.Direction;
 import org.proshin.finapi.primitives.StringOf;
@@ -157,6 +158,7 @@ public final class TransactionsCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
+    @Nonnull
     @Override
     public Iterator<NameValuePair> iterator() {
         return this.pairs.iterator();

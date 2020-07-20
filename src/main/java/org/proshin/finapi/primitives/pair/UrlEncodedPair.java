@@ -46,7 +46,7 @@ public final class UrlEncodedPair implements NameValuePair {
     public String getValue() {
         try {
             return URLEncoder.encode(this.origin.getValue(), StandardCharsets.UTF_8.displayName());
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
     }

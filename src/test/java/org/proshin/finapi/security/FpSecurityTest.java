@@ -28,7 +28,7 @@ public class FpSecurityTest {
 
     @Test
     public void test() {
-        final FpSecurity security = new FpSecurity(
+        final Security security = new FpSecurity(
             new JSONObject('{' +
                 "  \"id\": 1," +
                 "  \"accountId\": 2," +

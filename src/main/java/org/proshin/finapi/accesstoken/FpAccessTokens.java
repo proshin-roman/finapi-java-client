@@ -15,7 +15,6 @@
  */
 package org.proshin.finapi.accesstoken;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.HttpStatus;

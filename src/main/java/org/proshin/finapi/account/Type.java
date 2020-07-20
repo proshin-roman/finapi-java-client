@@ -66,7 +66,7 @@ public enum Type {
         }
 
         public Type get() {
-            for (final Type type : Type.values()) {
+            for (final Type type : values()) {
                 if (type.asCode() == this.code) {
                     return type;
                 }

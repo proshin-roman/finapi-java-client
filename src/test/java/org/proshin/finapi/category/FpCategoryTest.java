@@ -31,7 +31,7 @@ public class FpCategoryTest extends TestWithMockedEndpoint {
 
     @Test
     public void test() {
-        final FpCategory category = new FpCategory(
+        final Category category = new FpCategory(
             this.endpoint(),
             new FakeAccessToken("test-user"),
             new JSONObject('{' +

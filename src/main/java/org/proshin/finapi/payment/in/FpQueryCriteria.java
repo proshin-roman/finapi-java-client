@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.StringOf;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
@@ -69,6 +70,7 @@ public class FpQueryCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
+    @Nonnull
     @Override
     public Iterator<NameValuePair> iterator() {
         return this.pairs.iterator();

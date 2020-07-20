@@ -32,7 +32,7 @@ public class FpBankTest {
 
     @Test
     public void test() {
-        final FpBank bank = new FpBank(
+        final Bank bank = new FpBank(
             new JSONObject('{' +
                 "  \"id\": 277672," +
                 "  \"name\": \"FinAPI Test Bank\"," +

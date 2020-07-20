@@ -15,6 +15,7 @@
  */
 package org.proshin.finapi.category;
 
+import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
@@ -88,7 +89,7 @@ public final class FpCategories implements Categories {
         return new FpCategory(
             this.endpoint,
             this.token,
-            new JSONObject(this.endpoint.post(this.url, this.token, parameters, 201)),
+            new JSONObject(this.endpoint.post(this.url, this.token, parameters, HttpStatus.SC_CREATED)),
             this.url
         );
     }

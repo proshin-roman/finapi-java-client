@@ -15,7 +15,6 @@
  */
 package org.proshin.finapi.endpoint;
 
-import java.nio.charset.StandardCharsets;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
