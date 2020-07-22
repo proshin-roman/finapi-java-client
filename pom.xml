@@ -296,6 +296,7 @@
             <configuration>
               <encoding>UTF-8</encoding>
               <additionalJOption>-Xdoclint:none</additionalJOption>
+              <source>${maven.compiler.source}</source>
             </configuration>
             <executions>
               <execution>
