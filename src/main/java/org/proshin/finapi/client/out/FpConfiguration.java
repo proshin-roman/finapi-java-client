@@ -86,6 +86,11 @@ public final class FpConfiguration implements Configuration {
     }
 
     @Override
+    public boolean isStandalonePaymentsEnabled() {
+        return this.origin.getBoolean("isStandalonePaymentsEnabled");
+    }
+
+    @Override
     public Iterable<String> availableBankGroups() {
         return new IterableJsonArray<>(
             this.origin.getJSONArray("availableBankGroups"),

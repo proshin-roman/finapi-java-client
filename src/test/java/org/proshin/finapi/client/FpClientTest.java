@@ -51,12 +51,16 @@ public class FpClientTest extends TestWithMockedEndpoint {
                     "  \"isUserAutoVerificationEnabled\": true," +
                     "  \"isMandatorAdmin\": false," +
                     "  \"isWebScrapingEnabled\": true," +
+                    "  \"isXs2aEnabled\": true," +
+                    "  \"isStandalonePaymentsEnabled\": true," +
                     "  \"availableBankGroups\": [" +
                     "    \"DE\"," +
                     "    \"AT\"," +
                     "    \"IT\"" +
                     "  ]," +
                     "  \"applicationName\": \"My App\"," +
+                    "  \"finTSProductRegistrationNumber\": \"fintsRegNumber\"," +
+                    "  \"storeSecretsAvailableInWebForm\": true," +
                     "  \"supportSubjectDefault\": \"Some subject\"," +
                     "  \"supportEmail\": \"support@email.com\"," +
                     "  \"paymentsEnabled\": true," +
@@ -79,8 +83,11 @@ public class FpClientTest extends TestWithMockedEndpoint {
         assertThat(configuration.isUserAutoVerificationEnabled()).isTrue();
         assertThat(configuration.isMandatorAdmin()).isFalse();
         assertThat(configuration.isWebScrapingEnabled()).isTrue();
+        assertThat(configuration.isStandalonePaymentsEnabled()).isTrue();
         assertThat(configuration.availableBankGroups()).containsExactlyInAnyOrder("DE", "AT", "IT");
         assertThat(configuration.applicationName()).isEqualTo(Optional.of("My App"));
+        assertThat(configuration.finTSProductRegistrationNumber()).isEqualTo(Optional.of("fintsRegNumber"));
+        assertThat(configuration.storeSecretsAvailableInWebForm()).isTrue();
         assertThat(configuration.supportSubjectDefault()).isEqualTo(Optional.of("Some subject"));
         assertThat(configuration.supportEmail()).isEqualTo(Optional.of("support@email.com"));
         assertThat(configuration.paymentsEnabled()).isTrue();

@@ -44,6 +44,8 @@ public interface Configuration {
     @Deprecated
     boolean isXs2aEnabled();
 
+    boolean isStandalonePaymentsEnabled();
+
     Iterable<String> availableBankGroups();
 
     Optional<String> applicationName();
