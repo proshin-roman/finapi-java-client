@@ -18,6 +18,7 @@ package org.proshin.finapi.tppcredential.in;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
@@ -44,6 +45,7 @@ public class QueryTppCredentialsCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
+    @Nonnull
     @Override
     public Iterator<NameValuePair> iterator() {
         return this.pairs.iterator();

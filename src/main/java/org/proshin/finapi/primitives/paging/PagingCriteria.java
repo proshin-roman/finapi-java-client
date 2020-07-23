@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.Supplier;
+import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
@@ -43,6 +44,7 @@ public final class PagingCriteria implements Iterable<NameValuePair> {
         this.origin = origin;
     }
 
+    @Nonnull
     @Override
     public Iterator<NameValuePair> iterator() {
         return this.origin.get();

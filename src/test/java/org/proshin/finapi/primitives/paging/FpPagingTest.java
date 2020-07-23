@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 public class FpPagingTest {
     @Test
     public void test() {
-        final FpPaging paging = new FpPaging(
+        final Paging paging = new FpPaging(
             new JSONObject('{' +
                 "  \"page\": 1," +
                 "  \"perPage\": 20," +

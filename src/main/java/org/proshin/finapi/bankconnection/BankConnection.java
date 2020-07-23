@@ -76,6 +76,9 @@ public interface BankConnection {
     @Deprecated
     boolean ibanOnlyDirectDebitSupported();
 
+    /**
+     * @deprecated since v0.1.92 due to PSD2-related changes
+     */
     @Deprecated
     boolean collectiveMoneyTransferSupported();
 

@@ -36,7 +36,7 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
 
     @Test
     public void testParsingJsonStructure() {
-        final FpBankConnection connection = new FpBankConnection(
+        final BankConnection connection = new FpBankConnection(
             this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject('{' +
@@ -138,7 +138,6 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
 
         assertThat(connection.ibanOnlyDirectDebitSupported()).isTrue();
         assertThat(connection.ibanOnlyMoneyTransferSupported()).isTrue();
-        //noinspection deprecation
         assertThat(connection.collectiveMoneyTransferSupported()).isTrue();
 
         assertThat(connection.accounts()).containsExactlyInAnyOrder(1L, 2L, 3L);

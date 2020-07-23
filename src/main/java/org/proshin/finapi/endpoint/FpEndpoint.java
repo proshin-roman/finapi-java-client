@@ -71,8 +71,8 @@ public final class FpEndpoint implements Endpoint {
             final HttpUriRequest get = new HttpGet(builder.build());
             get.addHeader(new AuthorizationHeader(token.accessToken()));
             final HttpResponse response = this.client.execute(get);
-            if (response.getStatusLine().getStatusCode() != 200) {
-                throw new FinapiException(200, response);
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                throw new FinapiException(HttpStatus.SC_OK, response);
             }
             final String responseBody = new TextOf(
                 new InputOf(response.getEntity().getContent()),
@@ -101,8 +101,8 @@ public final class FpEndpoint implements Endpoint {
             final HttpUriRequest delete = new HttpDelete(builder.build());
             delete.addHeader(new AuthorizationHeader(token.accessToken()));
             final HttpResponse response = this.client.execute(delete);
-            if (response.getStatusLine().getStatusCode() != 200) {
-                throw new FinapiException(200, response);
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                throw new FinapiException(HttpStatus.SC_OK, response);
             }
             final String responseBody = new TextOf(
                 new InputOf(response.getEntity().getContent()),
@@ -250,7 +250,7 @@ public final class FpEndpoint implements Endpoint {
             path, token,
             new StringEntity(
                 body.asString(),
-                ContentType.create("application/json", StandardCharsets.UTF_8)
+                ContentType.APPLICATION_JSON
             ),
             HttpStatus.SC_OK
         );

@@ -15,6 +15,7 @@
  */
 package org.proshin.finapi.notificationrule;
 
+import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
@@ -72,7 +73,7 @@ public final class FpNotificationRules implements NotificationRules {
             this.endpoint,
             this.token,
             new JSONObject(
-                this.endpoint.post(this.url, this.token, parameters, 201)
+                this.endpoint.post(this.url, this.token, parameters, HttpStatus.SC_CREATED)
             ),
             this.url
         );

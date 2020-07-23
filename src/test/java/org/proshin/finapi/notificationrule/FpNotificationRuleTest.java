@@ -31,7 +31,7 @@ public class FpNotificationRuleTest extends TestWithMockedEndpoint {
 
     @Test
     public void testWithParams() {
-        final FpNotificationRule rule = new FpNotificationRule(
+        final NotificationRule rule = new FpNotificationRule(
             this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject('{' +
@@ -54,7 +54,7 @@ public class FpNotificationRuleTest extends TestWithMockedEndpoint {
 
     @Test
     public void testWithoutParams() {
-        final FpNotificationRule rule = new FpNotificationRule(
+        final NotificationRule rule = new FpNotificationRule(
             this.endpoint(),
             new FakeAccessToken("user-token"),
             new JSONObject('{' +

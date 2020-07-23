@@ -18,6 +18,7 @@ package org.proshin.finapi.bank.in;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.bank.Bank;
 import org.proshin.finapi.primitives.BankingInterface;
@@ -106,6 +107,7 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
+    @Nonnull
     @Override
     public Iterator<NameValuePair> iterator() {
         return this.pairs.iterator();

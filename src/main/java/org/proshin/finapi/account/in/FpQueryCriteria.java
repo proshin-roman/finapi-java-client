@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.account.Type;
 import org.proshin.finapi.primitives.StringOf;
@@ -99,6 +100,7 @@ public final class FpQueryCriteria implements Iterable<NameValuePair> {
         return this;
     }
 
+    @Nonnull
     @Override
     public Iterator<NameValuePair> iterator() {
         return this.pairs.iterator();

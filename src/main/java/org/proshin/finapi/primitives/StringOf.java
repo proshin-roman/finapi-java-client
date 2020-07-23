@@ -38,7 +38,7 @@ public final class StringOf implements Supplier<String> {
 
     public StringOf(final BigDecimal value) {
         this(((Supplier<String>) () -> {
-            DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locale.ENGLISH);
+            final DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locale.ENGLISH);
             df.applyPattern("###.##");
             return df.format(value);
         }
