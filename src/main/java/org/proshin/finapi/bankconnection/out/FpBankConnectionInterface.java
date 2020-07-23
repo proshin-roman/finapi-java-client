@@ -48,8 +48,9 @@ public class FpBankConnectionInterface implements BankConnectionInterface {
     }
 
     @Override
-    public BankConsent aisConsent() {
-        return new FpBankConsent(this.origin.getJSONObject("aisConsent"));
+    public Optional<BankConsent> aisConsent() {
+        return new OptionalObjectOf(this.origin, "aisConsent").get()
+            .map(FpBankConsent::new);
     }
 
     @Override
@@ -62,5 +63,10 @@ public class FpBankConnectionInterface implements BankConnectionInterface {
     public Optional<UpdateResult> lastAutoUpdate() {
         return new OptionalObjectOf(this.origin, "lastAutoUpdate").get()
             .map(FpUpdateResult::new);
+    }
+
+    @Override
+    public boolean userActionRequired() {
+        return this.origin.getBoolean("userActionRequired");
     }
 }

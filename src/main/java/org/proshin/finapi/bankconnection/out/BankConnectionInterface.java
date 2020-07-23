@@ -26,9 +26,11 @@ public interface BankConnectionInterface {
 
     TwoStepProcedures twoStepProcedures();
 
-    BankConsent aisConsent();
+    Optional<BankConsent> aisConsent();
 
     Optional<UpdateResult> lastManualUpdate();
 
     Optional<UpdateResult> lastAutoUpdate();
+
+    boolean userActionRequired();
 }

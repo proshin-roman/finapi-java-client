@@ -18,7 +18,9 @@ package org.proshin.finapi.bank;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 import org.json.JSONObject;
+import org.proshin.finapi.bank.out.BankGroup;
 import org.proshin.finapi.bank.out.BankInterface;
+import org.proshin.finapi.bank.out.FpBankGroup;
 import org.proshin.finapi.bank.out.FpBankInterface;
 import org.proshin.finapi.bank.out.FpLoginFields;
 import org.proshin.finapi.bank.out.LoginFields;
@@ -122,6 +124,12 @@ public final class FpBank implements Bank {
             this.origin.getJSONArray("interfaces"),
             (array, index) -> new FpBankInterface(array.getJSONObject(index))
         );
+    }
+
+    @Override
+    public Optional<BankGroup> bankGroup() {
+        return Optional.ofNullable(this.origin.getJSONObject("bankGroup"))
+            .map(FpBankGroup::new);
     }
 
     @Override

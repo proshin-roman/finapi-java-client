@@ -38,6 +38,8 @@ public interface BankInterface {
 
     Optional<OffsetDateTime> lastSuccessfulCommunication();
 
+    boolean isMoneyTransferSupported();
+
     enum BankInterfaceProperty {
         REDIRECT_APPROACH, DECOUPLED_APPROACH, DETAILED_CONSENT
     }
