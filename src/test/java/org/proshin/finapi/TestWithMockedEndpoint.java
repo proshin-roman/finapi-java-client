@@ -38,11 +38,11 @@ public abstract class TestWithMockedEndpoint {
         this.endpoint = new FpEndpoint("http://localhost:" + this.server.remoteAddress().getPort());
     }
 
-    protected Endpoint endpoint() {
+    public Endpoint endpoint() {
         return this.endpoint;
     }
 
-    protected MockServerClient server() {
+    public MockServerClient server() {
         return this.server;
     }
 }

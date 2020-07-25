@@ -269,7 +269,7 @@
       <plugin>
         <groupId>com.iwillfailyou</groupId>
         <artifactId>iwillfailyou-maven-plugin</artifactId>
-        <version>0.1.0</version>
+        <version>0.1.1</version>
 
         <!-- then configure it, if you need: -->
         <configuration>
