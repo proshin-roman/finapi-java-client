@@ -28,7 +28,7 @@ import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.tppcredential.in.EditTppCredentialParameters;
 import org.proshin.finapi.tppcredential.in.QueryTppCredentialsCriteria;
 
-public class FpTppCredentialsTest extends TestWithMockedEndpoint {
+public final class FpTppCredentialsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {

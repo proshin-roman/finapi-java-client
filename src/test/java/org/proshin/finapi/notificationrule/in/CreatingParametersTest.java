@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.notificationrule.TriggerEvent;
 import org.proshin.finapi.notificationrule.in.params.BankLoginErrorParams;
 
-public class CreatingParametersTest {
+public final class CreatingParametersTest {
 
     @Test
     public void testIncompatibleEventAndParams() {

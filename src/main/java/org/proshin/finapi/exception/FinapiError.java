@@ -18,7 +18,7 @@ package org.proshin.finapi.exception;
 import java.util.Optional;
 import org.json.JSONObject;
 
-public class FinapiError {
+public final class FinapiError {
 
     private final JSONObject origin;
 

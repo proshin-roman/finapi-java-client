@@ -21,7 +21,8 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public class FpCategorizationResultTest {
+public final class FpCategorizationResultTest {
+
     @Test
     public void test() {
         final CategorizationResult result = new FpCategorizationResult(

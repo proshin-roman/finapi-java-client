@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.proshin.finapi.exception.NoFieldException;
 
-public class UserAccessTokenTest {
+public final class UserAccessTokenTest {
 
     @Test
     public void testThatUserTokenFailsIfNoRefreshTokenIsSent() {

@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public class FpSepaExecutingResponseTest {
+public final class FpSepaExecutingResponseTest {
 
     @Test
     public void test() {

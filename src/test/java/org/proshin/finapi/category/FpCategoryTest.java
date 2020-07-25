@@ -27,7 +27,7 @@ import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.category.in.FpEditParameters;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public class FpCategoryTest extends TestWithMockedEndpoint {
+public final class FpCategoryTest extends TestWithMockedEndpoint {
 
     @Test
     public void test() {

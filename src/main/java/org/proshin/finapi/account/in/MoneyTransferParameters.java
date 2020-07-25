@@ -15,7 +15,6 @@
  */
 package org.proshin.finapi.account.in;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Iterator;
 import org.cactoos.iterator.IteratorOf;
@@ -111,63 +110,5 @@ public final class MoneyTransferParameters implements Jsonable {
     @Override
     public JSONObject asJson() {
         return this.origin;
-    }
-
-    public static final class Recipient implements Jsonable {
-
-        private final JSONObject origin;
-
-        public Recipient() {
-            this(new JSONObject());
-        }
-
-        public Recipient(final JSONObject origin) {
-            this.origin = origin;
-        }
-
-        public Recipient withName(final String name) {
-            this.origin.put("recipientName", name);
-            return this;
-        }
-
-        public Recipient withIban(final String iban) {
-            this.origin.put("recipientIban", iban);
-            return this;
-        }
-
-        public Recipient withBic(final String bic) {
-            this.origin.put("recipientBic", bic);
-            return this;
-        }
-
-        public Recipient withClearingAccount(final String id) {
-            this.origin.put("clearingAccountId", id);
-            return this;
-        }
-
-        public Recipient withEndToEndId(final String endToEndId) {
-            this.origin.put("endToEndId", endToEndId);
-            return this;
-        }
-
-        public Recipient withAmount(final BigDecimal amount) {
-            this.origin.put("amount", amount);
-            return this;
-        }
-
-        public Recipient withPurpose(final String purpose) {
-            this.origin.put("purpose", purpose);
-            return this;
-        }
-
-        public Recipient withSepaPurposeCode(final String sepaPurposeCode) {
-            this.origin.put("sepaPurposeCode", sepaPurposeCode);
-            return this;
-        }
-
-        @Override
-        public JSONObject asJson() {
-            return this.origin;
-        }
     }
 }

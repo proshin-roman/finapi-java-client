@@ -16,6 +16,8 @@
 package org.proshin.finapi.exception;
 
 public final class NoFieldException extends RuntimeException {
+
+    @SuppressWarnings("staticfree")
     private static final long serialVersionUID = 260448112051805868L;
 
     public NoFieldException(final String message) {

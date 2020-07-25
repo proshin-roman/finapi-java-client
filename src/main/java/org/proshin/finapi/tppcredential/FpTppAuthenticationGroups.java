@@ -22,7 +22,7 @@ import org.proshin.finapi.primitives.paging.FpPage;
 import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.tppcredential.in.QueryTppAuthenticationGroupsCriteria;
 
-public class FpTppAuthenticationGroups implements TppAuthenticationGroups {
+public final class FpTppAuthenticationGroups implements TppAuthenticationGroups {
 
     private final Endpoint endpoint;
     private final AccessToken token;

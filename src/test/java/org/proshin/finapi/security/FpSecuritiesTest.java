@@ -23,7 +23,7 @@ import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.security.in.SecuritiesCriteria;
 
-public class FpSecuritiesTest extends TestWithMockedEndpoint {
+public final class FpSecuritiesTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {

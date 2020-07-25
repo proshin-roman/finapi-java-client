@@ -19,7 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public class FpDeletionResultTest {
+public final class FpDeletionResultTest {
+
     @Test
     public void test() {
         final DeletionResult result = new FpDeletionResult(

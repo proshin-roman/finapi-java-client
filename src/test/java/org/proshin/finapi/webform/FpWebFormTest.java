@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public class FpWebFormTest {
+public final class FpWebFormTest {
 
     @Test
     public void testSuccess() {

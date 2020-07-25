@@ -18,7 +18,7 @@ package org.proshin.finapi.category.in;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 
-public class FpEditParameters implements Jsonable {
+public final class FpEditParameters implements Jsonable {
 
     private final JSONObject origin;
 

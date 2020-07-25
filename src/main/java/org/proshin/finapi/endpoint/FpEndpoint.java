@@ -49,6 +49,7 @@ import org.slf4j.LoggerFactory;
 
 public final class FpEndpoint implements Endpoint {
 
+    @SuppressWarnings("staticfree")
     private static final Logger LOGGER = LoggerFactory.getLogger(FpEndpoint.class);
 
     private final HttpClient client;
@@ -256,6 +257,7 @@ public final class FpEndpoint implements Endpoint {
         );
     }
 
+    @SuppressWarnings("staticfree")
     private static final class AuthorizationHeader implements Header {
 
         private final String token;

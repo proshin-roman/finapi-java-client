@@ -29,13 +29,14 @@ import org.proshin.finapi.category.in.CashFlowsCriteria;
 import org.proshin.finapi.category.in.CategoriesCriteria;
 import org.proshin.finapi.category.in.CreateCategoryParameters;
 import org.proshin.finapi.category.in.TrainCategorizationParameters;
+import org.proshin.finapi.category.in.TrainCategorizationTransaction;
 import org.proshin.finapi.category.out.CashFlows;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.Direction;
 import org.proshin.finapi.primitives.LocalDateOf;
 import org.proshin.finapi.primitives.paging.Page;
 
-public class FpCategoriesTest extends TestWithMockedEndpoint {
+public final class FpCategoriesTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {
@@ -207,7 +208,7 @@ public class FpCategoriesTest extends TestWithMockedEndpoint {
         ).trainCategorization(
             new TrainCategorizationParameters()
                 .withTransactions(
-                    new TrainCategorizationParameters.TrainCategorizationTransaction()
+                    new TrainCategorizationTransaction()
                         .withAccountType(Type.Checking)
                         .withAmount(new BigDecimal("-99.99"))
                         .withPurpose("Restaurantbesuch")

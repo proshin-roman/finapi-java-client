@@ -25,7 +25,7 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.payment.in.FpQueryCriteria;
 import org.proshin.finapi.primitives.paging.Page;
 
-public class FpPaymentsTest extends TestWithMockedEndpoint {
+public final class FpPaymentsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testQuery() {

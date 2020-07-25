@@ -24,7 +24,7 @@ import org.proshin.finapi.primitives.optional.OptionalLocalDateOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
 import org.proshin.finapi.tppcredential.in.EditTppCredentialParameters;
 
-public class FpTppCredential implements TppCredential {
+public final class FpTppCredential implements TppCredential {
 
     private final Endpoint endpoint;
     private final AccessToken token;

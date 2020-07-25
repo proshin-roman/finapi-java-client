@@ -21,7 +21,7 @@ import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public class WebFormsTest extends TestWithMockedEndpoint {
+public final class WebFormsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {

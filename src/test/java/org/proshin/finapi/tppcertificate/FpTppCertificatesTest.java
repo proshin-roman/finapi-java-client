@@ -25,7 +25,7 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.tppcertificate.in.QueryTppCertificatesCriteria;
 
-public class FpTppCertificatesTest extends TestWithMockedEndpoint {
+public final class FpTppCertificatesTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {

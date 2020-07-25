@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Roman Proshin
+ * Copyright 2020 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,41 +16,22 @@
 package org.proshin.finapi.account;
 
 /**
- * @todo #21 This enum can be refactored to a general class - think about it
+ * @deprecated since v0.1.92 due to PSD2-related changes
  */
-public enum Type {
-
-    Checking(1),
-
-    Savings(2),
-
-    CreditCard(3),
-
-    Security(4),
-
-    Loan(5),
-
-    Pocket(6),
-
-    Membership(7),
-
-    Bausparen(8);
-
-    /**
-     * @deprecated since v0.1.92 due to PSD2-related changes
-     */
-    @Deprecated
+@Deprecated
+public final class TypeOf {
     private final int code;
 
-    Type(final int code) {
+    public TypeOf(final int code) {
         this.code = code;
     }
 
-    /**
-     * @deprecated since v0.1.92 due to PSD2-related changes
-     */
-    @Deprecated
-    public int asCode() {
-        return this.code;
+    public Type get() {
+        for (final Type type : Type.values()) {
+            if (type.asCode() == this.code) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException(String.format("Unknown type %d", this.code));
     }
 }

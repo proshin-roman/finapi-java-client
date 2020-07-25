@@ -25,7 +25,7 @@ import org.proshin.finapi.primitives.StringOf;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
-public class FpQueryCriteria implements Iterable<NameValuePair> {
+public final class FpQueryCriteria implements Iterable<NameValuePair> {
 
     private final List<NameValuePair> pairs;
 

@@ -25,7 +25,7 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.tppcredential.in.QueryTppAuthenticationGroupsCriteria;
 
-public class FpTppAuthenticationGroupTest extends TestWithMockedEndpoint {
+public final class FpTppAuthenticationGroupTest extends TestWithMockedEndpoint {
 
     @Test
     public void testQuery() {

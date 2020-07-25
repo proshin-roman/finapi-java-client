@@ -31,7 +31,7 @@ import org.proshin.finapi.bankconnection.in.ImportBankConnectionParameters;
 import org.proshin.finapi.bankconnection.in.UpdateBankConnectionParameters;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public class FpBankConnectionsTest extends TestWithMockedEndpoint {
+public final class FpBankConnectionsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {

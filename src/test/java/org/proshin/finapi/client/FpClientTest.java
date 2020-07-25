@@ -30,7 +30,7 @@ import org.proshin.finapi.user.User;
 import org.proshin.finapi.user.Users;
 import org.proshin.finapi.user.in.FpCreateParameters;
 
-public class FpClientTest extends TestWithMockedEndpoint {
+public final class FpClientTest extends TestWithMockedEndpoint {
 
     @Test
     public void testConfiguration() {

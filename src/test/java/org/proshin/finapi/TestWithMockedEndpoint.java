@@ -23,13 +23,13 @@ import org.mockserver.junit.jupiter.MockServerExtension;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.endpoint.FpEndpoint;
 
-@SuppressWarnings("AbstractClassWithoutAbstractMethods")
 @ExtendWith(MockServerExtension.class)
+@SuppressWarnings("AbstractClassWithoutAbstractMethods")
 public abstract class TestWithMockedEndpoint {
 
-    @SuppressWarnings("InstanceVariableMayNotBeInitialized")
+    @SuppressWarnings({"InstanceVariableMayNotBeInitialized", "allfinal"})
     private MockServerClient server;
-    @SuppressWarnings("InstanceVariableMayNotBeInitialized")
+    @SuppressWarnings({"InstanceVariableMayNotBeInitialized", "allfinal"})
     private Endpoint endpoint;
 
     @BeforeEach

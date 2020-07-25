@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 import org.proshin.finapi.tppcertificate.CertificateType;
 
-public class CreateTppCertificateParametersTest {
+public final class CreateTppCertificateParametersTest {
 
     @Test
     public void test() {

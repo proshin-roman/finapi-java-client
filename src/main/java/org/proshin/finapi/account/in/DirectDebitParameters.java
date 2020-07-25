@@ -15,7 +15,6 @@
  */
 package org.proshin.finapi.account.in;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
@@ -111,72 +110,5 @@ public final class DirectDebitParameters implements Jsonable {
 
     public enum SequenceType {
         OOFF, FRST, RCUR, FNAL
-    }
-
-    public static final class Debtor implements Jsonable {
-        private final JSONObject origin;
-
-        public Debtor() {
-            this(new JSONObject());
-        }
-
-        public Debtor(final JSONObject origin) {
-            this.origin = origin;
-        }
-
-        public Debtor withName(final String name) {
-            this.origin.put("debitorName", name);
-            return this;
-        }
-
-        public Debtor withIban(final String iban) {
-            this.origin.put("debitorIban", iban);
-            return this;
-        }
-
-        public Debtor withBic(final String bic) {
-            this.origin.put("debitorBic", bic);
-            return this;
-        }
-
-        public Debtor withAmount(final BigDecimal amount) {
-            this.origin.put("amount", amount);
-            return this;
-        }
-
-        public Debtor withPurpose(final String purpose) {
-            this.origin.put("purpose", purpose);
-            return this;
-        }
-
-        public Debtor withSepaPurposeCode(final String sepaPurposeCode) {
-            this.origin.put("sepaPurposeCode", sepaPurposeCode);
-            return this;
-        }
-
-        public Debtor withMandateId(final String mandateId) {
-            this.origin.put("mandateId", mandateId);
-            return this;
-        }
-
-        public Debtor withMandateDate(final LocalDate mandateDate) {
-            this.origin.put("mandateDate", new StringOf(mandateDate));
-            return this;
-        }
-
-        public Debtor withCreditorId(final String creditorId) {
-            this.origin.put("creditorId", creditorId);
-            return this;
-        }
-
-        public Debtor withEndToEndId(final String endToEndId) {
-            this.origin.put("endToEndId", endToEndId);
-            return this;
-        }
-
-        @Override
-        public JSONObject asJson() {
-            return this.origin;
-        }
     }
 }

@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public class FpBankConsent implements BankConsent {
+public final class FpBankConsent implements BankConsent {
 
     private final JSONObject origin;
 

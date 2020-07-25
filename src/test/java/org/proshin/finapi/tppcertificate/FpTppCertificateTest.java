@@ -26,7 +26,7 @@ import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public class FpTppCertificateTest extends TestWithMockedEndpoint {
+public final class FpTppCertificateTest extends TestWithMockedEndpoint {
 
     @Test
     public void test() {

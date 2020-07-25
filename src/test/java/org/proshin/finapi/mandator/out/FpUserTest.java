@@ -22,7 +22,8 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public class FpUserTest {
+public final class FpUserTest {
+
     @Test
     public void test() {
         final User user = new FpUser(new JSONObject('{' +

@@ -22,7 +22,7 @@ import org.cactoos.iterable.Mapped;
 import org.cactoos.text.Joined;
 import org.cactoos.text.UncheckedText;
 
-public class QueryString implements Supplier<String> {
+public final class QueryString implements Supplier<String> {
 
     private final Supplier<String> origin;
 

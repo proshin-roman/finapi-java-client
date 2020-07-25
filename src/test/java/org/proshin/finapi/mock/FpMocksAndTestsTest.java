@@ -34,7 +34,7 @@ import org.proshin.finapi.mock.out.CategorizationResults;
 import org.proshin.finapi.primitives.BankingInterface;
 
 @SuppressWarnings("JUnitTestMethodWithNoAssertions")
-public class FpMocksAndTestsTest extends TestWithMockedEndpoint {
+public final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testMockBatchUpdate() {

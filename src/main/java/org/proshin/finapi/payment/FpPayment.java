@@ -25,7 +25,7 @@ import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.primitives.optional.OptionalOf;
 import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
 
-public class FpPayment implements Payment {
+public final class FpPayment implements Payment {
 
     private final JSONObject origin;
 

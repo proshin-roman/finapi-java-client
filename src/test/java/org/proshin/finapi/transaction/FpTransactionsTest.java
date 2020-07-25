@@ -32,7 +32,7 @@ import org.proshin.finapi.transaction.in.EditTransactionsParameters;
 import org.proshin.finapi.transaction.in.TransactionsCriteria;
 import org.proshin.finapi.transaction.out.TransactionsPage;
 
-public class FpTransactionsTest extends TestWithMockedEndpoint {
+public final class FpTransactionsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {

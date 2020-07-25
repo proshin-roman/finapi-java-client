@@ -265,6 +265,29 @@
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>com.iwillfailyou</groupId>
+        <artifactId>iwillfailyou-maven-plugin</artifactId>
+        <version>0.1.0</version>
+
+        <!-- then configure it, if you need: -->
+        <configuration>
+          <offline>true</offline> <!-- default false -->
+          <nullfree>
+            <skipComparisions>true</skipComparisions> <!-- default false -->
+            <threshold>0</threshold> <!-- default 0 -->
+          </nullfree>
+          <staticfree>
+            <threshold>0</threshold> <!-- default 0 -->
+          </staticfree>
+          <allfinal>
+            <skipInterfaceMethodParams>true</skipInterfaceMethodParams> <!-- default true -->
+            <skipLambdaParams>true</skipLambdaParams>
+            <threshold>0</threshold> <!-- default 0 -->
+          </allfinal>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

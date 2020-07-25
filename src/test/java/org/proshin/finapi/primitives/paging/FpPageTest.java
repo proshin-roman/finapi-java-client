@@ -22,7 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public class FpPageTest {
+public final class FpPageTest {
 
     @Test
     public void testItems() throws Exception {

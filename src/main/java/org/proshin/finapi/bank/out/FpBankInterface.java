@@ -25,7 +25,7 @@ import org.proshin.finapi.primitives.optional.OptionalStringOf;
 import org.proshin.finapi.tppcredential.FpTppAuthenticationGroup;
 import org.proshin.finapi.tppcredential.TppAuthenticationGroup;
 
-public class FpBankInterface implements BankInterface {
+public final class FpBankInterface implements BankInterface {
 
     private final JSONObject origin;
 

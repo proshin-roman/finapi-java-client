@@ -32,7 +32,7 @@ import org.proshin.finapi.bankconnection.out.UpdateResult;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public class FpBankConnectionTest extends TestWithMockedEndpoint {
+public final class FpBankConnectionTest extends TestWithMockedEndpoint {
 
     @Test
     public void testParsingJsonStructure() {

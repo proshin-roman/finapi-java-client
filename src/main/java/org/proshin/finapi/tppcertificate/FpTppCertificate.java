@@ -23,7 +23,7 @@ import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.optional.OptionalLocalDateOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
-public class FpTppCertificate implements TppCertificate {
+public final class FpTppCertificate implements TppCertificate {
 
     private final Endpoint endpoint;
     private final AccessToken token;
