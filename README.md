@@ -79,6 +79,17 @@ Make sure your branch builds without any warnings/issues:
 mvn clean install
 ```
 
+## How to release
+
+Push a new **annotated** tag. Here is an example of the command:
+
+```
+git tag -a v0.1.107 -m "Release v0.1.107" 53901d
+```
+
+Versioning is done using [jgitver](https://github.com/jgitver/jgitver) tool, so it will use the new tag as a base of
+the version.
+
 ## License
 Copyright 2018-2019 Roman Proshin
 
