@@ -79,4 +79,9 @@ public class FpBankInterface implements BankInterface {
     public Optional<OffsetDateTime> lastSuccessfulCommunication() {
         return new OptionalOffsetDateTimeOf(this.origin, "lastSuccessfulCommunication").get();
     }
+
+    @Override
+    public boolean isMoneyTransferSupported() {
+        return this.origin.getBoolean("isMoneyTransferSupported");
+    }
 }

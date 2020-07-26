@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Roman Proshin
+ * Copyright 2020 Roman Proshin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.proshin.finapi.bankconnection.out;
+package org.proshin.finapi.bank.out;
 
-import java.util.Optional;
-import org.proshin.finapi.primitives.BankingInterface;
+public interface BankGroup {
 
-public interface BankConnectionInterface {
+    Long id();
 
-    BankingInterface bankingInterface();
-
-    Iterable<LoginCredential> credentials();
-
-    TwoStepProcedures twoStepProcedures();
-
-    Optional<BankConsent> aisConsent();
-
-    Optional<UpdateResult> lastManualUpdate();
-
-    Optional<UpdateResult> lastAutoUpdate();
-
-    boolean userActionRequired();
+    String name();
 }

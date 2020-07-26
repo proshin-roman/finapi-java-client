@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import static org.proshin.finapi.bank.Bank.DataSource.FINTS_SERVER;
 import static org.proshin.finapi.bank.Bank.DataSource.WEB_SCRAPER;
+import org.proshin.finapi.bank.out.BankGroup;
 import org.proshin.finapi.bank.out.BankInterface;
 import static org.proshin.finapi.bank.out.BankInterface.BankInterfaceProperty.REDIRECT_APPROACH;
 import org.proshin.finapi.bank.out.LoginCredential;
@@ -72,9 +73,17 @@ public class FpBankTest {
                 "      \"properties\": [" +
                 "        \"REDIRECT_APPROACH\"" +
                 "      ]," +
-                "      \"loginHint\": \"Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein.\"" +
+                "      \"loginHint\": \"Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein.\"," +
+                "      \"health\": 100," +
+                "      \"lastCommunicationAttempt\": \"2018-01-01 00:00:00.000\"," +
+                "      \"lastSuccessfulCommunication\": \"2018-01-02 00:00:00.000\"," +
+                "      \"isMoneyTransferSupported\": true" +
                 "    }" +
                 "  ]," +
+                "  \"bankGroup\": {" +
+                "    \"id\": 1," +
+                "    \"name\": \"FinAPI Test Bank Group\"" +
+                "  }," +
                 "  \"lastCommunicationAttempt\": \"2018-01-01 00:00:00.000\"," +
                 "  \"lastSuccessfulCommunication\": \"2018-01-02 00:00:00.000\"" +
                 '}')
@@ -120,6 +129,19 @@ public class FpBankTest {
 
             assertThat(bankInterface.loginHint())
                 .isEqualTo(Optional.of("Bitte geben Sie nur die ersten fünf Stellen Ihrer PIN ein."));
+
+            assertThat(bankInterface.health()).isEqualTo(100);
+            assertThat(bankInterface.lastCommunicationAttempt())
+                .isEqualTo(Optional.of(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get()));
+            assertThat(bankInterface.lastSuccessfulCommunication())
+                .isEqualTo(Optional.of(new OffsetDateTimeOf("2018-01-02 00:00:00.000").get()));
+
+            assertThat(bankInterface.isMoneyTransferSupported()).isTrue();
         }
+
+        assertThat(bank.bankGroup().isPresent()).isTrue();
+        final BankGroup bankGroup = bank.bankGroup().get();
+        assertThat(bankGroup.id()).isEqualTo(1L);
+        assertThat(bankGroup.name()).isEqualTo("FinAPI Test Bank Group");
     }
 }

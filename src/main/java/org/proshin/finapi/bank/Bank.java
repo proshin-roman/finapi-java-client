@@ -17,6 +17,7 @@ package org.proshin.finapi.bank;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
+import org.proshin.finapi.bank.out.BankGroup;
 import org.proshin.finapi.bank.out.BankInterface;
 import org.proshin.finapi.bank.out.LoginFields;
 
@@ -81,6 +82,8 @@ public interface Bank {
     Iterable<DataSource> supportedDataSources();
 
     Iterable<BankInterface> interfaces();
+
+    Optional<BankGroup> bankGroup();
 
     /**
      * @deprecated since v0.1.92 due to PSD2-related changes

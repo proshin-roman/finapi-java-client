@@ -25,11 +25,15 @@ import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.bankconnection.in.EditBankConnectionParameters;
+import org.proshin.finapi.bankconnection.out.BankConsent;
+import static org.proshin.finapi.bankconnection.out.BankConsent.Status.PRESENT;
+import org.proshin.finapi.bankconnection.out.LoginCredential;
 import org.proshin.finapi.bankconnection.out.Status;
 import org.proshin.finapi.bankconnection.out.TwoStepProcedure;
 import org.proshin.finapi.bankconnection.out.Type;
 import org.proshin.finapi.bankconnection.out.UpdateResult;
 import org.proshin.finapi.fake.FakeAccessToken;
+import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
 public class FpBankConnectionTest extends TestWithMockedEndpoint {
@@ -42,9 +46,6 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
             new JSONObject('{' +
                 "  \"id\": 42," +
                 "  \"bankId\": 277672," +
-                "  \"bank\": {" +
-                "    \"id\": 277672," +
-                "  }," +
                 "  \"name\": \"Bank Connection\"," +
                 "  \"bankingUserId\": \"user ID\"," +
                 "  \"bankingCustomerId\": \"customer ID\"," +
@@ -64,6 +65,10 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
                 "    \"errorType\": \"BUSINESS\"," +
                 "    \"timestamp\": \"2018-01-11 00:00:00.000\"" +
                 "  }," +
+                "  \"ibanOnlyMoneyTransferSupported\": true," +
+                "  \"ibanOnlyDirectDebitSupported\": true," +
+                "  \"collectiveMoneyTransferSupported\": true," +
+                "  \"defaultTwoStepProcedureId\": \"955\"," +
                 "  \"twoStepProcedures\": [" +
                 "    {" +
                 "      \"procedureId\": \"955\"," +
@@ -72,11 +77,48 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
                 "      \"implicitExecute\": true" +
                 "    }" +
                 "  ]," +
-                "  \"ibanOnlyMoneyTransferSupported\": true," +
-                "  \"ibanOnlyDirectDebitSupported\": true," +
-                "  \"collectiveMoneyTransferSupported\": true," +
-                "  \"defaultTwoStepProcedureId\": \"955\"," +
-                "  \"accountIds\": [1, 2, 3]," +
+                "  \"interfaces\": [" +
+                "    {" +
+                "      \"interface\": \"FINTS_SERVER\"," +
+                "      \"loginCredentials\": [" +
+                "        {" +
+                "          \"label\": \"Nutzerkennung\"," +
+                "          \"value\": \"username\"" +
+                "        }" +
+                "      ]," +
+                "      \"defaultTwoStepProcedureId\": \"955\"," +
+                "      \"twoStepProcedures\": [" +
+                "        {" +
+                "          \"procedureId\": \"955\"," +
+                "          \"procedureName\": \"mobileTAN\"," +
+                "          \"procedureChallengeType\": \"TEXT\"," +
+                "          \"implicitExecute\": true" +
+                "        }" +
+                "      ]," +
+                "      \"aisConsent\": {" +
+                "        \"status\": \"PRESENT\"," +
+                "        \"expiresAt\": \"2019-07-20 09:05:10.546\"" +
+                "      }," +
+                "      \"lastManualUpdate\": {" +
+                "        \"result\": \"INTERNAL_SERVER_ERROR\"," +
+                "        \"errorMessage\": \"Internal server error\"," +
+                "        \"errorType\": \"TECHNICAL\"," +
+                "        \"timestamp\": \"2018-01-01 00:00:00.000\"" +
+                "      }," +
+                "      \"lastAutoUpdate\": {" +
+                "        \"result\": \"BANK_SERVER_REJECTION\"," +
+                "        \"errorMessage\": \"Internal bank error\"," +
+                "        \"errorType\": \"BUSINESS\"," +
+                "        \"timestamp\": \"2018-01-11 00:00:00.000\"" +
+                "      }," +
+                "      \"userActionRequired\": true" +
+                "    }" +
+                "  ]," +
+                "  \"accountIds\": [" +
+                "    1," +
+                "    2," +
+                "    3" +
+                "  ]," +
                 "  \"owners\": [" +
                 "    {" +
                 "      \"firstName\": \"Max\"," +
@@ -91,7 +133,11 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
                 "      \"street\": \"Musterstraße\"," +
                 "      \"houseNumber\": \"99\"" +
                 "    }" +
-                "  ]" +
+                "  ]," +
+                "  \"bank\": {" +
+                "    \"id\": 277672" +
+                "  }," +
+                "  \"furtherLoginNotRecommended\": true" +
                 '}'),
             "/api/v1/bankConnections"
         );
@@ -142,6 +188,52 @@ public class FpBankConnectionTest extends TestWithMockedEndpoint {
 
         assertThat(connection.accounts()).containsExactlyInAnyOrder(1L, 2L, 3L);
         assertThat(connection.owners().iterator().next().firstName()).isEqualTo(Optional.of("Max"));
+
+        connection.interfaces().forEach(connectionInterface -> {
+            assertThat(connectionInterface.bankingInterface()).isEqualTo(BankingInterface.FINTS_SERVER);
+
+            final LoginCredential loginCredential = connectionInterface.credentials().iterator().next();
+            assertThat(loginCredential.label()).isEqualTo(Optional.of("Nutzerkennung"));
+            assertThat(loginCredential.value()).isEqualTo(Optional.of("username"));
+
+            assertThat(connectionInterface.twoStepProcedures().defaultOne().isPresent()).isTrue();
+            assertThat(connectionInterface.twoStepProcedures().defaultOne().get().id()).isEqualTo("955");
+
+            connectionInterface.twoStepProcedures().all().forEach(tsp -> {
+                assertThat(tsp.id()).isEqualTo("955");
+                assertThat(tsp.name()).isEqualTo("mobileTAN");
+                assertThat(tsp.type()).isEqualTo(Optional.of(TwoStepProcedure.Type.TEXT));
+                assertThat(tsp.implicitExecute()).isTrue();
+            });
+
+            assertThat(connectionInterface.aisConsent().isPresent()).isTrue();
+            final BankConsent consent = connectionInterface.aisConsent().get();
+            assertThat(consent.status()).isEqualTo(PRESENT);
+            assertThat(consent.expiresAt())
+                .isEqualTo(new OffsetDateTimeOf("2019-07-20 09:05:10.546").get());
+
+            assertThat(connectionInterface.lastManualUpdate().isPresent()).isTrue();
+            assertThat(connectionInterface.lastManualUpdate().get().result())
+                .isEqualTo(UpdateResult.Result.INTERNAL_SERVER_ERROR);
+            assertThat(connectionInterface.lastManualUpdate().get().errorMessage())
+                .isEqualTo(Optional.of("Internal server error"));
+            assertThat(connectionInterface.lastManualUpdate().get().errorType())
+                .isEqualTo(Optional.of(UpdateResult.ErrorType.TECHNICAL));
+            assertThat(connectionInterface.lastManualUpdate().get().timestamp())
+                .isEqualTo(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get());
+
+            assertThat(connectionInterface.lastAutoUpdate().isPresent()).isTrue();
+            assertThat(connectionInterface.lastAutoUpdate().get().result())
+                .isEqualTo(UpdateResult.Result.BANK_SERVER_REJECTION);
+            assertThat(connectionInterface.lastAutoUpdate().get().errorMessage())
+                .isEqualTo(Optional.of("Internal bank error"));
+            assertThat(connectionInterface.lastAutoUpdate().get().errorType())
+                .isEqualTo(Optional.of(UpdateResult.ErrorType.BUSINESS));
+            assertThat(connectionInterface.lastAutoUpdate().get().timestamp())
+                .isEqualTo(new OffsetDateTimeOf("2018-01-11 00:00:00.000").get());
+
+            assertThat(connectionInterface.userActionRequired()).isTrue();
+        });
     }
 
     @Test

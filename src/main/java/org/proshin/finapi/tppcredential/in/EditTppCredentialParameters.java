@@ -57,6 +57,11 @@ public class EditTppCredentialParameters implements Jsonable {
         return this;
     }
 
+    public EditTppCredentialParameters withTppName(final String tppName) {
+        this.origin.put("tppName", tppName);
+        return this;
+    }
+
     public EditTppCredentialParameters withValidFromDate(final LocalDate validFromDate) {
         this.origin.put("validFromDate", new StringOf(validFromDate));
         return this;

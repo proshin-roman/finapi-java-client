@@ -28,6 +28,7 @@ public class CreateTppCredentialParametersTest {
                 .withTppClientId("custom client id")
                 .withTppClientSecret("custom client secret")
                 .withTppApiKey("custom api key")
+                .withTppName("custom name")
                 .withValidFromDate(new LocalDateOf("2019-01-22").get())
                 .withValidUntilDate(new LocalDateOf("2020-01-31").get())
                 .asJson().toString())
@@ -38,7 +39,8 @@ public class CreateTppCredentialParametersTest {
                 "\"tppClientSecret\":\"custom client secret\"," +
                 "\"validUntilDate\":\"2020-01-31\"," +
                 "\"tppAuthenticationGroupId\":99," +
-                "\"tppApiKey\":\"custom api key\"" +
+                "\"tppApiKey\":\"custom api key\"," +
+                "\"tppName\":\"custom name\"" +
                 '}'
             );
     }
