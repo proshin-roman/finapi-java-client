@@ -45,6 +45,13 @@ The project is following the next principles (it is a subset of [those ones](htt
 - No instanceof, type casting or reflection
 - No implementation inheritance
 
+All badges are through [iwillfailyou](https://iwillfailyou.com/)
+ 
+![nullfree status](https://iwillfailyou.com/nullfree/proshin-roman/finapi-java-client)
+![staticfree status](https://iwillfailyou.com/staticfree/proshin-roman/finapi-java-client)
+![allfinal status](https://iwillfailyou.com/allfinal/proshin-roman/finapi-java-client)
+![allpublic status](https://iwillfailyou.com/allpublic/proshin-roman/finapi-java-client)
+
 ## How to use
 
 Just add the following lines into your `pom.xml`

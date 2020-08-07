@@ -79,7 +79,7 @@
     <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
-      <version>0.44</version>
+      <version>0.46</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
@@ -269,23 +269,31 @@
       <plugin>
         <groupId>com.iwillfailyou</groupId>
         <artifactId>iwillfailyou-maven-plugin</artifactId>
-        <version>0.1.1</version>
+        <version>0.2.0</version>
 
         <!-- then configure it, if you need: -->
         <configuration>
-          <offline>true</offline> <!-- default false -->
+          <offline>false</offline><!-- default false -->
           <nullfree>
-            <skipComparisions>true</skipComparisions> <!-- default false -->
-            <threshold>0</threshold> <!-- default 0 -->
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
+            <skipComparisons>true</skipComparisons><!-- default false -->
           </nullfree>
           <staticfree>
-            <threshold>0</threshold> <!-- default 0 -->
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
           </staticfree>
           <allfinal>
-            <skipInterfaceMethodParams>true</skipInterfaceMethodParams> <!-- default true -->
-            <skipLambdaParams>true</skipLambdaParams>
-            <threshold>0</threshold> <!-- default 0 -->
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
+            <skipInterfaceMethodParams>true</skipInterfaceMethodParams><!-- default true -->
+            <skipLambdaParams>true</skipLambdaParams><!-- default false -->
+            <skipCatchParams>false</skipCatchParams><!-- default false -->
           </allfinal>
+          <allpublic>
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
+          </allpublic>
         </configuration>
       </plugin>
     </plugins>
