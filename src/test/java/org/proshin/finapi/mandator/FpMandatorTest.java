@@ -25,7 +25,7 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.mandator.in.UsersCriteria;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public class FpMandatorTest extends TestWithMockedEndpoint {
+public final class FpMandatorTest extends TestWithMockedEndpoint {
 
     @Test
     public void testUsers() {

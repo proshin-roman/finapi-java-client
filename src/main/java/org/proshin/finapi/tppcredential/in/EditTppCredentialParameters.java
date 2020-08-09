@@ -20,7 +20,7 @@ import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.primitives.StringOf;
 
-public class EditTppCredentialParameters implements Jsonable {
+public final class EditTppCredentialParameters implements Jsonable {
 
     private final JSONObject origin;
 

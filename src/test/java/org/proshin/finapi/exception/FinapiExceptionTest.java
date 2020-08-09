@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.bankconnection.out.TwoStepProcedure;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public class FinapiExceptionTest {
+public final class FinapiExceptionTest {
 
     @Test
     public void test() {

@@ -28,7 +28,7 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public class FpAccountTest extends TestWithMockedEndpoint {
+public final class FpAccountTest extends TestWithMockedEndpoint {
 
     @Test
     public void testFields() {

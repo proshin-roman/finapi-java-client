@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public class FpTwoStepProceduresTest {
+public final class FpTwoStepProceduresTest {
 
     @Test
     public void testThatExceptionIsThrownIfDefaultDoesNotMatchAnyProcedure() {

@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public class CreateTppCredentialParametersTest {
+public final class CreateTppCredentialParametersTest {
 
     @Test
     public void test() {

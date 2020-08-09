@@ -21,7 +21,7 @@ import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.primitives.StringOf;
 import org.proshin.finapi.tppcertificate.CertificateType;
 
-public class CreateTppCertificateParameters implements Jsonable {
+public final class CreateTppCertificateParameters implements Jsonable {
 
     private final JSONObject origin;
 

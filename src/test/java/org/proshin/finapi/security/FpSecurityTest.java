@@ -24,7 +24,7 @@ import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.security.out.QuantityNominalType;
 import org.proshin.finapi.security.out.QuoteType;
 
-public class FpSecurityTest {
+public final class FpSecurityTest {
 
     @Test
     public void test() {

@@ -18,7 +18,7 @@ package org.proshin.finapi.primitives;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 
-public class MultiStepAuthentication implements Jsonable {
+public final class MultiStepAuthentication implements Jsonable {
 
     private final JSONObject origin;
 

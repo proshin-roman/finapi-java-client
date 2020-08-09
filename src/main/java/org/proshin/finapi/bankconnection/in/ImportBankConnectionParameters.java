@@ -16,7 +16,7 @@
 package org.proshin.finapi.bankconnection.in;
 
 import java.util.Map;
-import org.cactoos.collection.Mapped;
+import org.cactoos.list.Mapped;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.account.Type;

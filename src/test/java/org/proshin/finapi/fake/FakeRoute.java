@@ -44,15 +44,15 @@ public final class FakeRoute {
         this.response = response;
     }
 
-    boolean matches(final String path) {
+    public boolean matches(final String path) {
         return this.pathMatcher.matches(path);
     }
 
-    boolean matches(final AccessToken accessToken, final String path) {
+    public boolean matches(final AccessToken accessToken, final String path) {
         return this.tokenMatcher.matches(accessToken.accessToken()) && this.pathMatcher.matches(path);
     }
 
-    String response() {
+    public String response() {
         return this.response;
     }
 }

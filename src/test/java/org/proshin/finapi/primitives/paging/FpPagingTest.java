@@ -19,7 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public class FpPagingTest {
+public final class FpPagingTest {
+
     @Test
     public void test() {
         final Paging paging = new FpPaging(

@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.pair.UrlEncodedPair;
 
-public class QueryTppCertificatesCriteria implements Iterable<NameValuePair> {
+public final class QueryTppCertificatesCriteria implements Iterable<NameValuePair> {
 
     private final List<NameValuePair> pairs;
 

@@ -19,7 +19,7 @@ import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
-public class FpLoginCredential implements LoginCredential {
+public final class FpLoginCredential implements LoginCredential {
 
     private final JSONObject origin;
 

@@ -22,20 +22,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class TypeTest {
+public final class TypeTest {
 
     @ParameterizedTest
     @CsvSource({"1, Checking", "2, Savings", "3, CreditCard", "4, Security", "5, Loan", "6, Pocket", "7, Membership",
         "8, Bausparen"
     })
     public void testCorrectTypes(final int typeCode, @Nonnull final Type expectedType) {
-        assertThat(new Type.TypeOf(typeCode).get()).isEqualTo(expectedType);
+        assertThat(new TypeOf(typeCode).get()).isEqualTo(expectedType);
     }
 
     @ParameterizedTest
     @ValueSource(ints = {0, -1, 9, 10, 100})
     public void testIllegalCode(final int typeCode) {
         assertThatExceptionOfType(IllegalArgumentException.class)
-            .isThrownBy(() -> new Type.TypeOf(typeCode).get());
+            .isThrownBy(() -> new TypeOf(typeCode).get());
     }
 }

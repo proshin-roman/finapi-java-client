@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.json.JSONArray;
 import org.junit.jupiter.api.Test;
 
-public class IterableJsonArrayTest {
+public final class IterableJsonArrayTest {
 
     @Test
     public void testHasNext() {

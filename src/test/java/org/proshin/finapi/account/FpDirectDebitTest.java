@@ -21,11 +21,12 @@ import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
 import org.proshin.finapi.TestWithMockedEndpoint;
+import org.proshin.finapi.account.in.Debtor;
 import org.proshin.finapi.account.in.DirectDebitParameters;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public class FpDirectDebitTest extends TestWithMockedEndpoint {
+public final class FpDirectDebitTest extends TestWithMockedEndpoint {
 
     @Test
     public void testRequest() {
@@ -75,7 +76,7 @@ public class FpDirectDebitTest extends TestWithMockedEndpoint {
                 .withExecutionDate(new LocalDateOf("2018-01-01").get())
                 .asSingleBooking()
                 .withDebtors(
-                    new DirectDebitParameters.Debtor()
+                    new Debtor()
                         .withName("Debitor")
                         .withIban("DE13700800000061110500")
                         .withBic("DRESDEFF700")

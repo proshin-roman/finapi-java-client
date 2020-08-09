@@ -34,7 +34,7 @@ import org.proshin.finapi.notificationrule.in.params.LowAccountBalanceParams;
 import org.proshin.finapi.notificationrule.in.params.NewAccountBalanceParams;
 import org.proshin.finapi.notificationrule.in.params.NewTransactionsParams;
 
-public class FpNotificationRulesTest extends TestWithMockedEndpoint {
+public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {

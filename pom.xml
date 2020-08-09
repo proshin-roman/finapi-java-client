@@ -79,7 +79,7 @@
     <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
-      <version>0.44</version>
+      <version>0.46</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
@@ -263,6 +263,37 @@
           <serverId>ossrh</serverId>
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>com.iwillfailyou</groupId>
+        <artifactId>iwillfailyou-maven-plugin</artifactId>
+        <version>0.2.0</version>
+
+        <!-- then configure it, if you need: -->
+        <configuration>
+          <offline>false</offline><!-- default false -->
+          <nullfree>
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
+            <skipComparisons>true</skipComparisons><!-- default false -->
+          </nullfree>
+          <staticfree>
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
+          </staticfree>
+          <allfinal>
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
+            <skipInterfaceMethodParams>true</skipInterfaceMethodParams><!-- default true -->
+            <skipLambdaParams>true</skipLambdaParams><!-- default false -->
+            <skipCatchParams>false</skipCatchParams><!-- default false -->
+          </allfinal>
+          <allpublic>
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
+          </allpublic>
         </configuration>
       </plugin>
     </plugins>

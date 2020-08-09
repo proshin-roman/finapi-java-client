@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public class FpOwnerTest {
+public final class FpOwnerTest {
     @Test
     public void test() {
         final Owner owner = new FpOwner(

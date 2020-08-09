@@ -22,11 +22,12 @@ import org.mockserver.model.HttpResponse;
 import org.mockserver.model.JsonBody;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.account.in.MoneyTransferParameters;
+import org.proshin.finapi.account.in.Recipient;
 import org.proshin.finapi.account.out.SepaRequestingResponse;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public class FpMoneyTransferTest extends TestWithMockedEndpoint {
+public final class FpMoneyTransferTest extends TestWithMockedEndpoint {
 
     @Test
     public void testRequest() {
@@ -80,7 +81,7 @@ public class FpMoneyTransferTest extends TestWithMockedEndpoint {
                 .withExecutionDate(new LocalDateOf("2019-04-03").get())
                 .asSingleBooking()
                 .withRecipients(
-                    new MoneyTransferParameters.Recipient()
+                    new Recipient()
                         .withName("Recipient #1")
                         .withIban("DE13700800000061110500")
                         .withBic("DRESDEFF700")
@@ -88,7 +89,7 @@ public class FpMoneyTransferTest extends TestWithMockedEndpoint {
                         .withAmount(new BigDecimal("123.45"))
                         .withPurpose("Test Payment #1")
                         .withSepaPurposeCode("OTHR1"),
-                    new MoneyTransferParameters.Recipient()
+                    new Recipient()
                         .withName("Recipient #2")
                         .withIban("DE13700800000061110501")
                         .withBic("DRESDEFF701")

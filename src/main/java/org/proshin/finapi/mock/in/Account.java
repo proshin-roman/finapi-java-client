@@ -22,7 +22,7 @@ import org.cactoos.iterable.Mapped;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 
-public class Account implements Jsonable {
+public final class Account implements Jsonable {
 
     private final Supplier<JSONObject> origin;
 

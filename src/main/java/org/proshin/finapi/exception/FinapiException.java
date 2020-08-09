@@ -30,6 +30,7 @@ import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
 public final class FinapiException extends RuntimeException {
 
+    @SuppressWarnings("staticfree")
     private static final long serialVersionUID = -5608855544688297953L;
 
     @SuppressWarnings("TransientFieldNotInitialized")
@@ -37,6 +38,7 @@ public final class FinapiException extends RuntimeException {
     @SuppressWarnings({"TransientFieldNotInitialized", "OptionalUsedAsFieldOrParameterType"})
     private final transient Optional<String> location;
 
+    @SuppressWarnings("nullfree")
     public FinapiException(final int expected, final HttpResponse response) {
         this(
             String.format(

@@ -21,7 +21,7 @@ import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.optional.OptionalObjectOf;
 
-public class FpBankConnectionInterface implements BankConnectionInterface {
+public final class FpBankConnectionInterface implements BankConnectionInterface {
 
     private final JSONObject origin;
 

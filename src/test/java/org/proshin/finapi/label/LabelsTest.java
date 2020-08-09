@@ -24,7 +24,7 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.label.in.LabelsCriteria;
 import org.proshin.finapi.primitives.paging.Page;
 
-public class LabelsTest extends TestWithMockedEndpoint {
+public final class LabelsTest extends TestWithMockedEndpoint {
 
     @Test
     public void testOne() {

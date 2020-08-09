@@ -24,7 +24,7 @@ import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.tppcredential.in.CreateTppCredentialParameters;
 import org.proshin.finapi.tppcredential.in.QueryTppCredentialsCriteria;
 
-public class FpTppCredentials implements TppCredentials {
+public final class FpTppCredentials implements TppCredentials {
 
     private final Endpoint endpoint;
     private final AccessToken token;

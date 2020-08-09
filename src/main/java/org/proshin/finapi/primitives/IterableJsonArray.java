@@ -36,6 +36,7 @@ public final class IterableJsonArray<T> implements Iterable<T> {
         return new JsonArrayIterator<>(this.array, this.func);
     }
 
+    @SuppressWarnings("staticfree")
     private static final class JsonArrayIterator<T> implements Iterator<T> {
 
         private final AtomicInteger index;

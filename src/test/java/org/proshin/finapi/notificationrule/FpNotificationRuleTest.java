@@ -27,7 +27,7 @@ import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public class FpNotificationRuleTest extends TestWithMockedEndpoint {
+public final class FpNotificationRuleTest extends TestWithMockedEndpoint {
 
     @Test
     public void testWithParams() {

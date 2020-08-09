@@ -15,13 +15,11 @@
  */
 package org.proshin.finapi.category.in;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
-import org.proshin.finapi.account.Type;
 
 public final class TrainCategorizationParameters implements Jsonable {
 
@@ -55,68 +53,5 @@ public final class TrainCategorizationParameters implements Jsonable {
     @Override
     public JSONObject asJson() {
         return this.origin;
-    }
-
-    public static final class TrainCategorizationTransaction implements Jsonable {
-
-        private final JSONObject origin;
-
-        public TrainCategorizationTransaction() {
-            this(new JSONObject());
-        }
-
-        public TrainCategorizationTransaction(final JSONObject origin) {
-            this.origin = origin;
-        }
-
-        public TrainCategorizationTransaction withAccountType(final Type type) {
-            this.origin.put("accountTypeId", type.asCode());
-            return this;
-        }
-
-        public TrainCategorizationTransaction withAmount(final BigDecimal amount) {
-            this.origin.put("amount", amount);
-            return this;
-        }
-
-        public TrainCategorizationTransaction withPurpose(final String purpose) {
-            this.origin.put("purpose", purpose);
-            return this;
-        }
-
-        public TrainCategorizationTransaction withCounterpart(final String counterpart) {
-            this.origin.put("counterpart", counterpart);
-            return this;
-        }
-
-        public TrainCategorizationTransaction withCounterpartIban(final String counterpartIban) {
-            this.origin.put("counterpartIban", counterpartIban);
-            return this;
-        }
-
-        public TrainCategorizationTransaction withCounterpartAccountNumber(final String counterpartAccountNumber) {
-            this.origin.put("counterpartAccountNumber", counterpartAccountNumber);
-            return this;
-        }
-
-        public TrainCategorizationTransaction withCounterpartBlz(final String counterpartBlz) {
-            this.origin.put("counterpartBlz", counterpartBlz);
-            return this;
-        }
-
-        public TrainCategorizationTransaction withCounterpartBic(final String counterpartBic) {
-            this.origin.put("counterpartBic", counterpartBic);
-            return this;
-        }
-
-        public TrainCategorizationTransaction withMcCode(final String mcCode) {
-            this.origin.put("mcCode", mcCode);
-            return this;
-        }
-
-        @Override
-        public JSONObject asJson() {
-            return this.origin;
-        }
     }
 }

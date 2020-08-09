@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public class OptionalLocalDateOf implements Supplier<Optional<LocalDate>> {
+public final class OptionalLocalDateOf implements Supplier<Optional<LocalDate>> {
 
     private final Supplier<Optional<LocalDate>> origin;
 

@@ -21,7 +21,7 @@ import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.MultiStepAuthentication;
 
-public class ConnectInterfaceParameters implements Jsonable {
+public final class ConnectInterfaceParameters implements Jsonable {
 
     private final JSONObject origin;
 

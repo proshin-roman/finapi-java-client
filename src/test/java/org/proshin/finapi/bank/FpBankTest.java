@@ -29,7 +29,7 @@ import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.tppcredential.TppAuthenticationGroup;
 
-public class FpBankTest {
+public final class FpBankTest {
 
     @Test
     public void test() {

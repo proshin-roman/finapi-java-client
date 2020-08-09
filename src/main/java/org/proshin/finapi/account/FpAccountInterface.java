@@ -24,7 +24,7 @@ import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
 
-public class FpAccountInterface implements AccountInterface {
+public final class FpAccountInterface implements AccountInterface {
 
     private final JSONObject origin;
 

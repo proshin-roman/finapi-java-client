@@ -22,7 +22,7 @@ import org.proshin.finapi.payment.in.FpQueryCriteria;
 import org.proshin.finapi.primitives.paging.FpPage;
 import org.proshin.finapi.primitives.paging.Page;
 
-public class FpPayments implements Payments {
+public final class FpPayments implements Payments {
 
     private final Endpoint endpoint;
     private final AccessToken token;

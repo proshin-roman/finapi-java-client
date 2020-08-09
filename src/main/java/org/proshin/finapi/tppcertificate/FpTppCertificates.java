@@ -24,7 +24,7 @@ import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.tppcertificate.in.CreateTppCertificateParameters;
 import org.proshin.finapi.tppcertificate.in.QueryTppCertificatesCriteria;
 
-public class FpTppCertificates implements TppCertificates {
+public final class FpTppCertificates implements TppCertificates {
 
     private final Endpoint endpoint;
     private final AccessToken token;
