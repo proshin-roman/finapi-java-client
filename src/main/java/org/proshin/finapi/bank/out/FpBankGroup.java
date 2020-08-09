@@ -17,7 +17,7 @@ package org.proshin.finapi.bank.out;
 
 import org.json.JSONObject;
 
-public class FpBankGroup implements BankGroup {
+public final class FpBankGroup implements BankGroup {
 
     private final JSONObject origin;
 
