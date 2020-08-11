@@ -44,17 +44,17 @@ public final class FpCashFlows implements CashFlows {
 
     @Override
     public BigDecimal income() {
-        return new BigDecimalOf(this.origin, "income").get();
+        return new BigDecimalOf(this.origin, "totalIncome").get();
     }
 
     @Override
     public BigDecimal spending() {
-        return new BigDecimalOf(this.origin, "spending").get();
+        return new BigDecimalOf(this.origin, "totalSpending").get();
     }
 
     @Override
     public BigDecimal balance() {
-        return new BigDecimalOf(this.origin, "balance").get();
+        return new BigDecimalOf(this.origin, "totalBalance").get();
     }
 
     @Override
