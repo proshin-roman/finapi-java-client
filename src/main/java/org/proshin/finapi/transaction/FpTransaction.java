@@ -26,6 +26,7 @@ import org.proshin.finapi.category.FpCategory;
 import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.label.FpLabel;
 import org.proshin.finapi.label.Label;
+import org.proshin.finapi.primitives.BigDecimalOf;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.primitives.optional.OptionalBigDecimalOf;
@@ -88,7 +89,7 @@ public final class FpTransaction implements Transaction {
 
     @Override
     public BigDecimal amount() {
-        return this.origin.getBigDecimal("amount");
+        return new BigDecimalOf(this.origin, "amount").get();
     }
 
     @Override

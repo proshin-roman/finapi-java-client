@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
+import org.proshin.finapi.primitives.BigDecimalOf;
 import org.proshin.finapi.primitives.paging.FpPage;
 import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.primitives.paging.Paging;
@@ -58,17 +59,17 @@ public final class FpTransactionsPage implements TransactionsPage {
 
     @Override
     public BigDecimal income() {
-        return this.origin.getBigDecimal("income");
+        return new BigDecimalOf(this.origin, "income").get();
     }
 
     @Override
     public BigDecimal spending() {
-        return this.origin.getBigDecimal("spending");
+        return new BigDecimalOf(this.origin, "spending").get();
     }
 
     @Override
     public BigDecimal balance() {
-        return this.origin.getBigDecimal("balance");
+        return new BigDecimalOf(this.origin, "balance").get();
     }
 
     @Override

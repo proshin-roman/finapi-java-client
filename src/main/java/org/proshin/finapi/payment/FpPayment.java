@@ -21,6 +21,7 @@ import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.payment.out.Status;
 import org.proshin.finapi.payment.out.Type;
+import org.proshin.finapi.primitives.BigDecimalOf;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.primitives.optional.OptionalOf;
 import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
@@ -50,7 +51,7 @@ public final class FpPayment implements Payment {
 
     @Override
     public BigDecimal amount() {
-        return this.origin.getBigDecimal("amount");
+        return new BigDecimalOf(this.origin, "amount").get();
     }
 
     @Override
