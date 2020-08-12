@@ -22,36 +22,38 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public final class BigDecimalOfTest {
+final class BigDecimalOfTest {
 
     @Test
-    public void testJsonDouble() {
+    void testJsonDouble() {
         assertThat(new BigDecimalOf(new JSONObject().put("key", -12.34), "key").get())
             .isEqualTo(new BigDecimal("-12.34"));
     }
 
     @Test
-    public void testJsonInt() {
+    void testJsonInt() {
         assertThat(new BigDecimalOf(new JSONObject().put("key", -12), "key").get())
             .isEqualTo(new BigDecimal("-12"));
     }
 
     @Test
-    public void testJsonString() {
+    void testJsonString() {
         assertThat(new BigDecimalOf(new JSONObject().put("key", "-12.34"), "key").get())
             .isEqualTo(new BigDecimal("-12.34"));
     }
 
     @Test
-    public void testNullValue() {
-        assertThatThrownBy(() -> new BigDecimalOf(new JSONObject(), "key").get())
+    void testNullValue() {
+        final BigDecimalOf bigDecimalOf = new BigDecimalOf(new JSONObject(), "key");
+        assertThatThrownBy(bigDecimalOf::get)
             .isInstanceOf(IllegalStateException.class)
             .hasMessage("Field 'key' cannot be null");
     }
 
     @Test
-    public void testInvalidValue() {
-        assertThatThrownBy(() -> new BigDecimalOf(new JSONObject().put("key", "abc"), "key").get())
+    void testInvalidValue() {
+        final BigDecimalOf bigDecimalOf = new BigDecimalOf(new JSONObject().put("key", "abc"), "key");
+        assertThatThrownBy(bigDecimalOf::get)
             .isInstanceOf(JSONException.class)
             .hasMessage("JSONObject[\"key\"] is not a number.");
     }
