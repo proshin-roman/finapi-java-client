@@ -22,28 +22,28 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-final class BigDecimalOfTest {
+public final class BigDecimalOfTest {
 
     @Test
-    void testJsonDouble() {
+    public void testJsonDouble() {
         assertThat(new BigDecimalOf(new JSONObject().put("key", -12.34), "key").get())
             .isEqualTo(new BigDecimal("-12.34"));
     }
 
     @Test
-    void testJsonInt() {
+    public void testJsonInt() {
         assertThat(new BigDecimalOf(new JSONObject().put("key", -12), "key").get())
             .isEqualTo(new BigDecimal("-12"));
     }
 
     @Test
-    void testJsonString() {
+    public void testJsonString() {
         assertThat(new BigDecimalOf(new JSONObject().put("key", "-12.34"), "key").get())
             .isEqualTo(new BigDecimal("-12.34"));
     }
 
     @Test
-    void testNullValue() {
+    public void testNullValue() {
         final BigDecimalOf bigDecimalOf = new BigDecimalOf(new JSONObject(), "key");
         assertThatThrownBy(bigDecimalOf::get)
             .isInstanceOf(IllegalStateException.class)
@@ -51,7 +51,7 @@ final class BigDecimalOfTest {
     }
 
     @Test
-    void testInvalidValue() {
+    public void testInvalidValue() {
         final BigDecimalOf bigDecimalOf = new BigDecimalOf(new JSONObject().put("key", "abc"), "key");
         assertThatThrownBy(bigDecimalOf::get)
             .isInstanceOf(JSONException.class)
