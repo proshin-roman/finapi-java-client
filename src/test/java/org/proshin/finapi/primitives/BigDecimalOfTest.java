@@ -18,6 +18,7 @@ package org.proshin.finapi.primitives;
 import java.math.BigDecimal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -51,6 +52,7 @@ public final class BigDecimalOfTest {
     @Test
     public void testInvalidValue() {
         assertThatThrownBy(() -> new BigDecimalOf(new JSONObject().put("key", "abc"), "key").get())
-            .isInstanceOf(NumberFormatException.class);
+            .isInstanceOf(JSONException.class)
+            .hasMessage("JSONObject[\"key\"] is not a number.");
     }
 }
