@@ -20,6 +20,7 @@ import java.util.Iterator;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
+import org.proshin.finapi.primitives.BigDecimalOf;
 import org.proshin.finapi.primitives.IterableJsonArray;
 
 public final class FpCashFlows implements CashFlows {
@@ -43,17 +44,17 @@ public final class FpCashFlows implements CashFlows {
 
     @Override
     public BigDecimal income() {
-        return this.origin.getBigDecimal("totalIncome");
+        return new BigDecimalOf(this.origin, "totalIncome").get();
     }
 
     @Override
     public BigDecimal spending() {
-        return this.origin.getBigDecimal("totalSpending");
+        return new BigDecimalOf(this.origin, "totalSpending").get();
     }
 
     @Override
     public BigDecimal balance() {
-        return this.origin.getBigDecimal("totalBalance");
+        return new BigDecimalOf(this.origin, "totalBalance").get();
     }
 
     @Override

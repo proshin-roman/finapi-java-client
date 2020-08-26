@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.proshin.finapi.primitives.BigDecimalOf;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
@@ -37,17 +38,17 @@ public final class FpDailyBalance implements DailyBalance {
 
     @Override
     public BigDecimal balance() {
-        return this.origin.getBigDecimal("balance");
+        return new BigDecimalOf(this.origin, "balance").get();
     }
 
     @Override
     public BigDecimal income() {
-        return this.origin.getBigDecimal("income");
+        return new BigDecimalOf(this.origin, "income").get();
     }
 
     @Override
     public BigDecimal spending() {
-        return this.origin.getBigDecimal("spending");
+        return new BigDecimalOf(this.origin, "spending").get();
     }
 
     @Override

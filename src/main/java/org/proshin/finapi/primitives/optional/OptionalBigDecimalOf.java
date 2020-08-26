@@ -25,7 +25,7 @@ public final class OptionalBigDecimalOf implements Supplier<Optional<BigDecimal>
     private final Supplier<Optional<BigDecimal>> origin;
 
     public OptionalBigDecimalOf(final JSONObject origin, final String name) {
-        this(new OptionalOf<>(origin, name, JSONObject::getBigDecimal));
+        this(new OptionalOf<>(origin, name, (json, key) -> new BigDecimal(json.getNumber(key).toString())));
     }
 
     public OptionalBigDecimalOf(final Supplier<Optional<BigDecimal>> origin) {
