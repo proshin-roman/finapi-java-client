@@ -1,4 +1,4 @@
-name: Feature Branch
+name: All tests
 
 on:
   push:
