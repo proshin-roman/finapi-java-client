@@ -15,9 +15,9 @@
  */
 package org.proshin.finapi.mandator;
 
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
@@ -90,7 +90,7 @@ public final class FpIbanRules implements IbanRules {
                 this.endpoint.post(
                     this.url,
                     this.token,
-                    () -> new JSONObject().put("ids", new CollectionOf<>(ids))
+                    () -> new JSONObject().put("ids", new ListOf<>(ids))
                 )
             ).getJSONArray("identifiers"),
             JSONArray::getLong

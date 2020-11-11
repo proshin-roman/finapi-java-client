@@ -17,8 +17,8 @@ package org.proshin.finapi.mock.in;
 
 import java.math.BigDecimal;
 import java.util.function.Supplier;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 
@@ -30,7 +30,7 @@ public final class Account implements Jsonable {
         this(() -> new JSONObject()
             .put("accountId", account)
             .put("accountBalance", balance)
-            .put("newTransactions", new CollectionOf<>(new Mapped<>(Jsonable::asJson, transactions)))
+            .put("newTransactions", new ListOf<>(new Mapped<>(Jsonable::asJson, transactions)))
         );
     }
 

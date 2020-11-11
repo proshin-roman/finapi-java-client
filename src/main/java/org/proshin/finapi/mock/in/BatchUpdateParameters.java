@@ -16,8 +16,8 @@
 package org.proshin.finapi.mock.in;
 
 import java.util.function.Supplier;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 
@@ -28,7 +28,7 @@ public final class BatchUpdateParameters implements Jsonable {
     public BatchUpdateParameters(final boolean withNotifications, final Connection... connections) {
         this(() -> new JSONObject()
             .put("triggerNotifications", withNotifications)
-            .put("mockBankConnectionUpdates", new CollectionOf<>(new Mapped<>(Jsonable::asJson, connections)))
+            .put("mockBankConnectionUpdates", new ListOf<>(new Mapped<>(Jsonable::asJson, connections)))
         );
     }
 
