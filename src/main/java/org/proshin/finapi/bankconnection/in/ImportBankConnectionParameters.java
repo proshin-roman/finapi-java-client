@@ -16,7 +16,8 @@
 package org.proshin.finapi.bankconnection.in;
 
 import java.util.Map;
-import org.cactoos.list.Mapped;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.list.ListOf;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.account.Type;
@@ -117,7 +118,7 @@ public final class ImportBankConnectionParameters implements Jsonable {
     }
 
     public ImportBankConnectionParameters withAccountTypes(final Iterable<Type> types) {
-        this.origin.put("accountTypes", new Mapped<>(Type::name, types));
+        this.origin.put("accountTypes", new ListOf<>(new Mapped<>(Type::name, types)));
         return this;
     }
 

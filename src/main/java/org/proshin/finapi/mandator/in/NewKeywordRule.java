@@ -16,7 +16,7 @@
 package org.proshin.finapi.mandator.in;
 
 import java.util.function.Supplier;
-import org.cactoos.collection.CollectionOf;
+import org.cactoos.list.ListOf;
 import org.json.JSONObject;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.primitives.Direction;
@@ -29,7 +29,7 @@ public final class NewKeywordRule implements Jsonable {
         this(() -> new JSONObject()
             .put("categoryId", category)
             .put("direction", direction.capitalized())
-            .put("keywords", new CollectionOf<>(keywords)));
+            .put("keywords", new ListOf<>(keywords)));
     }
 
     public NewKeywordRule(final Supplier<JSONObject> origin) {

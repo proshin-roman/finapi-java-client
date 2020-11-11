@@ -75,9 +75,11 @@ public final class FpEndpoint implements Endpoint {
             if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                 throw new FinapiException(HttpStatus.SC_OK, response);
             }
-            final String responseBody = new TextOf(
-                new InputOf(response.getEntity().getContent()),
-                StandardCharsets.UTF_8
+            final String responseBody = new UncheckedText(
+                new TextOf(
+                    new InputOf(response.getEntity().getContent()),
+                    StandardCharsets.UTF_8
+                )
             ).asString();
             LOGGER.info("Response body was: {}", responseBody);
             return responseBody;
@@ -105,9 +107,11 @@ public final class FpEndpoint implements Endpoint {
             if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                 throw new FinapiException(HttpStatus.SC_OK, response);
             }
-            final String responseBody = new TextOf(
-                new InputOf(response.getEntity().getContent()),
-                StandardCharsets.UTF_8
+            final String responseBody = new UncheckedText(
+                new TextOf(
+                    new InputOf(response.getEntity().getContent()),
+                    StandardCharsets.UTF_8
+                )
             ).asString();
             LOGGER.info("Response body was: {}", responseBody);
             return responseBody;
@@ -145,9 +149,11 @@ public final class FpEndpoint implements Endpoint {
             if (response.getStatusLine().getStatusCode() != expected) {
                 throw new FinapiException(expected, response);
             }
-            return new TextOf(
-                new InputOf(response.getEntity().getContent()),
-                StandardCharsets.UTF_8
+            return new UncheckedText(
+                new TextOf(
+                    new InputOf(response.getEntity().getContent()),
+                    StandardCharsets.UTF_8
+                )
             ).asString();
         } catch (final IOException e) {
             throw new IllegalStateException(
@@ -177,9 +183,11 @@ public final class FpEndpoint implements Endpoint {
             if (response.getStatusLine().getStatusCode() != expected) {
                 throw new FinapiException(expected, response);
             }
-            return new TextOf(
-                new InputOf(response.getEntity().getContent()),
-                StandardCharsets.UTF_8
+            return new UncheckedText(
+                new TextOf(
+                    new InputOf(response.getEntity().getContent()),
+                    StandardCharsets.UTF_8
+                )
             ).asString();
         } catch (final IOException e) {
             throw new IllegalStateException(
@@ -203,9 +211,11 @@ public final class FpEndpoint implements Endpoint {
             if (response.getStatusLine().getStatusCode() != expected) {
                 throw new FinapiException(expected, response);
             }
-            return new TextOf(
-                new InputOf(response.getEntity().getContent()),
-                StandardCharsets.UTF_8
+            return new UncheckedText(
+                new TextOf(
+                    new InputOf(response.getEntity().getContent()),
+                    StandardCharsets.UTF_8
+                )
             ).asString();
         } catch (final IOException e) {
             throw new IllegalStateException(
@@ -229,9 +239,11 @@ public final class FpEndpoint implements Endpoint {
             if (response.getStatusLine().getStatusCode() != expected) {
                 throw new FinapiException(expected, response);
             }
-            return new TextOf(
-                new InputOf(response.getEntity().getContent()),
-                StandardCharsets.UTF_8
+            return new UncheckedText(
+                new TextOf(
+                    new InputOf(response.getEntity().getContent()),
+                    StandardCharsets.UTF_8
+                )
             ).asString();
         } catch (final IOException e) {
             throw new IllegalStateException(

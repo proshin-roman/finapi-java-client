@@ -24,6 +24,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.cactoos.io.InputOf;
 import org.cactoos.text.TextOf;
+import org.cactoos.text.UncheckedText;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
@@ -48,9 +49,11 @@ public final class FinapiException extends RuntimeException {
             ((Supplier<JSONObject>) () -> {
                 try {
                     return new JSONObject(
-                        new TextOf(
-                            new InputOf(response.getEntity().getContent()),
-                            StandardCharsets.UTF_8
+                        new UncheckedText(
+                            new TextOf(
+                                new InputOf(response.getEntity().getContent()),
+                                StandardCharsets.UTF_8
+                            )
                         ).asString()
                     );
                 } catch (final IOException e) {
