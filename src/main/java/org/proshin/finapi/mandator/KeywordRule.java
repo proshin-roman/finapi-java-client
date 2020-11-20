@@ -20,7 +20,7 @@ import org.proshin.finapi.category.Category;
 import org.proshin.finapi.primitives.Direction;
 
 /**
- * @todo #200 Implement unit-tests for KeywordRule and KeywordRules classes.
+ * @todo #353 Implement unit-tests for KeywordRule and KeywordRules classes.
  */
 public interface KeywordRule {
 

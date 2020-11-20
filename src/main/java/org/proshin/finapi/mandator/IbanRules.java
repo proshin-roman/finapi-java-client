@@ -19,7 +19,7 @@ import org.proshin.finapi.mandator.in.NewIbanRule;
 import org.proshin.finapi.primitives.paging.Page;
 
 /**
- * @todo #201 Implement unit-tests for KeywordRule and KeywordRules classes.
+ * @todo #353 Implement unit-tests for KeywordRule and KeywordRules classes.
  */
 public interface IbanRules {
 
