@@ -25,6 +25,7 @@ import org.proshin.finapi.bank.out.FpBankInterface;
 import org.proshin.finapi.bank.out.FpLoginFields;
 import org.proshin.finapi.bank.out.LoginFields;
 import org.proshin.finapi.primitives.IterableJsonArray;
+import org.proshin.finapi.primitives.optional.OptionalObjectOf;
 import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
@@ -128,7 +129,7 @@ public final class FpBank implements Bank {
 
     @Override
     public Optional<BankGroup> bankGroup() {
-        return Optional.ofNullable(this.origin.getJSONObject("bankGroup"))
+        return new OptionalObjectOf(this.origin, "bankGroup").get()
             .map(FpBankGroup::new);
     }
 

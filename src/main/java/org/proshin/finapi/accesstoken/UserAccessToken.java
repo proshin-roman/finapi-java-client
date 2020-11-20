@@ -18,6 +18,7 @@ package org.proshin.finapi.accesstoken;
 import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.exception.NoFieldException;
+import org.proshin.finapi.primitives.optional.OptionalOf;
 
 public final class UserAccessToken implements AccessToken {
 
@@ -43,7 +44,7 @@ public final class UserAccessToken implements AccessToken {
         if (this.origin.isNull(name)) {
             throw new NoFieldException("Field 'refresh_token' may not be null for user's access token");
         } else {
-            return Optional.of(this.origin.getString(name));
+            return new OptionalOf<>(this.origin, name, JSONObject::getString).get();
         }
     }
 

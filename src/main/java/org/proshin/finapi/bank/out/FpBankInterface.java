@@ -20,6 +20,7 @@ import java.util.Optional;
 import org.json.JSONObject;
 import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.IterableJsonArray;
+import org.proshin.finapi.primitives.optional.OptionalObjectOf;
 import org.proshin.finapi.primitives.optional.OptionalOffsetDateTimeOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
 import org.proshin.finapi.tppcredential.FpTppAuthenticationGroup;
@@ -40,7 +41,7 @@ public final class FpBankInterface implements BankInterface {
 
     @Override
     public Optional<TppAuthenticationGroup> tppAuthenticationGroup() {
-        return Optional.ofNullable(this.origin.getJSONObject("tppAuthenticationGroup"))
+        return new OptionalObjectOf(this.origin, "tppAuthenticationGroup").get()
             .map(FpTppAuthenticationGroup::new);
     }
 

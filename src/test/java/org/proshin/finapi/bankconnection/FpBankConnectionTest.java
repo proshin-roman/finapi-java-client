@@ -36,10 +36,10 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public final class FpBankConnectionTest extends TestWithMockedEndpoint {
+final class FpBankConnectionTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testParsingJsonStructure() {
+    void testParsingJsonStructure() {
         final BankConnection connection = new FpBankConnection(
             this.endpoint(),
             new FakeAccessToken("user-token"),
@@ -154,7 +154,7 @@ public final class FpBankConnectionTest extends TestWithMockedEndpoint {
         assertThat(connection.status().update()).isEqualTo(Status.UpdateStatus.READY);
         assertThat(connection.status().categorization()).isEqualTo(Status.CategorizationStatus.PENDING);
 
-        assertThat(connection.lastManualUpdate().isPresent()).isTrue();
+        assertThat(connection.lastManualUpdate()).isPresent();
         assertThat(connection.lastManualUpdate().get().result()).isEqualTo(UpdateResult.Result.INTERNAL_SERVER_ERROR);
         assertThat(connection.lastManualUpdate().get().errorMessage())
             .isEqualTo(Optional.of("Internal server error"));
@@ -163,7 +163,7 @@ public final class FpBankConnectionTest extends TestWithMockedEndpoint {
         assertThat(connection.lastManualUpdate().get().timestamp())
             .isEqualTo(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get());
 
-        assertThat(connection.lastAutoUpdate().isPresent()).isTrue();
+        assertThat(connection.lastAutoUpdate()).isPresent();
         assertThat(connection.lastAutoUpdate().get().result()).isEqualTo(UpdateResult.Result.BANK_SERVER_REJECTION);
         assertThat(connection.lastAutoUpdate().get().errorMessage())
             .isEqualTo(Optional.of("Internal bank error"));
@@ -172,7 +172,7 @@ public final class FpBankConnectionTest extends TestWithMockedEndpoint {
         assertThat(connection.lastAutoUpdate().get().timestamp())
             .isEqualTo(new OffsetDateTimeOf("2018-01-11 00:00:00.000").get());
 
-        assertThat(connection.twoStepProcedures().defaultOne().isPresent()).isTrue();
+        assertThat(connection.twoStepProcedures().defaultOne()).isPresent();
         assertThat(connection.twoStepProcedures().defaultOne().get().id()).isEqualTo("955");
 
         connection.twoStepProcedures().all().forEach(tsp -> {
@@ -187,7 +187,8 @@ public final class FpBankConnectionTest extends TestWithMockedEndpoint {
         assertThat(connection.collectiveMoneyTransferSupported()).isTrue();
 
         assertThat(connection.accounts()).containsExactlyInAnyOrder(1L, 2L, 3L);
-        assertThat(connection.owners().iterator().next().firstName()).isEqualTo(Optional.of("Max"));
+        assertThat(connection.owners()).isPresent();
+        assertThat(connection.owners().get().iterator().next().firstName()).isEqualTo(Optional.of("Max"));
 
         connection.interfaces().forEach(connectionInterface -> {
             assertThat(connectionInterface.bankingInterface()).isEqualTo(BankingInterface.FINTS_SERVER);
@@ -196,7 +197,7 @@ public final class FpBankConnectionTest extends TestWithMockedEndpoint {
             assertThat(loginCredential.label()).isEqualTo(Optional.of("Nutzerkennung"));
             assertThat(loginCredential.value()).isEqualTo(Optional.of("username"));
 
-            assertThat(connectionInterface.twoStepProcedures().defaultOne().isPresent()).isTrue();
+            assertThat(connectionInterface.twoStepProcedures().defaultOne()).isPresent();
             assertThat(connectionInterface.twoStepProcedures().defaultOne().get().id()).isEqualTo("955");
 
             connectionInterface.twoStepProcedures().all().forEach(tsp -> {
@@ -206,13 +207,13 @@ public final class FpBankConnectionTest extends TestWithMockedEndpoint {
                 assertThat(tsp.implicitExecute()).isTrue();
             });
 
-            assertThat(connectionInterface.aisConsent().isPresent()).isTrue();
+            assertThat(connectionInterface.aisConsent()).isPresent();
             final BankConsent consent = connectionInterface.aisConsent().get();
             assertThat(consent.status()).isEqualTo(PRESENT);
             assertThat(consent.expiresAt())
                 .isEqualTo(new OffsetDateTimeOf("2019-07-20 09:05:10.546").get());
 
-            assertThat(connectionInterface.lastManualUpdate().isPresent()).isTrue();
+            assertThat(connectionInterface.lastManualUpdate()).isPresent();
             assertThat(connectionInterface.lastManualUpdate().get().result())
                 .isEqualTo(UpdateResult.Result.INTERNAL_SERVER_ERROR);
             assertThat(connectionInterface.lastManualUpdate().get().errorMessage())
@@ -222,7 +223,7 @@ public final class FpBankConnectionTest extends TestWithMockedEndpoint {
             assertThat(connectionInterface.lastManualUpdate().get().timestamp())
                 .isEqualTo(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get());
 
-            assertThat(connectionInterface.lastAutoUpdate().isPresent()).isTrue();
+            assertThat(connectionInterface.lastAutoUpdate()).isPresent();
             assertThat(connectionInterface.lastAutoUpdate().get().result())
                 .isEqualTo(UpdateResult.Result.BANK_SERVER_REJECTION);
             assertThat(connectionInterface.lastAutoUpdate().get().errorMessage())
@@ -237,7 +238,38 @@ public final class FpBankConnectionTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testEdit() {
+    void testEmptyOwnerArray() {
+        final BankConnection connection = new FpBankConnection(
+            this.endpoint(),
+            new FakeAccessToken("user-token"),
+            new JSONObject('{' +
+                "  \"id\": 42," +
+                "  \"owners\": []" +
+                '}'),
+            "/api/v1/bankConnections"
+        );
+        assertThat(connection.id()).isEqualTo(42L);
+        assertThat(connection.owners()).isPresent();
+        assertThat(connection.owners().get().iterator()).isExhausted();
+    }
+
+    @Test
+    void testNullOwnerArray() {
+        final BankConnection connection = new FpBankConnection(
+            this.endpoint(),
+            new FakeAccessToken("user-token"),
+            new JSONObject('{' +
+                "  \"id\": 42," +
+                "  \"owners\": null" +
+                '}'),
+            "/api/v1/bankConnections"
+        );
+        assertThat(connection.id()).isEqualTo(42L);
+        assertThat(connection.owners()).isNotPresent();
+    }
+
+    @Test
+    void testEdit() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/42")
@@ -269,7 +301,7 @@ public final class FpBankConnectionTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/42")

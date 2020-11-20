@@ -84,7 +84,7 @@ public interface BankConnection {
 
     Iterable<Long> accounts();
 
-    Iterable<Owner> owners();
+    Optional<Iterable<Owner>> owners();
 
     Iterable<BankConnectionInterface> interfaces();
 
