@@ -22,10 +22,10 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.json.JSONArray;
 import org.junit.jupiter.api.Test;
 
-public final class IterableJsonArrayTest {
+final class IterableJsonArrayTest {
 
     @Test
-    public void testHasNext() {
+    void testHasNext() {
         final Iterator<Integer> iterator = new IterableJsonArray<>(
             new JSONArray(new int[]{1}),
             JSONArray::getInt
@@ -36,7 +36,7 @@ public final class IterableJsonArrayTest {
     }
 
     @Test
-    public void testNoSuchElementException() {
+    void testNoSuchElementException() {
         final Iterator<Integer> iterator = new IterableJsonArray<>(
             new JSONArray(new int[]{1}),
             JSONArray::getInt

@@ -32,10 +32,10 @@ import org.proshin.finapi.transaction.in.EditTransactionParameters;
 import org.proshin.finapi.transaction.in.SplitTransactionParameters;
 import org.proshin.finapi.transaction.in.Subtransaction;
 
-public final class FpTransactionTest extends TestWithMockedEndpoint {
+final class FpTransactionTest extends TestWithMockedEndpoint {
 
     @Test
-    public void test() {
+    void test() {
         final Transaction tx = new FpTransaction(
             this.endpoint(),
             new FakeAccessToken("user-token"),
@@ -151,7 +151,7 @@ public final class FpTransactionTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testSplit() {
+    void testSplit() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/123/split")
@@ -202,7 +202,7 @@ public final class FpTransactionTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testRestore() {
+    void testRestore() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/123/restore")
@@ -221,7 +221,7 @@ public final class FpTransactionTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testEdit() {
+    void testEdit() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/123")
@@ -258,7 +258,7 @@ public final class FpTransactionTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/123")

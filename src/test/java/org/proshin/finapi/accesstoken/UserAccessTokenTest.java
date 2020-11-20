@@ -5,10 +5,10 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.proshin.finapi.exception.NoFieldException;
 
-public final class UserAccessTokenTest {
+final class UserAccessTokenTest {
 
     @Test
-    public void testThatUserTokenFailsIfNoRefreshTokenIsSent() {
+    void testThatUserTokenFailsIfNoRefreshTokenIsSent() {
         final AccessToken token = new UserAccessToken(new JSONObject(
             String.join("",
                 "{",

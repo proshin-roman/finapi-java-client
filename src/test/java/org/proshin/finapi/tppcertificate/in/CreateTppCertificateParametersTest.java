@@ -20,10 +20,10 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 import org.proshin.finapi.tppcertificate.CertificateType;
 
-public final class CreateTppCertificateParametersTest {
+final class CreateTppCertificateParametersTest {
 
     @Test
-    public void test() {
+    void test() {
         assertThat(
             new CreateTppCertificateParameters(
                 CertificateType.QWAC,

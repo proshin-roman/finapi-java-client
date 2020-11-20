@@ -19,10 +19,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public final class CreateTppCredentialParametersTest {
+final class CreateTppCredentialParametersTest {
 
     @Test
-    public void test() {
+    void test() {
         assertThat(
             new CreateTppCredentialParameters(99L, "custom label")
                 .withTppClientId("custom client id")

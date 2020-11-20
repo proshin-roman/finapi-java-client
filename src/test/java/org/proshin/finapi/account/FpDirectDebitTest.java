@@ -26,10 +26,10 @@ import org.proshin.finapi.account.in.DirectDebitParameters;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public final class FpDirectDebitTest extends TestWithMockedEndpoint {
+final class FpDirectDebitTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testRequest() {
+    void testRequest() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts/requestSepaDirectDebit")
@@ -92,7 +92,7 @@ public final class FpDirectDebitTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testExecute() {
+    void testExecute() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts/executeSepaDirectDebit")

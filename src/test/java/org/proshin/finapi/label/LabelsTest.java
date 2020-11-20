@@ -24,10 +24,10 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.label.in.LabelsCriteria;
 import org.proshin.finapi.primitives.paging.Page;
 
-public final class LabelsTest extends TestWithMockedEndpoint {
+final class LabelsTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testOne() {
+    void testOne() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/labels/12")
@@ -44,7 +44,7 @@ public final class LabelsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/labels")

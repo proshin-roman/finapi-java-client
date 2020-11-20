@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import static org.proshin.finapi.bankconnection.out.BankConsent.Status.PRESENT;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public final class FpBankConsentTest {
+final class FpBankConsentTest {
 
     @Test
-    public void test() {
+    void test() {
         final BankConsent consent = new FpBankConsent(
             new JSONObject(
                 '{' +

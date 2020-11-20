@@ -22,10 +22,10 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public final class FpCashFlowTest extends TestWithMockedEndpoint {
+final class FpCashFlowTest extends TestWithMockedEndpoint {
 
     @Test
-    public void test() {
+    void test() {
         final CashFlow cashFlow = new FpCashFlow(
             this.endpoint(),
             new FakeAccessToken("user-token"),

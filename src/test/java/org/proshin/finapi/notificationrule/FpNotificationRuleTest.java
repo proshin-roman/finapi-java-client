@@ -27,10 +27,10 @@ import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public final class FpNotificationRuleTest extends TestWithMockedEndpoint {
+final class FpNotificationRuleTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testWithParams() {
+    void testWithParams() {
         final NotificationRule rule = new FpNotificationRule(
             this.endpoint(),
             new FakeAccessToken("user-token"),
@@ -53,7 +53,7 @@ public final class FpNotificationRuleTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testWithoutParams() {
+    void testWithoutParams() {
         final NotificationRule rule = new FpNotificationRule(
             this.endpoint(),
             new FakeAccessToken("user-token"),
@@ -73,7 +73,7 @@ public final class FpNotificationRuleTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules/123")

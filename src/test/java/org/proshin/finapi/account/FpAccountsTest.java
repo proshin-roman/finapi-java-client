@@ -26,10 +26,10 @@ import org.proshin.finapi.account.in.FpQueryCriteria;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public final class FpAccountsTest extends TestWithMockedEndpoint {
+final class FpAccountsTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testOne() {
+    void testOne() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts/2")
@@ -47,7 +47,7 @@ public final class FpAccountsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts")
@@ -81,7 +81,7 @@ public final class FpAccountsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDailyBalances() {
+    void testDailyBalances() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts/dailyBalances")

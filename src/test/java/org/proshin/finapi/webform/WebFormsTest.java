@@ -21,10 +21,10 @@ import org.mockserver.model.HttpResponse;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public final class WebFormsTest extends TestWithMockedEndpoint {
+final class WebFormsTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testOne() {
+    void testOne() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/webForms/12")

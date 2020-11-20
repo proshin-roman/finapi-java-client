@@ -25,10 +25,10 @@ import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.user.in.FpCreateParameters;
 
-public final class UsersTest extends TestWithMockedEndpoint {
+final class UsersTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testAuthorized() {
+    void testAuthorized() {
         this.server()
             .when(
                 request("/api/v1/users")
@@ -45,7 +45,7 @@ public final class UsersTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testVerified() {
+    void testVerified() {
         this.server()
             .when(
                 request("/api/v1/users/verificationStatus")
@@ -66,7 +66,7 @@ public final class UsersTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         this.server()
             .when(
                 request("/api/v1/users")
@@ -97,7 +97,7 @@ public final class UsersTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testRequestPasswordChange() {
+    void testRequestPasswordChange() {
         this.server()
             .when(
                 request("/api/v1/users/requestPasswordChange")
@@ -123,7 +123,7 @@ public final class UsersTest extends TestWithMockedEndpoint {
 
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
-    public void testExecutePasswordChange() {
+    void testExecutePasswordChange() {
         this.server()
             .when(
                 request("/api/v1/users/executePasswordChange")
@@ -146,7 +146,7 @@ public final class UsersTest extends TestWithMockedEndpoint {
 
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
-    public void testVerify() {
+    void testVerify() {
         this.server()
             .when(
                 request("/api/v1/users/verify/user-1")
@@ -164,7 +164,7 @@ public final class UsersTest extends TestWithMockedEndpoint {
 
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
-    public void testDeleteUnverified() {
+    void testDeleteUnverified() {
         this.server()
             .when(
                 request("/api/v1/users/user-1")

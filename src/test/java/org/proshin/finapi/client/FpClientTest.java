@@ -30,10 +30,10 @@ import org.proshin.finapi.user.User;
 import org.proshin.finapi.user.Users;
 import org.proshin.finapi.user.in.FpCreateParameters;
 
-public final class FpClientTest extends TestWithMockedEndpoint {
+final class FpClientTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testConfiguration() {
+    void testConfiguration() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/clientConfiguration")
@@ -100,7 +100,7 @@ public final class FpClientTest extends TestWithMockedEndpoint {
      */
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
-    public void testEdit() {
+    void testEdit() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/clientConfiguration")
@@ -158,7 +158,7 @@ public final class FpClientTest extends TestWithMockedEndpoint {
 
     @Test
     @SuppressWarnings("JUnitTestMethodWithNoAssertions")
-    public void testUsers() {
+    void testUsers() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/users")

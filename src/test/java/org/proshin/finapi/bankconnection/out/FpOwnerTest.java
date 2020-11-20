@@ -21,9 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public final class FpOwnerTest {
+final class FpOwnerTest {
+
     @Test
-    public void test() {
+    void test() {
         final Owner owner = new FpOwner(
             new JSONObject('{' +
                 "  \"firstName\": \"Max\"," +

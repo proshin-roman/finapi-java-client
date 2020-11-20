@@ -28,10 +28,10 @@ import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.tppcredential.in.EditTppCredentialParameters;
 import org.proshin.finapi.tppcredential.in.QueryTppCredentialsCriteria;
 
-public final class FpTppCredentialsTest extends TestWithMockedEndpoint {
+final class FpTppCredentialsTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testOne() {
+    void testOne() {
         this.server()
             .when(
                 HttpRequest.request()
@@ -50,7 +50,7 @@ public final class FpTppCredentialsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         this.server()
             .when(
                 HttpRequest.request()
@@ -94,7 +94,7 @@ public final class FpTppCredentialsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testEdit() {
+    void testEdit() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/tppCredentials/378")

@@ -26,10 +26,10 @@ import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public final class FpTppCertificateTest extends TestWithMockedEndpoint {
+final class FpTppCertificateTest extends TestWithMockedEndpoint {
 
     @Test
-    public void test() {
+    void test() {
         final TppCertificate certificate = new FpTppCertificate(
             this.endpoint(),
             new FakeAccessToken("fake-access-token"),
@@ -50,7 +50,7 @@ public final class FpTppCertificateTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         this.server().when(
             request()
                 .withMethod("DELETE")

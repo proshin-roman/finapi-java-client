@@ -25,10 +25,10 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.mandator.in.UsersCriteria;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public final class FpMandatorTest extends TestWithMockedEndpoint {
+final class FpMandatorTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testUsers() {
+    void testUsers() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/mandatorAdmin/getUserList")
@@ -76,7 +76,7 @@ public final class FpMandatorTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDeleteUsers() {
+    void testDeleteUsers() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/mandatorAdmin/deleteUsers")
@@ -101,7 +101,7 @@ public final class FpMandatorTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testChangeClientCredentials() {
+    void testChangeClientCredentials() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/mandatorAdmin/changeClientCredentials")

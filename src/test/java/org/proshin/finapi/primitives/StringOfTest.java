@@ -21,16 +21,16 @@ import java.time.ZoneOffset;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
-public final class StringOfTest {
+final class StringOfTest {
 
     @Test
-    public void testStringOfOffsetDateTime() {
+    void testStringOfOffsetDateTime() {
         assertThat(new StringOf(OffsetDateTime.of(2018, 10, 25, 1, 2, 3, 4, ZoneOffset.UTC)).toString())
             .isEqualTo("2018-10-25");
     }
 
     @Test
-    public void testStringOfBigDecimal() {
+    void testStringOfBigDecimal() {
         assertThat(new StringOf(new BigDecimal("123456.012")).toString())
             .isEqualTo("123456.01");
     }

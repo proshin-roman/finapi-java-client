@@ -25,10 +25,10 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.payment.in.FpQueryCriteria;
 import org.proshin.finapi.primitives.paging.Page;
 
-public final class FpPaymentsTest extends TestWithMockedEndpoint {
+final class FpPaymentsTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/payments")

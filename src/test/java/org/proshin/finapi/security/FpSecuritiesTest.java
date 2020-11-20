@@ -23,10 +23,10 @@ import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.security.in.SecuritiesCriteria;
 
-public final class FpSecuritiesTest extends TestWithMockedEndpoint {
+final class FpSecuritiesTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testOne() {
+    void testOne() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/securities/123")
@@ -43,7 +43,7 @@ public final class FpSecuritiesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/securities")

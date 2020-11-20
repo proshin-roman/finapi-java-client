@@ -34,10 +34,10 @@ import org.proshin.finapi.mock.out.CategorizationResults;
 import org.proshin.finapi.primitives.BankingInterface;
 
 @SuppressWarnings("JUnitTestMethodWithNoAssertions")
-public final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
+final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testMockBatchUpdate() {
+    void testMockBatchUpdate() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/tests/mockBatchUpdate")
@@ -101,7 +101,7 @@ public final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCheckCategorization() {
+    void testCheckCategorization() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/tests/checkCategorization")

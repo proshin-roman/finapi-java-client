@@ -22,10 +22,10 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.bankconnection.out.TwoStepProcedure;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public final class FinapiExceptionTest {
+final class FinapiExceptionTest {
 
     @Test
-    public void test() {
+    void test() {
         final FinapiException exception = new FinapiException(
             "Test error message",
             new JSONObject('{' +

@@ -20,10 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public final class FpSepaRequestingResponseTest {
+final class FpSepaRequestingResponseTest {
 
     @Test
-    public void test() {
+    void test() {
         final SepaRequestingResponse response = new FpSepaRequestingResponse(new JSONObject('{' +
             "  \"successMessage\": \"Auftrag ausgeführt.\"," +
             "  \"warnMessage\": \"Es liegen Warnungen vor.\"," +
