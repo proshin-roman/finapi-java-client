@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
-import org.proshin.finapi.primitives.pair.UrlEncodedPair;
+import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
 
 public final class QueryTppCredentialsCriteria implements Iterable<NameValuePair> {
 
@@ -35,13 +35,13 @@ public final class QueryTppCredentialsCriteria implements Iterable<NameValuePair
     }
 
     public QueryTppCredentialsCriteria withSearch(final String search) {
-        this.pairs.add(new UrlEncodedPair("search", search));
+        this.pairs.add(new QueryParamEncodedPair("search", search));
         return this;
     }
 
     public QueryTppCredentialsCriteria withPage(final int page, final int perPage) {
-        this.pairs.add(new UrlEncodedPair("page", page));
-        this.pairs.add(new UrlEncodedPair("perPage", perPage));
+        this.pairs.add(new QueryParamEncodedPair("page", page));
+        this.pairs.add(new QueryParamEncodedPair("perPage", perPage));
         return this;
     }
 

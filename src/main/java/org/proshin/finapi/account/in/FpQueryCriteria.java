@@ -27,7 +27,7 @@ import org.apache.http.NameValuePair;
 import org.proshin.finapi.account.Type;
 import org.proshin.finapi.primitives.StringOf;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
-import org.proshin.finapi.primitives.pair.UrlEncodedPair;
+import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
 
 public final class FpQueryCriteria implements Iterable<NameValuePair> {
 
@@ -42,18 +42,18 @@ public final class FpQueryCriteria implements Iterable<NameValuePair> {
     }
 
     public FpQueryCriteria withIds(final Iterable<Long> ids) {
-        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("ids", ids)));
+        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("ids", ids)));
         return this;
     }
 
     public FpQueryCriteria withSearch(final String search) {
-        this.pairs.add(new UrlEncodedPair("search", search));
+        this.pairs.add(new QueryParamEncodedPair("search", search));
         return this;
     }
 
     public FpQueryCriteria withTypes(final Type... types) {
         this.pairs.add(
-            new UrlEncodedPair(
+            new QueryParamEncodedPair(
                 new CommaSeparatedPair<>(
                     "accountTypes",
                     Arrays.stream(types)
@@ -66,13 +66,13 @@ public final class FpQueryCriteria implements Iterable<NameValuePair> {
     }
 
     public FpQueryCriteria withBankConnections(final Iterable<Long> ids) {
-        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("bankConnectionIds", ids)));
+        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("bankConnectionIds", ids)));
         return this;
     }
 
     public FpQueryCriteria withMinLastSuccessfulUpdate(final OffsetDateTime minLastSuccessfulUpdate) {
         this.pairs.add(
-            new UrlEncodedPair(
+            new QueryParamEncodedPair(
                 "minLastSuccessfulUpdate",
                 new StringOf(minLastSuccessfulUpdate)
             )
@@ -82,7 +82,7 @@ public final class FpQueryCriteria implements Iterable<NameValuePair> {
 
     public FpQueryCriteria withMaxLastSuccessfulUpdate(final OffsetDateTime maxLastSuccessfulUpdate) {
         this.pairs.add(
-            new UrlEncodedPair(
+            new QueryParamEncodedPair(
                 "maxLastSuccessfulUpdate",
                 new StringOf(maxLastSuccessfulUpdate)
             )
@@ -91,12 +91,12 @@ public final class FpQueryCriteria implements Iterable<NameValuePair> {
     }
 
     public FpQueryCriteria withMinBalance(final BigDecimal minBalance) {
-        this.pairs.add(new UrlEncodedPair("minBalance", new StringOf(minBalance)));
+        this.pairs.add(new QueryParamEncodedPair("minBalance", new StringOf(minBalance)));
         return this;
     }
 
     public FpQueryCriteria withMaxBalance(final BigDecimal maxBalance) {
-        this.pairs.add(new UrlEncodedPair("maxBalance", new StringOf(maxBalance)));
+        this.pairs.add(new QueryParamEncodedPair("maxBalance", new StringOf(maxBalance)));
         return this;
     }
 

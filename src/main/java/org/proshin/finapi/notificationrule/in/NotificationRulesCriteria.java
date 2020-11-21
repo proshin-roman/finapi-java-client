@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.notificationrule.TriggerEvent;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
-import org.proshin.finapi.primitives.pair.UrlEncodedPair;
+import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
 
 public final class NotificationRulesCriteria implements Iterable<NameValuePair> {
 
@@ -37,17 +37,17 @@ public final class NotificationRulesCriteria implements Iterable<NameValuePair> 
     }
 
     public NotificationRulesCriteria withIds(final Iterable<Long> ids) {
-        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("ids", ids)));
+        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("ids", ids)));
         return this;
     }
 
     public NotificationRulesCriteria withTriggerEvent(final TriggerEvent triggerEvent) {
-        this.pairs.add(new UrlEncodedPair("triggerEvent", triggerEvent.name()));
+        this.pairs.add(new QueryParamEncodedPair("triggerEvent", triggerEvent.name()));
         return this;
     }
 
     public NotificationRulesCriteria withDetails(final boolean includeDetails) {
-        this.pairs.add(new UrlEncodedPair("includeDetails", includeDetails));
+        this.pairs.add(new QueryParamEncodedPair("includeDetails", includeDetails));
         return this;
     }
 

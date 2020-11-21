@@ -21,7 +21,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
-import org.proshin.finapi.primitives.pair.UrlEncodedPair;
+import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
 
 public final class SecuritiesCriteria implements Iterable<NameValuePair> {
 
@@ -36,29 +36,29 @@ public final class SecuritiesCriteria implements Iterable<NameValuePair> {
     }
 
     public SecuritiesCriteria withIds(final Iterable<Long> ids) {
-        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("ids", ids)));
+        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("ids", ids)));
         return this;
     }
 
     public SecuritiesCriteria withSearch(final String search) {
-        this.pairs.add(new UrlEncodedPair("search", search));
+        this.pairs.add(new QueryParamEncodedPair("search", search));
         return this;
     }
 
     public SecuritiesCriteria withAccounts(final Iterable<Long> accounts) {
-        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("accountIds", accounts)));
+        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("accountIds", accounts)));
         return this;
     }
 
     public SecuritiesCriteria withPage(final int page, final int perPage) {
-        this.pairs.add(new UrlEncodedPair("page", page));
-        this.pairs.add(new UrlEncodedPair("perPage", perPage));
+        this.pairs.add(new QueryParamEncodedPair("page", page));
+        this.pairs.add(new QueryParamEncodedPair("perPage", perPage));
         return this;
     }
 
     public SecuritiesCriteria orderBy(final String... orders) {
         for (final String order : orders) {
-            this.pairs.add(new UrlEncodedPair("order", order));
+            this.pairs.add(new QueryParamEncodedPair("order", order));
         }
         return this;
     }

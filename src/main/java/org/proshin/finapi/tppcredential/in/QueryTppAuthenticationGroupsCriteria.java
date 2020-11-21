@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
-import org.proshin.finapi.primitives.pair.UrlEncodedPair;
+import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
 
 public final class QueryTppAuthenticationGroupsCriteria implements Iterable<NameValuePair> {
 
@@ -35,23 +35,23 @@ public final class QueryTppAuthenticationGroupsCriteria implements Iterable<Name
     }
 
     public QueryTppAuthenticationGroupsCriteria withName(final String name) {
-        this.pairs.add(new UrlEncodedPair("search", name));
+        this.pairs.add(new QueryParamEncodedPair("name", name));
         return this;
     }
 
     public QueryTppAuthenticationGroupsCriteria withBankBlz(final String bankBlz) {
-        this.pairs.add(new UrlEncodedPair("search", bankBlz));
+        this.pairs.add(new QueryParamEncodedPair("bankBlz", bankBlz));
         return this;
     }
 
     public QueryTppAuthenticationGroupsCriteria withBankName(final String bankName) {
-        this.pairs.add(new UrlEncodedPair("search", bankName));
+        this.pairs.add(new QueryParamEncodedPair("bankName", bankName));
         return this;
     }
 
     public QueryTppAuthenticationGroupsCriteria withPage(final int page, final int perPage) {
-        this.pairs.add(new UrlEncodedPair("page", page));
-        this.pairs.add(new UrlEncodedPair("perPage", perPage));
+        this.pairs.add(new QueryParamEncodedPair("page", page));
+        this.pairs.add(new QueryParamEncodedPair("perPage", perPage));
         return this;
     }
 

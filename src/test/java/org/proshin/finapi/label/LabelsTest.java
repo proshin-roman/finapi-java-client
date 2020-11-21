@@ -50,9 +50,9 @@ public final class LabelsTest extends TestWithMockedEndpoint {
                 HttpRequest.request("/api/v1/labels")
                     .withMethod("GET")
                     .withHeader("Authorization", "Bearer user-token")
-                    .withQueryStringParameter("ids", "1%2C2")
-                    .withQueryStringParameter("search", "just+a+word")
-                    .withQueryStringParameter("order", "id%2Casc", "name%2Cdesc")
+                    .withQueryStringParameter("ids", "1,2")
+                    .withQueryStringParameter("search", "just%20a%20word")
+                    .withQueryStringParameter("order", "id,asc", "name,desc")
             )
             .respond(
                 HttpResponse.response("{}")

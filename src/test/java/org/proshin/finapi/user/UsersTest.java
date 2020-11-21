@@ -51,7 +51,7 @@ public final class UsersTest extends TestWithMockedEndpoint {
                 request("/api/v1/users/verificationStatus")
                     .withMethod("GET")
                     .withHeader("Authorization", "Bearer fake token")
-                    .withQueryStringParameter("userId", "user+id")
+                    .withQueryStringParameter("userId", "user%20id")
             )
             .respond(
                 response('{' +
