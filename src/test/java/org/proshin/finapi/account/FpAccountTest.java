@@ -88,7 +88,8 @@ public final class FpAccountTest extends TestWithMockedEndpoint {
                 "      \"clearingAccountId\": \"Clearing account ID\"," +
                 "      \"clearingAccountName\": \"Clearing account name\"" +
                 "    }" +
-                "  ]" +
+                "  ]," +
+                "  \"isSeized\": true" +
                 '}'),
             ""
         );
@@ -108,8 +109,8 @@ public final class FpAccountTest extends TestWithMockedEndpoint {
         assertThat(account.lastSuccessfulUpdate()).isEqualTo(
             (Optional.of(new OffsetDateTimeOf("2018-01-01 02:03:04.555").get()))
         );
-        assertThat(account.lastUpdateAttempt()).isEqualTo(Optional.of(new OffsetDateTimeOf("2018-01-02 03:04:05.666")
-            .get()));
+        assertThat(account.lastUpdateAttempt())
+            .isEqualTo(Optional.of(new OffsetDateTimeOf("2018-01-02 03:04:05.666").get()));
         assertThat(account.isNew()).isTrue();
         assertThat(account.status()).isEqualTo(Status.UPDATED);
         assertThat(account.supportedOrders())
@@ -122,10 +123,13 @@ public final class FpAccountTest extends TestWithMockedEndpoint {
                 Order.SEPA_B2B_COLLECTIVE_DIRECT_DEBIT
             );
 
-        account.clearingAccounts().forEach(clearingAccount -> {
-            assertThat(clearingAccount.id()).isEqualTo("Clearing account ID");
-            assertThat(clearingAccount.name()).isEqualTo("Clearing account name");
-        });
+        account.clearingAccounts()
+            .forEach(clearingAccount -> {
+                assertThat(clearingAccount.id()).isEqualTo("Clearing account ID");
+                assertThat(clearingAccount.name()).isEqualTo("Clearing account name");
+            });
+
+        assertThat(account.isSeized()).isTrue();
 
         account.interfaces().forEach(ai -> {
             assertThat(ai.bankingInterface()).isEqualTo(BankingInterface.FINTS_SERVER);

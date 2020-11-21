@@ -29,10 +29,10 @@ import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.tppcredential.TppAuthenticationGroup;
 
-public final class FpBankTest {
+final class FpBankTest {
 
     @Test
-    public void test() {
+    void test() {
         final Bank bank = new FpBank(
             new JSONObject('{' +
                 "  \"id\": 277672," +
@@ -77,7 +77,8 @@ public final class FpBankTest {
                 "      \"health\": 100," +
                 "      \"lastCommunicationAttempt\": \"2018-01-01 00:00:00.000\"," +
                 "      \"lastSuccessfulCommunication\": \"2018-01-02 00:00:00.000\"," +
-                "      \"isMoneyTransferSupported\": true" +
+                "      \"isMoneyTransferSupported\": true," +
+                "      \"isAisSupported\": true" +
                 "    }" +
                 "  ]," +
                 "  \"bankGroup\": {" +
@@ -137,6 +138,7 @@ public final class FpBankTest {
                 .isEqualTo(Optional.of(new OffsetDateTimeOf("2018-01-02 00:00:00.000").get()));
 
             assertThat(bankInterface.isMoneyTransferSupported()).isTrue();
+            assertThat(bankInterface.isAisSupported()).isTrue();
         }
 
         assertThat(bank.bankGroup().isPresent()).isTrue();

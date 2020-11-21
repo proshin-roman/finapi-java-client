@@ -73,4 +73,9 @@ public final class FpKeywordRule implements KeywordRule {
             JSONArray::getString
         );
     }
+
+    @Override
+    public boolean allKeywordsMustMatch() {
+        return this.origin.getBoolean("allKeywordsMustMatch");
+    }
 }

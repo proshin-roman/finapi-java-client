@@ -165,6 +165,11 @@ public final class FpAccount implements Account {
     }
 
     @Override
+    public boolean isSeized() {
+        return this.origin.getBoolean("isSeized");
+    }
+
+    @Override
     public void edit(final FpEditParameters parameters) {
         this.endpoint.patch(this.url + this.id(), this.token, parameters);
     }

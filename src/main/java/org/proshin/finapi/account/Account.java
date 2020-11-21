@@ -87,6 +87,8 @@ public interface Account {
 
     Iterable<AccountInterface> interfaces();
 
+    boolean isSeized();
+
     void edit(FpEditParameters parameters);
 
     void delete(Long id);
