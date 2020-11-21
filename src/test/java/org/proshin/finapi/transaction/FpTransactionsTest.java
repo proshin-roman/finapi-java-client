@@ -190,7 +190,7 @@ public final class FpTransactionsTest extends TestWithMockedEndpoint {
                     .withHeader("Authorization", "Bearer user-token")
                     .withQueryStringParameter("maxDeletionDate", "2019-01-01")
                     .withQueryStringParameter("minDeletionDate", "2018-01-01")
-                    .withQueryStringParameter("accountIds", "1%2C2")
+                    .withQueryStringParameter("accountIds", "1,2")
                     .withQueryStringParameter("safeMode", "false")
                     .withQueryStringParameter("rememberDeletion", "true")
             )
