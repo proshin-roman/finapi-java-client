@@ -187,8 +187,7 @@ final class FpBankConnectionTest extends TestWithMockedEndpoint {
         assertThat(connection.collectiveMoneyTransferSupported()).isTrue();
 
         assertThat(connection.accounts()).containsExactlyInAnyOrder(1L, 2L, 3L);
-        assertThat(connection.owners()).isPresent();
-        assertThat(connection.owners().get().iterator().next().firstName()).isEqualTo(Optional.of("Max"));
+        assertThat(connection.owners().iterator().next().firstName()).isEqualTo(Optional.of("Max"));
 
         connection.interfaces().forEach(connectionInterface -> {
             assertThat(connectionInterface.bankingInterface()).isEqualTo(BankingInterface.FINTS_SERVER);
@@ -249,8 +248,7 @@ final class FpBankConnectionTest extends TestWithMockedEndpoint {
             "/api/v1/bankConnections"
         );
         assertThat(connection.id()).isEqualTo(42L);
-        assertThat(connection.owners()).isPresent();
-        assertThat(connection.owners().get().iterator()).isExhausted();
+        assertThat(connection.owners()).isEmpty();
     }
 
     @Test
@@ -265,7 +263,7 @@ final class FpBankConnectionTest extends TestWithMockedEndpoint {
             "/api/v1/bankConnections"
         );
         assertThat(connection.id()).isEqualTo(42L);
-        assertThat(connection.owners()).isNotPresent();
+        assertThat(connection.owners()).isEmpty();
     }
 
     @Test

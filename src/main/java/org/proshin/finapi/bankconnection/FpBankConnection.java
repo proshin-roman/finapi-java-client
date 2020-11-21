@@ -40,7 +40,6 @@ import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.optional.OptionalObjectOf;
-import org.proshin.finapi.primitives.optional.OptionalOf;
 import org.proshin.finapi.primitives.optional.OptionalStringOf;
 
 /**
@@ -132,15 +131,11 @@ public final class FpBankConnection implements BankConnection {
     }
 
     @Override
-    public Optional<Iterable<Owner>> owners() {
-        return new OptionalOf<Iterable<Owner>>(
-            this.origin,
-            "owners",
-            (jsonObject, key) -> new IterableJsonArray<>(
-                jsonObject.getJSONArray(key),
-                (array, index) -> new FpOwner(array.getJSONObject(index))
-            )
-        ).get();
+    public Iterable<Owner> owners() {
+        return new IterableJsonArray<>(
+            Optional.ofNullable(this.origin.optJSONArray("owners")).orElse(new JSONArray()),
+            (array, index) -> new FpOwner(array.getJSONObject(index))
+        );
     }
 
     @Override
