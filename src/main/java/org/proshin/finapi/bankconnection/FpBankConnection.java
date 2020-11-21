@@ -133,7 +133,7 @@ public final class FpBankConnection implements BankConnection {
     @Override
     public Iterable<Owner> owners() {
         return new IterableJsonArray<>(
-            this.origin.getJSONArray("owners"),
+            Optional.ofNullable(this.origin.optJSONArray("owners")).orElse(new JSONArray()),
             (array, index) -> new FpOwner(array.getJSONObject(index))
         );
     }
