@@ -40,6 +40,8 @@ public interface BankInterface {
 
     boolean isMoneyTransferSupported();
 
+    boolean isAisSupported();
+
     enum BankInterfaceProperty {
         REDIRECT_APPROACH, DECOUPLED_APPROACH, DETAILED_CONSENT
     }

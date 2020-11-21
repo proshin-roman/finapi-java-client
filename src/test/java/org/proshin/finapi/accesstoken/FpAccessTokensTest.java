@@ -21,6 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
+import org.mockserver.model.Parameter;
+import org.mockserver.model.ParameterBody;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
@@ -30,24 +32,28 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
     public void testThatClientTokenReturnsValidToken() {
         final String clientId = "client ID #1";
         final String clientSecret = "client secret #1";
-        this.server().when(
-            HttpRequest.request("/oauth/token")
-                .withMethod("POST")
-                .withQueryStringParameter("grant_type", "client_credentials")
-                .withQueryStringParameter("client_id", clientId)
-                .withQueryStringParameter("client_secret", clientSecret)
-        ).respond(
-            HttpResponse.response(
-                String.join("",
-                    "{",
-                    "\"access_token\": \"access token\",",
-                    "\"token_type\": \"bearer\",",
-                    "\"expires_in\": 156,",
-                    "\"scope\": \"all\"",
-                    "}"
+        this.server()
+            .when(
+                HttpRequest.request("/oauth/token")
+                    .withMethod("POST")
+                    .withBody(
+                        new ParameterBody(
+                            new Parameter("grant_type", "client_credentials"),
+                            new Parameter("client_id", clientId),
+                            new Parameter("client_secret", clientSecret)
+                        )))
+            .respond(
+                HttpResponse.response(
+                    String.join("",
+                        "{",
+                        "\"access_token\": \"access token\",",
+                        "\"token_type\": \"bearer\",",
+                        "\"expires_in\": 156,",
+                        "\"scope\": \"all\"",
+                        "}"
+                    )
                 )
-            )
-        );
+            );
         final AccessToken token = new FpAccessTokens(this.endpoint()).clientToken(clientId, clientSecret);
         assertThat(token.accessToken()).isEqualTo("access token");
         assertThat(token.tokenType()).isEqualTo("bearer");
@@ -62,27 +68,31 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
         final String clientSecret = "client secret #2";
         final String username = "username #2";
         final String password = "password #2";
-        this.server().when(
-            HttpRequest.request("/oauth/token")
-                .withMethod("POST")
-                .withQueryStringParameter("grant_type", "password")
-                .withQueryStringParameter("client_id", clientId)
-                .withQueryStringParameter("client_secret", clientSecret)
-                .withQueryStringParameter("username", username)
-                .withQueryStringParameter("password", password)
-        ).respond(
-            HttpResponse.response(
-                String.join("",
-                    "{",
-                    "\"access_token\": \"access token\",",
-                    "\"token_type\": \"bearer\",",
-                    "\"refresh_token\": \"refresh token\",",
-                    "\"expires_in\": 156,",
-                    "\"scope\": \"all\"",
-                    "}"
+        this.server()
+            .when(
+                HttpRequest.request("/oauth/token")
+                    .withMethod("POST")
+                    .withBody(
+                        new ParameterBody(
+                            new Parameter("grant_type", "password"),
+                            new Parameter("client_id", clientId),
+                            new Parameter("client_secret", clientSecret),
+                            new Parameter("username", username),
+                            new Parameter("password", password)
+                        )))
+            .respond(
+                HttpResponse.response(
+                    String.join("",
+                        "{",
+                        "\"access_token\": \"access token\",",
+                        "\"token_type\": \"bearer\",",
+                        "\"refresh_token\": \"refresh token\",",
+                        "\"expires_in\": 156,",
+                        "\"scope\": \"all\"",
+                        "}"
+                    )
                 )
-            )
-        );
+            );
         final AccessToken token = new FpAccessTokens(this.endpoint())
             .userToken(clientId, clientSecret, username, password);
         assertThat(token.accessToken()).isEqualTo("access token");
@@ -97,26 +107,30 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
         final String clientId = "client ID #2";
         final String clientSecret = "client secret #2";
         final String refreshToken = "refresh token";
-        this.server().when(
-            HttpRequest.request("/oauth/token")
-                .withMethod("POST")
-                .withQueryStringParameter("grant_type", "refresh_token")
-                .withQueryStringParameter("client_id", clientId)
-                .withQueryStringParameter("client_secret", clientSecret)
-                .withQueryStringParameter("refresh_token", refreshToken)
-        ).respond(
-            HttpResponse.response(
-                String.join("",
-                    "{",
-                    "\"access_token\": \"access token\",",
-                    "\"token_type\": \"bearer\",",
-                    "\"refresh_token\": \"refresh token\",",
-                    "\"expires_in\": 156,",
-                    "\"scope\": \"all\"",
-                    "}"
+        this.server()
+            .when(
+                HttpRequest.request("/oauth/token")
+                    .withMethod("POST")
+                    .withBody(
+                        new ParameterBody(
+                            new Parameter("grant_type", "refresh_token"),
+                            new Parameter("client_id", clientId),
+                            new Parameter("client_secret", clientSecret),
+                            new Parameter("refresh_token", refreshToken)
+                        )))
+            .respond(
+                HttpResponse.response(
+                    String.join("",
+                        "{",
+                        "\"access_token\": \"access token\",",
+                        "\"token_type\": \"bearer\",",
+                        "\"refresh_token\": \"refresh token\",",
+                        "\"expires_in\": 156,",
+                        "\"scope\": \"all\"",
+                        "}"
+                    )
                 )
-            )
-        );
+            );
         final AccessToken token = new FpAccessTokens(this.endpoint())
             .userToken(clientId, clientSecret, refreshToken);
         assertThat(token.accessToken()).isEqualTo("access token");
@@ -131,15 +145,19 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
         final String clientId = "client ID #2";
         final String clientSecret = "client secret #2";
         final String refreshToken = "refresh token";
-        this.server().when(
-            HttpRequest.request("/oauth/revoke")
-                .withMethod("POST")
-                .withHeader("Authorization", "Bearer client-token")
-                .withQueryStringParameter("token", "user-token")
-                .withQueryStringParameter("token_type_hint", "access_token")
-        ).respond(
-            HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
-        );
+        this.server()
+            .when(
+                HttpRequest.request("/oauth/revoke")
+                    .withMethod("POST")
+                    .withHeader("Authorization", "Bearer client-token")
+                    .withBody(
+                        new ParameterBody(
+                            new Parameter("token", "user-token"),
+                            new Parameter("token_type_hint", "access_token")
+                        )))
+            .respond(
+                HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
+            );
         new FpAccessTokens(this.endpoint())
             .revoke(
                 new FakeAccessToken("client-token"),
@@ -153,15 +171,19 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
         final String clientId = "client ID #2";
         final String clientSecret = "client secret #2";
         final String refreshToken = "refresh token";
-        this.server().when(
-            HttpRequest.request("/oauth/revoke")
-                .withMethod("POST")
-                .withHeader("Authorization", "Bearer client-token")
-                .withQueryStringParameter("token", "user-token")
-                .withQueryStringParameter("token_type_hint", "refresh_token")
-        ).respond(
-            HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
-        );
+        this.server()
+            .when(
+                HttpRequest.request("/oauth/revoke")
+                    .withMethod("POST")
+                    .withHeader("Authorization", "Bearer client-token")
+                    .withBody(
+                        new ParameterBody(
+                            new Parameter("token", "user-token"),
+                            new Parameter("token_type_hint", "refresh_token")
+                        )))
+            .respond(
+                HttpResponse.response().withStatusCode(HttpStatus.SC_OK)
+            );
         new FpAccessTokens(this.endpoint())
             .revoke(
                 new FakeAccessToken("client-token"),

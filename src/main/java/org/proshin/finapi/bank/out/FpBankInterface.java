@@ -85,4 +85,9 @@ public final class FpBankInterface implements BankInterface {
     public boolean isMoneyTransferSupported() {
         return this.origin.getBoolean("isMoneyTransferSupported");
     }
+
+    @Override
+    public boolean isAisSupported() {
+        return this.origin.getBoolean("isAisSupported");
+    }
 }

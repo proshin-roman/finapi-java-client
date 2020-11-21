@@ -67,6 +67,10 @@ public final class Transaction implements Jsonable {
         return new Transaction(() -> this.origin.get().put("valueDate", new StringOf(valueDate)));
     }
 
+    public Transaction withTypeId(final Long typeId) {
+        return new Transaction(() -> this.origin.get().put("typeId", typeId));
+    }
+
     @Override
     public JSONObject asJson() {
         return this.origin.get();

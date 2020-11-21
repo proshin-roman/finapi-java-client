@@ -189,6 +189,8 @@ public final class FpTransactionsTest extends TestWithMockedEndpoint {
                     .withMethod("DELETE")
                     .withHeader("Authorization", "Bearer user-token")
                     .withQueryStringParameter("maxDeletionDate", "2019-01-01")
+                    .withQueryStringParameter("minDeletionDate", "2018-01-01")
+                    .withQueryStringParameter("accountIds", "1%2C2")
                     .withQueryStringParameter("safeMode", "false")
                     .withQueryStringParameter("rememberDeletion", "true")
             )
@@ -199,6 +201,8 @@ public final class FpTransactionsTest extends TestWithMockedEndpoint {
         ).deleteAll(
             new DeleteTransactionsCriteria()
                 .withMaxDeletionDate(new LocalDateOf("2019-01-01").get())
+                .withMinDeletionDate(new LocalDateOf("2018-01-01").get())
+                .withAccounts(new IterableOfLongs(1L, 2L))
                 .withUnsafeMode()
                 .withRememberingDeletion()
         );

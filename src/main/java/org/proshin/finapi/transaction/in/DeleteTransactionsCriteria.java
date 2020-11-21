@@ -22,6 +22,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.StringOf;
+import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
 import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
 
 public final class DeleteTransactionsCriteria implements Iterable<NameValuePair> {
@@ -37,6 +38,16 @@ public final class DeleteTransactionsCriteria implements Iterable<NameValuePair>
 
     public DeleteTransactionsCriteria withMaxDeletionDate(final LocalDate maxDeletionDate) {
         this.pairs.add(new QueryParamEncodedPair("maxDeletionDate", new StringOf(maxDeletionDate)));
+        return this;
+    }
+
+    public DeleteTransactionsCriteria withMinDeletionDate(final LocalDate minDeletionDate) {
+        this.pairs.add(new QueryParamEncodedPair("minDeletionDate", new StringOf(minDeletionDate)));
+        return this;
+    }
+
+    public DeleteTransactionsCriteria withAccounts(final Iterable<Long> accounts) {
+        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("accountIds", accounts)));
         return this;
     }
 

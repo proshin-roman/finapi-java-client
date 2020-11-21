@@ -19,6 +19,9 @@ import java.time.OffsetDateTime;
 import org.proshin.finapi.category.Category;
 import org.proshin.finapi.primitives.Direction;
 
+/**
+ * @todo #353 Implement unit-tests for KeywordRule and KeywordRules classes.
+ */
 public interface KeywordRule {
 
     Long id();
@@ -30,4 +33,6 @@ public interface KeywordRule {
     OffsetDateTime creationDate();
 
     Iterable<String> keywords();
+
+    boolean allKeywordsMustMatch();
 }
