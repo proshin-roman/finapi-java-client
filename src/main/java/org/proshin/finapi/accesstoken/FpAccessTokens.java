@@ -48,15 +48,14 @@ public final class FpAccessTokens implements AccessTokens {
         return new ClientAccessToken(
             new JSONObject(
                 this.endpoint.post(
-                    this.tokenUrl + '?' +
+                    this.tokenUrl,
+                    new StringEntity(
                         new QueryString(
                             new UrlEncodedPair("grant_type", "client_credentials"),
                             new UrlEncodedPair("client_id", clientId),
                             new UrlEncodedPair("client_secret", clientSecret)
                         ).get(),
-                    new StringEntity(
-                        "",
-                        ContentType.APPLICATION_JSON
+                        ContentType.APPLICATION_FORM_URLENCODED
                     ),
                     HttpStatus.SC_OK
                 )
@@ -74,7 +73,8 @@ public final class FpAccessTokens implements AccessTokens {
         return new UserAccessToken(
             new JSONObject(
                 this.endpoint.post(
-                    this.tokenUrl + '?' +
+                    this.tokenUrl,
+                    new StringEntity(
                         new QueryString(
                             new UrlEncodedPair("grant_type", "password"),
                             new UrlEncodedPair("client_id", clientId),
@@ -82,9 +82,7 @@ public final class FpAccessTokens implements AccessTokens {
                             new UrlEncodedPair("username", username),
                             new UrlEncodedPair("password", password)
                         ).get(),
-                    new StringEntity(
-                        "",
-                        ContentType.APPLICATION_JSON
+                        ContentType.APPLICATION_FORM_URLENCODED
                     ),
                     HttpStatus.SC_OK
                 )
@@ -97,16 +95,15 @@ public final class FpAccessTokens implements AccessTokens {
         return new UserAccessToken(
             new JSONObject(
                 this.endpoint.post(
-                    this.tokenUrl + '?' +
+                    this.tokenUrl,
+                    new StringEntity(
                         new QueryString(
                             new UrlEncodedPair("grant_type", "refresh_token"),
                             new UrlEncodedPair("client_id", clientId),
                             new UrlEncodedPair("client_secret", clientSecret),
                             new UrlEncodedPair("refresh_token", refreshToken)
                         ).get(),
-                    new StringEntity(
-                        "",
-                        ContentType.APPLICATION_JSON
+                        ContentType.APPLICATION_FORM_URLENCODED
                     ),
                     HttpStatus.SC_OK
                 )
@@ -140,11 +137,11 @@ public final class FpAccessTokens implements AccessTokens {
             }
         }
         this.endpoint.post(
-            this.revokeUrl + '?' + new QueryString(parameters).get(),
+            this.revokeUrl,
             clientToken,
             new StringEntity(
-                "",
-                ContentType.APPLICATION_JSON
+                new QueryString(parameters).get(),
+                ContentType.APPLICATION_FORM_URLENCODED
             ),
             HttpStatus.SC_OK
         );
