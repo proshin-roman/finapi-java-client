@@ -142,6 +142,11 @@
       <version>5.11.2</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>5.1.4.RELEASE</version>
+    </dependency>
   </dependencies>
 
   <build>

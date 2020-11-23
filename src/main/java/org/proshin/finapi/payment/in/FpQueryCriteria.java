@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.StringOf;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
-import org.proshin.finapi.primitives.pair.UrlEncodedPair;
+import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
 
 public final class FpQueryCriteria implements Iterable<NameValuePair> {
 
@@ -38,34 +38,34 @@ public final class FpQueryCriteria implements Iterable<NameValuePair> {
     }
 
     public FpQueryCriteria withIds(final Iterable<Long> ids) {
-        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("ids", ids)));
+        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("ids", ids)));
         return this;
     }
 
     public FpQueryCriteria withAccountIds(final Iterable<Long> accountIds) {
-        this.pairs.add(new UrlEncodedPair(new CommaSeparatedPair<>("accountIds", accountIds)));
+        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("accountIds", accountIds)));
         return this;
     }
 
     public FpQueryCriteria withMinAmount(final BigDecimal minAmount) {
-        this.pairs.add(new UrlEncodedPair("minAmount", new StringOf(minAmount)));
+        this.pairs.add(new QueryParamEncodedPair("minAmount", new StringOf(minAmount)));
         return this;
     }
 
     public FpQueryCriteria withMaxAmount(final BigDecimal maxAmount) {
-        this.pairs.add(new UrlEncodedPair("maxAmount", new StringOf(maxAmount)));
+        this.pairs.add(new QueryParamEncodedPair("maxAmount", new StringOf(maxAmount)));
         return this;
     }
 
     public FpQueryCriteria withPage(final int page, final int perPage) {
-        this.pairs.add(new UrlEncodedPair("page", page));
-        this.pairs.add(new UrlEncodedPair("perPage", perPage));
+        this.pairs.add(new QueryParamEncodedPair("page", page));
+        this.pairs.add(new QueryParamEncodedPair("perPage", perPage));
         return this;
     }
 
     public FpQueryCriteria orderBy(final String... orders) {
         for (final String order : orders) {
-            this.pairs.add(new UrlEncodedPair("order", order));
+            this.pairs.add(new QueryParamEncodedPair("order", order));
         }
         return this;
     }

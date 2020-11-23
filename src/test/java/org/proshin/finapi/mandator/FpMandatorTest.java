@@ -48,7 +48,7 @@ public final class FpMandatorTest extends TestWithMockedEndpoint {
                     .withQueryStringParameter("isLocked", "false")
                     .withQueryStringParameter("page", "3")
                     .withQueryStringParameter("perPage", "21")
-                    .withQueryStringParameter("order", "id%2Casc", "date%2Cdest")
+                    .withQueryStringParameter("order", "id,asc", "date,dest")
             )
             .respond(
                 HttpResponse.response("{\"users\":[{}]}")

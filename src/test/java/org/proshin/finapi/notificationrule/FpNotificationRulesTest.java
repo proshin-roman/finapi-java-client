@@ -60,7 +60,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
                 HttpRequest.request("/api/v1/notificationRules")
                     .withMethod("GET")
                     .withHeader("Authorization", "Bearer user-token")
-                    .withQueryStringParameter("ids", "1%2C2%2C3")
+                    .withQueryStringParameter("ids", "1,2,3")
                     .withQueryStringParameter("triggerEvent", "NEW_ACCOUNT_BALANCE")
                     .withQueryStringParameter("includeDetails", "true")
             )

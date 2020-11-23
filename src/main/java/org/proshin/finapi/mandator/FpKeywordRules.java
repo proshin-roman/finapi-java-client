@@ -26,7 +26,7 @@ import org.proshin.finapi.mandator.in.NewKeywordRule;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.paging.FpPage;
 import org.proshin.finapi.primitives.paging.Page;
-import org.proshin.finapi.primitives.pair.UrlEncodedPair;
+import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
 
 public final class FpKeywordRules implements KeywordRules {
 
@@ -49,8 +49,8 @@ public final class FpKeywordRules implements KeywordRules {
                     this.url,
                     this.token,
                     new IterableOf<>(
-                        new UrlEncodedPair("page", page),
-                        new UrlEncodedPair("perPage", perPage)
+                        new QueryParamEncodedPair("page", page),
+                        new QueryParamEncodedPair("perPage", perPage)
                     )
                 )
             ),
