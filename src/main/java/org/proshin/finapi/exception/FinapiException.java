@@ -36,6 +36,8 @@ public final class FinapiException extends RuntimeException {
 
     @SuppressWarnings("TransientFieldNotInitialized")
     private final transient JSONObject origin;
+    @SuppressWarnings("TransientFieldNotInitialized")
+    private final transient String requestId;
     @SuppressWarnings({"TransientFieldNotInitialized", "OptionalUsedAsFieldOrParameterType"})
     private final transient Optional<String> location;
 
@@ -61,15 +63,22 @@ public final class FinapiException extends RuntimeException {
                 }
             }
             ).get(),
+            response.getFirstHeader("X-Request-Id").getValue(),
             Optional.ofNullable(response.getFirstHeader("Location"))
                 .map(NameValuePair::getValue)
                 .orElse(null)
         );
     }
 
-    public FinapiException(final String message, final JSONObject origin, final String location) {
+    public FinapiException(
+        final String message,
+        final JSONObject origin,
+        final String requestId,
+        final String location) {
+
         super(message);
         this.origin = origin;
+        this.requestId = requestId;
         this.location = Optional.ofNullable(location);
     }
 
@@ -85,7 +94,7 @@ public final class FinapiException extends RuntimeException {
     }
 
     public String requestId() {
-        return this.origin.getString("requestId");
+        return this.requestId;
     }
 
     public String endpoint() {
