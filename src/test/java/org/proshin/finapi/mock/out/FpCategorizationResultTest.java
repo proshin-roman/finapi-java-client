@@ -41,7 +41,7 @@ final class FpCategorizationResultTest {
                 '}'),
             "/some-url"
         );
-        assertThat(result.category().isPresent()).isTrue();
+        assertThat(result.category()).isPresent();
         assertThat(result.category().get().id()).isEqualTo(378L);
         assertThat(result.transaction()).isEqualTo("transaction");
     }

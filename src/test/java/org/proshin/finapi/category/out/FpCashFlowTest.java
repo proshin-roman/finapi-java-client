@@ -51,7 +51,7 @@ final class FpCashFlowTest extends TestWithMockedEndpoint {
                 "    }"),
             "/api/v1/accounts"
         );
-        assertThat(cashFlow.category().isPresent()).isTrue();
+        assertThat(cashFlow.category()).isPresent();
         assertThat(cashFlow.category().get().id()).isEqualTo(378L);
         assertThat(cashFlow.income()).isEqualTo(new BigDecimal("199.99"));
         assertThat(cashFlow.spending()).isEqualTo(new BigDecimal("-99.99"));

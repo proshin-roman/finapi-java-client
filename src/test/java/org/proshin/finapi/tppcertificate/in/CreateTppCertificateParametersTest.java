@@ -34,8 +34,8 @@ final class CreateTppCertificateParametersTest {
                 .withPassphrase("custom passphrase")
                 .withValidFromDate(new LocalDateOf("2019-11-29").get())
                 .withValidUntilDate(new LocalDateOf("2020-12-31").get())
-                .asJson().toString())
-            .isEqualTo('{' +
+                .asJson())
+            .hasToString('{' +
                 "\"privateKey\":\"private key\"," +
                 "\"validFromDate\":\"2019-11-29\"," +
                 "\"passphrase\":\"custom passphrase\"," +

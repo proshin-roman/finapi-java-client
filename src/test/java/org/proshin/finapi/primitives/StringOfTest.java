@@ -25,13 +25,13 @@ final class StringOfTest {
 
     @Test
     void testStringOfOffsetDateTime() {
-        assertThat(new StringOf(OffsetDateTime.of(2018, 10, 25, 1, 2, 3, 4, ZoneOffset.UTC)).toString())
-            .isEqualTo("2018-10-25");
+        assertThat(new StringOf(OffsetDateTime.of(2018, 10, 25, 1, 2, 3, 4, ZoneOffset.UTC)))
+            .hasToString("2018-10-25");
     }
 
     @Test
     void testStringOfBigDecimal() {
-        assertThat(new StringOf(new BigDecimal("123456.012")).toString())
-            .isEqualTo("123456.01");
+        assertThat(new StringOf(new BigDecimal("123456.012")))
+            .hasToString("123456.01");
     }
 }

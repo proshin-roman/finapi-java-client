@@ -31,8 +31,8 @@ final class CreateTppCredentialParametersTest {
                 .withTppName("custom name")
                 .withValidFromDate(new LocalDateOf("2019-01-22").get())
                 .withValidUntilDate(new LocalDateOf("2020-01-31").get())
-                .asJson().toString())
-            .isEqualTo('{' +
+                .asJson())
+            .hasToString('{' +
                 "\"tppClientId\":\"custom client id\"," +
                 "\"validFromDate\":\"2019-01-22\"," +
                 "\"label\":\"custom label\"," +

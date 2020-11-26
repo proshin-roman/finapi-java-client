@@ -67,7 +67,7 @@ final class FpNotificationRuleTest extends TestWithMockedEndpoint {
         );
         assertThat(rule.id()).isEqualTo(1L);
         assertThat(rule.triggerEvent()).isEqualTo(TriggerEvent.NEW_ACCOUNT_BALANCE);
-        assertThat(rule.params().size()).isEqualTo(0);
+        assertThat(rule.params()).isEmpty();
         assertThat(rule.callbackHandle()).isEqualTo(Optional.of("handle"));
         assertThat(rule.includeDetails()).isTrue();
     }

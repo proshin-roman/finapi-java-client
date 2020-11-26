@@ -127,7 +127,7 @@ final class FpTransactionTest extends TestWithMockedEndpoint {
         assertThat(tx.type().typeCodeSwift()).isEqualTo(Optional.of("RAPRDE51"));
         assertThat(tx.sepaPurposeCode()).isEqualTo(Optional.of("OTHR"));
         assertThat(tx.primanota()).isEqualTo(Optional.of("Primanota"));
-        assertThat(tx.category().isPresent()).isTrue();
+        assertThat(tx.category()).isPresent();
         assertThat(tx.category().get().id()).isEqualTo(4L);
         tx.labels().forEach(label -> {
             assertThat(label.id()).isEqualTo(1L);
@@ -138,7 +138,7 @@ final class FpTransactionTest extends TestWithMockedEndpoint {
         assertThat(tx.isNew()).isTrue();
         assertThat(tx.importDate()).isEqualTo(new OffsetDateTimeOf("2018-01-01 00:00:00.000").get());
         assertThat(tx.children()).containsExactlyInAnyOrder(1L, 2L, 3L);
-        assertThat(tx.payPalData().isPresent()).isTrue();
+        assertThat(tx.payPalData()).isPresent();
         assertThat(tx.payPalData().get().invoiceNumber()).isEqualTo(Optional.of("INV2-KXVU-7Z64-DT6W-MG2X"));
         assertThat(tx.payPalData().get().fee()).isEqualTo(Optional.of(new BigDecimal("-0.99")));
         assertThat(tx.payPalData().get().net()).isEqualTo(Optional.of(new BigDecimal("9.99")));
