@@ -58,6 +58,7 @@ public final class FpMandator implements Mandator {
     }
 
     @Override
+    @SuppressWarnings("nomultiplereturn") // will be fixed in https://github.com/iwillfailyou/java-inspections/pull/24
     public DeletionResult deleteUsers(final Iterable<String> ids) {
         return new FpDeletionResult(
             new JSONObject(

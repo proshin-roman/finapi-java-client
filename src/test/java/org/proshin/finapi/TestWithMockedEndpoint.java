@@ -24,7 +24,7 @@ import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.endpoint.FpEndpoint;
 
 @ExtendWith(MockServerExtension.class)
-@SuppressWarnings({"AbstractClassWithoutAbstractMethods", "allfinal"})
+@SuppressWarnings({"AbstractClassWithoutAbstractMethods", "allfinal", "allpublic"})
 public abstract class TestWithMockedEndpoint {
 
     @SuppressWarnings({"InstanceVariableMayNotBeInitialized", "allfinal"})

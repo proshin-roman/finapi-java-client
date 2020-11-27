@@ -30,6 +30,7 @@ public final class FpTwoStepProcedures implements TwoStepProcedures {
     }
 
     @Override
+    @SuppressWarnings("nomultiplereturn") // will be fixed in https://github.com/iwillfailyou/java-inspections/pull/24
     public Optional<TwoStepProcedure> defaultOne() {
         return new OptionalOf<>(
             this.origin,
