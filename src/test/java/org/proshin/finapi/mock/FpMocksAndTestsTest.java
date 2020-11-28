@@ -62,7 +62,8 @@ final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
                         "              \"counterpartBic\": \"DRESDEFF700\"," +
                         "              \"counterpartAccountNumber\": \"61110500\"," +
                         "              \"bookingDate\": \"2018-01-01\"," +
-                        "              \"valueDate\": \"2018-02-02\"" +
+                        "              \"valueDate\": \"2018-02-02\"," +
+                        "              \"typeId\": 106" +
                         "            }" +
                         "          ]" +
                         "        }" +
@@ -93,6 +94,7 @@ final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
                             .withCounterpartAccountNumber("61110500")
                             .withBookingDate(LocalDate.of(2018, 1, 1))
                             .withValueDate(LocalDate.of(2018, 2, 2))
+                            .withTypeId(106L)
                     )
                 ),
                 new Connection(43L, BankingInterface.FINTS_SERVER)
