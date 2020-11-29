@@ -29,10 +29,10 @@ import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.tppcredential.TppAuthenticationGroup;
 
-final class FpBankTest {
+public final class FpBankTest {
 
     @Test
-    void test() {
+    public void test() {
         final Bank bank = new FpBank(
             new JSONObject('{' +
                 "  \"id\": 277672," +
