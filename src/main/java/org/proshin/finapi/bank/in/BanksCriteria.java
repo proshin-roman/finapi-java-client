@@ -44,7 +44,7 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
     }
 
     public BanksCriteria withSearch(final String search) {
-        this.pairs.add(new QueryParamEncodedPair("search", search));
+        this.pairs.add(new BasicNameValuePair("search", search));
         return this;
     }
 
