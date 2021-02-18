@@ -26,7 +26,7 @@ import org.proshin.finapi.mandator.in.NewIbanRule;
 import org.proshin.finapi.primitives.IterableJsonArray;
 import org.proshin.finapi.primitives.paging.FpPage;
 import org.proshin.finapi.primitives.paging.Page;
-import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
+import org.proshin.finapi.primitives.pair.PlainNameValuePair;
 
 public final class FpIbanRules implements IbanRules {
 
@@ -49,8 +49,8 @@ public final class FpIbanRules implements IbanRules {
                     this.url,
                     this.token,
                     new IterableOf<>(
-                        new QueryParamEncodedPair("page", page),
-                        new QueryParamEncodedPair("perPage", perPage)
+                        new PlainNameValuePair("page", page),
+                        new PlainNameValuePair("perPage", perPage)
                     )
                 )
             ),

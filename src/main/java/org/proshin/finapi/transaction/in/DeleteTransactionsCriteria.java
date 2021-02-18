@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.StringOf;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
-import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
+import org.proshin.finapi.primitives.pair.PlainNameValuePair;
 
 public final class DeleteTransactionsCriteria implements Iterable<NameValuePair> {
     private final List<NameValuePair> pairs;
@@ -37,27 +37,27 @@ public final class DeleteTransactionsCriteria implements Iterable<NameValuePair>
     }
 
     public DeleteTransactionsCriteria withMaxDeletionDate(final LocalDate maxDeletionDate) {
-        this.pairs.add(new QueryParamEncodedPair("maxDeletionDate", new StringOf(maxDeletionDate)));
+        this.pairs.add(new PlainNameValuePair("maxDeletionDate", new StringOf(maxDeletionDate)));
         return this;
     }
 
     public DeleteTransactionsCriteria withMinDeletionDate(final LocalDate minDeletionDate) {
-        this.pairs.add(new QueryParamEncodedPair("minDeletionDate", new StringOf(minDeletionDate)));
+        this.pairs.add(new PlainNameValuePair("minDeletionDate", new StringOf(minDeletionDate)));
         return this;
     }
 
     public DeleteTransactionsCriteria withAccounts(final Iterable<Long> accounts) {
-        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("accountIds", accounts)));
+        this.pairs.add(new PlainNameValuePair(new CommaSeparatedPair<>("accountIds", accounts)));
         return this;
     }
 
     public DeleteTransactionsCriteria withUnsafeMode() {
-        this.pairs.add(new QueryParamEncodedPair("safeMode", false));
+        this.pairs.add(new PlainNameValuePair("safeMode", false));
         return this;
     }
 
     public DeleteTransactionsCriteria withRememberingDeletion() {
-        this.pairs.add(new QueryParamEncodedPair("rememberDeletion", true));
+        this.pairs.add(new PlainNameValuePair("rememberDeletion", true));
         return this;
     }
 

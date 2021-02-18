@@ -21,7 +21,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
-import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
+import org.proshin.finapi.primitives.pair.PlainNameValuePair;
 
 public final class LabelsCriteria implements Iterable<NameValuePair> {
 
@@ -36,24 +36,24 @@ public final class LabelsCriteria implements Iterable<NameValuePair> {
     }
 
     public LabelsCriteria withIds(final Iterable<Long> ids) {
-        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("ids", ids)));
+        this.pairs.add(new PlainNameValuePair(new CommaSeparatedPair<>("ids", ids)));
         return this;
     }
 
     public LabelsCriteria withSearch(final String search) {
-        this.pairs.add(new QueryParamEncodedPair("search", search));
+        this.pairs.add(new PlainNameValuePair("search", search));
         return this;
     }
 
     public LabelsCriteria withPage(final int page, final int perPage) {
-        this.pairs.add(new QueryParamEncodedPair("page", page));
-        this.pairs.add(new QueryParamEncodedPair("perPage", perPage));
+        this.pairs.add(new PlainNameValuePair("page", page));
+        this.pairs.add(new PlainNameValuePair("perPage", perPage));
         return this;
     }
 
     public LabelsCriteria orderBy(final String... orders) {
         for (final String order : orders) {
-            this.pairs.add(new QueryParamEncodedPair("order", order));
+            this.pairs.add(new PlainNameValuePair("order", order));
         }
         return this;
     }
