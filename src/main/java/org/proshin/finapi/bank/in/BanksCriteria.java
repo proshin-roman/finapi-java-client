@@ -24,7 +24,7 @@ import org.proshin.finapi.bank.Bank;
 import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.paging.PagingCriteria;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
-import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
+import org.proshin.finapi.primitives.pair.PlainNameValuePair;
 
 public final class BanksCriteria implements Iterable<NameValuePair> {
 
@@ -39,12 +39,12 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
     }
 
     public BanksCriteria withIds(final Iterable<Long> ids) {
-        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("ids", ids)));
+        this.pairs.add(new PlainNameValuePair(new CommaSeparatedPair<>("ids", ids)));
         return this;
     }
 
     public BanksCriteria withSearch(final String search) {
-        this.pairs.add(new QueryParamEncodedPair("search", search));
+        this.pairs.add(new PlainNameValuePair("search", search));
         return this;
     }
 
@@ -53,7 +53,7 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
      */
     @Deprecated
     public BanksCriteria withSupporting(final boolean supporting) {
-        this.pairs.add(new QueryParamEncodedPair("isSupported", supporting));
+        this.pairs.add(new PlainNameValuePair("isSupported", supporting));
         return this;
     }
 
@@ -62,7 +62,7 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
      */
     @Deprecated
     public BanksCriteria withPinsAreVolatile(final boolean pinsAreVolatile) {
-        this.pairs.add(new QueryParamEncodedPair("pinsAreVolatile", pinsAreVolatile));
+        this.pairs.add(new PlainNameValuePair("pinsAreVolatile", pinsAreVolatile));
         return this;
     }
 
@@ -71,25 +71,25 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
      */
     @Deprecated
     public BanksCriteria withSupportedDataSources(final Iterable<Bank.DataSource> supportedDataSources) {
-        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("supportedDataSources",
+        this.pairs.add(new PlainNameValuePair(new CommaSeparatedPair<>("supportedDataSources",
             supportedDataSources
         )));
         return this;
     }
 
     public BanksCriteria withSupportedInterfaces(final Iterable<BankingInterface> supportedInterfaces) {
-        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("supportedInterfaces", supportedInterfaces)));
+        this.pairs.add(new PlainNameValuePair(new CommaSeparatedPair<>("supportedInterfaces", supportedInterfaces)));
         return this;
     }
 
     public BanksCriteria withLocation(final Iterable<String> location) {
-        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("location", location)));
+        this.pairs.add(new PlainNameValuePair(new CommaSeparatedPair<>("location", location)));
         return this;
     }
 
     public BanksCriteria withTppAuthenticationGroups(final Iterable<Long> tppAuthenticationGroups) {
         this.pairs.add(
-            new QueryParamEncodedPair(
+            new PlainNameValuePair(
                 new CommaSeparatedPair<>(
                     "tppAuthenticationGroupIds",
                     tppAuthenticationGroups
@@ -98,7 +98,7 @@ public final class BanksCriteria implements Iterable<NameValuePair> {
     }
 
     public BanksCriteria withTestBank(final boolean testBank) {
-        this.pairs.add(new QueryParamEncodedPair("isTestBank", testBank));
+        this.pairs.add(new PlainNameValuePair("isTestBank", testBank));
         return this;
     }
 

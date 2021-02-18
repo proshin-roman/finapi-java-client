@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.StringOf;
 import org.proshin.finapi.primitives.pair.CommaSeparatedPair;
-import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
+import org.proshin.finapi.primitives.pair.PlainNameValuePair;
 
 public final class DailyBalancesCriteria implements Iterable<NameValuePair> {
 
@@ -38,34 +38,34 @@ public final class DailyBalancesCriteria implements Iterable<NameValuePair> {
     }
 
     public DailyBalancesCriteria withAccounts(final Iterable<Long> accounts) {
-        this.pairs.add(new QueryParamEncodedPair(new CommaSeparatedPair<>("accountIds", accounts)));
+        this.pairs.add(new CommaSeparatedPair<>("accountIds", accounts));
         return this;
     }
 
     public DailyBalancesCriteria withStartDate(final OffsetDateTime startDate) {
-        this.pairs.add(new QueryParamEncodedPair("startDate", new StringOf(startDate)));
+        this.pairs.add(new PlainNameValuePair("startDate", new StringOf(startDate)));
         return this;
     }
 
     public DailyBalancesCriteria withEndDate(final OffsetDateTime endDate) {
-        this.pairs.add(new QueryParamEncodedPair("endDate", new StringOf(endDate)));
+        this.pairs.add(new PlainNameValuePair("endDate", new StringOf(endDate)));
         return this;
     }
 
     public DailyBalancesCriteria withoutProjection() {
-        this.pairs.add(new QueryParamEncodedPair("withProjection", false));
+        this.pairs.add(new PlainNameValuePair("withProjection", false));
         return this;
     }
 
     public DailyBalancesCriteria withPage(final int page, final int perPage) {
-        this.pairs.add(new QueryParamEncodedPair("page", page));
-        this.pairs.add(new QueryParamEncodedPair("perPage", perPage));
+        this.pairs.add(new PlainNameValuePair("page", page));
+        this.pairs.add(new PlainNameValuePair("perPage", perPage));
         return this;
     }
 
     public DailyBalancesCriteria orderBy(final String... orders) {
         for (final String order : orders) {
-            this.pairs.add(new QueryParamEncodedPair("order", order));
+            this.pairs.add(new PlainNameValuePair("order", order));
         }
         return this;
     }

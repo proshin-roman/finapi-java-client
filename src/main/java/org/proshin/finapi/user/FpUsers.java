@@ -20,7 +20,7 @@ import org.cactoos.iterable.IterableOf;
 import org.json.JSONObject;
 import org.proshin.finapi.accesstoken.AccessToken;
 import org.proshin.finapi.endpoint.Endpoint;
-import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
+import org.proshin.finapi.primitives.pair.PlainNameValuePair;
 import org.proshin.finapi.user.in.FpCreateParameters;
 
 public final class FpUsers implements Users {
@@ -55,7 +55,7 @@ public final class FpUsers implements Users {
                 this.url + "/verificationStatus",
                 this.token,
                 new IterableOf<>(
-                    new QueryParamEncodedPair("userId", userId)
+                    new PlainNameValuePair("userId", userId)
                 )
             )
         ).getBoolean("isUserVerified");
