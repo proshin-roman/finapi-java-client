@@ -43,6 +43,7 @@ import org.cactoos.text.TextOf;
 import org.cactoos.text.UncheckedText;
 import org.proshin.finapi.Jsonable;
 import org.proshin.finapi.accesstoken.AccessToken;
+import org.proshin.finapi.exception.FinapiAuthenticationException;
 import org.proshin.finapi.exception.FinapiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,19 +72,8 @@ public final class FpEndpoint implements Endpoint {
             builder.setParameters(new ListOf<>(parameters));
             final HttpUriRequest get = new HttpGet(builder.build());
             get.addHeader(new AuthorizationHeader(token.accessToken()));
-            final HttpResponse response = this.client.execute(get);
-            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                throw new FinapiException(HttpStatus.SC_OK, response);
-            }
-            final String responseBody = new UncheckedText(
-                new TextOf(
-                    new InputOf(response.getEntity().getContent()),
-                    StandardCharsets.UTF_8
-                )
-            ).asString();
-            LOGGER.info("Response body was: {}", responseBody);
-            return responseBody;
-        } catch (final IOException | URISyntaxException e) {
+            return this.execute(get);
+        } catch (final URISyntaxException e) {
             throw new RuntimeException(
                 new UncheckedText(
                     new FormattedText(
@@ -103,19 +93,8 @@ public final class FpEndpoint implements Endpoint {
             builder.setParameters(new ListOf<>(parameters));
             final HttpUriRequest delete = new HttpDelete(builder.build());
             delete.addHeader(new AuthorizationHeader(token.accessToken()));
-            final HttpResponse response = this.client.execute(delete);
-            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                throw new FinapiException(HttpStatus.SC_OK, response);
-            }
-            final String responseBody = new UncheckedText(
-                new TextOf(
-                    new InputOf(response.getEntity().getContent()),
-                    StandardCharsets.UTF_8
-                )
-            ).asString();
-            LOGGER.info("Response body was: {}", responseBody);
-            return responseBody;
-        } catch (final IOException | URISyntaxException e) {
+            return this.execute(delete);
+        } catch (final URISyntaxException e) {
             throw new IllegalStateException(
                 new UncheckedText(
                     new FormattedText(
@@ -142,29 +121,9 @@ public final class FpEndpoint implements Endpoint {
      */
     @Override
     public String post(final String path, final HttpEntity entity, final int expected) {
-        try {
-            final HttpPost post = new HttpPost(this.endpoint + path);
-            post.setEntity(entity);
-            final HttpResponse response = this.client.execute(post);
-            if (response.getStatusLine().getStatusCode() != expected) {
-                throw new FinapiException(expected, response);
-            }
-            return new UncheckedText(
-                new TextOf(
-                    new InputOf(response.getEntity().getContent()),
-                    StandardCharsets.UTF_8
-                )
-            ).asString();
-        } catch (final IOException e) {
-            throw new IllegalStateException(
-                new UncheckedText(
-                    new FormattedText(
-                        "Couldn't post to '%s'",
-                        path
-                    )
-                ).asString()
-            );
-        }
+        final HttpPost post = new HttpPost(this.endpoint + path);
+        post.setEntity(entity);
+        return this.execute(post, expected);
     }
 
     @Override
@@ -176,85 +135,25 @@ public final class FpEndpoint implements Endpoint {
 
     @Override
     public String post(final String path, final AccessToken token, final int expected) {
-        try {
-            final HttpUriRequest post = new HttpPost(this.endpoint + path);
-            post.addHeader(new AuthorizationHeader(token.accessToken()));
-            final HttpResponse response = this.client.execute(post);
-            if (response.getStatusLine().getStatusCode() != expected) {
-                throw new FinapiException(expected, response);
-            }
-            return new UncheckedText(
-                new TextOf(
-                    new InputOf(response.getEntity().getContent()),
-                    StandardCharsets.UTF_8
-                )
-            ).asString();
-        } catch (final IOException e) {
-            throw new IllegalStateException(
-                new UncheckedText(
-                    new FormattedText(
-                        "Couldn't post to '%s'",
-                        path
-                    )
-                ).asString()
-            );
-        }
+        final HttpUriRequest post = new HttpPost(this.endpoint + path);
+        post.addHeader(new AuthorizationHeader(token.accessToken()));
+        return this.execute(post, expected);
     }
 
     @Override
     public String post(final String path, final AccessToken token, final HttpEntity entity, final int expected) {
-        try {
-            final HttpPost post = new HttpPost(this.endpoint + path);
-            post.addHeader(new AuthorizationHeader(token.accessToken()));
-            post.setEntity(entity);
-            final HttpResponse response = this.client.execute(post);
-            if (response.getStatusLine().getStatusCode() != expected) {
-                throw new FinapiException(expected, response);
-            }
-            return new UncheckedText(
-                new TextOf(
-                    new InputOf(response.getEntity().getContent()),
-                    StandardCharsets.UTF_8
-                )
-            ).asString();
-        } catch (final IOException e) {
-            throw new IllegalStateException(
-                new UncheckedText(
-                    new FormattedText(
-                        "Couldn't post to '%s'",
-                        path
-                    )
-                ).asString()
-            );
-        }
+        final HttpPost post = new HttpPost(this.endpoint + path);
+        post.addHeader(new AuthorizationHeader(token.accessToken()));
+        post.setEntity(entity);
+        return this.execute(post, expected);
     }
 
     @Override
     public String patch(final String path, final AccessToken token, final HttpEntity entity, final int expected) {
-        try {
-            final HttpPatch patch = new HttpPatch(this.endpoint + path);
-            patch.addHeader(new AuthorizationHeader(token.accessToken()));
-            patch.setEntity(entity);
-            final HttpResponse response = this.client.execute(patch);
-            if (response.getStatusLine().getStatusCode() != expected) {
-                throw new FinapiException(expected, response);
-            }
-            return new UncheckedText(
-                new TextOf(
-                    new InputOf(response.getEntity().getContent()),
-                    StandardCharsets.UTF_8
-                )
-            ).asString();
-        } catch (final IOException e) {
-            throw new IllegalStateException(
-                new UncheckedText(
-                    new FormattedText(
-                        "Couldn't post to '%s'",
-                        path
-                    )
-                ).asString()
-            );
-        }
+        final HttpPatch patch = new HttpPatch(this.endpoint + path);
+        patch.addHeader(new AuthorizationHeader(token.accessToken()));
+        patch.setEntity(entity);
+        return this.execute(patch, expected);
     }
 
     @Override
@@ -267,6 +166,38 @@ public final class FpEndpoint implements Endpoint {
             ),
             HttpStatus.SC_OK
         );
+    }
+
+    private String execute(final HttpUriRequest request) {
+        return this.execute(request, HttpStatus.SC_OK);
+    }
+
+    private String execute(final HttpUriRequest request, final int expected) {
+        try {
+            final HttpResponse response = this.client.execute(request);
+            final int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                throw new FinapiAuthenticationException(response);
+            } else if (statusCode != expected) {
+                throw new FinapiException(expected, response);
+            }
+            return new UncheckedText(
+                new TextOf(
+                    new InputOf(response.getEntity().getContent()),
+                    StandardCharsets.UTF_8
+                )
+            ).asString();
+        } catch (final IOException e) {
+            throw new RuntimeException(
+                new UncheckedText(
+                    new FormattedText(
+                        "Couldn't get '%s'",
+                        request.getURI()
+                    )
+                ).asString(),
+                e
+            );
+        }
     }
 
     @SuppressWarnings("staticfree")

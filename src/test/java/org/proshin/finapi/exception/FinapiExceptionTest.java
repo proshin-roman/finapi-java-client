@@ -62,6 +62,7 @@ public final class FinapiExceptionTest {
                 "  \"authContext\": \"1/2\"," +
                 "  \"bank\": \"00000000\"" +
                 '}'),
+            "request-id-01234567890123456789",
             "fake location"
         );
         assertThat(exception.getMessage()).isEqualTo("Test error message");
