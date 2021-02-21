@@ -14,7 +14,7 @@
 [![](https://jitpack.io/v/proshin-roman/finapi-java-client.svg)](https://jitpack.io/#proshin-roman/finapi-java-client)
 
 ### Builds
-[![Build Status](https://travis-ci.org/proshin-roman/finapi-java-client.svg?branch=master)](https://travis-ci.org/proshin-roman/finapi-java-client)
+[![Build Status](https://travis-ci.com/proshin-roman/finapi-java-client.svg?branch=master)](https://travis-ci.com/proshin-roman/finapi-java-client)
 [![Build status](https://ci.appveyor.com/api/projects/status/n88wydxq8oa0eou0/branch/master?svg=true)](https://ci.appveyor.com/project/proshin-roman/finapi-java-client/branch/master)
 
 ### Code quality
