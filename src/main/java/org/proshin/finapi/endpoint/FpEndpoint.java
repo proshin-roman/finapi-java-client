@@ -168,10 +168,12 @@ public final class FpEndpoint implements Endpoint {
         );
     }
 
+    @SuppressWarnings("allpublic")
     private String execute(final HttpUriRequest request) {
         return this.execute(request, HttpStatus.SC_OK);
     }
 
+    @SuppressWarnings("allpublic")
     private String execute(final HttpUriRequest request, final int expected) {
         try {
             final HttpResponse response = this.client.execute(request);
