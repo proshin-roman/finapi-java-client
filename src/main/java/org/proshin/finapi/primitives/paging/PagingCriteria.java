@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
-import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
+import org.proshin.finapi.primitives.pair.PlainNameValuePair;
 
 public final class PagingCriteria implements Iterable<NameValuePair> {
 
@@ -30,10 +30,10 @@ public final class PagingCriteria implements Iterable<NameValuePair> {
     public PagingCriteria(final int page, final int perPage, final String... orders) {
         this(() -> {
                 final Collection<NameValuePair> list = new ArrayList<>();
-                list.add(new QueryParamEncodedPair("page", page));
-                list.add(new QueryParamEncodedPair("perPage", perPage));
+                list.add(new PlainNameValuePair("page", page));
+                list.add(new PlainNameValuePair("perPage", perPage));
                 for (final String order : orders) {
-                    list.add(new QueryParamEncodedPair("order", order));
+                    list.add(new PlainNameValuePair("order", order));
                 }
                 return list.iterator();
             }

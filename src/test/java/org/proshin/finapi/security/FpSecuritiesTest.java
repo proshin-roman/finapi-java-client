@@ -50,7 +50,7 @@ final class FpSecuritiesTest extends TestWithMockedEndpoint {
                     .withMethod("GET")
                     .withHeader("Authorization", "Bearer user-token")
                     .withQueryStringParameter("ids", "1,2,3")
-                    .withQueryStringParameter("search", "just%20a%20word")
+                    .withQueryStringParameter("search", "just a word")
                     .withQueryStringParameter("accountIds", "2,3,4")
                     .withQueryStringParameter("page", "12")
                     .withQueryStringParameter("perPage", "23")

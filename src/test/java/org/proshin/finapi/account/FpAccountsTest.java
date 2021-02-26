@@ -52,7 +52,7 @@ final class FpAccountsTest extends TestWithMockedEndpoint {
             .when(
                 HttpRequest.request("/api/v1/accounts")
                     .withQueryStringParameter("ids", "1,2")
-                    .withQueryStringParameter("search", "just%20a%20word")
+                    .withQueryStringParameter("search", "just a word")
                     .withQueryStringParameter("accountTypes", "Checking,Security")
                     .withQueryStringParameter("bankConnectionIds", "3,4")
                     .withQueryStringParameter("minLastSuccessfulUpdate", "2018-01-01")

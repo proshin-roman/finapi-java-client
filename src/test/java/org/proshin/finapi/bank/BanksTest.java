@@ -55,7 +55,7 @@ final class BanksTest extends TestWithMockedEndpoint {
                 HttpRequest.request("/api/v1/banks")
                     .withHeader("Authorization", "Bearer user-token")
                     .withQueryStringParameter("ids", "1,2,3")
-                    .withQueryStringParameter("search", "just%20a%20word")
+                    .withQueryStringParameter("search", "just a word")
                     .withQueryStringParameter("isSupported", "true")
                     .withQueryStringParameter("pinsAreVolatile", "true")
                     .withQueryStringParameter("supportedDataSources", "WEB_SCRAPER,FINTS_SERVER")

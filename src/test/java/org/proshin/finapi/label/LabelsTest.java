@@ -51,7 +51,7 @@ final class LabelsTest extends TestWithMockedEndpoint {
                     .withMethod("GET")
                     .withHeader("Authorization", "Bearer user-token")
                     .withQueryStringParameter("ids", "1,2")
-                    .withQueryStringParameter("search", "just%20a%20word")
+                    .withQueryStringParameter("search", "just a word")
                     .withQueryStringParameter("order", "id,asc", "name,desc")
             )
             .respond(

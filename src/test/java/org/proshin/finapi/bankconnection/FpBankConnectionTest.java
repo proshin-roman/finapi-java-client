@@ -39,7 +39,7 @@ import org.proshin.finapi.primitives.OffsetDateTimeOf;
 final class FpBankConnectionTest extends TestWithMockedEndpoint {
 
     @Test
-    void testParsingJsonStructure() {
+    public void testParsingJsonStructure() {
         final BankConnection connection = new FpBankConnection(
             this.endpoint(),
             new FakeAccessToken("user-token"),
@@ -237,7 +237,7 @@ final class FpBankConnectionTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    void testEmptyOwnerArray() {
+    public void testEmptyOwnerArray() {
         final BankConnection connection = new FpBankConnection(
             this.endpoint(),
             new FakeAccessToken("user-token"),
@@ -252,7 +252,7 @@ final class FpBankConnectionTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    void testNullOwnerArray() {
+    public void testNullOwnerArray() {
         final BankConnection connection = new FpBankConnection(
             this.endpoint(),
             new FakeAccessToken("user-token"),
@@ -267,7 +267,7 @@ final class FpBankConnectionTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    void testEdit() {
+    public void testEdit() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/42")
@@ -299,7 +299,7 @@ final class FpBankConnectionTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    void testDelete() {
+    public void testDelete() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/42")

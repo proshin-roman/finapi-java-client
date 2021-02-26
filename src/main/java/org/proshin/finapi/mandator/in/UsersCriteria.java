@@ -22,7 +22,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import org.apache.http.NameValuePair;
 import org.proshin.finapi.primitives.StringOf;
-import org.proshin.finapi.primitives.pair.QueryParamEncodedPair;
+import org.proshin.finapi.primitives.pair.PlainNameValuePair;
 
 public final class UsersCriteria implements Iterable<NameValuePair> {
 
@@ -37,54 +37,54 @@ public final class UsersCriteria implements Iterable<NameValuePair> {
     }
 
     public UsersCriteria withMinRegistrationDate(final OffsetDateTime minRegistrationDate) {
-        this.pairs.add(new QueryParamEncodedPair("minRegistrationDate", new StringOf(minRegistrationDate)));
+        this.pairs.add(new PlainNameValuePair("minRegistrationDate", new StringOf(minRegistrationDate)));
         return this;
     }
 
     public UsersCriteria withMaxRegistrationDate(final OffsetDateTime maxRegistrationDate) {
-        this.pairs.add(new QueryParamEncodedPair("maxRegistrationDate", new StringOf(maxRegistrationDate)));
+        this.pairs.add(new PlainNameValuePair("maxRegistrationDate", new StringOf(maxRegistrationDate)));
         return this;
     }
 
     public UsersCriteria withMinDeletionDate(final OffsetDateTime minDeletionDate) {
-        this.pairs.add(new QueryParamEncodedPair("minDeletionDate", new StringOf(minDeletionDate)));
+        this.pairs.add(new PlainNameValuePair("minDeletionDate", new StringOf(minDeletionDate)));
         return this;
     }
 
     public UsersCriteria withMaxDeletionDate(final OffsetDateTime maxDeletionDate) {
-        this.pairs.add(new QueryParamEncodedPair("maxDeletionDate", new StringOf(maxDeletionDate)));
+        this.pairs.add(new PlainNameValuePair("maxDeletionDate", new StringOf(maxDeletionDate)));
         return this;
     }
 
     public UsersCriteria withMinLastActiveDate(final OffsetDateTime minLastActiveDate) {
-        this.pairs.add(new QueryParamEncodedPair("minLastActiveDate", new StringOf(minLastActiveDate)));
+        this.pairs.add(new PlainNameValuePair("minLastActiveDate", new StringOf(minLastActiveDate)));
         return this;
     }
 
     public UsersCriteria withMaxLastActiveDate(final OffsetDateTime maxLastActiveDate) {
-        this.pairs.add(new QueryParamEncodedPair("maxLastActiveDate", new StringOf(maxLastActiveDate)));
+        this.pairs.add(new PlainNameValuePair("maxLastActiveDate", new StringOf(maxLastActiveDate)));
         return this;
     }
 
     public UsersCriteria withMonthlyStats() {
-        this.pairs.add(new QueryParamEncodedPair("includeMonthlyStats", true));
+        this.pairs.add(new PlainNameValuePair("includeMonthlyStats", true));
         return this;
     }
 
     public UsersCriteria withMonthlyStatsStartDate(final OffsetDateTime monthlyStatsStartDate) {
-        this.pairs.add(new QueryParamEncodedPair("monthlyStatsStartDate", new StringOf(monthlyStatsStartDate)));
+        this.pairs.add(new PlainNameValuePair("monthlyStatsStartDate", new StringOf(monthlyStatsStartDate)));
         return this;
     }
 
     public UsersCriteria withMonthlyStatsEndDate(final OffsetDateTime monthlyStatsEndDate) {
-        this.pairs.add(new QueryParamEncodedPair("monthlyStatsEndDate", new StringOf(monthlyStatsEndDate)));
+        this.pairs.add(new PlainNameValuePair("monthlyStatsEndDate", new StringOf(monthlyStatsEndDate)));
         return this;
     }
 
     public UsersCriteria withMinBankConnectionCountInMonthlyStats(
         final int minBankConnectionCountInMonthlyStats) {
         this.pairs.add(
-            new QueryParamEncodedPair(
+            new PlainNameValuePair(
                 "minBankConnectionCountInMonthlyStats",
                 minBankConnectionCountInMonthlyStats
             )
@@ -93,29 +93,29 @@ public final class UsersCriteria implements Iterable<NameValuePair> {
     }
 
     public UsersCriteria withUserId(final String userId) {
-        this.pairs.add(new QueryParamEncodedPair("userId", userId));
+        this.pairs.add(new PlainNameValuePair("userId", userId));
         return this;
     }
 
     public UsersCriteria withIsDeleted(final boolean isDeleted) {
-        this.pairs.add(new QueryParamEncodedPair("isDeleted", isDeleted));
+        this.pairs.add(new PlainNameValuePair("isDeleted", isDeleted));
         return this;
     }
 
     public UsersCriteria withIsLocked(final boolean isLocked) {
-        this.pairs.add(new QueryParamEncodedPair("isLocked", isLocked));
+        this.pairs.add(new PlainNameValuePair("isLocked", isLocked));
         return this;
     }
 
     public UsersCriteria withPage(final int page, final int perPage) {
-        this.pairs.add(new QueryParamEncodedPair("page", page));
-        this.pairs.add(new QueryParamEncodedPair("perPage", perPage));
+        this.pairs.add(new PlainNameValuePair("page", page));
+        this.pairs.add(new PlainNameValuePair("perPage", perPage));
         return this;
     }
 
     public UsersCriteria orderBy(final String... orders) {
         for (final String order : orders) {
-            this.pairs.add(new QueryParamEncodedPair("order", order));
+            this.pairs.add(new PlainNameValuePair("order", order));
         }
         return this;
     }
