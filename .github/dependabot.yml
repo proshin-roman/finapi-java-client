@@ -1,0 +1,18 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "22:00"
+  open-pull-requests-limit: 99
+  ignore:
+  - dependency-name: com.iwillfailyou:iwillfailyou-maven-plugin
+    versions:
+    - ">= 0.4.a, < 0.5"
+  - dependency-name: com.iwillfailyou:iwillfailyou-maven-plugin
+    versions:
+    - ">= 0.5.a, < 0.6"
+  - dependency-name: org.springframework:spring-web
+    versions:
+    - 5.3.5
