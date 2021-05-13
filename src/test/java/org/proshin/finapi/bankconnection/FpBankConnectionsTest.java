@@ -31,10 +31,10 @@ import org.proshin.finapi.bankconnection.in.ImportBankConnectionParameters;
 import org.proshin.finapi.bankconnection.in.UpdateBankConnectionParameters;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public final class FpBankConnectionsTest extends TestWithMockedEndpoint {
+final class FpBankConnectionsTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testOne() {
+    void testOne() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/42")
@@ -50,7 +50,7 @@ public final class FpBankConnectionsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections")
@@ -70,7 +70,7 @@ public final class FpBankConnectionsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testImportNew() throws Exception {
+    void testImportNew() throws Exception {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/import")
@@ -113,7 +113,7 @@ public final class FpBankConnectionsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    void testUpdate() throws Exception {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections/update")
@@ -147,7 +147,7 @@ public final class FpBankConnectionsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDeleteAll() {
+    void testDeleteAll() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/bankConnections")

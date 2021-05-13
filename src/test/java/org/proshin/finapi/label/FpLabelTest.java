@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public final class FpLabelTest extends TestWithMockedEndpoint {
+final class FpLabelTest extends TestWithMockedEndpoint {
 
     @Test
-    public void test() {
+    void test() {
         final Label label = new FpLabel(
             this.endpoint(),
             new FakeAccessToken("fake token"),

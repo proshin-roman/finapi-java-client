@@ -26,10 +26,10 @@ import org.mockserver.model.ParameterBody;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public final class FpAccessTokensTest extends TestWithMockedEndpoint {
+final class FpAccessTokensTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testThatClientTokenReturnsValidToken() {
+    void testThatClientTokenReturnsValidToken() {
         final String clientId = "client ID #1";
         final String clientSecret = "client secret #1";
         this.server()
@@ -57,13 +57,13 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
         final AccessToken token = new FpAccessTokens(this.endpoint()).clientToken(clientId, clientSecret);
         assertThat(token.accessToken()).isEqualTo("access token");
         assertThat(token.tokenType()).isEqualTo("bearer");
-        assertThat(token.refreshToken().isPresent()).isFalse();
+        assertThat(token.refreshToken()).isNotPresent();
         assertThat(token.expiresIn()).isEqualTo(156);
         assertThat(token.scope()).isEqualTo("all");
     }
 
     @Test
-    public void testThatUserTokenReturnsValidToken() {
+    void testThatUserTokenReturnsValidToken() {
         final String clientId = "client ID #2";
         final String clientSecret = "client secret #2";
         final String username = "username #2";
@@ -103,7 +103,7 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testGettingUserTokenUsingRefreshToken() {
+    void testGettingUserTokenUsingRefreshToken() {
         final String clientId = "client ID #2";
         final String clientSecret = "client secret #2";
         final String refreshToken = "refresh token";
@@ -141,7 +141,7 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testRevokeTokenAccessTokenOnly() {
+    void testRevokeTokenAccessTokenOnly() {
         final String clientId = "client ID #2";
         final String clientSecret = "client secret #2";
         final String refreshToken = "refresh token";
@@ -167,7 +167,7 @@ public final class FpAccessTokensTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testRevokeTokenRefreshTokenOnly() {
+    void testRevokeTokenRefreshTokenOnly() {
         final String clientId = "client ID #2";
         final String clientSecret = "client secret #2";
         final String refreshToken = "refresh token";

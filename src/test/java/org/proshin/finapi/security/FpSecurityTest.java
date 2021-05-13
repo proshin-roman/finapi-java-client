@@ -24,10 +24,10 @@ import org.proshin.finapi.primitives.OffsetDateTimeOf;
 import org.proshin.finapi.security.out.QuantityNominalType;
 import org.proshin.finapi.security.out.QuoteType;
 
-public final class FpSecurityTest {
+final class FpSecurityTest {
 
     @Test
-    public void test() {
+    void test() {
         final Security security = new FpSecurity(
             new JSONObject('{' +
                 "  \"id\": 1," +

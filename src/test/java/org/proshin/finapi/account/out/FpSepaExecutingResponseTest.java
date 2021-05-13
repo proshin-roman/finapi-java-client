@@ -20,10 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public final class FpSepaExecutingResponseTest {
+final class FpSepaExecutingResponseTest {
 
     @Test
-    public void test() {
+    void test() {
         final SepaExecutingResponse response = new FpSepaExecutingResponse(
             new JSONObject('{' +
                 "  \"successMessage\": \"Auftrag ausgeführt.\"," +

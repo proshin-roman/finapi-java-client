@@ -30,10 +30,10 @@ import org.proshin.finapi.primitives.paging.Page;
 import org.proshin.finapi.primitives.paging.PagingCriteria;
 
 @SuppressWarnings("JUnitTestMethodWithNoAssertions")
-public final class BanksTest extends TestWithMockedEndpoint {
+final class BanksTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testOne() {
+    void testOne() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/banks/123")
@@ -49,7 +49,7 @@ public final class BanksTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testSearch() {
+    void testSearch() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/banks")

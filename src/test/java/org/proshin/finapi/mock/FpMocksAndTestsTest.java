@@ -34,10 +34,10 @@ import org.proshin.finapi.mock.out.CategorizationResults;
 import org.proshin.finapi.primitives.BankingInterface;
 
 @SuppressWarnings("JUnitTestMethodWithNoAssertions")
-public final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
+final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testMockBatchUpdate() {
+    void testMockBatchUpdate() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/tests/mockBatchUpdate")
@@ -62,7 +62,8 @@ public final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
                         "              \"counterpartBic\": \"DRESDEFF700\"," +
                         "              \"counterpartAccountNumber\": \"61110500\"," +
                         "              \"bookingDate\": \"2018-01-01\"," +
-                        "              \"valueDate\": \"2018-02-02\"" +
+                        "              \"valueDate\": \"2018-02-02\"," +
+                        "              \"typeId\": 106" +
                         "            }" +
                         "          ]" +
                         "        }" +
@@ -93,6 +94,7 @@ public final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
                             .withCounterpartAccountNumber("61110500")
                             .withBookingDate(LocalDate.of(2018, 1, 1))
                             .withValueDate(LocalDate.of(2018, 2, 2))
+                            .withTypeId(106L)
                     )
                 ),
                 new Connection(43L, BankingInterface.FINTS_SERVER)
@@ -101,7 +103,7 @@ public final class FpMocksAndTestsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCheckCategorization() {
+    void testCheckCategorization() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/tests/checkCategorization")

@@ -36,10 +36,10 @@ import org.proshin.finapi.primitives.Direction;
 import org.proshin.finapi.primitives.LocalDateOf;
 import org.proshin.finapi.primitives.paging.Page;
 
-public final class FpCategoriesTest extends TestWithMockedEndpoint {
+final class FpCategoriesTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testOne() {
+    void testOne() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/categories/378")
@@ -56,7 +56,7 @@ public final class FpCategoriesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/categories")
@@ -87,7 +87,7 @@ public final class FpCategoriesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCashFlows() {
+    void testCashFlows() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/categories/cashFlows")
@@ -151,7 +151,7 @@ public final class FpCategoriesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/categories")
@@ -176,7 +176,7 @@ public final class FpCategoriesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testTrainCategorization() {
+    void testTrainCategorization() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/categories/trainCategorization")
@@ -224,7 +224,7 @@ public final class FpCategoriesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDeleteAll() {
+    void testDeleteAll() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/categories")

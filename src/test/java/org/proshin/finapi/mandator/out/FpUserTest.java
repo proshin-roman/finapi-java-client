@@ -22,10 +22,10 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public final class FpUserTest {
+final class FpUserTest {
 
     @Test
-    public void test() {
+    void test() {
         final User user = new FpUser(new JSONObject('{' +
             "      \"userId\": \"1\"," +
             "      \"registrationDate\": \"2018-01-01\"," +

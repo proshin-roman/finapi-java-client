@@ -20,10 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public final class FpWebFormTest {
+final class FpWebFormTest {
 
     @Test
-    public void testSuccess() {
+    void testSuccess() {
         final WebForm webForm = new FpWebForm(
             new JSONObject(
                 '{' +

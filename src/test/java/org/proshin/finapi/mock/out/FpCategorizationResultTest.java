@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.endpoint.FpEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public final class FpCategorizationResultTest {
+final class FpCategorizationResultTest {
 
     @Test
-    public void test() {
+    void test() {
         final CategorizationResult result = new FpCategorizationResult(
             new FpEndpoint(""),
             new FakeAccessToken("user-token"),
@@ -41,7 +41,7 @@ public final class FpCategorizationResultTest {
                 '}'),
             "/some-url"
         );
-        assertThat(result.category().isPresent()).isTrue();
+        assertThat(result.category()).isPresent();
         assertThat(result.category().get().id()).isEqualTo(378L);
         assertThat(result.transaction()).isEqualTo("transaction");
     }

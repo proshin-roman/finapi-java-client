@@ -27,10 +27,10 @@ import org.proshin.finapi.account.out.SepaRequestingResponse;
 import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public final class FpMoneyTransferTest extends TestWithMockedEndpoint {
+final class FpMoneyTransferTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testRequest() {
+    void testRequest() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts/requestSepaMoneyTransfer")
@@ -102,7 +102,7 @@ public final class FpMoneyTransferTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testExecute() {
+    void testExecute() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/accounts/executeSepaMoneyTransfer")

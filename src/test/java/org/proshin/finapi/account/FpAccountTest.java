@@ -28,10 +28,10 @@ import org.proshin.finapi.fake.FakeAccessToken;
 import org.proshin.finapi.primitives.BankingInterface;
 import org.proshin.finapi.primitives.OffsetDateTimeOf;
 
-public final class FpAccountTest extends TestWithMockedEndpoint {
+final class FpAccountTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testFields() {
+    void testFields() {
         final Account account = new FpAccount(
             this.endpoint(),
             new FakeAccessToken("secure user token"),

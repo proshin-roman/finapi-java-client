@@ -280,7 +280,7 @@
       <plugin>
         <groupId>com.iwillfailyou</groupId>
         <artifactId>iwillfailyou-maven-plugin</artifactId>
-        <version>0.2.0</version>
+        <version>0.5.0</version>
 
         <!-- then configure it, if you need: -->
         <configuration>
@@ -304,7 +304,24 @@
           <allpublic>
             <disabled>false</disabled><!-- default false -->
             <threshold>0</threshold><!-- default 0 -->
+            <!-- sonarcloud recommends removing 'public' for junit5 classes and tests -->
+            <exclude>glob:**/test/**/*Test.java</exclude>
           </allpublic>
+          <setterfree>
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
+          </setterfree>
+          <nomultiplereturn>
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
+          </nomultiplereturn>
+          <inheritancefree>
+            <disabled>false</disabled><!-- default false -->
+            <threshold>0</threshold><!-- default 0 -->
+            <!-- test classes can extend 'TestWithMockedEndpoint' -->
+            <!-- custom Exceptions can extend 'RuntimeException' -->
+            <exclude>glob:**/test/**/*Test.java,glob:**/main/**/*Exception.java</exclude>
+          </inheritancefree>
         </configuration>
       </plugin>
     </plugins>

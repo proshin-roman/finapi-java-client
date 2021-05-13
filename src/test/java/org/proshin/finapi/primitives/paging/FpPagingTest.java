@@ -19,10 +19,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public final class FpPagingTest {
+final class FpPagingTest {
 
     @Test
-    public void test() {
+    void test() {
         final Paging paging = new FpPaging(
             new JSONObject('{' +
                 "  \"page\": 1," +

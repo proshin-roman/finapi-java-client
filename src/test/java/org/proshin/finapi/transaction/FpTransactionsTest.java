@@ -32,10 +32,10 @@ import org.proshin.finapi.transaction.in.EditTransactionsParameters;
 import org.proshin.finapi.transaction.in.TransactionsCriteria;
 import org.proshin.finapi.transaction.out.TransactionsPage;
 
-public final class FpTransactionsTest extends TestWithMockedEndpoint {
+final class FpTransactionsTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testOne() {
+    void testOne() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/123")
@@ -50,7 +50,7 @@ public final class FpTransactionsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions")
@@ -133,7 +133,7 @@ public final class FpTransactionsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testEdit() {
+    void testEdit() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions")
@@ -166,7 +166,7 @@ public final class FpTransactionsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testTriggerCategorization() {
+    void testTriggerCategorization() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions/triggerCategorization")
@@ -182,7 +182,7 @@ public final class FpTransactionsTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDeleteAll() {
+    void testDeleteAll() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/transactions")

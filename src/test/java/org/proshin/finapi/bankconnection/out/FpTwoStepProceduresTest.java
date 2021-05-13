@@ -19,10 +19,10 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public final class FpTwoStepProceduresTest {
+final class FpTwoStepProceduresTest {
 
     @Test
-    public void testThatExceptionIsThrownIfDefaultDoesNotMatchAnyProcedure() {
+    void testThatExceptionIsThrownIfDefaultDoesNotMatchAnyProcedure() {
         final TwoStepProcedures twoStepProcedures = new FpTwoStepProcedures(
             new JSONObject('{' +
                 "  \"defaultTwoStepProcedureId\": \"000\"," +

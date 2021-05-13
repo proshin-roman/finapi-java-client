@@ -27,10 +27,10 @@ import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.category.in.FpEditParameters;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public final class FpCategoryTest extends TestWithMockedEndpoint {
+final class FpCategoryTest extends TestWithMockedEndpoint {
 
     @Test
-    public void test() {
+    void test() {
         final Category category = new FpCategory(
             this.endpoint(),
             new FakeAccessToken("test-user"),
@@ -53,7 +53,7 @@ public final class FpCategoryTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testEdit() {
+    void testEdit() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/categories/378")
@@ -72,7 +72,7 @@ public final class FpCategoryTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         this.server().when(
             HttpRequest.request("/api/v1/categories/378")
                 .withMethod("DELETE")

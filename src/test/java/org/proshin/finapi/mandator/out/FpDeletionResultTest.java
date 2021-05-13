@@ -19,10 +19,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public final class FpDeletionResultTest {
+final class FpDeletionResultTest {
 
     @Test
-    public void test() {
+    void test() {
         final DeletionResult result = new FpDeletionResult(
             new JSONObject('{' +
                 "  \"deletedUsers\": [" +

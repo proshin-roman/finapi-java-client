@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.notificationrule.TriggerEvent;
 import org.proshin.finapi.notificationrule.in.params.BankLoginErrorParams;
 
-public final class CreatingParametersTest {
+final class CreatingParametersTest {
 
     @Test
-    public void testIncompatibleEventAndParams() {
+    void testIncompatibleEventAndParams() {
         assertThatExceptionOfType(RuntimeException.class)
             .isThrownBy(
                 () -> new CreatingParameters(TriggerEvent.NEW_TRANSACTIONS)

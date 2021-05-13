@@ -19,10 +19,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 
-public final class CreateTppCredentialParametersTest {
+final class CreateTppCredentialParametersTest {
 
     @Test
-    public void test() {
+    void test() {
         assertThat(
             new CreateTppCredentialParameters(99L, "custom label")
                 .withTppClientId("custom client id")
@@ -31,8 +31,8 @@ public final class CreateTppCredentialParametersTest {
                 .withTppName("custom name")
                 .withValidFromDate(new LocalDateOf("2019-01-22").get())
                 .withValidUntilDate(new LocalDateOf("2020-01-31").get())
-                .asJson().toString())
-            .isEqualTo('{' +
+                .asJson())
+            .hasToString('{' +
                 "\"tppClientId\":\"custom client id\"," +
                 "\"validFromDate\":\"2019-01-22\"," +
                 "\"label\":\"custom label\"," +

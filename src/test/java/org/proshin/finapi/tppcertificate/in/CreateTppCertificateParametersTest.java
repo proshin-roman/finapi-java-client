@@ -20,10 +20,10 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.primitives.LocalDateOf;
 import org.proshin.finapi.tppcertificate.CertificateType;
 
-public final class CreateTppCertificateParametersTest {
+final class CreateTppCertificateParametersTest {
 
     @Test
-    public void test() {
+    void test() {
         assertThat(
             new CreateTppCertificateParameters(
                 CertificateType.QWAC,
@@ -34,8 +34,8 @@ public final class CreateTppCertificateParametersTest {
                 .withPassphrase("custom passphrase")
                 .withValidFromDate(new LocalDateOf("2019-11-29").get())
                 .withValidUntilDate(new LocalDateOf("2020-12-31").get())
-                .asJson().toString())
-            .isEqualTo('{' +
+                .asJson())
+            .hasToString('{' +
                 "\"privateKey\":\"private key\"," +
                 "\"validFromDate\":\"2019-11-29\"," +
                 "\"passphrase\":\"custom passphrase\"," +

@@ -22,10 +22,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-public final class FpPageTest {
+final class FpPageTest {
 
     @Test
-    public void testItems() throws Exception {
+    void testItems() throws Exception {
         final Page<Integer> items = new FpPage<>(
             "items",
             new JSONObject('{' +
@@ -41,7 +41,7 @@ public final class FpPageTest {
     }
 
     @Test
-    public void testPaging() {
+    void testPaging() {
         final Page<Integer> items = new FpPage<>(
             "items",
             new JSONObject('{' +

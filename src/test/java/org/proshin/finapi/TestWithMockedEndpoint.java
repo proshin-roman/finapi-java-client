@@ -24,7 +24,7 @@ import org.proshin.finapi.endpoint.Endpoint;
 import org.proshin.finapi.endpoint.FpEndpoint;
 
 @ExtendWith(MockServerExtension.class)
-@SuppressWarnings({"AbstractClassWithoutAbstractMethods", "allfinal"})
+@SuppressWarnings({"AbstractClassWithoutAbstractMethods", "allfinal", "allpublic"})
 public abstract class TestWithMockedEndpoint {
 
     @SuppressWarnings({"InstanceVariableMayNotBeInitialized", "allfinal"})
@@ -33,7 +33,7 @@ public abstract class TestWithMockedEndpoint {
     private Endpoint endpoint;
 
     @BeforeEach
-    public void init(@Nonnull final MockServerClient server) {
+    void init(@Nonnull final MockServerClient server) {
         this.server = server;
         this.endpoint = new FpEndpoint("http://localhost:" + this.server.remoteAddress().getPort());
     }

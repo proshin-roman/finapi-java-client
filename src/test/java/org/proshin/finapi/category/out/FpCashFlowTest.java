@@ -22,10 +22,10 @@ import org.junit.jupiter.api.Test;
 import org.proshin.finapi.TestWithMockedEndpoint;
 import org.proshin.finapi.fake.FakeAccessToken;
 
-public final class FpCashFlowTest extends TestWithMockedEndpoint {
+final class FpCashFlowTest extends TestWithMockedEndpoint {
 
     @Test
-    public void test() {
+    void test() {
         final CashFlow cashFlow = new FpCashFlow(
             this.endpoint(),
             new FakeAccessToken("user-token"),
@@ -51,7 +51,7 @@ public final class FpCashFlowTest extends TestWithMockedEndpoint {
                 "    }"),
             "/api/v1/accounts"
         );
-        assertThat(cashFlow.category().isPresent()).isTrue();
+        assertThat(cashFlow.category()).isPresent();
         assertThat(cashFlow.category().get().id()).isEqualTo(378L);
         assertThat(cashFlow.income()).isEqualTo(new BigDecimal("199.99"));
         assertThat(cashFlow.spending()).isEqualTo(new BigDecimal("-99.99"));

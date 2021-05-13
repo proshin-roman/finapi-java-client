@@ -34,10 +34,10 @@ import org.proshin.finapi.notificationrule.in.params.LowAccountBalanceParams;
 import org.proshin.finapi.notificationrule.in.params.NewAccountBalanceParams;
 import org.proshin.finapi.notificationrule.in.params.NewTransactionsParams;
 
-public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
+final class FpNotificationRulesTest extends TestWithMockedEndpoint {
 
     @Test
-    public void testOne() {
+    void testOne() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules/123")
@@ -54,7 +54,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testQuery() {
+    void testQuery() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
@@ -79,7 +79,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCreateNewAccountBalance() {
+    void testCreateNewAccountBalance() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
@@ -111,7 +111,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCreateNewTransactions() {
+    void testCreateNewTransactions() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
@@ -145,7 +145,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCreateBankLoginError() {
+    void testCreateBankLoginError() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
@@ -177,7 +177,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCreateForeignMoneyTransfer() {
+    void testCreateForeignMoneyTransfer() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
@@ -209,7 +209,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCreateLowAccountBalance() {
+    void testCreateLowAccountBalance() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
@@ -243,7 +243,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCreateHighTransactionAmount() {
+    void testCreateHighTransactionAmount() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
@@ -279,7 +279,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCreateCategoryCashFlow() {
+    void testCreateCategoryCashFlow() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
@@ -315,7 +315,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testCreateNewTermsAndConditions() {
+    void testCreateNewTermsAndConditions() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")
@@ -341,7 +341,7 @@ public final class FpNotificationRulesTest extends TestWithMockedEndpoint {
     }
 
     @Test
-    public void testDeleteAll() {
+    void testDeleteAll() {
         this.server()
             .when(
                 HttpRequest.request("/api/v1/notificationRules")

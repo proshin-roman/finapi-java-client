@@ -116,7 +116,7 @@ public final class FpBankTest {
         for (final BankInterface bankInterface : bank.interfaces()) {
             assertThat(bankInterface.bankingInterface()).isEqualTo(BankingInterface.FINTS_SERVER);
 
-            assertThat(bankInterface.tppAuthenticationGroup().isPresent()).isTrue();
+            assertThat(bankInterface.tppAuthenticationGroup()).isPresent();
             final TppAuthenticationGroup authenticationGroup = bankInterface.tppAuthenticationGroup().get();
             assertThat(authenticationGroup.id()).isEqualTo(1L);
             assertThat(authenticationGroup.name()).isEqualTo("AirBank XS2A CZ");
@@ -141,7 +141,7 @@ public final class FpBankTest {
             assertThat(bankInterface.isAisSupported()).isTrue();
         }
 
-        assertThat(bank.bankGroup().isPresent()).isTrue();
+        assertThat(bank.bankGroup()).isPresent();
         final BankGroup bankGroup = bank.bankGroup().get();
         assertThat(bankGroup.id()).isEqualTo(1L);
         assertThat(bankGroup.name()).isEqualTo("FinAPI Test Bank Group");
