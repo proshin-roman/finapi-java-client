@@ -1,3 +1,9 @@
+⚠️ Development and maintenance of this project is over. Thank you all who were using it and even contributing into it! 
+
+Feel free to fork it and continue the project under your name. If you decide to do so - write me an email and I will put a link to your repo here!
+
+---
+
 [![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
 [![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
